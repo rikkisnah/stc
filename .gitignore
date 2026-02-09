@@ -1,0 +1,65 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyo
+*.pyz
+*.egg-info/
+build/
+dist/
+.eggs/
+.mypy_cache/
+.pytest_cache/
+.coverage*
+.htmlcov/
+venv/
+.venv/
+.env
+.env.*
+Pipfile.lock
+pip-wheel-metadata/
+
+# Node.js artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tsbuildinfo
+.next/
+out/
+coverage/
+dist/
+
+# Go artifacts
+bin/
+pkg/
+*.test
+*.out
+*.coverprofile
+coverage.txt
+
+go.sum
+
+# Archives
+*.zip
+
+# Editor and OS cruft
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Personal working notes
+?LAUDE.md
+
+# Script ticket and output data
+scripts/tickets-json/
+scripts/normalized-tickets/
+scripts/overnight-logs/
+
+# Claude launcher scripts
+*claude*
