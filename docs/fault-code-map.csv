@@ -1,0 +1,1404 @@
+faultId,component,customerDescription
+---,FW/SW,The diagnosis routines in the server encountered a event it understood but did not have the messaging files necessary to report it.
+DCT-0001-01,,A rack has reached 40C in temp
+DCT-0002-01,,A liquid cooling event has been identified
+DCT-0002-02,,A liquid cooling event has been identified
+HPCGPU-0001-01,GPU,The PCIe link speed is degraded for a GPU.
+HPCGPU-0001-02,GPU,The PCIe bus address for a GPU is not as expected.
+HPCGPU-0002-01,GPU,The GPU has encountered an uncorrectable ECC error and remap is pending.
+HPCGPU-0002-02,GPU,The GPU has exceeded the maximum number of ECC defective row remaps.
+HPCGPU-0002-03,GPU,The GPU has encountered an uncorrectable SRAM error.
+HPCGPU-0003-01,GPU,The GPU temperature has exceeded the maximum allowable.
+HPCGPU-0003-02,GPU,The GPU temperature has exceeded the maximum allowable.
+HPCGPU-0004-01,GPU,The GPU is throttling performance due to a hardware problem.
+HPCGPU-0004-02,GPU,The GPU is throttling performance due to exceeding the maximum operating temperature.
+HPCGPU-0004-03,GPU,The GPU is throttling performance due to a thermal problem.
+HPCGPU-0004-04,GPU,The GPU is throttling performance due to power availability.
+HPCGPU-0005-01,GPU,"The GPU has experienced an Xid 79, GPU has fallen off the bus."
+HPCGPU-0005-02,GPU,"The GPU has experienced an Xid 62, internal microcontroller halt."
+HPCRDMA-0001-01,RDMA,The PCIe link speed is degraded for an RDMA interface.
+HPCRDMA-0001-02,RDMA,The PCIe bus address for an RDMA interface is not as expected.
+HPCRDMA-0002-01,RDMA,An RDMA cable is not plugged in.
+HPCRDMA-0002-02,RDMA,An RDMA cable has exceeded the allowable Bit Error Rate.
+HPCRDMA-0002-03,RDMA,An RDMA cable is in a degraded state.
+HPCRDMA-0002-04,RDMA,An RDMA cable flap event has been detected.
+HT0-0001-0001,HOSTT0LINK,Host T0 Link flap detected - 1
+HT0-0001-0002,HOSTT0LINK,Host T0 Link reset detected -2
+HT0-0001-0003,HOSTT0LINK,Host T0 Link fault detected - 3
+ILOM-8000-1G,ILOM,Indicates that a Field Replaceable Unit (FRU) in the chassis contains records to indicate it is faulty.
+ILOM-8000-2V,ILOM,indicates that the fault management function running on the service processor has determined a Field Replaceable Unit (FRU) has a corrupt FRUID SEEPROM.
+ILOM-8000-30,ILOM,The Top Level Identification of the system cannot be determined.
+ILOM-8000-4T,ILOM,The Service Processor power-on self test has detected a problem. 
+ILOM-8000-56,FW/SW,The fault diagnosis daemon (fdd) on the service processor has received unexpected error telemetry and is therefore unable to provide a diagnosis describing the suspect hardware fault or software/firmware defect.
+ILOM-8000-6N,FW/SW,The preferred ILOM firmware image could not be booted.
+ILOM-8000-79,FW/SW,An ILOM file system has exceeded the file system capacity limit.
+ILOM-8000-81,FW/SW,The platform service processor had detected a file missing which it deems necessary for operation.
+ILOM-8000-9W,FW/SW,NOT A X86 EVENT The ILOM miniroot system is missing.
+ILOM-8000-AF,ILOM,The Service Processor hardware is faulty.
+ILOM-8000-CK,ILOM,I2C transactions are blocked to the device.
+ILOM-8000-D8,ILOM,A Field Replaceable Unit (FRU) FRUID SEEPROM cannot be accessed.
+ILOM-8000-EM,ILOM,On host startup the host fault manager is unable to use the Ethernet over USB (EoUSB) interconnect between the host and the Service Processor (SP).
+ILOM-8000-F7,ILOM,The link between the host and the Service Processor (SP) has experienced a heartbeat failure.
+ILOM-8000-GU,ILOM,NOT X86 EVENT.The link between two Service Processors (SPs) has experienced a heartbeat failure.
+ILOM-8000-H0,ILOM,The key identity properties (KIP) of the system are indeterminable.
+ILOM-8000-JV,FW/SW,ILOM has detected that it's file system has exceeded the filesystem capacity limit.
+ILOM-8000-KG,FW/SW,ILOM has detected that a number of open faults have exceeded threshold limit.
+ILOM-8000-LL,FW/SW,ILOM Fault Diagnosis Daemon (FDD) encountered an error parsing it's diagnosis rules files.
+ILOM-8000-M9,ILOM,ILOM fault manager has posted an ereport that has an invalid format or invalid contents.
+ILOM-8000-NN,ILOM,FDD SERD Restore Failure.
+ISTOR-8000-05,STORAGE,A Disk Temperature has exceeded its threshold.
+ISTOR-8000-1S,STORAGE,A Predictive Disk Failure is Imminent.
+ISTOR-8000-2A,STORAGE,A Disk Self-Test Failure has occurred.
+ISTOR-8000-3P,STORAGE,ILOM fault manager has applied diagnosis to error reports indicating a non-recoverable hardware failure was detected by the disk device.
+ISTOR-8000-4D,STORAGE,ILOM fault manager has applied diagnosis to error reports indicating a non-recoverable media error was detected by the device.
+ISTOR-8000-5H,STORAGE,Indicates a non-recoverable drive failure was detected by the device while performing a command.
+ISTOR-8000-63,STORAGE,ILOM diagnosisindicates a path to the disk device has been unconfigured due to transport instability
+ISTOR-8000-7Y,STORAGE,SMART health-monitoring firmware on the drive has detected the available spare space on disk device has been exhausted.
+ISTOR-8000-8Q,STORAGE,SMART health-monitoring firmware has reported that the disk has been placed in read-only mode.
+ISTOR-8000-9C,STORAGE,SMART health-monitoring firmware has reported that the volatile memory backup device has failed.
+ISTOR-8000-AR,STORAGE,The SMART health-monitoring has detected the Percent Drive Life Used (PDLU) on disk device has fallen below the WARNING threshold set by the manufacturer.
+ISTOR-8000-C4,STORAGE,The SMART health-monitoring has detected that the Percent Drive Life Used (PDLU) on disk device has fallen SIGNIFICANTLY below the threshold set by the manufacturer.
+ISTOR-8000-DX,STORAGE,The on-die temperature of the device controller has exceeded the critical limit established by the manufacturer.
+ISTOR-8000-E2,CPU,The on-die temperature of the device controller has exceeded the warning limit established by the manufacturer.
+JBOD-CONFIG-ENCL-01,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-SG-CONFIG-DISK-03,DISK,Check cable connections / IOM status/reseat IOM
+JBOD-SG-CONFIG-DISK-04,DISK,Faulty disk. Needs to be replaced.
+JBOD-SG-CONFIG-ENCL-01,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-SG-CONFIG-ENCL-03,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-SG-FAULT-DISK-04,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/05
+JBOD-SG-FAULT-DISK-21,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/32
+JBOD-SG-FAULT-DISK-27,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/43
+JBOD-WDC-CONFIG-CONNECTOR-01,CONNECTOR/CABLE,A data path between JBOD and Host has failed
+JBOD-WDC-CONFIG-CONNECTOR-02,CONNECTOR/CABLE,A data path between JBOD and Host has failed
+JBOD-WDC-CONFIG-DISK-01,DISK,Check cable connections / IOM status/reseat IOM
+JBOD-WDC-CONFIG-DISK-02,DISK,Incorrect disk configuration points to missing disk. Need to install missing disk
+JBOD-WDC-CONFIG-DISK-03,DISK,Check cable connections / IOM status/reseat IOM
+JBOD-WDC-CONFIG-DISK-04,DISK,Faulty disk. Needs to be replaced.
+JBOD-WDC-CONFIG-DISK-05,DISK,Check cable connections / IOM status/reseat IOM
+JBOD-WDC-CONFIG-DISK-06,DISK,Incorrect disk configuration points to missing disk. Need to install missing disk
+JBOD-WDC-CONFIG-ENCL-01,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-WDC-CONFIG-ENCL-02,IOM,An enclosure has failed resulting in loss of disk capacity. 
+JBOD-WDC-CONFIG-ENCL-03,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-WDC-CONFIG-FAN-01,ENCL FAN,Fans are no longer redundant
+JBOD-WDC-CONFIG-FW-01,FW,Loss of JBOD
+JBOD-WDC-CONFIG-FW-02,FW,TBD
+JBOD-WDC-CONFIG-FW-03,FW,Loss of JBOD
+JBOD-WDC-CONFIG-FW-04,FW,TBD
+JBOD-WDC-CONFIG-OS-01,OS,Wrong queue depth. Expected:64. Reported: Incorrect value. Update queue depth.
+JBOD-WDC-CONFIG-OS-02,OS,Update multipath config file and may require reboot.
+JBOD-WDC-CONFIG-OS-03,OS,Depends on repair action outcome. Customer may need to update \n multipath.conf file and reboot.
+JBOD-WDC-CONFIG-OS-04,OS,Update multipath config file and may require reboot.
+JBOD-WDC-CONFIG-OS-07,OS,A data path between JBOD and Host has failed
+JBOD-WDC-CONFIG-OS-08,OS,Number of device nodes per disk exceeds 2
+JBOD-WDC-CONFIG-OS-09,OS,A data path between JBOD and Host has failed
+JBOD-WDC-CONFIG-OS-10,OS,Number of device nodes per disk exceeds 4
+JBOD-WDC-CONFIG-PSU-01,PSU,Power Supplies are no longer redundant
+JBOD-WDC-FAULT-ADS-01,DISK,Reduced disk capacity
+JBOD-WDC-FAULT-CONNECTOR-01,CONNECTOR/CABLE,A data path between JBOD and Host has failed
+JBOD-WDC-FAULT-CURRENT-01,N/A,Ignore. No Impact.
+JBOD-WDC-FAULT-DISK-01,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/00
+JBOD-WDC-FAULT-DISK-02,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/01
+JBOD-WDC-FAULT-DISK-03,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/14
+JBOD-WDC-FAULT-DISK-04,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/90 (LHI rate replacement error)
+JBOD-WDC-FAULT-DISK-05,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/05 (background media scan)
+JBOD-WDC-FAULT-DISK-06,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/21 (milliactuator failure)
+JBOD-WDC-FAULT-DISK-07,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/32 (read error rate warning)
+JBOD-WDC-FAULT-DISK-08,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/50 (start stop count)
+JBOD-WDC-FAULT-DISK-09,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/62 (read error rate)
+JBOD-WDC-FAULT-DISK-10,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/63 (seek error rate)
+JBOD-WDC-FAULT-DISK-11,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/64 (reassign count)
+JBOD-WDC-FAULT-DISK-12,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/FC (rid recovery error)
+JBOD-WDC-FAULT-DISK-13,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/FD (helium leak)
+JBOD-WDC-FAULT-DISK-14,DISK,Faulty disk. Needs to be replaced. - SMART ASC/ASCQ=5d/FF (test index)
+JBOD-WDC-FAULT-DISK-15,DISK,Faulty disk. Needs to be replaced. Unresponsive disk drives - smart_support=false
+JBOD-WDC-FAULT-DISK-SLOT-01,Disk,"Disk redundancy may be impacted, loss of disk capacity."
+JBOD-WDC-FAULT-DOOR-01,DOOR,System down for maintenance
+JBOD-WDC-FAULT-ENCL-IOM-01,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-WDC-FAULT-ENCL-THERMAL-01,ENCLOSURE,JBOD is in a thermal shutdown condiftion
+JBOD-WDC-FAULT-ESC-IOM-01,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-WDC-FAULT-FAN-01,ENCL FAN,Fans are no longer redundant
+JBOD-WDC-FAULT-PSU-01,PSU,Power Supplies are no longer redundant
+JBOD-WDC-FAULT-PSU-AC-IN-01,PSU,Power Supplies are no longer redundant
+JBOD-WDC-FAULT-TEMP-01,ENCLOSURE,"Services are degraded, shutdown occurred."
+JBOD-WDC-FAULT-VOLTAGE-01,PSU or IOM,Reduced JBOD power. Need to reseat PSU/IOM
+JBOD-WDC-WARNING-ADS-01 ,DISK/SLOT,TBD
+JBOD-WDC-WARNING-ADS-02 ,DISK/SLOT,No Impact. Its just a warning.
+JBOD-WDC-WARNING-ADS-03 ,DISK/SLOT,Reduced disk capacity
+JBOD-WDC-WARNING-ADS-04,DISK/SLOT,TBD
+JBOD-WDC-WARNING-ADS-05,DISK/SLOT,Reduced disk capacity
+JBOD-WDC-WARNING-ADS-06,DISK,Reduced disk capacity
+JBOD-WDC-WARNING-CONNECTOR-01 ,CONNECTOR/CABLE,A data path between JBOD and Host has failed
+JBOD-WDC-WARNING-CONNECTOR-02,CONNECTOR,Just a warning/informational at this  time
+JBOD-WDC-WARNING-CONNECTOR-03 ,CABLE,TBD
+JBOD-WDC-WARNING-CONNECTOR-04 ,CABLE,TBD
+JBOD-WDC-WARNING-CONNECTOR-05,CABLE,TBD
+JBOD-WDC-WARNING-CONNECTOR-06,CABLE,TBD
+JBOD-WDC-WARNING-CONNECTOR-07,CABLE,TBD
+JBOD-WDC-WARNING-CURRENT-01 ,N/A,TBD
+JBOD-WDC-WARNING-CURRENT-02 ,N/A,No Impact. Its just a warning.
+JBOD-WDC-WARNING-CURRENT-03 ,N/A,TBD
+JBOD-WDC-WARNING-CURRENT-04,PSU or IOM,TBD
+JBOD-WDC-WARNING-CURRENT-05 ,N/A,TBD
+JBOD-WDC-WARNING-CURRENT-06,N/A,TBD
+JBOD-WDC-WARNING-CURRENT-07,N/A,TBD
+JBOD-WDC-WARNING-DISK-01,DISK,No action. No Impact.
+JBOD-WDC-WARNING-DISK-SLOT-01 ,DISK,"Disk redundancy may be impacted, loss of disk capacity."
+JBOD-WDC-WARNING-DISK-SLOT-02,DISK/SLOT,No Impact. Its just a warning.
+JBOD-WDC-WARNING-DISK-SLOT-03,DISK,"Disk redundancy may be impacted, loss of disk capacity."
+JBOD-WDC-WARNING-DISK-SLOT-04 ,DISK,TBD
+JBOD-WDC-WARNING-DISK-SLOT-05,DISK/SLOT,"Disk redundancy may be impacted, loss of disk capacity."
+JBOD-WDC-WARNING-DISK-SLOT-06 ,DISK/SLOT,"Disk redundancy may be impacted, loss of disk capacity."
+JBOD-WDC-WARNING-DISK-SLOT-07 ,DISK/SLOT,TBD
+JBOD-WDC-WARNING-DOOR-NOT-INSTALLED-01 ,DOOR/CHASSIS,Disruption in services
+JBOD-WDC-WARNING-DOOR-OPEN-01,DOOR,System down for maintenance
+JBOD-WDC-WARNING-DOOR-UNLOCKED-01,DOOR,System down for maintenance
+JBOD-WDC-WARNING-ENCL-IOM-01 ,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-WDC-WARNING-ENCL-IOM-02 ,IOM,No Impact. Its just a warning.
+JBOD-WDC-WARNING-ENCL-IOM-03 ,IOM,TBD
+JBOD-WDC-WARNING-ENCL-IOM-04,IOM,TBD
+JBOD-WDC-WARNING-ENCL-IOM-05,IOM,TBD
+JBOD-WDC-WARNING-ENCL-IOM-06,IOM,TBD
+JBOD-WDC-WARNING-ENCL-IOM-07,IOM,TBD
+JBOD-WDC-WARNING-ESC-IOM-01 ,IOM,Enclosure services have failed. Need to reseat/replace IOM's
+JBOD-WDC-WARNING-ESC-IOM-02 ,IOM,No Impact. Its just a warning.
+JBOD-WDC-WARNING-ESC-IOM-03 ,IOM,TBD
+JBOD-WDC-WARNING-ESC-IOM-04,IOM,TBD
+JBOD-WDC-WARNING-ESC-IOM-05,IOM,TBD
+JBOD-WDC-WARNING-ESC-IOM-06,IOM,TBD
+JBOD-WDC-WARNING-ESC-IOM-07,IOM,TBD
+JBOD-WDC-WARNING-FAN-01,FAN,Fans are no longer redundant
+JBOD-WDC-WARNING-FAN-02 ,FAN,No Impact. Its just a warning.
+JBOD-WDC-WARNING-FAN-03 ,FAN,TBD
+JBOD-WDC-WARNING-FAN-04,FAN/PSU,TBD
+JBOD-WDC-WARNING-FAN-05,FAN,TBD
+JBOD-WDC-WARNING-FAN-06,FAN,TBD
+JBOD-WDC-WARNING-FAN-07,FAN,TBD
+JBOD-WDC-WARNING-FAN-NOT-INSTALLED-01 ,FAN,Fans are no longer redundant
+JBOD-WDC-WARNING-PSU-01,PSU,Power Supplies are no longer redundant
+JBOD-WDC-WARNING-PSU-02,PSU,No Impact. Its just a warning.
+JBOD-WDC-WARNING-PSU-03,PSU,TBD
+JBOD-WDC-WARNING-PSU-04,PSU,TBD
+JBOD-WDC-WARNING-PSU-05,PSU,TBD
+JBOD-WDC-WARNING-PSU-06,PSU,TBD
+JBOD-WDC-WARNING-PSU-07,PSU,TBD
+JBOD-WDC-WARNING-PSU-AC-IN-01,PSU,Reduced JBOD power. Need to check and replace PSU
+JBOD-WDC-WARNING-PSU-NOT-INSTALLED-01,PSU,Reduced JBOD power. Need to reseat PSU/IOM
+JBOD-WDC-WARNING-TEMP-01 ,N/A,TBD
+JBOD-WDC-WARNING-TEMP-02,ENCLOSURE,No Impact. Its just a warning.
+JBOD-WDC-WARNING-TEMP-03,N/A,N/A
+JBOD-WDC-WARNING-TEMP-04,ENCLOSURE,TBD
+JBOD-WDC-WARNING-TEMP-05,ENCLOSURE,TBD
+JBOD-WDC-WARNING-TEMP-06,ENCLOSURE,reduced or total loss of disk capacity
+JBOD-WDC-WARNING-TEMP-07,N/A,N/A
+JBOD-WDC-WARNING-VOLTAGE-01 ,N/A,TBD
+JBOD-WDC-WARNING-VOLTAGE-02,PSU or IOM,Just a warning/informational at this  time
+JBOD-WDC-WARNING-VOLTAGE-03,N/A,N/A
+JBOD-WDC-WARNING-VOLTAGE-04,PSU or IOM,TBD
+JBOD-WDC-WARNING-VOLTAGE-05,N/A,TBD
+JBOD-WDC-WARNING-VOLTAGE-06,N/A,TBD
+JBOD-WDC-WARNING-VOLTAGE-07,N/A,TBD
+NVL-0001-0001,,A liquid coolant leak has occurred within an NVLink device in the rack.
+NVL-0002-0001,,The device is reporting itself as unhealthy and it may require replacement.
+NVL-0002-0002,,The device is reporting itself as unhealthy and it may require replacement.
+NVL-0003-0001,,A fan is exceeding its max speed.
+NVL-0003-0002,,A fan is running under its min speed.
+NVL-0003-0003,,A fan is reporting itself as unhealthy.
+NVL-0004-0001,,An NVLink Switch ASIC is reporting temperature issues.
+NVL-0004-0002,,An NVLink Switch ASIC is reporting temperature issues.
+NVL-0004-0003,,An NVLink Switch temperature sensor has exceeded its critical temperature threshold.
+NVL-0004-0004,,An NVLink Switch temperature sensor has exceeded its max temperature threshold.
+NVL-0004-0005,,An NVLink Switch temperature sensor is in an unhealthy state.
+NVL-0004-0006,,A cable has exceeded its warning temperature limit.
+NVL-0005-0001,,The NVSwitch is reporting a voltage sensor is outside of its acceptable range.
+SDN-INTERFACE,NETWORK,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-17,SMART_NIC,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-2M,MEMORY,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-38,MEMORY,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-4K,CPU,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-5F,CPU,Correctable CPU problem threshold breached
+SMARTNIC-8000-6W,STORAGE,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-71,EMCC,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-89,POWER,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-9N,CVMX,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-A6,NETWORK,A fault in the instance software defined network interface has been detected
+SMARTNIC-8000-CT,FILESYSTEM,A fault in the instance software defined network interface has been detected
+SPAMD-8000-1Q,CPU,The start of the boot process was unable to complete or is deadlocked.
+SPAMD-8000-24,CPU,A bus interconnect error has been detected.
+SPAMD-8000-3R,CPU,A bus interconnect error has been detected.
+SPAMD-8000-42,CPU,A processor has detected multiple cache correctable errors.
+SPAMD-8000-5X,CPU,A processor has detected a cache uncorrectable error.
+SPAMD-8000-6E,CPU,A processor has detected multiple data cache correctable errors.
+SPAMD-8000-7J,CPU,A processor has detected a data cache uncorrectable error.
+SPAMD-8000-8S,CPU,A processor has detected multiple data TLB correctable errors.
+SPAMD-8000-95,CPU,A processor has detected a data TLB uncorrectable error.
+SPAMD-8000-AP,CPU,A processor has detected multiple instruction cache correctable errors.
+SPAMD-8000-CA,CPU,A processor has detected an instruction cache uncorrectable error.
+SPAMD-8000-DH,CPU,A processor has detected an internal fault.
+SPAMD-8000-ED,CPU,A processor has detected multiple instruction TLB correctable errors.
+SPAMD-8000-FY,CPU,A processor has detected an instruction TLB uncorrectable error.
+SPAMD-8000-G3,CPU,A processor has detected multiple level 0 cache correctable errors.
+SPAMD-8000-HR,CPU,A processor has detected a level 0 cache uncorrectable error.
+SPAMD-8000-J4,CPU,A processor has detected multiple level 2 TLB correctable errors.
+SPAMD-8000-KQ,CPU,A processor has detected a level 0 data cache uncorrectable error.
+SPAMD-8000-LC,CPU,A processor has detected multiple level 0 data TLB correctable errors.
+SPAMD-8000-MJ,CPU,A processor has detected a level 0 data TLB uncorrectable error.
+SPAMD-8000-NE,CPU,A processor has detected multiple level 0 instruction cache correctable errors.
+SPAMD-8000-PX,CPU,A processor has detected a level 0 instruction cache uncorrectable error.
+SPAMD-8000-Q2,CPU,A processor has detected multiple level 0 instruction TLB correctable errors.
+SPAMD-8000-RA,CPU,A processor has detected a level 0 instruction TLB uncorrectable error.
+SPAMD-8000-SP,CPU,A processor has detected multiple level 0 TLB correctable errors.
+SPAMD-8000-T5,CPU,A processor has detected a level 0 TLB uncorrectable error.
+SPAMD-8000-US,CPU,A processor has detected multiple level 1 cache correctable errors.
+SPAMD-8000-V3,CPU,A processor has detected a level 1 cache uncorrectable error.
+SPAMD-8000-WY,CPU,A processor has detected multiple level 1 data cache correctable errors.
+SPAMD-8000-XD,CPU,A processor has detected a level 1 data cache uncorrectable error.
+SPAMD-8000-YH,CPU,A processor has detected multiple level 1 data TLB correctable errors.
+SPAMD-8001-0D,CPU,A processor has detected a level 1 data TLB uncorrectable error.
+SPAMD-8001-1H,CPU,A processor has detected multiple level 1 instruction cache correctable errors.
+SPAMD-8001-23,CPU,A processor has detected a level 1 instruction cache uncorrectable error.
+SPAMD-8001-3Y,CPU,A processor has detected multiple level 1 instruction TLB correctable errors.
+SPAMD-8001-45,CPU,A processor has detected a level 1 instruction TLB uncorrectable error.
+SPAMD-8001-5S,CPU,A processor has detected multiple level 1 TLB correctable errors.
+SPAMD-8001-6A,CPU,A processor has detected a level 1 TLB uncorrectable error.
+SPAMD-8001-7P,CPU,A processor has detected multiple level 2 cache correctable errors.
+SPAMD-8001-8X,CPU,A processor has detected a level 2 cache uncorrectable error.
+SPAMD-8001-92,CPU,A processor has detected multiple level 2 data cache correctable errors.
+SPAMD-8001-AJ,CPU,A processor has detected a level 2 data cache uncorrectable error.
+SPAMD-8001-CE,CPU,A processor has detected multiple level 2 data TLB correctable errors.
+SPAMD-8001-DQ,CPU,A processor has detected a level 2 data TLB uncorrectable error.
+SPAMD-8001-EC,CPU,A processor has detected multiple level 2 instruction cache correctable errors.
+SPAMD-8001-FR,CPU,A processor has detected a level 2 instruction TLB uncorrectable error.
+SPAMD-8001-G4,CPU,A processor has detected multiple level 2 instruction TLB correctable errors.
+SPAMD-8001-HY,CPU,A processor has detected a level 2 instruction TLB uncorrectable error.
+SPAMD-8001-J3,CPU,A processor has detected multiple level 2 TLB correctable errors.
+SPAMD-8001-KH,CPU,A processor has detected a level 2 TLB uncorrectable error.
+SPAMD-8001-LD,CPU,Excessive temperature has been detected on a system component.
+SPAMD-8001-MP,CPU,The system is experiencing CPU Timeout Failures.
+SPAMD-8001-NA,CPU,A processor has detected multiple TLB correctable errors.
+SPAMD-8001-PS,CPU,A processor has detected a TLB uncorrectable error.
+SPAMD-8001-Q5,CPU,A processor has detected an unknown uncorrectable error.
+SPAMD-8001-RE,PCI,An Integrated I/O correctable error in a PCIE device has been detected.
+SPAMD-8001-SJ,PCI,ILOM has detected that a PCIE link layer is inactive.
+SPAMD-8001-T2,PCI,A PCIe device that is present was unable to be initialized.
+SPAMD-8001-UX,PCI,An integrated I/O fatal error in a downstream PCIE device has been detected.
+SPAMD-8001-V4,PCI,An integrated I/O non-fatal error in a downstream PCIE leaf device has been detected.
+SPAMD-8001-WR,PCI,A PCI link error has been detected on a PCI card.
+SPAMD-8001-XC,PCI,The External Global Memory Interconnect (xGMI) has detected that a link has degraded width.
+SPAMD-8001-YQ,PCI,An Integrated I/O non-fatal error in a PCIe device has been detected.
+SPAMD-8002-05,MEMORY,Multiple correctable memory DIMM address/command parity errors have been detected.
+SPAMD-8002-1S,MEMORY,An uncorrectable Memory DIMM address/command parity error has been detected.
+SPAMD-8002-2A,MEMORY,Multiple correctable ECC errors on a memory DIMM have been detected.
+SPAMD-8002-3P,MEMORY,A memory uncorrectable ECC error on a Memory DIMM has been detected.
+SPAMD-8002-4D,ILOM,Initialization of the BIOS was not successful.
+SPAMD-8002-5H,CPU,The Platform Security Processor (PSP) firmware was unable to initialization the processor successfully.
+SPAMD-8002-63,CPU,An Advanced Boot Loader (ABL) critical error has occurred during the boot process.
+SPAMD-8002-7Y,CPU,An Advanced Boot Loader (ABL) error has occurred during the boot process.
+SPAMD-8002-8Q,CPU,An Advanced Boot Loader (ABL) fatal error has occurred during the boot process.
+SPAMD-8002-9C,CPU,An Advanced Boot Loader (ABL) warning error has occurred with the bootloader program or the boot path related hardware.
+SPAMD-8002-AR,CPU,The processor built-in self-test (BIST) has detected a processor core complex failure.
+SPAMD-8002-C4,CPU,The processor built-in self-test (BIST) has detected a chip failure.
+SPAMD-8002-DX,CPU,The Inter-chip external Global Memory Interconnect (xGMI) link is down.
+SPAMD-8002-E2,MEMORY,The processor built-in self-test (BIST) has detected a DIMM failure.
+SPAMD-8002-FJ,MEMORY,The Platform Security Processor (PSP) firmware has detected a DIMM training failure.
+SPAMD-8002-GE,CPU,The Platform Security Processor (PSP) firmware has detected an internal I/O fault on a processor.
+SPAMD-8002-HP,MEMORY,Ilom has detected that no system memory is available.
+SPAMD-8002-JA,MEMORY,Platform Security Processor (PSP) firmware has detected a DIMM is missing
+SPAMD-8002-KS,CPU,Interchip Global Memory Interconnect (xGMI) correctable link error has occurred.
+SPAMD-8002-L5,CPU,Interchip Global Memory Interconnect (xGMI) uncorrectable link error has occurred.
+SPAMD-8002-MY,MB,ILOM has detected a potential voltage regulator device malfunction.
+SPAMD-8002-N3,CPU,A processor has generated Poison data in response to the detection of an invalid access.
+SPAMD-8002-PH,CPU,A processor has detected a fatal error from an invalid access.
+SPAMD-8002-QD,CPU,A processor has detected excessive correctable errors in an internal memory array.
+SPAMD-8002-R4,CPU,A processor has generated Poison data in response to the detection of a parity or ECC error in an internal memory array.
+SPAMD-8002-SR,CPU,A processor has detected a fatal error in an internal memory array.
+SPAMD-8002-TC,CPU,A processor thread has detected an uncorrectable error in an internal memory array.
+SPAMD-8002-UQ,CPU,A processor thread has detected a recoverable uncorrected error in an internal memory array.
+SPAMD-8002-VE,CPU,A processor has exceeded the allowable Bit Error Rate of correctable errors in a Global Memory Interconnect link.
+SPAMD-8002-WJ,CPU,A processor has detected excessive correctable CRC errors in a Global Memory Interconnect link.
+SPAMD-8002-X2,CPU,A processor has detected excessive correctable errors in a Global Memory Interconnect link.
+SPAMD-8002-YX,CPU,A processor has detected excessive correctable errors in a link FIFO.
+SPAMD-8003-02,CPU,A processor has detected a timeout in a Global Memory Interconnect state machine.
+SPAMD-8003-1X,CPU,A processor has detected an unspecified error within a Global Memory Interconnect link.
+SPAMD-8003-2E,CPU,A processor has detected excessive correctable errors in the integrated PCIe host bridge.
+SPAMD-8003-3J,CPU,A processor has generated Poison data in response to the detection of an error in the integrated PCIe host bridge
+SPAMD-8003-4C,CPU,A processor has detected a fatal error in the integrated PCIe host bridge.
+SPAMD-8003-5Q,CPU,A processor thread has detected a recoverable uncorrected error in the integrated PCIe host bridge.
+SPAMD-8003-64,CPU,A processor has detected a correctable timeout error.
+SPAMD-8003-7R,CPU,A processor has detected a fatal timeout error.
+SPAMD-8003-8H,CPU,A processor thread has detected excessive corrected transmission error
+SPAMD-8003-9D,CPU,A processor has generated Poison data in response to the detection of a transmission error.
+SPAMD-8003-AY,CPU,A processor has detected a fatal transmission error.
+SPAMD-8003-C3,CPU,A processor thread has detected a recoverable uncorrected error during a transmission.
+SPAMD-8003-DS,CPU,A processor thread has detected excessive corrected errors in the CPU interconnect.
+SPAMD-8003-E5,CPU,A processor thread has detected a recoverable uncorrected error in the CPU interconnect.
+SPAMD-8003-FP,DIMM,Multiple correctable memory DIMM address/command parity errors have been detected.
+SPAMD-8003-GA,DIMM,An recoverable uncorrectable Memory DIMM address/command parity error has been detected.
+SPAMD-8003-HJ,DIMM,Multiple correctable ECC errors on a memory DIMM have been detected.
+SPAMD-8003-JE,DIMM,A processor has generated Poison data in response to the detection of a memory DIMM DRAM ECC error.
+SPAMD-8003-KX,DIMM,A fatal uncorrectable ECC error on a Memory DIMM has been detected.
+SPAMD-8003-L2,DIMM,A recoverable uncorrectable ECC error on a Memory DIMM has been detected.
+SPAMD-8003-MR,DIMM,Multiple correctable ECC errors on a memory channel have been detected.
+SPAMD-8003-N4,DIMM,A processor has generated Poison data in response to the detection of an error on a memory channel.
+SPAMD-8003-PQ,DIMM,A recoverable uncorrectable ECC error on a Memory Channel has been detected.
+SPAMD-8003-QC,CPU,A processor has detected a fatal hardware assertion.
+SPAMD-8003-R3,CPU,A processor has detected a fatal error on an inbound access
+SPAMD-8003-SY,CPU,A processor thread has detected excessive corrected internal error
+SPAMD-8003-TD,CPU,A processor has generated Poison data in response to the detection of an internal error.
+SPAMD-8003-UH,CPU,A processor has detected a fatal internal error.
+SPAMD-8003-VA,CPU,A processor thread has detected an uncorrectable internal error.
+SPAMD-8003-WP,CPU,A processor thread has detected a recoverable uncorrectable internal error.
+SPAMD-8003-X5,CPU,A processor has detected a recoverable uncorrected error from an invalid access.
+SPAMD-8003-YS,MEMORY,A fatal Memory DIMM address/command parity error has been detected.
+SPAMD-8004-0Q,MEMORY,An uncorrectable ECC error on a Memory DIMM has been detected.
+SPAMD-8004-1C,CPU,A processor has detected an uncorrectable error on an inbound access.
+SPAMD-8004-2R,CPU,A processor has detected a fatal error in an internal Global Memory Interconnect link FIFO.
+SPAMD-8004-34,CPU,A processor has detected an uncorrectable error in an internal Global Memory Interconnect link FIFO.
+SPAMD-8004-4X,CPU,A processor has detected a recoverable uncorrected error in an internal Global Memory Interconnect link FIFO.
+SPAMD-8004-52,CPU,A processor has generated Poison data in response to the detection of an error in an internal Global Memory Interconnect link FIFO.
+SPAMD-8004-6J,CPU,A processor has detected a fatal timeout in an internal Global Memory Interconnect state machine.
+SPAMD-8004-7E,CPU,A processor has detected an uncorrectable timeout in an internal Global Memory Interconnect state machine.
+SPAMD-8004-85,CPU,A processor has detected a recoverable uncorrected timeout in an internal Global Memory Interconnect state machine.
+SPAMD-8004-9S,CPU,A processor has generated Poison data in response to the detection of a timeout in an internal Global Memory Interconnect state machine.
+SPAMD-8004-AA,CPU,A processor has detected a fatal error within an internal Global Memory Interconnect link.
+SPAMD-8004-CP,CPU,A processor has detected an uncorrectable error within an internal Global Memory Interconnect link.
+SPAMD-8004-DD,CPU,A processor has detected a recoverable uncorrected error within an internal Global Memory Interconnect link.
+SPAMD-8004-EH,CPU,A processor has generated Poison data in response to the detection of an error within an internal Global Memory Interconnect link.
+SPAMD-8004-F3,MEMORY,A fatal ECC error on a Memory Channel has been detected.
+SPAMD-8004-GY,MEMORY,A uncorrectable ECC error on a Memory Channel has been detected.
+SPAMD-8004-H4,CPU,A processor has detected an uncorrectable error in the integrated PCIe host bridge.
+SPAMD-8004-JR,CPU,A processor thread has detected an uncorrected error during a transmission.
+SPAMD-8004-KC,CPU,A processor thread has detected a fatal error in the CPU interconnect.
+SPAMD-8004-LQ,CPU,A processor thread has detected an uncorrected error in the CPU interconnect.
+SPAMD-8004-ME,CPU,A processor has generated Poison data in response to the detection of an error in the CPU interconnect.
+SPAMD-8004-NJ,CPU,A processor thread has detected excessive corrected errors in the CPU interconnect.
+SPAMD-8004-P2,CPU,A processor has exceeded the allowable Bit Error Rate of correctable errors in an external Global Memory Interconnect link.
+SPAMD-8004-QX,CPU,A processor has detected excessive correctable CRC errors in an external Global Memory Interconnect link.
+SPAMD-8004-RP,CPU,A processor has detected excessive correctable errors in an external Global Memory Interconnect link.
+SPAMD-8004-SA,CPU,A processor has detected a fatal error in an external Global Memory Interconnect link FIFO.
+SPAMD-8004-TS,CPU,A processor has detected an uncorrectable error in an external Global Memory Interconnect link FIFO.
+SPAMD-8004-U5,CPU,A processor has detected a recoverable uncorrected error in an external Global Memory Interconnect link FIFO.
+SPAMD-8004-VY,CPU,A processor has generated Poison data in response to the detection of an error in an external Global Memory Interconnect link FIFO.
+SPAMD-8004-W3,CPU,A processor has detected excessive correctable errors in an external Global Memory Interconnect link FIFO.
+SPAMD-8004-XH,CPU,A processor has detected a fatal timeout in an external Global Memory Interconnect state machine.
+SPAMD-8004-YD,CPU,A processor has detected an uncorrectable timeout in an external Global Memory Interconnect state machine.
+SPAMD-8005-0H,CPU,A processor has detected a recoverable uncorrected timeout in an external Global Memory Interconnect state machine.
+SPAMD-8005-1D,CPU,A processor has generated Poison data in response to the detection of a timeout in an external Global Memory Interconnect state machine.
+SPAMD-8005-2Y,CPU,A processor has detected a timeout in an external Global Memory Interconnect state machine.
+SPAMD-8005-33,CPU,A processor has detected a fatal error within an external Global Memory Interconnect link.
+SPAMD-8005-4S,CPU,A processor has detected an uncorrectable error within an external Global Memory Interconnect link.
+SPAMD-8005-55,CPU,A processor has detected a recoverable uncorrected error within an external Global Memory Interconnect link.
+SPAMD-8005-6P,CPU,A processor has generated Poison data in response to the detection of an error within an external Global Memory Interconnect link.
+SPAMD-8005-7A,CPU,A processor has detected an unspecified error within an external Global Memory Interconnect link.
+SPARM-8000-1M,ILOM,Initialization of the BIOS was not successful.
+SPARM-8000-27,CPU,The start of the boot process was unable to complete or is deadlocked.
+SPARM-8000-3U,FW/SW,a problem has been encountered between the Arm Trusted Firmware (ATF) located within the BIOS and a processor.
+SPARM-8000-41,CPU,A Processor failed to boot due to processor training or memory boot errors
+SPARM-8000-5W,CPU,A processor has detected multiple cache coherent interconnect correctable errors.
+SPARM-8000-6F,CPU,A processor has detected a cache coherent interconnect uncorrectable error.
+SPARM-8000-7K,CPU,A processor has detected multiple cluster processor module correctable errors.
+SPARM-8000-8T,CPU,A processor has detected a cluster processor module uncorrectable error.
+SPARM-8000-96,FW/SW,A problem has been encountered with the firmware on an internal co-processor.
+SPARM-8000-AN,CPU,A processor has detected an internal Generic Interrupt Controller uncorrectable error.
+SPARM-8000-C9,CPU,A processor has detected multiple scalable mesh interconnect correctable errors.
+SPARM-8000-DL,CPU,A processor has detected a scalable mesh interconnect uncorrectable error.
+SPARM-8000-EG,CPU,A processor has detected multiple on-chip memory correctable errors.
+SPARM-8000-FV,PCI,A processor has detected a fault is present in a downstream PCIe Device.
+SPARM-8000-G0,PCI,A processor has detected multiple Host Bridge correctable errors with a downstream PCIe device.
+SPARM-8000-HU,PCI,A processor has detected multiple system memory management unit correctable errors with in downstream PCIe device.
+SPARM-8000-J7,CPU,The system control processor has detected an error within a co-processor and has determined that a fault is present in the processor.
+SPARM-8000-KM,CPU,A processor has detected an error in the coherent hub memory interface 
+SPARM-8000-L8,CPU,A processor has failed to train memory and has determined that a fault is present with a Memory Dimm(s).
+SPARM-8000-MK,MEMORY,Multiple correctable ECC errors on a memory DIMM have been detected.
+SPARM-8000-NF,MEMORY,A memory uncorrectable ECC error on a Memory DIMM has been detected.
+SPARM-8000-PW,MEMORY,A dynamic memory controller recovery error been detected.
+SPARM-8000-Q1,CPU,A memory controller link error has been detected and has determined that a fault is present in a Memory Dimm(s).
+SPARM-8000-R9,MEMORY,A memory DIMM training error has been detected and has determined that a fault is present in a Memory Dimm.
+SPARM-8000-SN,CPU,Excessive temperature has been detected on the processor.
+SPARM-8000-T6,PCI,An Integrated Host Bridge correctable error in a downstream PCIe device has been detected.
+SPARM-8000-UT,PCI,A PCIE data ink layer is inactive.
+SPARM-8000-V0,PCI,A PCIe device that is present in the system was unable to be initialized.
+SPARM-8000-WV,PCI,A PCIe host bridge fatal error in a downstream PCIE device has been detected.
+SPARM-8000-XG,PCI,A downstream PCIE leaf device is faulty.
+SPARM-8000-YL,PCI,A PCI link speed error has occurred on a PCI card.
+SPARM-8001-0G,PCI,A PCI link width error has occurred on a PCI card.
+SPARM-8001-1L,PCI,A non-fatal error in a PCIe device has been detected.
+SPARM-8001-20,CPU,A processor timeout failure has occurred.
+SPARM-8001-3V,MEMORY,A processor has failed to train a memory DIMM.
+SPARM-8001-46,CPU,A processor has detected multiple Generic Interrupt Controller correctable errors.
+SPARM-8001-5T,PCI,An uncorrectable error with the Interrupt Translation Service within the generic interrupt controller (GIC) has been detected
+SPARM-8001-69,PCI,A processor on-chip integrated PCIe host bridge has detected an uncorrectable error with a downstream PCIe device.
+SPARM-8001-7N,PCI,A processor on-chip system memory management unit (MMU) has detected an uncorrectable error with a downstream PCIe device.
+SPARM-8001-8W,CPU,A processor has detected an on-chip (in CPU) memory uncorrectable error.
+SPARM-8001-91,FW/SW,A communication error between the System Control Processor (SCP) firmware on the processor and ILOM has occurred.
+SPARM-8001-AK,FW/SW,The SCP has lost communication with the processor. This is an unserviceable event indicating a power on is occuring.
+SPARM-8001-CF,CPU,The System Control Processor (SCP) firmware on a processor has stopped functioning.
+SPARM-8001-DM,MEMORY,A processor has detected excessive correctable errors on a memory controller link.
+SPENV-8000-16,None,The management I/O (MIO) module for a server module is missing.
+SPENV-8000-2N,POWER,An invalid power supply configuration has been detected.
+SPENV-8000-39,ILOM,The deferred update of the system BIOS has failed.
+SPENV-8000-4L,CPU,ILOM was able to access the serial peripheral (SPI) flash device but the write was blocked or the resulting image was corrupted.
+SPENV-8000-5G,ILOM,System has detected invalid or corrupt firmware in the FPGA or ILOM power state.
+SPENV-8000-6V,Fan,The ambient temperature of the system has exceeded established thresholds.
+SPENV-8000-70,Fan,A fan module required to maintain redundancy is missing.
+SPENV-8000-88,CPU,A lack of power to the disk backplane has been detected.
+SPENV-8000-9M,ILOM,A device necessary to support a configuration has failed.
+SPENV-8000-A7,Fan,A fan module is rotating too slow.
+SPENV-8000-CU,POWER,An internal power supply failure has been detected.
+SPENV-8000-D1,CPU,The Field Programmable Gate Array (FPGA) has detected a mulfunctioning component and has powered-off the system.
+SPENV-8000-EW,ILOM,Number of boot retries has exceeded limit
+SPENV-8000-FF,POWER,The Field-Programmable Gate Array (FPGA) has detected the system standby was powered off unexpectedly.
+SPENV-8000-GK,ILOM,The BIOS has detected that the platform information structure (SPI flash) is invalid.
+SPENV-8000-H9,POWER,A failure with a voltage regulator on the motherbord has been detected.
+SPENV-8000-JN,ILOM,A serial peripheral interface error
+SPENV-8000-K6,POWER,A loss of AC input power to a power supply has been detected.
+SPENV-8000-LT,POWER,A power source has failed or is not available to the server.
+SPENV-8000-M0,POWER, Power Inadequate
+SPENV-8000-NV,CPU,Excessive temperature has been detected on a GPU.  Could be a Fan issue or possibly just high ambient temperatures in the DC.
+SPENV-8000-PG,ILOM,The service processor is unable to provide platform services to the operating system.
+SPENV-8000-QL,ILOM,The Field Programmable Gate Array (FPGA) has detected a power-on request that was denied by the service processor.
+SPENV-8000-RU,Fan,Indicates insufficient cooling of server is due to multiple faulted or missing fan modules.  The fan module configuration supported by the server can provide adequate cooling when 1one fan module is faulted or missing but not when more than one fan module has failed or is missing.
+SPENV-8000-S7,POWER,Indicates a minor drop in voltage on the 12-volt rail has been detected.
+SPENV-8000-TM,POWER,The 12-Volt rail has dropped below the 11.5-volt threshold.
+SPENV-8000-U8,PCI,IOU Unknown
+SPENV-8000-VK,PCI,PCIe Data Cable Missing
+SPENV-8000-WF,POWER,chassis power-off/power-on button is either obstructed or has malfunctioned 
+SPENV-8000-XW,PCI,Power Cable Incorrectly Attached to IOU
+SPENV-8000-Y1,PCI,FIM Missing or Improperly Attached
+SPENV-8001-0W,STORAGE,NVME Drive Unsupported
+SPENV-8001-11,STORAGE,SAS Drive Unsupported
+SPENV-8001-2K,POWER,12-Volt Failure Predicted
+SPENV-8001-3F,POWER,Power Supply Missing
+SPENV-8001-4M,PCI,IOU External Cable Missing
+SPENV-8001-58,CPU,GPU Undetected Non-serviceable
+SPENV-8001-6U,CPU,GPU Undetected
+SPENV-8001-77,PCI,IOU GXR ERROR
+SPENV-8001-8G,POWER,The power supplies are not providing redundant availability.
+SPENV-8001-9L,FW/SW,An override of the fan control cooling parameters has occurred because of the inability to access a temperature sensor.
+SPENV-8001-A0,FW/SW,The firmware on the Serial Peripheral Interface (SPI) flash has been corrupted.
+SPENV-8001-CV,POWER,The chassis wide service-required LED will be illuminated.
+SPENV-8001-D6,Fan,The internal temperature within the system has exceeded established thresholds.
+SPENV-8001-ET,FW/SW,The bootstrap code on the SPI flash is unrecognized.
+SPENV-8001-F9,FW/SW,A SPI flash parameter is not set to factory default.
+SPENV-8001-GN,ILOM,The FPGA upgrade was not performed due to ROT lock-down being asserted.
+SPENV-8001-HF,ILOM,An upgrade to the Field Programmable Gate Array (FPGA) was unsuccessful.
+SPENV-8001-JK,POWER,RTC Battery End of Life
+SPENV-8001-K1,FW/SW,LB SPI Firmware Corrupt
+SPENV-8001-LW,ILOM,LB SPI Firmware Failed
+SPENV-8001-M7,CPU,Processor / Memory Throttling
+SPENV-8001-NU,Fan,FAN Low Speed
+SPENV-8001-P8,PCI,PCIe Cable Unsupported 
+SPENV-8001-QM,POWER,PSU Overvoltage Input Exceeded
+SPENV-8001-RV,POWER,PSU Fan Failure
+SPENV-8001-S0,POWER,PSU Output Current Exceeded
+SPENV-8001-TL,POWER,PSU Output Voltage Exceeded
+SPENV-8001-UG,POWER,PSU Output UnderVoltage
+SPENV-8001-VN,PCI,PCIe Device Unexpectedly Removed
+SPENV-8001-W9,POWER,PSU Mix Models Identified
+SPENV-8001-XT,POWER,PSU Mix Models Unidentified
+SPENV-8001-Y6,STORAGE,SSD Cable Incorrect
+SPENV-8002-0M,MEMORY,The Power Management Integrated Circuit (PMIC) on a DDR5 DIMM has detected an input overvoltage failure.
+SPENV-8002-18,MEMORY,The Power Management Integrated Circuit (PMIC) on a DDR5 DIMM has experienced an output overvoltage failure.
+SPENV-8002-2U,MEMORY,The Power Management Integrated Circuit (PMIC) on a DDR5 DIMM has experienced an overtemperature failure.
+SPENV-8002-37,PCI,The Graphix Extension Retimer (GXR) PCIe card installed is not a supported hardware version.
+SPENV-8002-4W,PCI,The Graphix Extension Retimer (GXR) PCIe cards populated in the system are not compatible.
+SPENV-8002-51,PCI,There is an insufficent number of Graphix Extension Retimer (GXR) PCIe cards populated.
+SPENV-8002-6K,Chassis ???,ILOM has detected that a board is missing.
+SPENV-8002-7F,GPU,GPU is missing.
+SPENV-8002-86,PCI,NIC is missing.
+SPENV-8002-9T,NVMe,An NVME drive is missing.(associated PCIe events differentiate missing from failed)
+SPENV-8002-A9,PCI,All retimer cards are missing. (We will get one of these for the whole tail node if all 8 retimer cards are missing) 
+SPENV-8002-CN,POWER,All retimer cards have no power.
+SPENV-8002-DG,CDFP,The order in which retimer cables are connected is wrong.
+SPENV-8002-EL,PCI,Retimer card's cable is missing.
+SPENV-8002-F0,PCI,Retimer card is missing.
+SPENV-8002-GV,PCI,Retimer card has an internal error.
+SPENV-8002-H7,MEMORY,DDR5 PMIC Output voltage out of range
+SPENV-8002-JU,STORAGE,the firmware of the Storage Enclosure Processor (SEP) located on the disk backplane is outdated and requires an update
+SPENV-8002-K8,STORAGE,an update of the Storage Enclosure Processor (SEP) firmware on the disk backplane has failed.
+SPENV-8002-LM,MEMORY,A DIMM has reached an Unrecoverable Overtemperature. Validate there are no cooling issues present.
+SPENV-8002-W0,POWER,The input voltage coming from the bus bar is over it's limit.
+SPENV-8002-XL,POWER,The input voltage coming from the bus bar is under it's limit.
+SPENV-8003-0L,Motherboard,A DC-DC converter module is not providing its share of current to the system.
+SPENV-8003-1G,Motherboard,An over current event has occurred with a DC-DC converter module.
+SPENV-8003-2V,Motherboard,An over voltage event has occurred with a DC-DC converter module
+SPENV-8003-30,Motherboard,An under voltage event has occurred with a DC-DC converter module.
+SPENV-8003-4T,ILOM,A MultiMediaCard (MMC) storage device has reached its end of life.
+SPENV-8003-56,ILOM,MMC Not Configured for Erase.
+SPENV-8003-81,GPU,A leak around a GPU has been detected.
+SPENV-8003-9W,GPU,a leak sensor for a GPU is disconnected
+SPENV-8003-AF,Manifold,An issues with the power and cooling delivery system to this system has been detected
+SPENV-8003-CK,Manifold,An issues with the power and cooling delivery system to this system has been detected
+SPENV-8003-D8,Board,An over current event has occurred with a voltage regulator.
+SPENV-8003-EM,Board,An over voltage event has occurred with a voltage regulator.
+SPENV-8003-F7,CPU,Cooling CPU Leak Detected
+SPENV-8003-GU,CPU,Cooling CPU Leak Sensor Disconnected
+SPENV-8003-H0,CPU,A cable connection to a leak sensor is either missing or damaged.
+SPENV-8003-JV,CPU,A leak sensor for a CPU is shorted.
+SPENV-8003-KG,GPU,A leak sensor for a GPU is shorted.
+SPENV-8003-LL,Manifold,A leak sensor for the manifold or Quick Disconnect (QD) is shorted.
+SPENV-8003-M9,PCIe Subsystem,A leak around the PCIe subsystem has been detected.
+SPENV-8003-NN,PCIe Subsystem,A leak sensor for a PCIe subsystem is disconnected.
+SPENV-8003-P6,PCIe Subsystem,A leak sensor for the PCIe subsystem is shorted.
+SPGX-8000-13,GPU,Indicates that the OAM has not been detected or is missing during the initialization process.
+SPGX-8000-2H,GPU,ILOM has determined that OAMs have not been properly populated.
+SPGX-8000-3D,GPU,GX GPU Thermtrip
+SPGX-8000-4P,GPU,indicates that firmware on the OAM has failed to boot.
+SPGX-8000-5A,GPU,indicates that firmware on the OAM was not updated.
+SPGX-8000-6S,GPU,indicates that firmware on the OAM could not be validated.
+SPGX-8000-75,ILOM,The HMC (or its 3.3v coin battery) is non-functional
+SPGX-8000-8E,GBB,GPU NVLink failure has occurred.
+SPGX-8000-9J,GBB,GPU NVSwitch is hanging.
+SPGX-8000-A2,GBB,GPU NVSwitch is unavailable.
+SPGX-8000-CX,GPU,Indicates that the OAM health is at a critical level.
+SPGX-8000-D4,GPU,Indicates that an OAM has experienced an uncorrected error.
+SPGX-8000-ER,GPU,ILOM has detected a corrupted ROM on a GPU.
+SPGX-8000-FC,GPU,An uncorrectable ECC error has caused an application to fail.
+SPGX-8000-GQ,GPU,A uncorrectable ECC error in DRAM has occurred.
+SPGX-8000-HD,GPU,An uncorrectable ECC error in SRAM has occurred.
+SPGX-8000-JH,GPU,GPU Page Retirement Exceeded
+SPGX-8000-K3,GPU,GPU Row Remapping Exceed Threshold
+SPGX-8000-LY,GPU,Indicates that future GPU memory row mappings are not available.
+SPGXTAIL-8000-1W,Fan,Fan Capacity is Deficient
+SPGXTAIL-8000-2F,GBB,Indicates that the GPU Base Board has an unknown manufacturer or model number.
+SPGXTAIL-8000-3K,PCI,GX Switch Thermtrip
+SPGXTAIL-8000-48,POWER,Power Supplies is Deficient
+SPGXTAIL-8000-5M,GBB,indicates that firmware on the GBB has failed to boot.
+SPGXTAIL-8000-67,GBB,Indicates that firmware on the GBB was not updated.
+SPGXTAIL-8000-7U,GBB,Indicates that firmware on the GBB could not be validated.
+SPGXTAIL-8000-8L,GBB,Indicates that the GBB health is at a critical level..
+SPGXTAIL-8000-9G,GBB,Indicates a failure on the GBB FPGA.
+SPGXTAIL-8000-AV,GBB,Indicates that the GBB health is at a critical level..
+SPGXTAIL-8000-C0,GBB,Indicates that the SPI bus on the GPU Base Board (GBB) has failed.
+SPGXTAIL-8000-DT,GBB,PCIE CRC error was encountered on an nvswitch.
+SPGXTAIL-8000-E6,GBB,Problem with the IOB has caused a PCIE reset failure.
+SPGXTAIL-8000-FN,GBB, PCIE switch has failed.
+SPGXTAIL-8000-G9,GBB,Indicates that a PCIe switch on the IOB has caused a PCIe reset.
+SPGXTAIL-8000-HK,GBB,Indicates that a PCIe training error on a NVSwitch has occurred.
+SPGXTAIL-8000-JF,GBB,PCIE uncorrectable error.
+SPGXTAIL-8000-KW,CDFP,Problem in an upstream device has caused a PCIE reset failure.
+SPGXTAIL-8000-L1,POWER,detected a failure on the PDB 12v supply.
+SPGXTAIL-8000-MU,GBB,ILOM has detected a power good failure on the tail node.
+SPGXTAIL-8000-N7,GPU,GPU Temperature Fail
+SPGXTAIL-8000-PM,PCI,PCIe Link Layer Inactive
+SPGXTAIL-8000-Q8,PCI,Indicates that a PCI link error has occurred on a sled of the G4-8c.
+SPGXTAIL-8000-R0,PCI,Indicates that a PCI link error has occurred on a sled of the G4-8c.
+SPGXTAIL-8000-SV,GBB,Auto firmware recovery on the GPU Baseboard (GBB) has failed.
+SPGXTAIL-8000-TG,PSB,A PCIe reset error has occurred on a PCIe Switch Board (PSB)
+SPINTEL-8000-12,ILOM,PMC Patch Failed
+SPINTEL-8000-2J,CPU,A warm reset was unsuccessful in clearing IERR condition.
+SPINTEL-8000-3E,CPU,A reset of the host has failed.
+SPINTEL-8000-4Q,CPU,A power-cycle of the host by ILOM was unsuccessful in resetting the Platform Controller Hub (PCH).
+SPINTEL-8000-5C,CPU,The Management Engine is in recovery mode and any warm resets of the host OS will become global resets.
+SPINTEL-8000-6R,ILOM,The Platform Controller Hub (PCH) has momentarily failed to service a power-on request.
+SPINTEL-8000-74,CPU,Multiple Platform Controller Hub (PCH) failures to service a power-on request have occurred.
+SPINTEL-8000-8D,CPU,The Ultrapath Interconnect Initialization Code (UPIRC) has detected a global error.
+SPINTEL-8000-9H,CPU,A burst of Ultrapath Interconnect (UPI) correctable link errors has occurred.  This is a non-serviceable event used for logging purposes to assist in other possible faults.
+SPINTEL-8000-A3,MEMORY,The Memory Reference Code (MRC) has detected a DDR4 DIMM that does not support 1.2-Volt.
+SPINTEL-8000-CY,MEMORY,The Memory Reference Code (MRC) has detected a 16GB memory DIMM that is not supported by the processor.
+SPINTEL-8000-D5,MEMORY,The Memory Reference Code (MRC) has detected a DIMM that stacks multiple DRAMS on a DIMM (3DS) is unsupported.
+SPINTEL-8000-ES,MEMORY,Unexpected shutdown has occurred and  data committed to 3DX DIMM may not have been  persisted
+SPINTEL-8000-FA,MEMORY,A 3D Xpoint (3DX) DIMM is unsupported.
+SPINTEL-8000-GP,MEMORY,The Memory Reference Code (MRC) has detected the firmware installed on a DIMM is out of date and is not supported.
+SPINTEL-8000-HE,MEMORY,The Memory Reference Code (MRC) has detected a set of DIMMs that violiates DIMM population rules.
+SPINTEL-8000-JJ,MEMORY,The Memory Reference Code (MRC) has detected invalid Serial Presence Detect (SPD) contents in a memory DIMM.
+SPINTEL-8000-K2,MEMORY,The Memory Reference Code (MRC) has detected Memory DIMMs of different types.
+SPINTEL-8000-LX,MEMORY,The Memory Reference Code (MRC) has detected a mixture of 3DX DIMMS and UDIMMs.
+SPINTEL-8000-M4,MEMORY,The Memory Reference Code (MRC) has detected memory DIMMs on a memory channel with different Stock-Keeping-Unit (SKU) numbers.
+SPINTEL-8000-NR,MEMORY,The Memory Reference Code (MRC) has detected an unsupported non-production memory DIMM.
+SPINTEL-8000-PC,MEMORY,The Memory Reference Code (MRC) has detected an unsupported number of ranks on a memory DIMM.
+SPINTEL-8000-QQ,MEMORY,The Memory Reference Code (MRC) has detected a registered DIMM (RDIMM) on a board that only supports unbuffered/unregistered memory DIMMs (UDIMM).
+SPINTEL-8000-RY,MEMORY,The Memory Reference Code (MRC) has detected a memory DIMM with an unsupported Stock-Keeping-Unit (SKU) number.
+SPINTEL-8000-S3,MEMORY,The Memory Reference Code (MRC) has detected an unbuffered/unregistered DIMM (UDIMM) has been installed and is unsupported.
+SPINTEL-8000-TH,MEMORY,The Memory Reference Code (MRC) has detected the memory configuration on a memory channel uses an unsupported frequency.
+SPINTEL-8000-UD,MEMORY,The Memory Reference Code (MRC) has detected the number of ranks on a memory channel is unsupported.
+SPINTEL-8000-VP,MEMORY,The Memory Reference Code (MRC) has detected memory DIMMs on a memory channel in violation of the memory DIMM population rules.
+SPINTEL-8000-WA,MEMORY,The memory configuration does not support two-level main memory (2LM) mode.
+SPINTEL-8000-XS,MEMORY,The Voltage Drain Drain (VDD) value set in the BIOS is not appropriate for the Data Center Persistent Memory Module (DCPMM) a.k.a. 3D Xpoint (3DX) DIMM's.
+SPINTEL-8000-Y5,MEMORY,The Memory Reference Code (MRC) has disabled Advanced Double Device Data Correction (ADDDC).
+SPINTEL-8001-0S,MEMORY,An unsupported memory configuration using DDR4 DIMM(s) that are below 32-GB in size has been detected.
+SPINTEL-8001-15,MEMORY,The DDR4 DIMM type is an unsupported configuration in the current memory mode.
+SPINTEL-8001-2P,MEMORY,The Memory Reference Code (MRC) has detected a 3DX DIMM that is not recognized due to some mismatch with current configuration data in the DIMM firmware.
+SPINTEL-8001-3A,MEMORY,The geometry of a DDR4 Memory DIMM is not supported.
+SPINTEL-8001-4H,ILOM,The Memory Reference Code (MRC) has detected a global error.
+SPINTEL-8001-5D,MEMORY,The processor has determined the capacity ratio between a DDR4 DIMM and DCPMM DIMM is outside the recommended range.
+SPINTEL-8001-6Y,MEMORY,The Memory Reference Code (MRC) has determined that DIMM sockets are not using the same memory mode.
+SPINTEL-8001-73,MEMORY,The Memory Reference Code (MRC) has disabled Single Device Data Correction (SDDC).
+SPINTEL-8001-8C,MEMORY,The Memory Reference Code (MRC) has detected that the amount of installed memory cannot be supported by the installed processor.
+SPINTEL-8001-9Q,MEMORY,The Data Center Persistent Memory Modules (DCPMM) installed across all DIMM sockets don't have the same capacity.
+SPINTEL-8001-A4,MEMORY,The memory topology is not symmetrical between memory controllers.
+SPINTEL-8001-CR,FW/SW,A communications error between ILOM and Intel Management Engine has occurred.
+SPINTEL-8001-D2,FW/SW,The Platform Controller Hub (PCH) PMC patch did not load properly.
+SPINTEL-8001-EX,FW/SW,The Platform Controller Hub (PCH) has been reset.
+SPINTEL-8001-FE,FW/SW,The Platform Controller Hub (PCH) was unable to service a power-on request even after it was reset.
+SPINTEL-8001-GJ,FW/SW,A problem within the BIOS code has been detected.
+SPINTEL-8001-HA,FW/SW,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the Ultrapath could not transition to full speed because an unsupported UPI link speed parameter within UPIRC has been encountered.
+SPINTEL-8001-JP,FW/SW,The Ultrapath Interconnect (UPI) initialization code has detected a slow UPI link.
+SPINTEL-8001-K5,FW/SW,The Ultrapath Interconnect Reference Code (UPIRC) has detected an internal error in the minimum path setup.
+SPINTEL-8001-LS,FW/SW,The Ultrapath Interconnect Code (UPIRC) has detected an internal error.
+SPINTEL-8001-M3,FW/SW,The Ultrapath Interconnect Code (UPIRC) has detected the Ultrapath Interconnect (UPI) topology data is invalid
+SPINTEL-8001-NY,FW/SW,An unexpected error code from the Ultrapath Interconnect (UPI) Reference Code has been detected and is not clearly defined in the BIOS.
+SPINTEL-8001-PD,FW/SW,An unknown error code from the Ultrapath Interconnect (UPI) Reference Code has been detected and has not been registered with the ILOM fault diagnosis daemon.
+SPINTEL-8001-QH,FW/SW,An unsupported Ultrapath topology has been detected.
+SPINTEL-8001-RR,FW/SW,The Memory Reference Code (MRC) has detected an array access out-of-bounds.
+SPINTEL-8001-S4,FW/SW,The Memory Reference Code (MRC) has detected an invalid opcode for memory DIMM.
+SPINTEL-8001-TQ,FW/SW,The Memory Reference Code (MRC) has detected an array out of bounds event during channel interleaving.
+SPINTEL-8001-UC,FW/SW,The Memory Reference Code (MRC) has detected that the System Address Decoder (SAD) rules encountered a configuration error.
+SPINTEL-8001-VJ,FW/SW,The increased refresh rate for a temperature sensor has been disabled.
+SPINTEL-8001-WE,FW/SW,The custom refresh rate for temperature sensor has been disabled.
+SPINTEL-8001-XX,FW/SW,The Memory Reference Code (MRC) does not recognize the interface used to access 3DX registers.
+SPINTEL-8001-Y2,FW/SW,The Memory Reference Code (MRC) detected a surprise clock stop error on a 3D Xpoint (3DX) DIMM that was not resolved by a power cycle.
+SPINTEL-8002-0H,FW/SW,the Memory Reference Code detected a non-serviceable surprise clock stop on a 3D Xpoint (3DX) DIMM.
+SPINTEL-8002-1D,FW/SW,The Memory Reference Code (MRC) has determined that an internal opcode is either invalid or not defined.
+SPINTEL-8002-2Y,FW/SW,The Memory Reference Code (MRC) has detected the number of Integrated memory controllers (IMC) has exceeded the limit.
+SPINTEL-8002-33,FW/SW,An error in the Memory Reference Code (MRC) has been detected.
+SPINTEL-8002-4S,FW/SW,The Memory Reference Code (MRC) has detected an invalid boot mode.
+SPINTEL-8002-55,FW/SW,The Memory Reference Code (MRC) has detected an invalid access to a register.
+SPINTEL-8002-6P,FW/SW,The Memory Reference Code (MRC) has detected an invalid subboot mode request.
+SPINTEL-8002-7A,FW/SW,The Memory Reference Code (MRC) could not lookup ODT structure.
+SPINTEL-8002-82,FW/SW,An unexpected error code from the Memory Reference Code has been detected and is not clearly defined in the BIOS.
+SPINTEL-8002-9X,FW/SW,An unknown error code from the Memory Reference Code has been detected and has not been registered with the ILOM fault diagnosis daemon.
+SPINTEL-8002-AE,ILOM,BIOS Hang
+SPINTEL-8002-CJ,ILOM,MRC not successful. Unable to complete boot process.
+SPINTEL-8002-DC,PCI,PCIE initialization failed to complete.
+SPINTEL-8002-EQ,CPU,The Demoted Warm Reset (DWR) process was unable to complete or is deadlocked.
+SPINTEL-8002-F4,CPU,The start of the boot process was unable to complete or is deadlocked.
+SPINTEL-8002-GR,CPU,The Ultrapath Interconnect (UPI) initialization Code was unable to complete or is deadlocked.
+SPINTEL-8002-H3,CPU,Indicates processor internal errors (IERR) have been detected.
+SPINTEL-8002-JY,CPU,Multiple processor internal errors have occurrred.
+SPINTEL-8002-KD,CPU,The Memory Reference Code (MRC) has detected that a processor has failed the built-in self-test for all the cores.
+SPINTEL-8002-LH,CPU,The Memory Reference Code (MRC) has detected that a processor has failed the built-in self-test on a single core.
+SPINTEL-8002-MA,CPU,Direct Media Interface (DMI) training has failed to complete within specified time.
+SPINTEL-8002-NP,CPU,An indeterminate processor error has occurred.
+SPINTEL-8002-P5,CPU,A processor has detected an internal fault.
+SPINTEL-8002-QS,CPU,The Power Control Unit (PCu) on a processor has detected a catastrophic over current from the Integrated Voltage Regulator (IVR).
+SPINTEL-8002-RJ,CPU,The Power control Unit (PCU) on a processor has detected a catastrophic over voltage from the Integrated Voltage Regulator (IVR).
+SPINTEL-8002-SE,CPU,A processor has detected multiple memory controller address/command parity correctable errors.
+SPINTEL-8002-TX,CPU,A processor has detected a memory controller address/command parity uncorrectable error.
+SPINTEL-8002-U2,CPU,A processor has detected multiple memory controller correctable errors.
+SPINTEL-8002-VR,CPU,The memory controller on a processor has experienced a timeout in it's Mesh2Mem logic.
+SPINTEL-8002-W4,CPU,A processor has detected a memory controller uncorrectable error.
+SPINTEL-8002-XQ,CPU,A processor has detected multiple Mid-Level Cache (MLC) correctable errors.
+SPINTEL-8002-YC,CPU,A timeout occurred while sending to the Message Channel. This is an internal processor problem.
+SPINTEL-8003-0Q,CPU,The Power Control Unit (PCU) on a processor has detected excessive die temperature on the processor.
+SPINTEL-8003-1C,CPU,The processor has experienced a pkg C-state timeout or hang indicative of processor or UPI problems.
+SPINTEL-8003-2R,CPU,The processor has experienced a pkg S-state timeout or hang indicative of a processor or UPI failure.
+SPINTEL-8003-34,CPU,The processor has experienced a pkg S-state timeout or hang indicative of a processor or UPI failure.
+SPINTEL-8003-4X,CPU,The System Management Bus (SMBUS) has detected a Vector Packet Processing (VPP) timeout indicative of a processor failure.
+SPINTEL-8003-52,CPU,The System Management Bus (SMBUS) has detected a timeout waiting for the Power Management Request (PMR) completion to be received.
+SPINTEL-8003-6J,CPU,During Boot Mode Processing more than 1 Intel TXT Agent has been detected.
+SPINTEL-8003-7E,CPU,An invalid access to the System Configuration Controller (UBOX) on a processor has occurred.
+SPINTEL-8003-85,CPU,The System Configuration Controller (UBOX) has encountered a message channel tracker error.
+SPINTEL-8003-9S,CPU,The System Configuration Controller (UBOX) has encountered a MasterLock timeout or System Management Interuupt (SMI) Lock timeout.
+SPINTEL-8003-AA,CPU,An Ultrapath Interconnect (UPI) correctable link error has occurred.
+SPINTEL-8003-CP,CPU,An Ultrapath Interconnect (UPI) link down error has occurred.
+SPINTEL-8003-DD,CPU,An Ultrapath Interconnect (UPI) CRC Link error has occurred.
+SPINTEL-8003-EH,CPU,An Ultrapath Interconnect (UPI) uncorrectable link error has occurred.
+SPINTEL-8003-F3,CPU,The Ultrapath Interconnect (UPI) has detected that a link has degraded width.
+SPINTEL-8003-GY,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected mismatched Ultrapath Interconnect (UPI) link ends.
+SPINTEL-8003-H4,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an error in the Ultrapath Interconect (UPI) bus programming.
+SPINTEL-8003-JR,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected a processor socket initialization failure.
+SPINTEL-8003-KC,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath Interconnect (UPI) resource request that was too large for the processor.
+SPINTEL-8003-LQ,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath Interconnect (UPI) resource for the processor that was not requested.
+SPINTEL-8003-ME,CPU,An Ultrapath Interconnect (UPI) receiver failure has occurred.
+SPINTEL-8003-NJ,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the system address decoder could not be setup.
+SPINTEL-8003-P2,CPU,The Ultrapath Interconnect Reference Code (UPIRC) is unable to determine the processor topology.
+SPINTEL-8003-QX,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath topology failure associated with the UPI link.
+SPINTEL-8003-RP,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath topology failure associated with the processor socket.
+SPINTEL-8003-SA,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the processors do not support Time Stamp Counter (TSC) synchronization.
+SPINTEL-8003-TS,CPU,An Ultrapath Interconnect (UPI) transmitter (TX) failure has occurred.
+SPINTEL-8003-U5,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the requested Ultrapath link speed is unsupported.
+SPINTEL-8003-VY,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the Video Graphics Array (VGA) range target has an invalid socket.
+SPINTEL-8003-W3,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the Video Graphics Array (VGA) range target has an invalid stack.
+SPINTEL-8003-XH,CPU,A processor has detected an unknown uncorrectable error.
+SPINTEL-8003-YD,CPU,The Power Control Unit (PCU) on a processor has detected a voltage regulator failure.
+SPINTEL-8004-02,CPU,A bus interconnect error has been detected.
+SPINTEL-8004-1X,CPU,A bus interconnect error has been detected.
+SPINTEL-8004-2E,CPU,A processor has detected multiple cache correctable errors.
+SPINTEL-8004-3J,CPU,A processor has detected a cache uncorrectable error.
+SPINTEL-8004-4C,CPU,A processor has detected multiple data cache correctable errors.
+SPINTEL-8004-5Q,CPU,A processor has detected a data cache uncorrectable error.
+SPINTEL-8004-64,CPU,A processor has detected multiple data TLB correctable errors.
+SPINTEL-8004-7R,CPU,A processor has detected a data TLB uncorrectable error.
+SPINTEL-8004-8H,CPU,A processor has detected multiple instruction cache correctable errors.
+SPINTEL-8004-9D,CPU,A processor has detected an instruction cache uncorrectable error.
+SPINTEL-8004-AY,CPU,A processor has detected multiple instruction TLB correctable errors.
+SPINTEL-8004-C3,CPU,A processor has detected an instruction TLB uncorrectable error.
+SPINTEL-8004-DS,CPU,A processor has detected multiple level 0 cache correctable errors.
+SPINTEL-8004-E5,CPU,A processor has detected a level 0 cache uncorrectable error.
+SPINTEL-8004-FP,CPU,A processor has detected multiple level 2 TLB correctable errors.
+SPINTEL-8004-GA,CPU,A processor has detected a level 0 data cache uncorrectable error.
+SPINTEL-8004-HJ,CPU,A processor has detected multiple level 0 data TLB correctable errors.
+SPINTEL-8004-JE,CPU,A processor has detected a level 0 data TLB uncorrectable error.
+SPINTEL-8004-KX,CPU,A processor has detected multiple level 0 instruction cache correctable errors.
+SPINTEL-8004-L2,CPU,A processor has detected a level 0 instruction cache uncorrectable error.
+SPINTEL-8004-MR,CPU,A processor has detected multiple level 0 instruction TLB correctable errors.
+SPINTEL-8004-N4,CPU,A processor has detected a level 0 instruction TLB uncorrectable error.
+SPINTEL-8004-PQ,CPU,A processor has detected multiple level 0 TLB correctable errors.
+SPINTEL-8004-QC,CPU,A processor has detected a level 0 TLB uncorrectable error.
+SPINTEL-8004-R3,CPU,A processor has detected multiple level 1 cache correctable errors.
+SPINTEL-8004-SY,CPU,A processor has detected a level 1 cache uncorrectable error.
+SPINTEL-8004-TD,CPU,A processor has detected multiple level 1 data cache correctable errors.
+SPINTEL-8004-UH,CPU,A processor has detected a level 1 data cache uncorrectable error.
+SPINTEL-8004-VA,CPU,A processor has detected multiple level 1 data TLB correctable errors.
+SPINTEL-8004-WP,CPU,A processor has detected a level 1 data TLB uncorrectable error.
+SPINTEL-8004-X5,CPU,A processor has detected multiple level 1 instruction cache correctable errors.
+SPINTEL-8004-YS,CPU,A processor has detected a level 1 instruction cache uncorrectable error.
+SPINTEL-8005-05,CPU,A processor has detected multiple level 1 instruction TLB correctable errors.
+SPINTEL-8005-1S,CPU,A processor has detected a level 1 instruction TLB uncorrectable error.
+SPINTEL-8005-2A,CPU,A processor has detected multiple level 1 TLB correctable errors.
+SPINTEL-8005-3P,CPU,A processor has detected a level 1 TLB uncorrectable error.
+SPINTEL-8005-4D,CPU,A processor has detected multiple level 2 cache correctable errors.
+SPINTEL-8005-5H,CPU,A processor has detected a level 2 cache uncorrectable error.
+SPINTEL-8005-63,CPU,A processor has detected multiple level 2 data cache correctable errors.
+SPINTEL-8005-7Y,CPU,A processor has detected a level 2 data cache uncorrectable error.
+SPINTEL-8005-8Q,CPU,A processor has detected multiple level 2 data TLB correctable errors.
+SPINTEL-8005-9C,CPU,A processor has detected a level 2 data TLB uncorrectable error.
+SPINTEL-8005-AR,CPU,A processor has detected multiple level 2 instruction cache correctable errors.
+SPINTEL-8005-C4,CPU,A processor has detected a level 2 instruction TLB uncorrectable error.
+SPINTEL-8005-DX,CPU,A processor has detected multiple level 2 instruction TLB correctable errors.
+SPINTEL-8005-E2,CPU,A processor has detected a level 2 instruction TLB uncorrectable error.
+SPINTEL-8005-FJ,CPU,A processor has detected multiple level 2 TLB correctable errors.
+SPINTEL-8005-GE,CPU,A processor has detected a level 2 TLB uncorrectable error.
+SPINTEL-8005-HP,CPU,A processor has detected multiple Last-Level Cache (LLC) correctable errors.
+SPINTEL-8005-JA,CPU,A processor has detected a Last-Level Cache (LLC) uncorrectable error.
+SPINTEL-8005-KS,CPU,Excessive temperature has been detected on a system component.
+SPINTEL-8005-L5,CPU,CPU Timeout Failures
+SPINTEL-8005-MY,CPU,A processor has detected multiple TLB correctable errors.
+SPINTEL-8005-N3,CPU,A processor has detected a TLB uncorrectable error.
+SPINTEL-8005-PH,CPU,An integrated I-O fatal core error has been detected.
+SPINTEL-8005-QD,CPU,An integrated I-O fatal coherent interface protocol error has been detected
+SPINTEL-8005-R4,CPU,An integrated I-O parity error on the internal configuration interface has been detected.
+SPINTEL-8005-SR,CPU,ILOM was able to access the serial peripheral (SPI) flash device but the write was blocked or the resulting image was corrupted.
+SPINTEL-8005-TC,CPU,An integrated I-O fatal vtd error has been detected.
+SPINTEL-8005-UQ,CPU,ILOM has detected that the traffic controller on the Integrated I/O (IIO) of a processor has encountered multiple correctable errors.
+SPINTEL-8005-VE,CPU,ILOM has detected that the traffic controller on the Integrated I/O (IIO) of a processor has encountered an uncorrectable error.
+SPINTEL-8005-WJ,PCI,ILOM has detected that a PCIE link layer is inactive.
+SPINTEL-8005-X2,PCI,PCIe Device Initialization Failed
+SPINTEL-8005-YX,PCI,An integrated I-O fatal error in a downstream PCIE device has been detected.
+SPINTEL-8006-0D,PCI,The ILOM fault manager has has determined a PCI link error has occurred which reduces the link speed of a PCI card.
+SPINTEL-8006-1H,PCI,The ILOM fault manager has applied diagnosis to error reports
+SPINTEL-8006-23,MEMORY,Multiple correctable ECC errors on a channel that has a 3D Xpoint (3DX) DIMM has been detected by the processor.
+SPINTEL-8006-3Y,MEMORY,A memory uncorrectable ECC error on a channel that has a 3D Xpoint DIMM has been detected by the processor.
+SPINTEL-8006-45,MEMORY,A 3D Xpoint (3DX) DIMM communications failure has occurred due to a protocol error.
+SPINTEL-8006-5S,MEMORY,The ILOM fault manager has received an error report indicating the Memory Reference Code (MRC) has determined a 3D Xpoint (3DX) DIMM encountered a fatal error.
+SPINTEL-8006-6A,MEMORY,A DIMM has encountered an excessive number of memory correctable errors.
+SPINTEL-8006-7P,MEMORY,The health status of a Data Center Persistent Memory Module (DCPMM) aka 3D Xpoint (3DX) DIMM is failing.
+SPINTEL-8006-8X,MEMORY,A memory channel failure has occurred.
+SPINTEL-8006-92,MEMORY,Multiple correctable memory DIMM address/command parity errors have been detected.
+SPINTEL-8006-AJ,MEMORY,An uncorrectable Memory DIMM address/command parity error has been detected.
+SPINTEL-8006-CE,MEMORY,Multiple correctable ECC errors on a memory DIMM have been detected.
+SPINTEL-8006-DQ,MEMORY,The Memory Reference Code (MRC) has detected a DIMM communication failure.
+SPINTEL-8006-EC,MEMORY,A DIMM has encountered an excessive number of memory correctable errors.
+SPINTEL-8006-FR,MEMORY,The Memory Reference Code (MRC) has detected a failure with setting up memory interleaving.
+SPINTEL-8006-G4,MEMORY,The Memory Reference Code (MRC) has detected a Phase-Locked Loop (PLL) lock error on a memory DIMM.
+SPINTEL-8006-HY,MEMORY,The Memory Reference Code (MRC) has detected a DIMM polling timeout event while obtaining DIMM parameters.
+SPINTEL-8006-J3,MEMORY,The Memory Reference Code (MRC) has detected a memory DIMM that has failed receive-enable training.
+SPINTEL-8006-KH,MEMORY,A memory uncorrectable ECC error on a Memory DIMM has been detected.
+SPINTEL-8006-LD,MEMORY,The Memory Reference Code (MRC) has detected the system is unable to read or write DIMM voltage information.
+SPINTEL-8006-MP,MEMORY,The Memory Reference Code (MRC) has detected a CLK loopback training error.
+SPINTEL-8006-NA,MEMORY,The Memory Reference Code (MRC) has detected a clock (CLK) training error.
+SPINTEL-8006-PS,MEMORY,A memory channel failure has occurred.  
+SPINTEL-8006-Q5,MEMORY,The Memory Reference Code (MRC) has detected a DIMM has failed training.
+SPINTEL-8006-RE,MEMORY,The Memory Reference Code (MRC) has detected a memory channel interleave failure.
+SPINTEL-8006-SJ,MEMORY,The Memory Reference Code (MRC) has detected that a memory channel on-die termination (ODT) timing overflow has occurred.
+SPINTEL-8006-T2,MEMORY,The Memory Reference Code (MRC) has detected a memory channel has failed the Revision Identification (RID) register training.
+SPINTEL-8006-UX,MEMORY,The Memory Reference Code (MRC) has detected a memory channel uncorrectable error during Revision Identification (RID) register training.
+SPINTEL-8006-V4,MEMORY,The Memory Reference Code (MRC) has detected an uncorrectable swizzle discovery error on a memory channel.
+SPINTEL-8006-WR,MEMORY,The Memory Reference Code (MRC) has detected a memory channel training failure.
+SPINTEL-8006-XC,MEMORY,A 3D Xpoint (3DX) DIMM has encountered an SMBUS write error.
+SPINTEL-8006-YQ,MEMORY,The Memory Reference Code (MRC) has detected a DIMM encountered an error during memory channel initialization.
+SPINTEL-8007-0C,MEMORY,The Memory Reference Code (MRC) has detected a DIMM encountered an error during memory channel I/O initialization.
+SPINTEL-8007-1Q,MEMORY,The Memory Reference Code (MRC) has detected a DIMM encountered an error during memory channel initialization.
+SPINTEL-8007-24,ILOM,The Memory Reference Code (MRC) has detected the system was unable to read the memory controller frequency.
+SPINTEL-8007-3R,MEMORY,The Memory Reference Code (MRC) has detected that a DIMM failed memtest due to multiple symbols.
+SPINTEL-8007-42,CPU,The Memory Reference Code (MRC) has detected a fuse error in the Power Controller Unit (PCU).
+SPINTEL-8007-5X,ILOM,The Memory Reference Code (MRC) has detected that the Power Controller Unit (PCU) is not responding.
+SPINTEL-8007-6E,MEMORY,The Memory Reference Code (MRC) has detected a memory controller frequency that is unsupported.
+SPINTEL-8007-7J,CPU,The Platfom Controller Hub (PCH) is not compatible with the installed processor.
+SPINTEL-8007-8S,PCI,The number of PCIe link correctable errors (CEs) have exceeded threshold limit.
+SPINTEL-8007-95,MEMORY,The Memory Reference Code (MRC) has detected that the DCPMM DIMMs partitions are not the same size.
+SPINTEL-8007-AP,MEMORY,The Memory Reference Code (MRC) has detected that no system memory is available.
+SPINTEL-8007-CA,MEMORY,Excessive temperature has been detected on processors and DIMMs.
+SPINTEL-8007-DH,MEMORY,The Memory Reference Code (MRC) has failed to set up memory channel interleaving on a DDR4 DIMM because near memory capacity has been exceeded.
+SPINTEL-8007-ED,MEMORY,The Memory Reference Code (MRC) has failed to set up memory channel interleaving on a DDR4 DIMM because near memory capacity was below the minimum.
+SPINTEL-8007-FY,MEMORY,The Memory Reference Code (MRC) has determined that the number of far memory channels is not a power of 2 in 2LM mode.
+SPINTEL-8007-G3,MEMORY,The Memory Reference Code (MRC) has determined that the Data Center Persistent Memory Modules (DCPMM) cannot be used in Persistent Memory Mode when Software Guard Extensions (SGX) are enabled.
+SPINTEL-8007-HR,MEMORY,The DCPMM DIMMs on a processor socket have mismatched capacities.
+SPINTEL-8007-J4,MEMORY,The Data Center Persistent Memory Modules (DCPMM) cannot be used in Persistent Memory Mode when Total Memory Encryption (TME) is enabled
+SPINTEL-8007-KQ,MEMORY,The Memory Reference Code (MRC) has determined that the AppDirect x1 operation is not allowed for the current DIMM population configuration.
+SPINTEL-8007-LC,MEMORY,The memory DIMM is not supported in mixed mode (Two Level Memory (2LM) AppDirect x1 ).
+SPINTEL-8007-MJ,MEMORY,The Memory Reference Code (MRC) has determined that a processor is unable to detect any DIMM's installed that are associated with that processor.
+SPINTEL-8007-NE,MEMORY,The Memory Reference Code (MRC) has encountered an invalid DIMM configuration using memory population rules and guidelines for a processor socket.
+SPINTEL-8007-PX,MEMORY,The Memory Reference Code (MRC) has determined that a combination of DIMM types across sockets associated with a processor is invalid.
+SPINTEL-8007-Q2,MEMORY,The Memory Reference Code (MRC) has determined that the Total Memory Encryption (TME) physical address bits have exceeded maximum value.
+SPINTEL-8007-RA,FW/SW,The Ultrapath Interconnect Reference Code (UPIRC) has determined that the UPI link speed is not supported by firmware.
+SPINTEL-8007-SP,FW/SW,BIOS has received an unexpected ereport that was received from the root port of a processor.
+SPINTEL-8007-T5,FW/SW,The Memory Reference Code (MRC) has detected a failure with setting up memory interleaving.
+SPINTEL-8007-US,FW/SW,The Memory Reference Code (MRC) has determined that the power management thermal table for DIMMs was not found.
+SPINTEL-8007-V3,FW/SW,The Memory Reference Code (MRC) has determined that the power management weight table was not found.
+SPINTEL-8007-WY,FW/SW,The Memory Reference Code (MRC) has encountered an internal memory management error.
+SPINTEL-8007-XD,FW/SW,The Memory Reference Code (MRC) has encountered a library internal error.
+SPINTEL-8007-YH,FW/SW,The Memory Reference Code (MRC) has encountered an internal memory allocation error.
+SPINTEL-8008-06,FW/SW,The Memory Reference Code (MRC) is unable to support patrol scrub operations.
+SPINTEL-8008-1T,FW/SW,The Memory Reference Code (MRC) has determined that the memory DIMM population rules are invalid.
+SPINTEL-8008-29,FW/SW,The Memory Reference Code (MRC) has determined that the memory DIMM population rules for a socket are unavailable.
+SPINTEL-8008-3N,CPU,The processor has encountered an Asynchronous DRAM Refresh (ADR) timeout.
+SPINTEL-8008-4G,CPU,The bus clock frequency for a processor has exceeded the fused threshold.
+SPINTEL-8008-5L,CPU,The dispatcher of the Package Control Unit (PCU) on a processor has timed out.
+SPINTEL-8008-60,CPU,The idle state of the Package Control Unit (PCU) Finite-State Machine (FSM) on a processor has timed out.
+SPINTEL-8008-7V,CPU,A processor Built-in Self-Test (BIST) of it's Last Level Cache (LLC) has timed out.
+SPINTEL-8008-8M,CPU,The Power Control Unit (PCU) on a processor has detected a power control failure.
+SPINTEL-8008-98,CPU,The Power Control Unit (PCU) on a processor has detected a sideband timeout.
+SPINTEL-8008-AU,CPU,The Power Control Unit (PCU) on a processor has encountered a problem with clock synchronization.
+SPINTEL-8008-C7,CPU,A reset of the Power Control Unit (PCU) on a processor has timed out during processor initialization.
+SPINTEL-8008-DW,PCI,Indicates that a PCIe component or device has encountered a completer abort error.
+SPINTEL-8008-E1,PCI,The PCIe subsystem has encountered a completion timeout.
+SPINTEL-8008-FK,PCI,A PCIe device has encountered excessive CE re-transmissions of a packet due to a faulty device.
+SPINTEL-8008-GF,PCI,A PCIe device or processor has encountered a protocol error.
+SPINTEL-8008-HN,PCI,A PCIe device encountered an Access Control Services (ACS) violation error.
+SPINTEL-8008-J9,PCI,A PCIe device or processor has encountered malformed Transaction Layer Packets (TLP).
+SPINTEL-8008-KT,PCI,A PCIe device or processor has received an unsupported request.
+SPINTEL-8008-L6,PCI,The PCIe data link layer between a PCIe card and processor has encountered a surprise link down.
+SPINTEL-8008-MV,PCI,A PCIe flow control protocol error between a PCIe device and processor has occurred.
+SPINTEL-8008-N0,PCI,A PCIe link has encountered excessive CE re-transmissions of a packet due to a bad link.
+SPINTEL-8008-PL,PCI,A PCIe data link layer has failed.
+SPINTEL-8008-QG,PCI,An Integrated I/O (IIO) non-fatal error in a PCIe device has been detected.
+SPINTEL-8008-R7,PCI,The Root Port of the Processor IO (RPPIO) configuration space has encountered a completer abort from a downstream PCIe device.
+SPINTEL-8008-SU,PCI,A Root Port Processor IO (RPPIO) completion timeout was encountered from a downstream PCIe device.
+SPINTEL-8008-T8,PCI,A Root Port of the Processor IO (RPPIO) memory or IO space encountered a completer abort.
+SPINTEL-8008-UM,PCI,A Root Port of the Processor IO (RPPIO) memory or IO space encountered an unsupported request.
+SPINTEL-8008-VF,CPU,The Coherent Memory Interface (CMI) has encountered a failure during initialization of a memory channel.
+SPINTEL-8008-WK,MEMORY,The Memory Reference Code (MRC) has detected that completion delay times for DCPMMs were out of range.
+SPINTEL-8008-X1,MEMORY,The Memory Reference Code encountered a DCPMM DIMM with a forced fatal transaction.
+SPINTEL-8008-YW,MEMORY,The Memory Reference Code has detected a SMBUS read error on a  DCPMM DIMM.
+SPINTEL-8009-01,MEMORY,The Memory Reference Code (MRC) has encountered a memory test failure on a memory DIMM.
+SPINTEL-8009-1W,ILOM,The Memory Reference Code (MRC) has encountered a memory test failure on a memory channel.
+SPINTEL-8009-2F,CPU,The Package Control Unit (PCU) on a processor has encountered an unsupported command or is not responding.
+SPINTEL-8009-3K,MEMORY,The internal temperature on a memory DIMM has exceeded established thresholds.
+SPINTEL-8009-48,CPU,A processor detected internal correctable errors that exceed the SERD threshold.
+SPINTEL-8009-5M,CPU,A processor detected timeout correctable errors that exceed the SERD threshold.
+SPINTEL-8009-67,MEMORY,Multiple correctable ECC errors have been detected by the processor on a Data Center Persistent Memory Module (DCPMM)
+SPINTEL-8009-7U,MEMORY,"ILOM has determined a memory uncorrectable ECC error has been detected by the processor on a Data Center Persistent Memory Module (DCPMM), aka 3D Xpoint DIMM."
+SPINTEL-8009-8L,MEMORY,The Memory Reference Code (MRC) has detected a polling timeout during memory channel DIMM training.
+SPINTEL-8009-9G,MEMORY,The Address Indirection Table (AIT) for a DCPMM DIMM is not ready.
+SPINTEL-8009-AV,MEMORY,Memory Reference Code (MRC) has identified DDR4 DIMMs on a processor socket have mismatched capacities.
+SPINTEL-8009-C0,MEMORY,24GB DIMM Unsupported
+SPINTEL-8009-DT,MEMORY,9x4 DIMM Config Invalid
+SPINTEL-8009-E6,MEMORY,LRDIMM Unsupported
+SPINTEL-8009-FN,MEMORY,Mem Channel Mixed Widths Unsupported
+SPINTEL-8009-G9,FW/SW,Fatal Internal Error
+SPINTEL-8009-HK,FW/SW,Ultrapath Config Unknown
+SPINTEL-8009-JF,FW/SW,DDR Frequency Not Found
+SPINTEL-8009-KW,FW/SW,Power Management Temp Threshold Invalid
+SPINTEL-8009-L1,FW/SW,Row Failures List Not Updated
+SPINTEL-8009-MU,FW/SW,VDD Out of Range
+SPINTEL-8009-N7,CPU,Processor UBOX General Error
+SPINTEL-8009-PM,CPU,Processor RCIEP Correctable
+SPINTEL-8009-Q8,CPU,Processor RCIEP Uncorrectable
+SPINTEL-8009-R0,MEMORY,MRC Polling Timeout
+SPINTEL-8009-SV,MEMORY,DIMM Power Failure
+SPINTEL-8009-TG,MEMORY,SPD Block Unlocked
+SPINTEL-8009-UL,MEMORY,DIMM Zero Margin Error
+SPINTEL-8009-V9,MEMORY,The Memory Reference Code (MRC) detected a timing margin error during DIMM training.
+SPINTEL-8009-WN,MEMORY,DIMM Vendor Version Unsupported
+SPINTEL-8009-X6,MEMORY,DIMM Socket Configuration is Nonuniform
+SPINTEL-8009-YT,PCI,PCIe Link Training Failure
+SPINTEL-800A-08,CPU,GPU Page Retirement Exceeded
+SPINTEL-800A-1M,CPU,GPU Row Remappings Exceed Threshold.  The GPU should be manually taken offline immediately. Failure to replace the GPU may cause the server to encounter fatal memory errors.
+SPNVDA-8000-1Y,CPU,CPU Access Invalid Fatal.
+SPNVDA-8000-2D,FW/SW,CPU Access Invalid Fatal Transient.
+SPNVDA-8000-3H,FW/SW,The processor firmware has encountered a recurrent fatal error.
+SPNVDA-8000-4A,CPU,CPU Firmware Fatal Transient.
+SPNVDA-8000-5P,FW/SW,CPU Firmware Uncorrectable Recoverable.
+SPNVDA-8000-65,ILOM,The system failed to successfully start the BIOS image or is deadlocked.
+SPNVDA-8000-7S,ILOM,The system failed to successfully complete the PEI phase of SBIOS or is deadlocked.
+SPNVDA-8000-8J,ILOM,The system failed to successfully start the SBIOS image on the Grace CPU or is deadlocked.
+SPNVDA-8000-9E,CPU,CPU Array Fatal
+SPNVDA-8000-AX,CPU,CPU Array Fatal Transient.
+SPNVDA-8000-C2,CPU,CPU C2C Link Fatal.
+SPNVDA-8000-DR,CPU,CPU C2C Link Fatal Transient.
+SPNVDA-8000-E4,CPU,CPU C2C Link Recovery Failed Fatal.
+SPNVDA-8000-FQ,CPU,CPU C2C Link Recovery Failed Fatal Transient.
+SPNVDA-8000-GC,CPU,CPU CLINK Fatal.
+SPNVDA-8000-HH,CPU,CPU CLINK Fatal Transient.
+SPNVDA-8000-JD,CPU,The processor has detected a frequency violation.
+SPNVDA-8000-KY,CPU,The processor has detected a frequency violation transient.
+SPNVDA-8000-L3,CPU,CPU Internal Fatal.
+SPNVDA-8000-MS,CPU,CPU Internal Fatal Transient.
+SPNVDA-8000-N5,CPU,CPU Internal Bus Fatal.
+SPNVDA-8000-PP,CPU,CPU Internal Bus Fatal Transient.
+SPNVDA-8000-QA,CPU,A processor has detected the consumption of poison data by a sub-unit that was incapable of containing the error.
+SPNVDA-8000-R2,CPU,Excessive temperature has been detected on a processor.
+SPNVDA-8000-SX,CPU,CPU Timeout Fatal.
+SPNVDA-8000-TE,CPU,CPU Timeout Fatal Transient
+SPNVDA-8000-UJ,CPU,CPU Voltage Violation Fatal.
+SPNVDA-8000-VC,CPU,CPU Voltage Violation Fatal Transient.
+SPNVDA-8000-WQ,GPU,GPU Nvidia Poison Data Uncontained Unknown.
+SPNVDA-8000-X4,GPU,GPU Nvidia Poison Data Uncontained Unknown.
+SPNVDA-8000-YR,PCI,PCIe Correctable Error.
+SPNVDA-8001-04,PCI,Downstream I/O device is faulty.
+SPNVDA-8001-1R,PCI,PCIe Fatal Error.
+SPNVDA-8001-2C,PCI,PCIe Non Fatal Error on Device.
+SPNVDA-8001-3Q,CPU,A Cross Socket Attestation (CSA) failure has occurred.
+SPNVDA-8001-4E,CPU,Boot Remote Socket Excluded.
+SPNVDA-8001-5J,CPU,CPU CMET Corrupt.
+SPNVDA-8001-62,GPU,Liquid Coolant leak detected near or around CPUs or GPUs.
+SPNVDA-8001-7X,LEAK_SENSOR,Cooling GPU or CPU Sensor Disconnected
+SPNVDA-8001-8P,LEAK_SENSOR,Cooling GPU or CPU Sensor Shorted.
+SPNVDA-8001-9A,GPU,Leak detected at manifold or quick disconnect valve.
+SPNVDA-8001-AS,LEAK_SENSOR,The leak sensor for the manifold or quick disconnect valve has shorted.
+SPNVDA-8001-C5,LEAK_SENSOR,The leak sensor for the CPUs and GPUs has shorted.
+SPNVDA-8001-DY,POWER,The system was not powered on successfully during the power-on process.
+SPNVDA-8001-E3,POWER,Compute Node Power Failed.
+SPNVDA-8001-FH,GPU,Nvidia GPU Overtemp
+SPNVDA-8001-GD,CPU,CPU C2C Link Init Failed.
+SPNVDA-8001-HQ,GPU,CPU C2C Link Init Failed.
+SPNVDA-8001-JC,CPU,Boot CPU Init Failed.
+SPNVDA-8001-KR,CPU,Boot CPU Link Init Failed
+SPNVDA-8001-L4,CPU,Boot DRAM ECC Error
+SPNVDA-8001-MX,CPU,Boot Load Failed
+SPNVDA-8001-N2,CPU,The boot temperature of a processor is out of range.
+SPNVDA-8001-PJ,CPU,Boot SPI Access Failure
+SPNVDA-8001-QE,CPU,Boot UPHY Init Failed
+SPNVDA-8001-R5,GPU,GPU SRAM Unrecoverable Uncorrectable Error.
+SPNVDA-8001-SS,GPU,GPU DRAM Recoverable Uncorrectable ECC.
+SPNVDA-8001-TA,GPU,GPU DRAM Unrecoverable Uncorrectable ECC
+SPNVDA-8001-UP,PCI,PCIe link layer is inactive.
+SPNVDA-8001-VD,PCI,PCIe Device Init Failed.
+SPNVDA-8001-WH,PCI,IIO PCIE Error in Downstream Leaf Devices.
+SPNVDA-8001-X3,PCI,PCIe Degraded Link Speed
+SPNVDA-8001-YY,PCI,PCIe Degraded Link Width.
+SPNVDA-8002-0E,MEMORY,Boot DRAM Retired Page Overflow
+SPNVDA-8002-1J,MEMORY,Memory DRAM Training Failed Transient.
+SPNVDA-8002-22,MEMORY,DRAM Memory Channel Unavailable
+SPNVDA-8002-3X,MEMORY,DRAM ECC Memory Error Deferred Transient.
+SPNVDA-XID149-0400,compute_tray,NVLINK XID error detected (XID 149.4)
+SPNVDA-XID149-0A00,compute_tray,NVLINK XID error detected (XID 149.A)
+SPNVIDIA-8000-1F,Fan,Fan Capacity is Deficient
+SPNVIDIA-8000-2W,POWER,Power Supplies is Deficient
+SPNVIDIA-8000-31,CPU,GPU Temperature Fail
+SPNVIDIA-8000-4U,CPU,GPU Page Retirement Exceeded
+SPNVIDIA-8000-57,PCI,PCIe Link Layer Inactive
+SPNVIDIA-8000-6M,PCI,PCIe Degraded Link Speed
+SPNVIDIA-8000-78,PCI,PCIe Link Degraded Width
+SPNVIDIA-8000-80,CPU,GX GPU Thermtrip
+SPNVIDIA-8000-9V,PCI,GX Switch Thermtrip
+SPNVIDIA-8000-AG,CPU,GPU Row Remapping Exceed Threshold
+SPNVIDIA-8000-CL,GPU,detected a failure on the GBB FPGA.
+SPNVIDIA-8000-D9,GPU,GPU NVLink failure has occurred.
+SPNVIDIA-8000-EN,GPU,GPU NVSwitch is hanging.
+SPNVIDIA-8000-F6,GPU,GPU NVSwitch is unavailable.
+SPNVIDIA-8000-GT,GPU,PCIE CRC error was encountered on an nvswitch.
+SPNVIDIA-8000-H1,GPU,Problem with the IOB has caused a PCIE reset failure.
+SPNVIDIA-8000-JW,GPU,PCIE switch has failed.
+SPNVIDIA-8000-KF,GPU,Problem with the IOB or a PCIE switch has caused a PCIE reset failure.
+SPNVIDIA-8000-LK,GPU,PCIE training error.
+SPNVIDIA-8000-M8,GPU,PCIE uncorrectable error.
+SPNVIDIA-8000-NM,CDFP,Problem in an upstream device has caused a PCIE reset failure.
+SPNVIDIA-8000-P7,12vPDB,detected a failure on the PDB 12v supply.
+SPNVIDIA-8000-QU,GPU,ILOM has detected a power good failure on the tail node.
+SPNVIDIA-8000-RL,GPU,ILOM has detected a corrupted ROM on a GPU.
+SPNVIDIA-8000-SG,GPU,An uncorrectable ECC error has caused an application to fail.
+SPNVIDIA-8000-TV,GPU,A uncorrectable ECC error in DRAM has occurred.
+SPNVIDIA-8000-U0,GPU,An uncorrectable ECC error in SRAM has occurred.
+SPNVIDIA-8000-VT,ILOM,The HMC (or its 3.3v coin battery) is non-functional
+SPNVIDIA-8000-W6,PCI,The PCIE switch is not accessible and needs to be reinitialized.
+SPNVIDIA-8000-XN,CPU,The GPU is not accessible.
+SPNVIDIA-8000-Y9,GPU,The sled is unable to power on.
+SPNVIDIA-8001-0N,GPU,A system fault on the sled has been detected.
+SPNVIDIA-8001-19,PCI,The PCIE switch is not accessible.
+SPX86A-8000-11,ILOM,The var-log Directory is full which may lead to SP Failure.
+SPX86A-8000-2K,ILOM,SP Failing Self Test
+SPX86A-8000-3F,ILOM,BIOS Hang
+SPX86A-8000-4M,ILOM,MRC not successful. Unable to complete boot process.
+SPX86A-8000-58,ILOM,QPIRC not successful. Unable to complete the boot process
+SPX86A-8000-6U,ILOM,Boot retry limit reached. Unable to boot
+SPX86A-8000-77,ILOM,ipmi not successful. Unable to complete the boot process
+SPX86A-8000-8G,ILOM,Malfunctioning component detected by CPLD. Unable to power on
+SPX86A-8000-9L,ILOM,power on request made to SP has been denied. Failure to power on host
+SPX86A-8000-A0,ILOM,The number of boot retries has exceeded limit
+SPX86A-8000-CV,CPU,Multiple catastrophic error events (CATERR) have been detected.
+SPX86A-8000-D6,CPU,A persistent catastrophic error event (CATERR) has been detected
+SPX86A-8000-ET,ILOM,A serial peripheral interface error
+SPX86A-8000-F9,ILOM,The key identity properties of the system are unknown.
+SPX86A-8000-GN,CPU,A bus interconnect error has been detected.
+SPX86A-8000-HF,CPU,A bus interconnect timeout event has been detected.
+SPX86A-8000-JK,CPU,A processor has detected multiple cache correctable errors.
+SPX86A-8000-K1,CPU,A processor has detected a cache uncorrectable error.
+SPX86A-8000-LW,CPU,A processor has detected multiple data cache correctable errors.
+SPX86A-8000-M7,CPU,A processor has detected a data cache uncorrectable error.
+SPX86A-8000-NU,CPU,A processor has detected multiple data TLB correctable errors.
+SPX86A-8000-P8,CPU,A processor has detected a data TLB uncorrectable error.
+SPX86A-8000-QM,CPU,A processor has detected multiple instruction cache correctable errors.
+SPX86A-8000-RV,CPU,A processor has detected an instruction cache uncorrectable error.
+SPX86A-8000-S0,CPU,An indeterminate processor error has occurred.
+SPX86A-8000-TL,CPU,A processor has detected an internal fault.
+SPX86A-8000-UG,CPU,A processor has detected multiple instruction TLB correctable errors.
+SPX86A-8000-VN,CPU,A processor has detected an instruction TLB uncorrectable error.
+SPX86A-8000-W9,CPU,A processor has detected multiple level 0 cache correctable errors.
+SPX86A-8000-XT,CPU,A processor has detected a level 0 cache uncorrectable error.
+SPX86A-8000-Y6,CPU,A processor has detected multiple level 2 TLB correctable errors.
+SPX86A-8001-0T,CPU,A processor has detected a level 0 data cache uncorrectable error.
+SPX86A-8001-16,CPU,A processor has detected multiple level 0 data TLB correctable errors.
+SPX86A-8001-2N,CPU,A processor has detected a level 0 data TLB uncorrectable error.
+SPX86A-8001-39,CPU,A processor has detected multiple level 0 instruction cache correctable errors.
+SPX86A-8001-4L,CPU,A processor has detected a level 0 instruction cache uncorrectable error.
+SPX86A-8001-5G,CPU,A processor has detected multiple level 0 instruction TLB correctable errors.
+SPX86A-8001-6V,CPU,A processor has detected a level 0 instruction TLB uncorrectable error.
+SPX86A-8001-70,CPU,A processor has detected multiple level 0 TLB correctable errors.
+SPX86A-8001-88,CPU,A processor has detected a level 0 TLB uncorrectable error.
+SPX86A-8001-9M,CPU,A processor has detected multiple level 1 cache correctable errors.
+SPX86A-8001-A7,CPU,A processor has detected a level 1 cache uncorrectable error.
+SPX86A-8001-CU,CPU,A processor has detected multiple level 1 data cache correctable errors.
+SPX86A-8001-D1,CPU,A processor has detected a level 1 data cache uncorrectable error.
+SPX86A-8001-EW,CPU,A processor has detected multiple level 1 data TLB correctable errors.
+SPX86A-8001-FF,CPU,A processor has detected a level 1 data TLB uncorrectable error.
+SPX86A-8001-GK,CPU,A processor has detected multiple level 1 instruction cache correctable errors.
+SPX86A-8001-H9,CPU,A processor has detected a level 1 instruction cache uncorrectable error.
+SPX86A-8001-JN,CPU,A processor has detected multiple level 1 instruction TLB correctable errors.
+SPX86A-8001-K6,CPU,A processor has detected a level 1 instruction TLB uncorrectable error.
+SPX86A-8001-LT,CPU,A processor has detected multiple level 1 TLB correctable errors.
+SPX86A-8001-M0,CPU,A processor has detected a level 1 TLB uncorrectable error.
+SPX86A-8001-NV,CPU,A processor has detected multiple level 2 cache correctable errors.
+SPX86A-8001-PG,CPU,A processor has detected a level 2 cache uncorrectable error.
+SPX86A-8001-QL,CPU,A processor has detected multiple level 2 data cache correctable errors.
+SPX86A-8001-RU,CPU,A processor has detected a level 2 data cache uncorrectable error.
+SPX86A-8001-S7,CPU,A processor has detected multiple level 2 data TLB correctable errors.
+SPX86A-8001-TM,CPU,A processor has detected a level 2 data TLB uncorrectable error.
+SPX86A-8001-U8,CPU,A processor has detected multiple level 2 instruction cache correctable errors.
+SPX86A-8001-VK,CPU,A processor has detected a level 2 instruction TLB uncorrectable error.
+SPX86A-8001-WF,CPU,A processor has detected multiple level 2 instruction TLB correctable errors.
+SPX86A-8001-XW,CPU,A processor has detected a level 2 instruction TLB uncorrectable error.
+SPX86A-8001-Y1,CPU,A processor has detected multiple level 2 TLB correctable errors.
+SPX86A-8002-0L,CPU,A processor has detected a level 2 TLB uncorrectable error.
+SPX86A-8002-1G,CPU,A processor has detected multiple memory controller address/command parity correctable errors.
+SPX86A-8002-2V,CPU,A processor has detected a memory controller address/command parity uncorrectable error.
+SPX86A-8002-30,CPU,A processor has detected multiple memory controller correctable errors.
+SPX86A-8002-4T,CPU,A processor has detected a memory controller uncorrectable error.
+SPX86A-8002-56,CPU,A processor has detected a QuickPath Interconnect link layer uncorrectable error.
+SPX86A-8002-6N,CPU,A processor has detected a QuickPath Interconnect receiver uncorrectable error.
+SPX86A-8002-79,CPU,A processor has detected a QuickPath Interconnect transmitter uncorrectable error.
+SPX86A-8002-81,CPU,A processor has detected multiple Last Level Cache correctable errors.
+SPX86A-8002-9W,CPU,A processor has detected a Last Level Cache uncorrectable error.
+SPX86A-8002-AF,CPU,A processor has detected multiple Mid Level Cache correctable errors.
+SPX86A-8002-CK,MEMORY,A Memory Expansion Buffer (MXB) over-temperature condition has been detected
+SPX86A-8002-D8,MEMORY,Multiple correctable Scalable Memory Interconnect (SMI2) address errors have been detected.
+SPX86A-8002-EM,MEMORY,Multiple correctable Scalable Memory Interconnect (SMI2) data errors have been detected. 
+SPX86A-8002-F7,MEMORY,A Scalable Memory Interconnect (SMI) half-width failover has been detected. 
+SPX86A-8002-GU,MEMORY,A Scalable Memory Interconnect (SMI) link error has been detected.
+SPX86A-8002-H0,CPU,CPU Timeout Failures
+SPX86A-8002-JV,CPU,A processor has detected multiple TLB correctable errors.
+SPX86A-8002-KG,CPU,A processor has detected a TLB uncorrectable error.
+SPX86A-8002-LL,CPU,A processor has detected an unknown uncorrectable error.
+SPX86A-8002-M9,CPU,An integrated I-O fatal core error has been detected.
+SPX86A-8002-NN,CPU,An integrated I-O fatal coherent interface protocol error has been detected
+SPX86A-8002-P6,CPU,An integrated I-O parity error on the internal configuration interface has been detected.
+SPX86A-8002-QT,PCI,An integrated I/O (IIO) non-fatal error in a downstream PCIE device has been detected.
+SPX86A-8002-RK,PCI,An integrated I-O fatal error in a downstream PCIE device has been detected.
+SPX86A-8002-SF,PCI,An integrated I-O non-fatal error in a downstream PCIE leaf device has been detected.
+SPX86A-8002-TW,PCI,An integrated I/O (IIO) non-fatal error in the root port device has been detected
+SPX86A-8002-U1,CPU,An integrated I-O fatal vtd error has been detected.
+SPX86A-8002-VU,MEMORY,Multiple correctable memory DIMM address/command parity errors have been detected.
+SPX86A-8002-W7,MEMORY,An uncorrectable Memory DIMM address/command parity error has been detected.
+SPX86A-8002-XM,MEMORY,Multiple correctable ECC errors on a memory DIMM have been detected.
+SPX86A-8002-Y8,MEMORY,A memory uncorrectable ECC error on a Memory DIMM has been detected.
+SPX86A-8003-0M,MB,The service processor is unable to provide platform services to the operating system.
+SPX86A-8003-18,ILOM,The firmware on the service processor may have become corrupt.
+SPX86A-8003-2U,CPU,A Quickpath Interconnect lane width reduction failover has been detected.
+SPX86A-8003-37,CPU,A Quickpath Interconnect half speed failover has been detected.
+SPX86A-8003-4W,CPU,A correctable Quickpath Interconnect link error has been detected.
+SPX86A-8003-51,Fan,A fan module required to maintain redundancy is missing.
+SPX86A-8003-6K,Fan,Multiple fan modules in a fan cooling zone are either missing or faulted.
+SPX86A-8003-7F,Fan,Multiple fan module in a fan column are either missing or faulted. 
+SPX86A-8003-86,POWER,An unsupported power supply has been detected.
+SPX86A-8003-9T,POWER,A power supply is missing.
+SPX86A-8003-A9,Fan,A fan module is rotating too slow.
+SPX86A-8003-CN,POWER,An internal power supply failure has been detected.
+SPX86A-8003-DG,POWER,The power supplies are configured for low-line AC input. 
+SPX86A-8003-EL,POWER,A loss of AC input power to a power supply has been detected.
+SPX86A-8003-F0,POWER,The power supplies are unable to supply sufficient power to the syste
+SPX86A-8003-GV,POWER,The top cover was removed while AC input power was applied to the power supplies.
+SPX86A-8003-H7,Fan,The internal temperature has exceeded established thresholds.
+SPX86A-8003-JU,Fan,The ambient temperature has exceeded established thresholds.
+SPX86A-8003-K8,CPU,Excessive temperature has been detected on a system component.
+SPX86A-8003-LM,POWER,A voltage regulator on a memory DIMM module failed to power on. 
+SPX86A-8003-MF,MEMORY,BIOS was unable to configure the memory expansion buffer.
+SPX86A-8003-NK,MEMORY,BIOS was unable to train the link to the memory expansion buffer.
+SPX86A-8003-P1,CPU,The Quickpath Interconnect link is operating below normal speed.
+SPX86A-8003-QW,CPU,A Quickpath Interconnect link training failure has been detected.
+SPX86A-8003-RN,FW/SW,An unknown error code from the Quickpath Interconnect reference code has been detected.
+SPX86A-8003-S9,MEMORY,An unsupported 4-gb memory DIMM has been detected.
+SPX86A-8003-TT,MEMORY,An unsupported 8-gb memory DIMM has been detected.
+SPX86A-8003-U6,MEMORY,A memory channel has an unsupported memory DIMM module configuration.
+SPX86A-8003-VV,MEMORY,An unsupported DDR3 ultra low voltage memory DIMM has been detected.
+SPX86A-8003-W0,MEMORY,The number of ranks allowed on a memory channel has been exceeded.
+SPX86A-8003-XL,MEMORY,An invalid quad rank memory DIMM configuration has been detected.
+SPX86A-8003-YG,MEMORY,All memory channels have been disabled due to memory test failures.
+SPX86A-8004-01,MEMORY,An invalid memory DIMM configuration has been detected.
+SPX86A-8004-1W,MEMORY,A memory DIMM with an unsupported number of ranks has been detected.
+SPX86A-8004-2F,MEMORY,Tthe ILOM fault manager has applied diagnosis to error reports indicating a Quad-Rank memory DIMM has been detected in the third slot of a memory channel. Quad-Rank memory DIMM's can only be populated in slots 1 & 2 of a memory channel.
+SPX86A-8004-3K,MEMORY,A memory DIMM with an unsupported SDRAM capacity has been detected.
+SPX86A-8004-48,MEMORY,A checksum error has been detected while reading the Serial Presence Detect (SPD) on a memory DIMM.
+SPX86A-8004-5M,MEMORY,The ILOM fault manager has applied diagnosis to error reports indicating a memory DIMM has been detected that is unable to operate at speeds required by the platform.
+SPX86A-8004-67,MEMORY,The ILOM fault manager has applied diagnosis to error reports indicating a failure has occurred during Memory Reference Code (MRC) DIMM training.
+SPX86A-8004-7U,MEMORY,The ILOM fault manager has applied diagnosis to error reports indicating a single symbol error has been detected during Memory Reference Code (MRC) DIMM training.
+SPX86A-8004-8L,MEMORY,The ILOM fault manager has applied diagnosis to error reports indicating an unbuffered memory DIMM (UDIMM) has been detected.
+SPX86A-8004-9G,MEMORY,An unknown error code from the Memory Reference Code has been detected.
+SPX86A-8004-AV,MEMORY,Multiple correctable ECC errors on all memory DIMMs on a Memory Expansion Buffer (MXB) have been detected. 
+SPX86A-8004-C0,CPU,A processor has detected a QuickPath Interconnect (QPI) link is down
+SPX86A-8004-DT,PCI,An unexpected error code from the Quickpath Interconnect reference code has been detected.
+SPX86A-8004-E6,PCI,A PCI link error has occurred which reduces the link speed of a PCI card.
+SPX86A-8004-FN,PCI,A PCI link error has occurred which reduces the width speed of a PCI card.
+SPX86A-8004-G9,MEMORY,An unexpected error code from the Memory Reference Code has been detected.
+SPX86A-8004-HK,STORAGE,NVME drive is in a slot that does not support it.
+SPX86A-8004-JF,STORAGE,SAS drive is in a slot that does not support it.
+SPX86A-8004-KW,POWER,Insufficient cooling capacity due to multiple faulted or missing fans.
+SPX86A-8004-L1,CPU,Persistent processor internal errors have been detected after a server reboot.
+SPX86A-8004-MU,CPU,Persistent processor internal errors have been detected after a server reboot.
+SPX86A-8004-N7,CPU,Multiple processor internal errors have occurrred.
+SPX86A-8004-PM,CPU,A failure with a voltage regulator on the motherbord has been detected.
+SPX86A-8004-Q8,CPU,A firmware or hardware error with the power control unit of a CPU has been detected.
+SPX86A-8004-R0,ILOM,An error has occurred in which no automated diagnosis is available to identify faulty component.
+SPX86A-8004-SV,STORAGE,A lack of power to the disk backplane has been detected.
+SPX86A-8004-TG,PCI,An Integrated I-O correctable error in a PCIE device has been detected.
+SPX86A-8004-UL,MEMORY,An Integrated I-O non-fatal error in a PCIe device has been detected.
+SPX86A-8004-V9,MEMORY,Memory channel has a mixture of DDR3 and DDR4 DIMMs.
+SPX86A-8004-WN,MEMORY,Detected DDR4 DIMMs that will not run on system voltage.
+SPX86A-8004-X6,MEMORY,DIMM geometry is not recognized or supported by BIOS.
+SPX86A-8004-YT,MEMORY,DIMMs have failed memory test and are disabled.
+SPX86A-8005-06,MEMORY,System has DIMM's with incompatible memory types
+SPX86A-8005-1T,MEMORY,DIMM has failed DDR training.
+SPX86A-8005-29,MEMORY,The memory DIMM's in a channel are not populated in sequential order.
+SPX86A-8005-3N,MEMORY,RDIMM is not supported by CPU or is plugged into a UDIMM-only board.
+SPX86A-8005-4G,MEMORY,An unsupported SODIMM has been detected in system.
+SPX86A-8005-5L,MEMORY,System does not support mixture of DIMMs with varying SPD sizes.
+SPX86A-8005-60,MEMORY,BIOS configuration does not support types of DIMMS in system.
+SPX86A-8005-7V,CPU,Memory channel has failed CLK training.
+SPX86A-8005-8M,CPU,A processor has failed the BIOS built-in self-test.
+SPX86A-8005-98,FW/SW,A power management policy request has been rejected by the Intel Management Engine.
+SPX86A-8005-AU,ILOM,A communications error between ILOM and Intel Management Engine has occurred.
+SPX86A-8005-C7,CPU,ILOM was able to access the serial peripheral (SPI) flash device but the write was blocked or the resulting image was corrupted.
+SPX86A-8005-DW,CPU,A communications error between ILOM and Intel Management Engine has occurred.
+SPX86A-8005-E1,CPU,A communications error between ILOM and Intel Management Engine has occurred.
+SPX86A-8005-FK,POWER,An invalid power supply configuration has been detected.
+SPX86A-8005-GF,POWER,Power Supply Missing
+SPX86A-8005-HN,ILOM,A device or component is missing.
+SPX86A-8005-J9,MB,The ambient temperature has exceeded established thresholds.
+SPX86A-8005-KT,ILOM,ILOM was able to access the serial peripheral (SPI) flash device but the write was blocked or the resulting image was corrupted.
+SPX86A-8005-L6,FW/SW,An error in the Memory Reference Code (MRC) has been detected.
+SPX86A-8005-MV,PCI,Loss of network due to Ethernet device failure.
+SPX86A-8005-N0,ILOM,A temperature sensor has failed.
+SPX86A-8005-PL,CPU,A processor has detected a midlevel cache uncorrectable error.
+SPX86A-8005-QG,POWER,An invalid power supply configuration has been detected.
+SPX86A-8005-R7,MB,The Field-Programmable Gate Array (FPGA) has detected a power-on request that was denied by the service processor.
+SPX86A-8005-SU,CPU,A warm reset was unsuccessful in clearing IERR condition.
+SPX86A-8005-T8,CPU,The Management Engine is in recovery mode and any warm resets of the host OS will become global resets.
+SPX86A-8005-UM,CPU,The Platform Controller Hub (PCH) has momentarily failed to service a power-on request.
+SPX86A-8005-VF,MB,Multiple Platform Controller Hub (PCH) failures to service a power-on request have occurred.
+SPX86A-8005-WK,ILOM,System has detected invalid or corrupt firmware in the FPGA or ILOM power state.
+SPX86A-8005-X1,Fan,The ambient temperature of the system has exceeded established thresholds.
+SPX86A-8005-YW,CPU,The Ultrapath Interconnect Initialization Code (UPIRC) has detected a global error.
+SPX86A-8006-0G,STORAGE,A NVME drive is in a slot that does not support it.
+SPX86A-8006-1L,STORAGE,A SAS drive is in a slot that does not support it.
+SPX86A-8006-20,MEMORY,The Memory Reference Code (MRC) has detected a DDR4 DIMM that does not support 1.2-Volt.
+SPX86A-8006-3V,MEMORY,The Memory Reference Code (MRC) has detected a 16GB memory DIMM that is not supported by the processor.
+SPX86A-8006-46,MEMORY,The Memory Reference Code (MRC) has detected a DIMM that stacks multiple DRAMS on a DIMM (3DS) is unsupported.
+SPX86A-8006-5T,MEMORY,The Memory Reference Code (MRC) has detected an unsupported NVDIMM.
+SPX86A-8006-69,MEMORY,The Memory Reference Code (MRC) has detected a set of DIMMs that violiates DIMM population rules.
+SPX86A-8006-7N,MEMORY,The Memory Reference Code (MRC) has detected invalid Serial Presence Detect (SPD) contents in a memory DIMM.
+SPX86A-8006-8W,MEMORY,The Memory Reference Code (MRC) has detected Memory DIMMs of different types.
+SPX86A-8006-91,MEMORY,The Memory Reference Code (MRC) has detected a nonvolatile persistent memory DIMM (NVDIMM) on a board that only supports unbuffered/unregistered memory DIMMs (UDIMM).
+SPX86A-8006-AK,MEMORY,The Memory Reference Code (MRC) has detected memory DIMMs on a memory channel with different Stock-Keeping-Unit (SKU) numbers.
+SPX86A-8006-CF,MEMORY,The Memory Reference Code (MRC) has detected an unsupported non-production memory DIMM.
+SPX86A-8006-DM,MEMORY,The Memory Reference Code (MRC) has detected an unsupported number of ranks on a memory DIMM.
+SPX86A-8006-E8,MEMORY,The Memory Reference Code (MRC) has detected an unsupported nonvolatile memory DIMM (NVDIMM).
+SPX86A-8006-FU,MEMORY,The Memory Reference Code (MRC) has detected a registered DIMM (RDIMM) on a board that only supports unbuffered/unregistered memory DIMMs (UDIMM).
+SPX86A-8006-G7,MEMORY,The Memory Reference Code (MRC) has detected a memory DIMM with an unsupported Stock-Keeping-Unit (SKU) number.
+SPX86A-8006-HV,MEMORY,The Memory Reference Code (MRC) has detected an unbuffered/unregistered DIMM (UDIMM) has been installed and is unsupported.
+SPX86A-8006-J0,MEMORY,The Memory Reference Code (MRC) has detected the memory configuration on a memory channel uses an unsupported frequency.
+SPX86A-8006-KL,MEMORY,The Memory Reference Code (MRC) has detected the number of ranks on a memory channel is unsupported.
+SPX86A-8006-LG,MEMORY,The Memory Reference Code (MRC) has detected memory DIMMs on a memory channel in violation of the memory DIMM population rules.
+SPX86A-8006-MN,MEMORY,The Memory Reference Code (MRC) has disabled Advanced Double Device Data Correction (ADDDC).
+SPX86A-8006-N9,MEMORY,The Memory Reference Code (MRC) has detected a global error.
+SPX86A-8006-PT,MEMORY,The Memory Reference Code (MRC) has disabled Single Device Data Correction (SDDC).
+SPX86A-8006-Q6,MEMORY,The Memory Reference Code (MRC) has detected that the amount of installed memory cannot be supported by the installed processor.
+SPX86A-8006-RF,FW/SW,The Platform Controller Hub (PCH) PMC patch did not load properly.
+SPX86A-8006-SK,FW/SW,The Platform Controller Hub (PCH) has been reset.
+SPX86A-8006-T1,FW/SW,The Platform Controller Hub (PCH) was unable to service a power-on request even after it was reset.
+SPX86A-8006-UW,FW/SW,A problem within the BIOS code has been detected.
+SPX86A-8006-V7,FW/SW,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the Ultrapath could not transition to full speed because an unsupported UPI link speed parameter within UPIRC has been encountered.
+SPX86A-8006-WU,FW/SW,The Ultrapath Interconnect (UPI) initialization code has detected a slow UPI link.
+SPX86A-8006-X8,FW/SW,The Ultrapath Interconnect Reference Code (UPIRC) has detected an internal error in the minimum path setup.
+SPX86A-8006-YM,FW/SW,The Ultrapath Interconnect Code (UPIRC) has detected an internal error.
+SPX86A-8007-08,FW/SW,The Ultrapath Interconnect Code (UPIRC) has detected the Ultrapath Interconnect (UPI) topology data is invalid
+SPX86A-8007-1M,FW/SW,An unexpected error code from the Ultrapath Interconnect (UPI) Reference Code has been detected and is not clearly defined in the BIOS.
+SPX86A-8007-27,FW/SW,An unknown error code from the Ultrapath Interconnect (UPI) Reference Code has been detected and has not been registered with the ILOM fault diagnosis daemon.
+SPX86A-8007-3U,FW/SW,An unsupported Ultrapath topology has been detected.
+SPX86A-8007-41,FW/SW,The Memory Reference Code (MRC) has detected an array access out-of-bounds.
+SPX86A-8007-5W,FW/SW,The Memory Reference Code (MRC) has detected an invalid opcode for memory DIMM.
+SPX86A-8007-6F,FW/SW,The Memory Reference Code (MRC) has detected an array out of bounds event during channel interleaving.
+SPX86A-8007-7K,FW/SW,The Memory Reference Code (MRC) has detected that a NVDIMM driver was unable to control a nonvolatile DIMM (NVDIMM).
+SPX86A-8007-8T,FW/SW,The Memory Reference Code (MRC) has detected that the System Address Decoder (SAD) rules encountered a configuration error.
+SPX86A-8007-96,FW/SW,The Memory Reference Code (MRC) has detected the number of Integrated memory controllers (IMC) has exceeded the limit.
+SPX86A-8007-AN,FW/SW,The Memory Reference Code (MRC) has detected an invalid boot mode.
+SPX86A-8007-C9,FW/SW,The Memory Reference Code (MRC) has detected an invalid access to a register.
+SPX86A-8007-DL,FW/SW,The Memory Reference Code (MRC) has detected an invalid subboot mode request.
+SPX86A-8007-EG,FW/SW,The Memory Reference Code (MRC) could not lookup ODT structure.
+SPX86A-8007-FV,FW/SW,The Memory Reference Code (MRC) has detected a System Management Bus (SMBUS) read error accessing a thermal sensor on a DIMM.
+SPX86A-8007-G0,FW/SW,An unexpected error code from the Memory Reference Code has been detected and is not clearly defined in the BIOS.
+SPX86A-8007-HU,FW/SW,An unknown error code from the Memory Reference Code has been detected and has not been registered with the ILOM fault diagnosis daemon.
+SPX86A-8007-J7,ILOM,"A device necessary to support a configuration has failed.\n(If there are no secondary faults, you have to look at eReports to see what failed)"
+SPX86A-8007-KM,PCI,PCIE initialization failed to complete.
+SPX86A-8007-L8,CPU,The Demoted Warm Reset (DWR) process was unable to complete or is deadlocked.
+SPX86A-8007-MK,CPU,The start of the boot process was unable to complete or is deadlocked.
+SPX86A-8007-NF,CPU,The Ultrapath Interconnect (UPI) initialization Code was unable to complete or is deadlocked.
+SPX86A-8007-PW,CPU,The Field-Programmable Gate Array (FPGA) has detected the system was powered off unexpectedly.
+SPX86A-8007-Q1,ILOM,The BIOS has detected that the platform information structure (SPI flash) is invalid.
+SPX86A-8007-R9,POWER,A power source has failed or is not available to the server.
+SPX86A-8007-SN,CPU,The Memory Reference Code (MRC) has detected that a processor has failed the built-in self-test for all the cores.
+SPX86A-8007-T6,CPU,The Memory Reference Code (MRC) has detected that a processor has failed the built-in self-test on a single core.
+SPX86A-8007-UT,CPU,A bus interconnect error has been detected.
+SPX86A-8007-V0,CPU,Direct Media Interface (DMI) training has failed to complete within specified time.
+SPX86A-8007-WV,CPU,The Power Control Unit (PCu) on a processor has detected a catastrophic over current from the Integrated Voltage Regulator (IVR).
+SPX86A-8007-XG,CPU,The Power control Unit (PCU) on a processor has detected a catastrophic over voltage from the Integrated Voltage Regulator (IVR).
+SPX86A-8007-YL,CPU,A processor has detected multiple Last-Level Cache (LLC) correctable errors.
+SPX86A-8008-05,CPU,A processor has detected a Last-Level Cache (LLC) uncorrectable error.
+SPX86A-8008-1S,CPU,The memory controller on a processor has experienced a timeout in it's Mesh2Mem logic.
+SPX86A-8008-2A,CPU,A processor has detected multiple Mid-Level Cache (MLC) correctable errors.
+SPX86A-8008-3P,CPU,A timeout occurred while sending to the Message Channel. This is an internal processor problem.
+SPX86A-8008-4D,CPU,The Power Control Unit (PCU) on a processor has detected excessive die temperature on the processor.
+SPX86A-8008-5H,CPU,The processor has experienced a pkg C-state timeout or hang indicative of processor or UPI problems.
+SPX86A-8008-63,CPU,The processor has experienced a pkg C-state timeout indicative of a processor failure.
+SPX86A-8008-7Y,CPU,The processor has experienced a pkg S-state timeout or hang indicative of a processor or UPI failure.
+SPX86A-8008-8Q,CPU,The System Management Bus (SMBUS) has detected a Vector Packet Processing (VPP) timeout indicative of a processor failure.
+SPX86A-8008-9C,CPU,The System Management Bus (SMBUS) has detected a timeout waiting for the Power Management Request (PMR) completion to be received.
+SPX86A-8008-AR,CPU,During Boot Mode Processing more than 1 Intel TXT Agent has been detected.
+SPX86A-8008-C4,CPU,An invalid access to the System Configuration Controller (UBOX) on a processor has occurred.
+SPX86A-8008-DX,CPU,The System Configuration Controller (UBOX) has encountered a message channel tracker error.
+SPX86A-8008-E2,CPU,The System Configuration Controller (UBOX) has encountered a MasterLock timeout or System Management Interuupt (SMI) Lock timeout.
+SPX86A-8008-FJ,CPU,An Ultrapath Interconnect (UPI) correctable link error has occurred.
+SPX86A-8008-GE,CPU,An Ultrapath Interconnect (UPI) link down error has occurred.
+SPX86A-8008-HP,CPU,An Ultrapath Interconnect (UPI) CRC Link error has occurred.
+SPX86A-8008-JA,CPU,An Ultrapath Interconnect (UPI) uncorrectable link error has occurred.
+SPX86A-8008-KS,CPU,The Ultrapath Interconnect (UPI) has detected that a link has degraded width.
+SPX86A-8008-L5,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected mismatched Ultrapath Interconnect (UPI) link ends.
+SPX86A-8008-MY,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an error in the Ultrapath Interconect (UPI) bus programming.
+SPX86A-8008-N3,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected a processor socket initialization failure.
+SPX86A-8008-PH,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath Interconnect (UPI) resource request that was too large for the processor.
+SPX86A-8008-QD,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath Interconnect (UPI) resource for the processor that was not requested.
+SPX86A-8008-R4,CPU,An Ultrapath Interconnect (UPI) receiver failure has occurred.
+SPX86A-8008-SR,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the system address decoder could not be setup.
+SPX86A-8008-TC,CPU,The Ultrapath Interconnect Reference Code (UPIRC) is unable to determine the processor topology.
+SPX86A-8008-UQ,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath topology failure associated with the UPI link.
+SPX86A-8008-VE,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected an Ultrapath topology failure associated with the processor socket.
+SPX86A-8008-WJ,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the processors do not support Time Stamp Counter (TSC) synchronization.
+SPX86A-8008-X2,CPU,An Ultrapath Interconnect (UPI) transmitter (TX) failure has occurred.
+SPX86A-8008-YX,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the requested Ultrapath link speed is unsupported.
+SPX86A-8009-02,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the Video Graphics Array (VGA) range target has an invalid socket.
+SPX86A-8009-1X,CPU,The Ultrapath Interconnect Reference Code (UPIRC) has detected that the Video Graphics Array (VGA) range target has an invalid stack.
+SPX86A-8009-2E,CPU,The Power Control Unit (PCU) on a processor has detected a voltage regulator failure.
+SPX86A-8009-3J,PCI,ILOM has detected that a PCIE link layer is inactive.
+SPX86A-8009-4C,CPU,ILOM has detected that the traffic controller on the Integrated I/O (IIO) of a processor has encountered multiple correctable errors.
+SPX86A-8009-5Q,CPU,ILOM has detected that the traffic controller on the Integrated I/O (IIO) of a processor has encountered an uncorrectable error.
+SPX86A-8009-64,MEMORY,The Memory Reference Code (MRC) has detected a DIMM communication failure.
+SPX86A-8009-7R,MEMORY,The Memory Reference Code (MRC) has detected that a nonvolatile memory DIMM (NVDIMM) is unsupported by currently installed MRC firmware.
+SPX86A-8009-8H,CPU,The Memory Reference Code (MRC) has detected a failure with setting up memory interleaving.
+SPX86A-8009-9D,MEMORY,The Memory Reference Code (MRC) has detected a memory DIMM that has failed the latency test.
+SPX86A-8009-AY,MEMORY,The Memory Reference Code (MRC) has detected that no system memory is available.
+SPX86A-8009-C3,MEMORY,The health status of a Nonvolatile Memory DIMM (NVDIMM) is in fatal condition.
+SPX86A-8009-DS,MEMORY,The Memory Reference Code (MRC) has detected a Phase-Locked Loop (PLL) lock error on a memory DIMM.
+SPX86A-8009-E5,MEMORY,The Memory Reference Code (MRC) has detected a DIMM polling timeout event while obtaining DIMM parameters.
+SPX86A-8009-FP,MEMORY,The Memory Reference Code (MRC) has detected that the Post Package Repair (PPR) of a memory DIMM has failed.
+SPX86A-8009-GA,MEMORY,The Memory Reference Code (MRC) has detected a timing value that will overflow the DIMMs internal register.
+SPX86A-8009-HJ,CPU,The Memory Reference Code (MRC) has detected the system is unable to read or write DIMM voltage information.
+SPX86A-8009-JE,MEMORY,The Memory Reference Code (MRC) has detected a CLK loopback training error.
+SPX86A-8009-KX,MEMORY,The Memory Reference Code (MRC) has detected a clock (CLK) training error.
+SPX86A-8009-L2,MEMORY,The Memory Reference Code (MRC) has detected a DIMM has failed training.
+SPX86A-8009-MR,MEMORY,The Memory Reference Code (MRC) has detected a memory channel interleave failure.
+SPX86A-8009-N4,MEMORY,The Memory Reference Code (MRC) has detected that a memory channel on-die termination (ODT) timing overflow has occurred.
+SPX86A-8009-PQ,MEMORY,The Memory Reference Code (MRC) has detected a memory channel has failed the Revision Identification (RID) register training.
+SPX86A-8009-QC,MEMORY,The Memory Reference Code (MRC) has detected a memory channel uncorrectable error during Revision Identification (RID) register training.
+SPX86A-8009-R3,MEMORY,The Memory Reference Code (MRC) has detected an uncorrectable swizzle discovery error on a memory channel.
+SPX86A-8009-SY,MEMORY,The Memory Reference Code (MRC) has detected a memory channel variation in roundtrip delay times has exceeded limit.
+SPX86A-8009-TD,MEMORY,The Memory Reference Code (MRC) has detected a memory channel training failure.
+SPX86A-8009-UH,CPU,The Memory Reference Code (MRC) has detected the system was unable to read the memory controller frequency.
+SPX86A-8009-VA,MEMORY,The Memory Reference Code (MRC) has detected that a DIMM failed memtest due to multiple symbols.
+SPX86A-8009-WP,CPU,The Memory Reference Code (MRC) has detected that the Power Controller Unit (PCU) is not responding.
+SPX86A-8009-X5,CPU,The Memory Reference Code (MRC) has detected a System Management Bus (SMBUS) read error has occurred on a Load Reduced DIMM (LRDIMM).
+SPX86A-8009-YS,CPU,The Memory Reference Code (MRC) has detected a memory controller frequency that is unsupported.
+SPX86A-800A-0C,ILOM,PMC Patch Failed\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \u00a0 \u00a0
+SPX86A-800A-1Q,None,MIO not installed
+SPX86A-800A-24,MB,SMOD not Installed
+SPX86A-800A-3R,ILOM, BIOS Update Failed
+SPX86A-800A-42,ILOM,SPI Firmware Corrupt
+SPX86A-800A-5X,MEMORY,ESM Capacitance Test Failed
+SPX86A-800A-6E,MEMORY,ESM Internal Failure
+SPX86A-800A-7J,CPU, GPU Thermtrip Failure
+SPX86A-800A-8S,PCI, PCIe Device Initialization Failed
+SPX86A-800A-95,MEMORY,Memtest Single Symbol Test Failed
+SPX86A-800A-AP,MEMORY,A 3D Xpoint (3DX) DIMM is unsupported.
+SPX86A-800A-CA,MEMORY,The Memory Reference Code (MRC) has detected the firmware installed on a DIMM is out of date and is not supported.
+SPX86A-800A-DH,MEMORY,The Memory Reference Code (MRC) has detected a mixture of DPCMMS and UDIMMs.
+SPX86A-800A-ED,MEMORY,The Memory Reference Code (MRC) has detected a DPCMM that is not recognized due to some mismatch with current configuration data in the DIMM firmware.
+SPX86A-800A-FY,FW/SW,The Memory Reference Code (MRC) detected a surprise clock stop error on a 3D Xpoint (3DX) DIMM that was not resolved by a power cycle.
+SPX86A-800A-G3,MEMORY,the Memory Reference Code detected a non-serviceable surprise clock stop on a 3D Xpoint (3DX) DIMM.
+SPX86A-800A-HR,FW/SW,The Memory Reference Code (MRC) has determined that an internal opcode is either invalid or not defined.
+SPX86A-800A-J4,CPU,ILOM fault manager has applied diagnosis to error reports received and has determined a Graphics Processing Unit (GPU) has exceeded the acceptable threshold for the number of memory pages retired.
+SPX86A-800A-KQ,MEMORY,Multiple correctable ECC errors on a channel that has a 3D Xpoint (3DX) DIMM has been detected by the processor.
+SPX86A-800A-LC,MEMORY,A memory uncorrectable ECC error on a channel that has a 3D Xpoint DIMM has been detected by the processor.
+SPX86A-800A-MJ,MEMORY,A critical over-temperature condition was detected on a 3D Xpoint (3DX) DIMM.
+SPX86A-800A-NE,MEMORY,A 3D Xpoint (3DX) DIMM communications failure has occurred due to a protocol error.
+SPX86A-800A-PX,MEMORY,The ILOM fault manager has received an error report indicating the Memory Reference Code (MRC) has determined a 3D Xpoint (3DX) DIMM encountered a fatal error.
+SPX86A-800A-Q2,MEMORY,The health status of a 3D Xpoint (3DX) DIMM is fatal or critical.
+SPX86A-800A-RA,MEMORY,A DIMM has encountered an excessive number of memory correctable errors.
+SPX86A-800A-SP,MEMORY,A memory channel failure has occurred.
+SPX86A-800A-T5,MEMORY,A 3D Xpoint (3DX) DIMM has encountered an SMBUS read error.
+SPX86A-800A-US,MEMORY,A 3D Xpoint (3DX) DIMM has encountered an SMBUS write error.
+SPX86A-800A-V3,MEMORY,The Memory Reference Code (MRC) has detected a DIMM encountered an error during memory channel I/O initialization.
+SPX86A-800A-WY,MEMORY,The Memory Reference Code (MRC) has detected a DIMM encountered an error during memory channel initialization.
+SPX86A-800A-XD,POWER,A minor drop in voltage on the 12-volt rail has been detected.
+SPX86A-800A-YH,MEMORY,Unexpected shutdown has occurred and  data committed to DPCMM may not have been  persisted
+SPX86A-800C-0D,POWER,A significant drop in voltage on the 12-volt rail has been detected.
+SPX86A-800C-1H,CPU,A reset of the host has failed.
+SPX86A-800C-23,MEMORY,The memory configuration does not support two-level main memory (2LM) mode.
+SPX86A-800C-3Y,MEMORY,The Voltage Drain Drain (VDD) value set in the BIOS is not appropriate for the Data Center Persistent Memory Module (DCPMM) a.k.a. 3D Xpoint (3DX) DIMM's.
+SPX86A-800C-45,MEMORY,An unsupported memory configuration using DDR4 DIMM(s) that are below 32-GB in size has been detected.
+SPX86A-800C-5S,MEMORY,The DDR4 DIMM type is an unsupported configuration in the current memory mode.
+SPX86A-800C-6A,MEMORY,A Data Center Persistent Memory Module (DCPMM) a.k.a. 3D Xpoint (3DX) DIMM is present but is not populated in first slot associated with memory controller 0 of a processor.
+SPX86A-800C-7P,MEMORY,A Data Center Persistent Memory Module (DCPMM) a.k.a. 3D Xpoint (3DX) DIMM is present but is not populated in sockets associated with processor 0.
+SPX86A-800C-8X,MEMORY,A DDR4 DIMM is not present in a channel that contains a Data Center Persistent Memory Module (DCPMM) a.k.a. 3D Xpoint (3DX) DIMM.
+SPX86A-800C-92,MEMORY,The geometry of a DDR4 Memory DIMM is not supported.
+SPX86A-800C-AJ,MEMORY,The processor has determined the capacity ratio between a DDR4 DIMM and DCPMM DIMM is outside the recommended range.
+SPX86A-800C-CE,MEMORY,The Memory Reference Code (MRC) has determined that DIMM sockets are not using the same memory mode.
+SPX86A-800C-DQ,MEMORY,A Memory DIMM is improperly populated or is a type that is not compatible with other DIMMs installed.
+SPX86A-800C-EC,MEMORY,The Data Center Persistent Memory Modules (DCPMM) installed across all DIMM sockets don't have the same capacity.
+SPX86A-800C-FR,MEMORY,A Data Center Persistent Memory Module is installed in a memory DIMM socket that should have a DDR4 DIMM installed.
+SPX86A-800C-G4,MEMORY,The memory topology is not symmetrical between memory controllers.
+SPX86A-800C-HY,FW/SW,Inability to access a temperature sensor has led to an override of the fan control cooling parameters.
+SPX86A-800C-J3,ILOM,The increased refresh rate for a temperature sensor has been disabled.
+SPX86A-800C-KH,ILOM,The custom refresh rate for temperature sensor has been disabled.
+SPX86A-800C-LD,FW/SW,The Memory Reference Code (MRC) does not recognize the interface used to access 3DX registers.
+SPX86A-800C-MP,FW/SW,The Memory Reference Code (MRC) has determined that the SMBUS has become inactive during memory DIMM initialization.
+SPX86A-800C-NA,FW/SW,The Memory Reference Code (MRC) has determined that the SMBUS is not responding during memory DIMM initialization.
+SPX86A-800C-PS,POWER,A minor drop in voltage on the 12-volt rail has been detected.
+SPX86A-800C-Q5,MEMORY,The health status of a Data Center Persistent Memory Module (DCPMM) aka 3D Xpoint (3DX) DIMM is failing.
+SPX86A-800C-RE,MEMORY,A DIMM has encountered an excessive number of memory correctable errors.
+SPX86A-800C-SJ,MEMORY,The Memory Reference Code (MRC) has detected a DIMM encountered an error during memory channel initialization.
+SPX86A-800C-T2,CPU,The Memory Reference Code (MRC) has detected a fuse error in the Power Controller Unit (PCU).
+SPX86A-800C-UX,CPU,A power-cycle of the host by ILOM was unsuccessful in resetting the Platform Controller Hub (PCH).
+SPX86A-800C-V4,CPU,A burst of Ultrapath Interconnect (UPI) correctable link errors has occurred.
+SPX86A-800C-WR,MEMORY,Adaptive Device Correction (ADC) has been activated on the first occurrence of encountering an excessive number of memory correctable errors on a DIMM.
+SPX86A-800C-XC,MEMORY,Excessive memory channel link correctable errors have occurred on a channel that has a Data Center Persistent Memory Module (DCPMM)
+SPX86A-800C-YQ,MEMORY,Adaptive Device Correction (ADC) has been reactivated on the second occurrence of encountering an excessive number of memory correctable errors on the same DIMM.
+SPX86A-800D-0S,MEMORY,Excessive memory channel correctable errors have occurred on a DIMM.
+SPX86A-800D-15,MEMORY,Excessive memory channel link correctable errors have occurred on a DIMM.
+SPX86A-800D-2P,POWER,Indicates that a power source is operating at low efficiency.
+SPX86A-800D-3A,FW/SW,Indicates that the SPI Flash Image is Unrecognized
+SPX86A-800D-4H,FW/SW,Indicates that an SPI Parameter setting is not set to factory default.
+SPX86A-800D-5D,ILOM,Indicates that an upgrade to the Field Programmable Gate Array (FPGA) was not performed due to Root of Trust (ROT) lock-down being asserted.
+SPX86A-800D-6Y,ILOM,Indicates that an upgrade to the Field Programmable Gate Array (FPGA) was unsuccessful.
+SPX86A-800D-73,MEMORY,Indicates that the Memory Reference Code (MRC) has identified DDR4 DIMMs on a processor socket have mismatched capacities.
+SPX86A-800D-8C,CPU,Processor / Memory Throttling
+SPX86A-800D-9Q,MEMORY,DIMM UE Predicted
+TOR_UNREACHABLE,SMART_NIC,Smartnic can not be reached for over an hour and host power is stale or unknown
+ilom_unreachable,ILOM,
