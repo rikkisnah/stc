@@ -1,0 +1,69 @@
+########################################
+# Global defaults
+########################################
+
+model = "oca/gpt-5.1-codex"
+profile = "gpt-5-1-codex"
+preferred_auth_method = "apikey"
+sandbox_mode = "workspace-write"
+
+# Codex-only features (Responses API required)
+approval_policy = "on-failure"
+trust_level = "trusted"
+web_search_request = true
+
+
+########################################
+# Model Providers
+########################################
+
+[model_providers.oca-responses]
+name = "Oracle Code Assist Responses"
+base_url = "https://code-internal.aiservice.us-chicago-1.oci.oraclecloud.com/20250206/app/litellm"
+wire_api = "responses"
+http_headers = { "client" = "codex-cli", "client-version" = "0" }
+
+
+########################################
+# Profiles (Responses / Codex ONLY)
+########################################
+
+[profiles.plan]
+model = "oca/gpt-5.2"
+model_provider = "oca-responses"
+preferred_auth_method = "apikey"
+sandbox_mode = "read-only"
+
+[profiles.act]
+model = "oca/gpt-5.1-codex"
+model_provider = "oca-responses"
+preferred_auth_method = "apikey"
+sandbox_mode = "workspace-write"
+
+[profiles.gpt-5-codex]
+model = "oca/gpt-5-codex"
+review_model = "oca/gpt-5-codex"
+model_provider = "oca-responses"
+personality = "pragmatic"
+
+[profiles.gpt-5]
+model = "oca/gpt-5"
+review_model = "oca/gpt-5"
+model_provider = "oca-responses"
+
+[profiles.gpt-5-2]
+model = "oca/gpt-5.2"
+review_model = "oca/gpt-5.2"
+model_provider = "oca-responses"
+
+[profiles.gpt-5-1-codex]
+model = "oca/gpt-5.1-codex"
+review_model = "oca/gpt-5.1-codex"
+model_provider = "oca-responses"
+personality = "pragmatic"
+
+[profiles.gpt-5-1-codex-mini]
+model = "oca/gpt-5.1-codex-mini"
+review_model = "oca/gpt-5.1-codex-mini"
+model_provider = "oca-responses"
+personality = "pragmatic"
