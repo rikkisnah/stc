@@ -28,7 +28,7 @@ From this point on, **only** read or write the working copies inside `scripts/tr
 1. Treat **all** JSON files under `scripts/normalized-tickets/` (any date subdirectory) as the source pool.
 2. Filter to tickets with `status.current = Resolved` that are **not** already present in the working `scripts/trained-data/tickets-categorized.csv`.
 3. Process tickets in deterministic filename order so every ticket is eventually categorized; do not limit work to a single date.
-4. Pull exactly **ten** tickets per pass (sequentially, not randomly). Every batch must include **ten** tickets so auditing remains consistent.
+4. Pull exactly **three** tickets per pass (sequentially, not randomly). Every batch must include **three** tickets so auditing remains consistent.
 
 ### Categorization
 1. Evaluate each ticket against the current `scripts/trained-data/rule-engine.csv`.
@@ -39,7 +39,7 @@ From this point on, **only** read or write the working copies inside `scripts/tr
 6. Append every processed ticket to `scripts/trained-data/tickets-categorized.csv`, auto-setting `Human Audit for Accuracy = needs-review` when the computed confidence is below 0.5 and `pending-review` otherwise. Leave `Human Comments` empty for the reviewer.
 
 ### Snapshots and Re-runs
-1. After each **ten**-ticket batch, snapshot the live files within `scripts/trained-data/` as `tickets-categorized-<pass>.csv` and `rule-engine-<pass>.csv` to preserve history.
+1. After each **three**-ticket batch, snapshot the live files within `scripts/trained-data/` as `tickets-categorized-<pass>.csv` and `rule-engine-<pass>.csv` to preserve history.
 2. To rerun a batch, remove the affected rows from the live `tickets-categorized.csv`, keep the current rule engine, and repeat the categorization steps on the same normalized inputs.
 
 ## Human Audit Feedback Loop
@@ -80,7 +80,7 @@ After each training pass, create pass-suffixed snapshots within the working dire
 The file `scripts/trained-data/golden-rules-engine/rule-engine.csv` is the authoritative, production-ready rule engine generated from all completed training passes and human audits. **Do not modify files in this directory directly.** It is read-only and only updated manually by a human after audit is complete. Updates flow from the per-pass working files after human review, not the other way around.
 
 ## Instructions
-- Before beginning any workflow steps, read `/mnt/data/src/rkisnah/stc/MEMORY.md` and carry any active reminders or constraints into the session.
+- Before beginning any workflow steps, read `MEMORY.md` (in the repo root) and carry any active reminders or constraints into the session.
 - Always provide both the structured CSV row and a brief rationale.
 - Favor deterministic rule matches when the ticket clearly triggers an existing rule; fall back to LLM reasoning otherwise.
 - When categorization source is `rule`, surface the highest matching rule confidence in `LLM Confidence`. When source is `llm`, provide the LLM’s confidence score.

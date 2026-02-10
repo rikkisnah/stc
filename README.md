@@ -61,12 +61,12 @@ Step 6  categorize all      ──►  scripts/analysis/tickets-categorized.csv
 Pull raw JSON from Jira.
 
 ```bash
-uv run python scripts/get_tickets.py                       # Fetch all tickets
-uv run python scripts/get_tickets.py -2d                    # Last 2 days
-uv run python scripts/get_tickets.py 2025-01-01             # From start date to now
-uv run python scripts/get_tickets.py 2025-01-01 2025-01-31  # Date range
-uv run python scripts/get_tickets.py -t DO-2639750          # Single ticket by key
-uv run python scripts/get_tickets.py -h                     # Show help
+uv run python scripts/get-tickets.py                       # Fetch all tickets
+uv run python scripts/get-tickets.py -2d                    # Last 2 days
+uv run python scripts/get-tickets.py 2025-01-01             # From start date to now
+uv run python scripts/get-tickets.py 2025-01-01 2025-01-31  # Date range
+uv run python scripts/get-tickets.py -t DO-2639750          # Single ticket by key
+uv run python scripts/get-tickets.py -h                     # Show help
 ```
 
 Output: `scripts/tickets-json/`
@@ -182,7 +182,7 @@ These are retained for reference but may not reflect the current pipeline.
 # Running Tests
 
 ```bash
-uv run pytest scripts/test_get_tickets.py -v
+uv run pytest scripts/test-get-tickets.py -v
 ```
 
 # Glossary

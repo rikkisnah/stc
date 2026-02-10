@@ -43,3 +43,20 @@ R041,SPENV-\d{4}-\w+|DCT-\d{4}-\d{2},labels+description+comments,Hardware Enviro
 R042,HPCGPU-\d{4}|HPCRDMA-\d{4}|HT0-\d{4}|ILOM-8000|ISTOR-8000|JBOD-\w+-\w+|NVL-\d{4}|SDN-INTERFACE|SMARTNIC-8000|SP\w+-\d{4}|SPNVDA-XID|DCT-\d{4},labels+description+comments,Runbook Present = TRUE,HW- General,50,1,human,0
 R043,vops\.oci\.oraclecorp\.com/runbooks/OHDHO,description+comments,Runbook Present = TRUE,ROT,50,1,human,0
 R044,RoT.*unreachable.*network|RoT is unreachable on the network,summary,RoT Network Unreachable,ROT,80,1,human,0
+R045,Meta CPV Validation Analysis,summary,CPV Meta Validation Analysis,HW- General,80,0.8,llm,0
+R046,CPV Job Failure.*health_check,summary,CPV Job Failure - Health Check,HW- General,75,0.8,llm,0
+R047,CPV Job Timeout.*health_check,summary,CPV Job Timeout - Health Check,HW- General,75,0.8,llm,0
+R048,CPV Job.*ib_write_bw_pair,summary,CPV Job Issue - IB Write BW Pair,RDMA Cable,75,0.8,llm,0
+R049,CPV Job.*rccl_.*multitest_pollara,summary,CPV Job Issue - RCCL Multi-Host Test,GPU Interconnect,75,0.8,llm,0
+R050,CPV Job.*rccl_all_reduce_perf|CPV Job.*rccl_allreduce_perf,summary,CPV Job Issue - RCCL AllReduce Perf,GPU Interconnect,75,0.8,llm,0
+R051,CPV Job.*agfhc_level_1_to_5|CPV Job.*agfhc_hbm,summary,CPV Job Issue - AGFHC Diagnostics,GPU,75,0.8,llm,0
+R052,CPV Job.*initial_setup,summary,CPV Job Issue - Initial Setup,HW- General,70,0.75,llm,0
+R053,CPV Job.*gpuburn_short,summary,CPV Job Issue - GPUBurn Short,GPU,75,0.8,llm,0
+R054,CPV Job.*cable_validation,summary,CPV Job Issue - Cable Validation,RDMA Cable,75,0.8,llm,0
+R055,CPV Job.*iperf_pair,summary,CPV Job Issue - iPerf Pair,Networking,75,0.8,llm,0
+R056,CPV Job.*miniHPL,summary,CPV Job Issue - miniHPL,GPU,75,0.8,llm,0
+R057,CPV Job.*sunvts_burnin,summary,CPV Job Issue - SUNVTS Burn-In,HW- General,75,0.8,llm,0
+R058,CPV Job.*rccl_alltoall_perf,summary,CPV Job Issue - RCCL AllToAll Perf,GPU Interconnect,75,0.8,llm,0
+R059,CPV Job.*meta_validation,summary,CPV Job Issue - Meta Validation,HW- General,70,0.75,llm,0
+R060,WARN.*Clock speed is lower than max clock speed,description,GPU Clock Speed Warning,GPU,55,0.7,llm,0
+R061,WARN.*unsupported driver,description,GPU Driver Version Warning,GPU,55,0.7,llm,0

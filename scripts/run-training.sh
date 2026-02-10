@@ -17,7 +17,8 @@ usage() {
 
 [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]] && usage
 
-REPO_ROOT="/mnt/data/src/rkisnah/stc"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 PROMPT_FILE="$REPO_ROOT/prompts/train-to-categorize-tickets-prompt.md"
 CODEX_BIN="${CODEX_BIN:-codex}"
 

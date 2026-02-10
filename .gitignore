@@ -53,6 +53,9 @@ go.sum
 .DS_Store
 Thumbs.db
 
+# Environment config (contains secrets)
+env.json
+
 # Personal working notes
 ?LAUDE.md
 

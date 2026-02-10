@@ -16,7 +16,12 @@ import requests
 JIRA_TOKEN = "REDACTED_BITBUCKET_PAT"
 BASE_URL = "https://jira-sd.mc1.oracleiaas.com"
 
-BASE_JQL = """\
+PROJECT_MAP = {
+    "do":  "DC Ops",
+    "hpc": "High Performance Computing",
+}
+
+BASE_JQL_TEMPLATE = """\
 (labels = GPU_V6_E6-IS_MI355X_S.01 OR "Rack Type" = GPU_MI355X_E6_R.01)
 AND status != "Pending Part(s)"
 AND (("Region / Domain" IN (aga.ad1, "AGA5 (AD)")
@@ -26,7 +31,7 @@ AND (("Region / Domain" IN (aga.ad1, "AGA5 (AD)")
      AND ("Rack Type" IN (GPU_MI355X_E6_R.02, GPU_MI355X_E6_R.01)
           OR labels IN (GPU_V6_E6-IS_MI355X_S.02, GPU_V6_E6-IS_MI355X_S.01, AGA-CPV))
      AND summary !~ "Master")
-AND project = "DC Ops"
+AND project = "{project}"
 AND issuetype != "Service Request"
 AND "Component / Item" NOT IN cascadeOption(10046, 10064)"""
 
@@ -106,9 +111,9 @@ def fetch_single_ticket(ticket_key):
 
 
 def fetch_search(date_filter="", force=False, include_unresolved=False,
-                 unresolved_only=False):
+                 unresolved_only=False, project="do"):
     """Fetch tickets via JQL search with optional date filter."""
-    jql = BASE_JQL
+    jql = BASE_JQL_TEMPLATE.format(project=PROJECT_MAP[project])
     if unresolved_only:
         jql += UNRESOLVED_FILTER
     elif not include_unresolved:
@@ -185,13 +190,18 @@ def parse_args(argv=None):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 examples:
-  %(prog)s -a                           Fetch all tickets
+  %(prog)s -a                           Fetch all DO tickets (default)
+  %(prog)s -p hpc -a                    Fetch all HPC tickets
   %(prog)s -a -2d                       Last 2 days
   %(prog)s -a 2025-01-01                From 2025-01-01 to now
   %(prog)s -a 2025-01-01 2025-01-31     Between two dates
   %(prog)s -t DO-2639750                Fetch single ticket
   %(prog)s -t https://jira-sd.mc1.oracleiaas.com/browse/DO-2639750
 """,
+    )
+    parser.add_argument(
+        "-p", "--project", choices=["do", "hpc"], default="do",
+        help="Jira project: do (DC Ops, default) or hpc (High Performance Computing)",
     )
     parser.add_argument(
         "-a", "--all", action="store_true", dest="fetch_all",
@@ -269,7 +279,8 @@ def main(argv=None):
         date_filter = build_date_filter(args)
         fetch_search(date_filter, force=args.yes,
                      include_unresolved=args.include_unresolved,
-                     unresolved_only=args.unresolved_only)
+                     unresolved_only=args.unresolved_only,
+                     project=args.project)
 
     elapsed = time.monotonic() - start_time
     print(f"\nCompleted in {elapsed:.2f}s.")
