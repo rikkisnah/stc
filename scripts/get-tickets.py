@@ -143,10 +143,31 @@ def fetch_single_ticket(ticket_key):
     print(f"Done. Saved to {out_path}")
 
 
+def load_jql_from_file(path):
+    """Load JQL content from a file.
+
+    Returns the stripped content if non-empty, otherwise None.
+    """
+
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError as exc:
+        print(f"Warning: failed reading JQL file {path} ({exc}); using BASE_JQL.")
+        return None
+
+    jql = text.strip()
+    if not jql:
+        print(f"Warning: JQL file {path} is empty; using BASE_JQL.")
+        return None
+
+    return jql
+
+
 def fetch_search(date_filter="", force=False, include_unresolved=False,
-                 unresolved_only=False):
+                 unresolved_only=False, jql=None):
     """Fetch tickets via JQL search with optional date filter."""
-    jql = BASE_JQL
+    base_jql = jql if jql else BASE_JQL
+    jql = base_jql
     if unresolved_only:
         jql += UNRESOLVED_FILTER
     elif not include_unresolved:
@@ -236,6 +257,10 @@ examples:
         help="Fetch all matching tickets (with optional date filter)",
     )
     parser.add_argument(
+        "--jql-file",
+        help="Path to a file containing a custom JQL query (used with -a/--all)",
+    )
+    parser.add_argument(
         "--include-unresolved", action="store_true",
         help="Include unresolved tickets (default: only resolved)",
     )
@@ -258,8 +283,18 @@ examples:
 
     args, remaining = parser.parse_known_args(argv)
 
-    # Merge remaining args (like -2d) into positional
-    positional = (args.positional or []) + remaining
+    # Merge remaining args (like -2d) into positional, excluding values that
+    # belong to known flags (e.g. --jql-file PATH).
+    positional = list(args.positional or [])
+    skip_next = False
+    for token in remaining:
+        if skip_next:
+            skip_next = False
+            continue
+        if token == "--jql-file":
+            skip_next = True
+            continue
+        positional.append(token)
 
     # Parse positional args into structured fields
     args.relative_days = None
@@ -285,6 +320,10 @@ examples:
     elif len(positional) > 2:
         parser.error("Too many arguments")
 
+    # Enforce --jql-file usage
+    if args.jql_file and not args.fetch_all:
+        parser.error("--jql-file requires -a/--all")
+
     # Show help if no action specified
     if not args.fetch_all and not args.ticket:
         parser.print_help()
@@ -305,9 +344,14 @@ def main(argv=None):
         fetch_single_ticket(ticket_key)
     elif args.fetch_all:
         date_filter = build_date_filter(args)
-        fetch_search(date_filter, force=args.yes,
-                     include_unresolved=args.include_unresolved,
-                     unresolved_only=args.unresolved_only)
+        custom_jql = load_jql_from_file(args.jql_file) if args.jql_file else None
+        fetch_search(
+            date_filter,
+            force=args.yes,
+            include_unresolved=args.include_unresolved,
+            unresolved_only=args.unresolved_only,
+            jql=custom_jql,
+        )
 
     elapsed = time.monotonic() - start_time
     print(f"\nCompleted in {elapsed:.2f}s.")

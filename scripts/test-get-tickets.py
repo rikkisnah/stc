@@ -91,6 +91,18 @@ class TestParseArgs:
         with pytest.raises(SystemExit):
             parse_args(["-a", "2025-01-01", "bad"])
 
+    def test_jql_file_flag_records_path(self, tmp_path):
+        jql_file = tmp_path / "custom.jql"
+        jql_file.write_text("project = \"DC Ops\"")
+        args = parse_args(["-a", "--jql-file", str(jql_file)])
+        assert getattr(args, "jql_file") == str(jql_file)
+
+    def test_jql_file_flag_requires_fetch_all(self, tmp_path):
+        jql_file = tmp_path / "custom.jql"
+        jql_file.write_text("project = \"DC Ops\"")
+        with pytest.raises(SystemExit):
+            parse_args(["--jql-file", str(jql_file)])
+
 
 # --- build_date_filter ---
 
@@ -284,3 +296,32 @@ class TestFetchSearch:
 
         call_params = mock_get.call_args[1]["params"]
         assert 'created >= "-2d"' in call_params["jql"]
+
+    def test_custom_jql_file_content_used(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        custom_jql = "project = \"DC Ops\" AND status = \"Open\""
+        responses = iter([
+            {"issues": [], "total": 0},
+        ])
+        mock_get = MagicMock(side_effect=lambda *a, **kw: MagicMock(json=MagicMock(return_value=next(responses))))
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get)
+
+        fetch_search(jql=custom_jql)
+
+        params = mock_get.call_args[1]["params"]
+        assert params["jql"].startswith(custom_jql)
+
+    def test_custom_jql_empty_falls_back(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        responses = iter([
+            {"issues": [], "total": 0},
+        ])
+        mock_get = MagicMock(side_effect=lambda *a, **kw: MagicMock(json=MagicMock(return_value=next(responses))))
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get)
+
+        fetch_search(jql="")
+
+        params = mock_get.call_args[1]["params"]
+        assert params["jql"].startswith(get_tickets.BASE_JQL)
