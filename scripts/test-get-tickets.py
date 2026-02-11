@@ -15,6 +15,8 @@ fetch_search = get_tickets.fetch_search
 fetch_single_ticket = get_tickets.fetch_single_ticket
 parse_args = get_tickets.parse_args
 parse_ticket_key = get_tickets.parse_ticket_key
+load_jira_token = get_tickets.load_jira_token
+
 
 
 # --- parse_ticket_key ---
@@ -169,6 +171,41 @@ class TestArchiveExisting:
         out_dir = tmp_path / "nonexistent"
         archive_path = archive_existing(out_dir)
         assert archive_path is None
+
+
+# --- load_jira_token ---
+
+
+class TestLoadJiraToken:
+    def test_reads_from_env_json(self, tmp_path, monkeypatch, capsys):
+        env_path = tmp_path / "env.json"
+        env_path.write_text(json.dumps({"jira_token": "TOKEN_FROM_FILE"}))
+        monkeypatch.setattr(get_tickets, "CONFIG_ENV_PATH", env_path)
+
+        token = load_jira_token()
+        assert token == "TOKEN_FROM_FILE"
+        assert f"Using Jira token from {env_path}." in capsys.readouterr().out
+
+    def test_placeholder_falls_back_to_embedded(self, tmp_path, monkeypatch, capsys):
+        env_path = tmp_path / "env.json"
+        env_path.write_text(json.dumps({"jira_token": "PLACEHOLDER"}))
+        monkeypatch.setattr(get_tickets, "CONFIG_ENV_PATH", env_path)
+
+        token = load_jira_token()
+        assert token == get_tickets.DEFAULT_JIRA_TOKEN
+        out = capsys.readouterr().out
+        assert "missing/placeholder" in out
+        assert "Using embedded Jira token." in out
+
+    def test_missing_file_falls_back_to_embedded(self, tmp_path, monkeypatch, capsys):
+        env_path = tmp_path / "env.json"
+        monkeypatch.setattr(get_tickets, "CONFIG_ENV_PATH", env_path)
+
+        token = load_jira_token()
+        assert token == get_tickets.DEFAULT_JIRA_TOKEN
+        out = capsys.readouterr().out
+        assert "not found" in out
+        assert "Using embedded Jira token." in out
 
 
 # --- fetch_single_ticket ---

@@ -13,7 +13,7 @@ from urllib.parse import quote
 
 import requests
 
-JIRA_TOKEN = "REDACTED_BITBUCKET_PAT"
+DEFAULT_JIRA_TOKEN = "REDACTED_BITBUCKET_PAT"
 BASE_URL = "https://jira-sd.mc1.oracleiaas.com"
 
 BASE_JQL = """\
@@ -35,11 +35,46 @@ UNRESOLVED_FILTER = '\n     AND resolution = Unresolved'
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = SCRIPT_DIR / "tickets-json"
+CONFIG_ENV_PATH = SCRIPT_DIR.parent / "env.json"
+
+
+def load_jira_token():
+    """Load Jira token from config.
+
+    Precedence:
+      1) env.json (repo root) with key "jira_token"
+      2) DEFAULT_JIRA_TOKEN (legacy fallback)
+    """
+
+    try:
+        text = CONFIG_ENV_PATH.read_text(encoding="utf-8")
+        data = json.loads(text)
+        token = data.get("jira_token")
+        if token and token != "PLACEHOLDER":
+            print(f"Using Jira token from {CONFIG_ENV_PATH}.")
+            return token
+        print(
+            f"Warning: {CONFIG_ENV_PATH} missing/placeholder 'jira_token'; using default token.",
+            file=sys.stdout,
+        )
+    except FileNotFoundError:
+        print(
+            f"Warning: {CONFIG_ENV_PATH} not found; using default token.",
+            file=sys.stdout,
+        )
+    except (OSError, json.JSONDecodeError) as exc:
+        print(
+            f"Warning: failed reading {CONFIG_ENV_PATH} ({exc}); using default token.",
+            file=sys.stdout,
+        )
+
+    print("Using embedded Jira token.")
+    return DEFAULT_JIRA_TOKEN
 
 
 def make_headers():
     return {
-        "Authorization": f"Bearer {JIRA_TOKEN}",
+        "Authorization": f"Bearer {load_jira_token()}",
         "Accept": "application/json",
     }
 
@@ -69,9 +104,12 @@ def archive_existing(output_dir, force=False):
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     archive_name = f"tickets_json_{timestamp}"
+    # Archive the specific output_dir passed in (often a temp dir in tests).
     archive_path = shutil.make_archive(
-        str(SCRIPT_DIR / archive_name), "zip",
-        root_dir=str(SCRIPT_DIR), base_dir=output_dir.name,
+        str(output_dir.parent / archive_name),
+        "zip",
+        root_dir=str(output_dir.parent),
+        base_dir=output_dir.name,
     )
     print(f"Archived existing tickets to {archive_path}")
 
