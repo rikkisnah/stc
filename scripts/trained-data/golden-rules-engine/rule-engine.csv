@@ -1,45 +1,45 @@
-RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count
-R001,ib_write_bw_pair.*SPGXTAIL-8000-KW|SPGXTAIL-8000-KW.*ib_write_bw_pair,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,100,0.95,human-confirmed,5
-R002,Cable Order Check.*cabling issue|Reseat/Reorder CDFP Cables,summary+description,CDFP Cable Order Failure,CDFP,90,0.95,human-confirmed,3
-R003,CDFP.*faults.*known.*BUG|CDFP faults.*BUG issue,comments,CDFP False Positive (Known Bug),CDFP,80,0.9,human-confirmed,1
-R004,GBB.*powergood|SPGXTAIL-8000-MU|GBB.*firmware.*failed.*boot|SPGXTAIL-8000-5M,description+comments,GBB/OAM Powergood Failure,GPU,85,0.9,llm,3
-R005,pcie\.link-degraded-width|SPAMD-8001-XC|RESEAT_AND/OR_REPLACE PCIe,summary+description,PCIe Link Degraded Width,PCIE,90,0.95,human-confirmed,2
-R006,SmartNIC.*connectivity|dhcp_timeout.*no_dhcpoffers_received|SmartnicRotWipe,summary+labels,SmartNIC DHCP Timeout,SmartNIC,70,0.95,human-confirmed,13
-R007,Cable Validation Failure.*optic|failed optic|CPV-RDMA-Miscabled,summary+labels+comments,RDMA Cable Validation - Failed Optic,RDMA Cable,85,0.9,human-confirmed,5
-R008,SPGXTAIL-8000-KW,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,75,0.9,human-confirmed,4
-R009,ionic.*state DOWN.*POLLING|rdma link.*DOWN,description+comments,CPV Failure - RDMA Links Down,RDMA Cable,65,0.75,llm,1
-R010,rackPreReceiveActivities|pre-receive checks,summary+labels,Rack Pre-Receive Activity (Non-Incident),unknown,60,0.85,human-confirmed,2
-R011,TRS prescription|Resolving for TRS|Resolving for TRS prescription,comments,Runbook Present = TRUE,HW- General,50,1,human-confirmed,3
-R012,TRS_PRESCRIPTIVE_TICKET,labels,Runbook Present = TRUE,HW- General,50,1,human,10
-R013,SPAMD-8003|OP found on host.*Processor,summary+description,CPU/Processor Fault - Open Problem,CPU/Processor,70,0.7,llm,1
-R014,GPU.*failed.*agfhc|UMC_correctable.*GPU|RHS Hardware.*Action Plan.*Replace GPU,description+comments,GPU Hardware Failure - RHS Action Plan,GPU,75,0.75,llm,1
-R015,Prescriptive Action,summary+description,Runbook Present = TRUE,HW- General,50,1,human,6
-R016,Resolving for TRS prescription,comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,90,0.9,human-confirmed,2
-R017,Follow Runbook,description+comments,Runbook Present = TRUE,HW- General,60,0.85,llm,1
-R018,SPAMD-8001-WR,description,PCIe Hardware Fault - Open Problem,PCIE,70,0.7,llm,1
-R019,SPG\w+-\d+,labels,Runbook Present = TRUE,HW – Open Problems,50,1,human,0
-R020,Reference Document:.*support\.oracle\.com/msg/|support\.oracle\.com/msg/,description+comments,Runbook Present = TRUE,HW – Open Problems,50,1,human,0
-R021,Problem\s*Type:\s*TRS_\w+,summary,TRS Component Replacement,TRS,80,1,human,0
-R022,Mismatch.*Expected module_id.*found,description+comments,CDFP Module ID Mismatch,CDFP,85,1,human,0
-R023,Mismatch.*Expected module_id.*found,description+comments,Runbook Present = TRUE,CDFP,50,1,human,0
-R024,ILOM has determined that the expected number of GPU,description+comments,GPU Count Mismatch (ILOM),GPU,80,1,human,0
-R025,pcie_speed.*FAIL,description,PCIe Speed Check Failure,PCIE,80,1,human,0
-R026,pcie_speed.*FAIL,description,Runbook Present = TRUE,HW- General,50,1,human,0
-R027,Prescriptive Action.*Serial:,summary,Prescriptive Action - Component,HW- General,75,1,human,0
-R028,devops\.oci\.oraclecorp\.com/runbooks/,description+comments,Runbook Present = TRUE,HW- General,50,1,human,0
-R029,SVCIO_Update_Failed.*Ilom Provisioning|Ilom Provisioning.*SVCIO_Update_Failed,summary,SVCIO Update Failed - ILOM Provisioning,ILOM,80,1,human,0
-R030,gpuburn_short,summary,GPUBurn Short Run Failure,GPU,85,1,human,0
-R031,SMARTNIC_ESCALATED_RECIPE,summary,SmartNIC Escalated Recipe,SmartNIC,85,1,human,0
-R032,HPCGPU-\d{4}-\d{2}|SPGX-8000-\w+|SPNVIDIA-\d{4}-\w+,labels+description+comments,GPU Fault - Diagnostics Code Detected,GPU,55,0.9,human,0
-R033,HPCRDMA-\d{4}-\d{2},labels+description+comments,RDMA Fault - Diagnostics Code Detected,RDMA Cable,65,0.9,human,0
-R034,HT0-\d{4}-\d{4}|SDN-INTERFACE,labels+description+comments,Network/Link Fault - Diagnostics Code Detected,Networking,65,0.9,human,0
-R035,ILOM-8000-\w+,labels+description+comments,ILOM Fault - Diagnostics Code Detected,ILOM,60,0.85,human,0
-R036,ISTOR-8000-\w+|JBOD-\w+-\w+,labels+description+comments,Storage/JBOD Fault - Diagnostics Code Detected,Storage,60,0.85,human,0
-R037,SMARTNIC-8000-\w+,labels+description+comments,SmartNIC Fault - Diagnostics Code Detected,SmartNIC,60,0.85,human,0
-R038,NVL-\d{4}-\d{4},labels+description+comments,NVLink Fault - Diagnostics Code Detected,NVLink,65,0.9,human,0
-R039,SPAMD-\d{4}-\w+|SPARM-\d{4}-\w+|SPINTEL-\d{4}-\w+|SPNVDA-\d{4}-\w+|SPNVDA-XID\d+-\w+|SPX86A-\d{4}-\w+,labels+description+comments,CPU/Processor Fault - SP Diagnostics Code Detected,CPU/Processor,50,0.85,human,0
-R040,SPGXTAIL-8000-\w+,labels+description+comments,GPU Tail Node/GBB Fault - Diagnostics Code Detected,GPU,50,0.85,human,0
-R041,SPENV-\d{4}-\w+|DCT-\d{4}-\d{2},labels+description+comments,Hardware Environment Fault - Diagnostics Code Detected,HW- General,55,0.8,human,0
-R042,HPCGPU-\d{4}|HPCRDMA-\d{4}|HT0-\d{4}|ILOM-8000|ISTOR-8000|JBOD-\w+-\w+|NVL-\d{4}|SDN-INTERFACE|SMARTNIC-8000|SP\w+-\d{4}|SPNVDA-XID|DCT-\d{4},labels+description+comments,Runbook Present = TRUE,HW- General,50,1,human,0
-R043,vops\.oci\.oraclecorp\.com/runbooks/OHDHO,description+comments,Runbook Present = TRUE,ROT,50,1,human,0
-R044,RoT.*unreachable.*network|RoT is unreachable on the network,summary,RoT Network Unreachable,ROT,80,1,human,0
+Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count
+DO,R001,ib_write_bw_pair.*SPGXTAIL-8000-KW|SPGXTAIL-8000-KW.*ib_write_bw_pair,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,100,0.95,human-confirmed,5
+DO,R002,Cable Order Check.*cabling issue|Reseat/Reorder CDFP Cables,summary+description,CDFP Cable Order Failure,CDFP,90,0.95,human-confirmed,3
+DO,R003,CDFP.*faults.*known.*BUG|CDFP faults.*BUG issue,comments,CDFP False Positive (Known Bug),CDFP,80,0.9,human-confirmed,1
+DO,R004,GBB.*powergood|SPGXTAIL-8000-MU|GBB.*firmware.*failed.*boot|SPGXTAIL-8000-5M,description+comments,GBB/OAM Powergood Failure,GPU,85,0.9,llm,3
+DO,R005,pcie\.link-degraded-width|SPAMD-8001-XC|RESEAT_AND/OR_REPLACE PCIe,summary+description,PCIe Link Degraded Width,PCIE,90,0.95,human-confirmed,2
+DO,R006,SmartNIC.*connectivity|dhcp_timeout.*no_dhcpoffers_received|SmartnicRotWipe,summary+labels,SmartNIC DHCP Timeout,SmartNIC,70,0.95,human-confirmed,13
+DO,R007,Cable Validation Failure.*optic|failed optic|CPV-RDMA-Miscabled,summary+labels+comments,RDMA Cable Validation - Failed Optic,RDMA Cable,85,0.9,human-confirmed,5
+DO,R008,SPGXTAIL-8000-KW,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,75,0.9,human-confirmed,4
+DO,R009,ionic.*state DOWN.*POLLING|rdma link.*DOWN,description+comments,CPV Failure - RDMA Links Down,RDMA Cable,65,0.75,llm,1
+DO,R010,rackPreReceiveActivities|pre-receive checks,summary+labels,Rack Pre-Receive Activity (Non-Incident),unknown,60,0.85,human-confirmed,2
+DO,R011,TRS prescription|Resolving for TRS|Resolving for TRS prescription,comments,Runbook Present = TRUE,HW- General,50,1,human-confirmed,3
+DO,R012,TRS_PRESCRIPTIVE_TICKET,labels,Runbook Present = TRUE,HW- General,50,1,human,10
+DO,R013,SPAMD-8003|OP found on host.*Processor,summary+description,CPU/Processor Fault - Open Problem,CPU/Processor,70,0.7,llm,1
+DO,R014,GPU.*failed.*agfhc|UMC_correctable.*GPU|RHS Hardware.*Action Plan.*Replace GPU,description+comments,GPU Hardware Failure - RHS Action Plan,GPU,75,0.75,llm,1
+DO,R015,Prescriptive Action,summary+description,Runbook Present = TRUE,HW- General,50,1,human,6
+DO,R016,Resolving for TRS prescription,comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,90,0.9,human-confirmed,2
+DO,R017,Follow Runbook,description+comments,Runbook Present = TRUE,HW- General,60,0.85,llm,1
+DO,R018,SPAMD-8001-WR,description,PCIe Hardware Fault - Open Problem,PCIE,70,0.7,llm,1
+DO,R019,SPG\w+-\d+,labels,Runbook Present = TRUE,HW – Open Problems,50,1,human,0
+DO,R020,Reference Document:.*support\.oracle\.com/msg/|support\.oracle\.com/msg/,description+comments,Runbook Present = TRUE,HW – Open Problems,50,1,human,0
+DO,R021,Problem\s*Type:\s*TRS_\w+,summary,TRS Component Replacement,TRS,80,1,human,0
+DO,R022,Mismatch.*Expected module_id.*found,description+comments,CDFP Module ID Mismatch,CDFP,85,1,human,0
+DO,R023,Mismatch.*Expected module_id.*found,description+comments,Runbook Present = TRUE,CDFP,50,1,human,0
+DO,R024,ILOM has determined that the expected number of GPU,description+comments,GPU Count Mismatch (ILOM),GPU,80,1,human,0
+DO,R025,pcie_speed.*FAIL,description,PCIe Speed Check Failure,PCIE,80,1,human,0
+DO,R026,pcie_speed.*FAIL,description,Runbook Present = TRUE,HW- General,50,1,human,0
+DO,R027,Prescriptive Action.*Serial:,summary,Prescriptive Action - Component,HW- General,75,1,human,0
+DO,R028,devops\.oci\.oraclecorp\.com/runbooks/,description+comments,Runbook Present = TRUE,HW- General,50,1,human,0
+DO,R029,SVCIO_Update_Failed.*Ilom Provisioning|Ilom Provisioning.*SVCIO_Update_Failed,summary,SVCIO Update Failed - ILOM Provisioning,ILOM,80,1,human,0
+DO,R030,gpuburn_short,summary,GPUBurn Short Run Failure,GPU,85,1,human,0
+DO,R031,SMARTNIC_ESCALATED_RECIPE,summary,SmartNIC Escalated Recipe,SmartNIC,85,1,human,0
+DO,R032,HPCGPU-\d{4}-\d{2}|SPGX-8000-\w+|SPNVIDIA-\d{4}-\w+,labels+description+comments,GPU Fault - Diagnostics Code Detected,GPU,55,0.9,human,0
+DO,R033,HPCRDMA-\d{4}-\d{2},labels+description+comments,RDMA Fault - Diagnostics Code Detected,RDMA Cable,65,0.9,human,0
+DO,R034,HT0-\d{4}-\d{4}|SDN-INTERFACE,labels+description+comments,Network/Link Fault - Diagnostics Code Detected,Networking,65,0.9,human,0
+DO,R035,ILOM-8000-\w+,labels+description+comments,ILOM Fault - Diagnostics Code Detected,ILOM,60,0.85,human,0
+DO,R036,ISTOR-8000-\w+|JBOD-\w+-\w+,labels+description+comments,Storage/JBOD Fault - Diagnostics Code Detected,Storage,60,0.85,human,0
+DO,R037,SMARTNIC-8000-\w+,labels+description+comments,SmartNIC Fault - Diagnostics Code Detected,SmartNIC,60,0.85,human,0
+DO,R038,NVL-\d{4}-\d{4},labels+description+comments,NVLink Fault - Diagnostics Code Detected,NVLink,65,0.9,human,0
+DO,R039,SPAMD-\d{4}-\w+|SPARM-\d{4}-\w+|SPINTEL-\d{4}-\w+|SPNVDA-\d{4}-\w+|SPNVDA-XID\d+-\w+|SPX86A-\d{4}-\w+,labels+description+comments,CPU/Processor Fault - SP Diagnostics Code Detected,CPU/Processor,50,0.85,human,0
+DO,R040,SPGXTAIL-8000-\w+,labels+description+comments,GPU Tail Node/GBB Fault - Diagnostics Code Detected,GPU,50,0.85,human,0
+DO,R041,SPENV-\d{4}-\w+|DCT-\d{4}-\d{2},labels+description+comments,Hardware Environment Fault - Diagnostics Code Detected,HW- General,55,0.8,human,0
+DO,R042,HPCGPU-\d{4}|HPCRDMA-\d{4}|HT0-\d{4}|ILOM-8000|ISTOR-8000|JBOD-\w+-\w+|NVL-\d{4}|SDN-INTERFACE|SMARTNIC-8000|SP\w+-\d{4}|SPNVDA-XID|DCT-\d{4},labels+description+comments,Runbook Present = TRUE,HW- General,50,1,human,0
+DO,R043,vops\.oci\.oraclecorp\.com/runbooks/OHDHO,description+comments,Runbook Present = TRUE,ROT,50,1,human,0
+DO,R044,RoT.*unreachable.*network|RoT is unreachable on the network,summary,RoT Network Unreachable,ROT,80,1,human,0

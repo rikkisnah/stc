@@ -7,6 +7,7 @@ Usage:
     python3 scripts/rule-engine-categorize.py --tickets-dir scripts/normalized-tickets/2026-02-08
     python3 scripts/rule-engine-categorize.py --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv
     python3 scripts/rule-engine-categorize.py --output-dir scripts/analysis
+    python3 scripts/rule-engine-categorize.py --project HPC
 """
 import argparse
 import csv
@@ -34,6 +35,9 @@ def parse_args():
                    help="Path to rule-engine.csv")
     p.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR,
                    help="Output directory for tickets-categorized.csv")
+    p.add_argument("--project", choices=["DO", "HPC"], default=None,
+                   help="Only evaluate rules for this project key. "
+                        "If omitted, auto-detects from each ticket's project field.")
     p.add_argument("--resume", action="store_true",
                    help="Skip tickets already present in the output CSV")
     return p.parse_args()
@@ -50,12 +54,19 @@ def find_latest_tickets_dir():
     return date_dirs[-1]
 
 
-def load_rules(path):
-    """Load rule-engine.csv, return list of rule dicts sorted by priority (desc)."""
+def load_rules(path, project=None):
+    """Load rule-engine.csv, return list of rule dicts sorted by priority (desc).
+
+    If *project* is given (e.g. "DO"), only rules whose ``Project Key``
+    matches are loaded.  When *project* is None all rules are loaded and
+    filtering happens per-ticket in ``evaluate_ticket``.
+    """
     rules = []
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            if project and row.get("Project Key", "") != project:
+                continue
             row["Priority"] = int(row["Priority"])
             row["Confidence"] = float(row["Confidence"])
             row["Hit Count"] = int(row["Hit Count"])
@@ -91,9 +102,19 @@ def get_ticket_field_text(ticket, field_spec):
     return "\n".join(parts)
 
 
-def evaluate_ticket(ticket_data, rules):
+def get_ticket_project(ticket_data):
+    """Return the Jira project key from a normalized ticket (e.g. 'DO', 'HPC')."""
+    return ticket_data.get("ticket", {}).get("project", {}).get("key", "")
+
+
+def evaluate_ticket(ticket_data, rules, project_key=None):
     """
     Evaluate all rules against a ticket.
+
+    *project_key* is the resolved project for this ticket.  When set, rules
+    whose ``Project Key`` doesn't match are skipped.  When the caller already
+    filtered rules at load-time (``--project`` flag) this can be ``None``.
+
     Returns (category_rules, meta_rules) — lists of matched rule dicts.
     """
     category_rules = []
@@ -101,6 +122,8 @@ def evaluate_ticket(ticket_data, rules):
 
     for rule in rules:
         if rule["_re"] is None:
+            continue
+        if project_key and rule.get("Project Key", "") != project_key:
             continue
         text = get_ticket_field_text(ticket_data, rule["Match Field"])
         if rule["_re"].search(text):
@@ -122,19 +145,26 @@ def compute_age(created_str):
         return ""
 
 
-def categorize_ticket(ticket_data, rules):
-    """Produce one output row dict for a ticket."""
+def categorize_ticket(ticket_data, rules, project_key=None):
+    """Produce one output row dict for a ticket.
+
+    *project_key* is passed through to ``evaluate_ticket`` so that only
+    rules matching the ticket's project are considered.
+    """
     ticket_info = ticket_data.get("ticket", {})
     status_info = ticket_data.get("status", {})
 
     ticket_id = ticket_info.get("key", "UNKNOWN")
+    ticket_project = get_ticket_project(ticket_data)
     status = status_info.get("current", "")
     created = status_info.get("created", "")
     age = compute_age(created)
     # Trim created to date only
     created_date = created[:10] if created else ""
 
-    category_rules, meta_rules = evaluate_ticket(ticket_data, rules)
+    category_rules, meta_rules = evaluate_ticket(
+        ticket_data, rules, project_key=project_key,
+    )
 
     runbook_present = "TRUE" if meta_rules else "FALSE"
 
@@ -174,6 +204,7 @@ def categorize_ticket(ticket_data, rules):
         audit = "needs-review"
 
     return {
+        "Project Key": ticket_project,
         "Ticket": ticket_id,
         "Status": status,
         "Created": created_date,
@@ -190,7 +221,7 @@ def categorize_ticket(ticket_data, rules):
 
 
 OUTPUT_FIELDS = [
-    "Ticket", "Status", "Created", "Age", "Runbook Present",
+    "Project Key", "Ticket", "Status", "Created", "Age", "Runbook Present",
     "Category of Issue", "Category", "Rules Used",
     "Categorization Source", "LLM Confidence",
     "Human Audit for Accuracy", "Human Comments",
@@ -206,6 +237,7 @@ def main():
     print(f"Tickets dir : {tickets_dir}")
     print(f"Rule engine : {rule_engine_path}")
     print(f"Output dir  : {output_dir}")
+    print(f"Project     : {args.project or 'auto-detect'}")
 
     if not tickets_dir.is_dir():
         sys.exit(f"Tickets directory not found: {tickets_dir}")
@@ -214,8 +246,10 @@ def main():
 
     os.makedirs(output_dir, exist_ok=True)
 
-    rules = load_rules(rule_engine_path)
-    print(f"Loaded {len(rules)} rules")
+    project_filter = args.project
+    rules = load_rules(rule_engine_path, project=project_filter)
+    print(f"Loaded {len(rules)} rules"
+          + (f" (project={project_filter})" if project_filter else " (all projects)"))
 
     # Collect all ticket JSONs
     ticket_files = sorted(tickets_dir.glob("*.json"))
@@ -248,7 +282,10 @@ def main():
         with open(tf, encoding="utf-8") as f:
             ticket_data = json.load(f)
 
-        row = categorize_ticket(ticket_data, rules)
+        # When --project is set, rules are already filtered at load time
+        # so no per-ticket filtering needed.  Otherwise auto-detect from ticket.
+        per_ticket_project = None if project_filter else get_ticket_project(ticket_data)
+        row = categorize_ticket(ticket_data, rules, project_key=per_ticket_project)
         results.append(row)
 
         if row["Categorization Source"] == "rule":

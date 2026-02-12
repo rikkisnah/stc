@@ -1,0 +1,18 @@
+﻿Build,Group,Category,Filter,cc,bcc
+gpu_mi355x_bringup,CHS - CX7 Priority Blocks - AGA4.1,QFAB Block 15+16+17 | CFAB Block 8 Open Tickets Link,383106,@dco-aga4 @lgreen @aroden @gomcgowa @mlovestr @relarse @josantho @joshschm, @wezzhu @shlou @vensridh
+gpu_mi355x_bringup,CHS - CX7 Priority Blocks - AGA4.1,QFAB Block 19+20+21+22 | CFAB Block 9 Open Tickets Link,383107,,
+gpu_mi355x_bringup,CHS - CX7 Priority Blocks - AGA4.1,QFAB Block 11+12+13+14 | CFAB Block 6 Open Tickets Link,383108,,
+gpu_mi355x_bringup,CHS - CX7 Priority Blocks - AGA4.1,QFAB Block 5+6 | CFAB Block 3 Open Tickets Link,383109,,
+gpu_mi355x_bringup,CHS - CX7 Priority Blocks - AGA4.1,QFAB Block 24+25+26+27 | CFAB Block 10 Tickets Link,383110,,
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,AGA4 Mi355X - POLLARA - NOT PENDING PARTS - All Blocks - Open Tickets ,383111,@dco-aga4 @lgreen @aroden @gomcgowa @mlovestr @relarse @josantho @joshschm, @wezzhu @shlou @vensridh
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,SmartNIC Jira: Pollara - SmartNIC Issues,383112,,
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,Unblocked by RHS: Pollara - Unblocked by RHS,383114,,
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,Cabling Jira: Pollara - Cabling Issues,383115,,
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,ILOM Jira: Pollara - ILOM Issues,383116,,
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,CPV IB Jira: Pollara - IB Issues,383117,,
+gpu_mi355x_bringup,CHS - Pollara (all blocks) - AGA4.2 ,AGFHC Jira: Pollara - AGFHC Issues,383118,,
+gpu_mi355x_bringup,LVV,AGA4 Mi355X LVV Open Tickets,373240,,@lgreen @aroden @mlovestr @josantho please coordinate with LVV
+gpu_mi355x_bringup,AGA4 Mi355X Card Management,AGA4 - Mi355X Card Management Tickets,383119,"Card Management Oncall - @yinwjian @rfragoso, please review the below", @wezzhu @shlou @vensridh
+gpu_mi355x_bringup,AGA4 - MI355X - NSG,AGA4 - MI355X - Networking Tickets,351101,"NSG Oncall - , please review the below tickets.", @wezzhu @shlou @vensridh
+gpu_mi355x_bringup,RHS,CX7 RHS Tickets,383121,"RHS Oncall - , please review the", @wezzhu @shlou @vensridh
+gpu_mi355x_bringup,RHS,Pollara RHS Tickets,383122,,

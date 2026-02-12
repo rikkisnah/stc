@@ -10,6 +10,8 @@
 - Training outputs (`rule-engine.csv`, `tickets-categorized.csv`) live in `scripts/trained-data/`; golden artifacts in `scripts/trained-data/golden-rules-engine/` are read-only until human promotion.
 - Prompts (`prompts/train-to-categorize-tickets-prompt.md`, `prompts/update-rule-engine-prompt.md`) are the single source of truth for LLM-run instructions; archives retained for context only.
 - Generated code or scripts include the `#ai-assisted` disclaimer block to preserve auditability.
+- Rule engine rows carry a `Project Key` column so project-specific classifiers can filter applicable rules without duplicating files.
+- The golden directory (`scripts/trained-data/golden-rules-engine/`) is immutable for automated workflows; updates happen only via audited, manual promotion.
 
 ## Assumptions
 - Jira export cadence supplies at least 5 fresh tickets per training batch.

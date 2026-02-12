@@ -14,5 +14,8 @@ dev = [
     "pytest-cov>=7.0.0",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["scripts/tests"]
+
 [tool.coverage.report]
 exclude_lines = ["if __name__ == .__main__.:"]

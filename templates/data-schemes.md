@@ -3,6 +3,7 @@
 ### Rule Engine (`rule-engine.csv`)
 | Field | Type | Description |
 | --- | --- | --- |
+| `Project Key` | string | Jira project key the rule applies to (`DO` or `HPC`). Rules only fire against tickets from the matching project. |
 | `RuleID` | string | Unique identifier for the rule. |
 | `Rule Pattern` | string | Regex or keyword pattern evaluated against ticket text. |
 | `Match Field` | string | Ticket field to inspect (e.g., summary, description, labels). |
