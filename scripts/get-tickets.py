@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Fetch tickets from Jira - Python version of get-tickets.sh"""
+"""Fetch tickets from Jira - Python version of get-tickets.sh.
+
+Supports limiting output with `--number-of-tickets` to capture the first N
+tickets (written to `--output-file`, defaulting to
+`scripts/tickets-json/limited-tickets.json`).
+"""
 
 import argparse
 import json
@@ -164,8 +169,15 @@ def load_jql_from_file(path):
 
 
 def fetch_search(date_filter="", force=False, include_unresolved=False,
-                 unresolved_only=False, jql=None):
-    """Fetch tickets via JQL search with optional date filter."""
+                 unresolved_only=False, jql=None, number_of_tickets=None,
+                 output_file=None):
+    """Fetch tickets via JQL search with optional date filter.
+
+    When ``number_of_tickets`` is provided, only the first N tickets are
+    collected and written to ``output_file`` instead of paging to
+    ``scripts/tickets-json/``.
+    """
+
     base_jql = jql if jql else BASE_JQL
     jql = base_jql
     if unresolved_only:
@@ -178,12 +190,24 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
     print(f"JQL URL: {BASE_URL}/issues/?jql={encoded_jql}")
     print()
 
-    archive_existing(OUTPUT_DIR, force=force)
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    limited_mode = number_of_tickets is not None
+    remaining = number_of_tickets
+    limited_issues = []
+
+    if limited_mode:
+        if not output_file:
+            raise ValueError("output_file is required when limiting tickets")
+        output_path = Path(output_file)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        archive_existing(OUTPUT_DIR, force=force)
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
     headers = make_headers()
     start_at = 0
-    max_results = 100
+    max_results = min(remaining, 100) if limited_mode else 100
     total_fetched = 0
+    pages = 0
 
     while True:
         print(f"Fetching tickets starting at {start_at}...")
@@ -211,6 +235,25 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
             break
 
         total = data.get("total", "?")
+
+        if limited_mode:
+            to_take = issues if remaining is None else issues[:remaining]
+            limited_issues.extend(to_take)
+            taken_count = len(to_take)
+            total_fetched += taken_count
+            if remaining is not None:
+                remaining -= taken_count
+            print(f"  Got {taken_count} tickets ({total_fetched}/{number_of_tickets} requested)")
+
+            if remaining is not None and remaining <= 0:
+                break
+
+            start_at += count
+            max_results = min(remaining, 100) if remaining is not None else 100
+            pages += 1
+            # Continue fetching until Jira returns 0 issues.
+            continue
+
         total_fetched += count
         print(f"  Got {count} tickets ({total_fetched}/{total} total)")
 
@@ -218,9 +261,19 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
         out_path.write_text(json.dumps(data, indent=2))
 
         start_at += max_results
+        pages += 1
 
-    pages = start_at // max_results
-    print(f"Done. Fetched {total_fetched} tickets across {pages} pages.")
+    if limited_mode:
+        payload = {
+            "issues": limited_issues,
+            "total": len(limited_issues),
+            "limited": True,
+        }
+        output_path.write_text(json.dumps(payload, indent=2))
+        print(f"Done. Fetched {len(limited_issues)} ticket(s); wrote subset to {output_path}.")
+    else:
+        pages = pages or (start_at // max_results if max_results else 0)
+        print(f"Done. Fetched {total_fetched} tickets across {pages} pages.")
 
 
 def build_date_filter(args):
@@ -236,6 +289,61 @@ def build_date_filter(args):
         print(f"Filtering: tickets created from {args.start_date} to now")
         return f' AND created >= "{args.start_date}"'
     return ""
+
+
+def _extract_positional_tokens(argv_list):
+    """Return positional-like tokens in their original order."""
+
+    # Map of recognized flags to the number of value tokens they consume.
+    option_arg_counts = {
+        "-a": 0,
+        "--all": 0,
+        "--include-unresolved": 0,
+        "--unresolved-only": 0,
+        "-y": 0,
+        "--yes": 0,
+        "-t": 1,
+        "--ticket": 1,
+        "--jql-file": 1,
+        "--number-of-tickets": 1,
+        "--output-file": 1,
+        "-h": 0,
+        "--help": 0,
+    }
+
+    positional = []
+    i = 0
+    treat_all_as_positional = False
+
+    while i < len(argv_list):
+        token = argv_list[i]
+
+        if treat_all_as_positional:
+            positional.append(token)
+            i += 1
+            continue
+
+        if token == "--":
+            treat_all_as_positional = True
+            i += 1
+            continue
+
+        option_arity = option_arg_counts.get(token)
+        if option_arity is not None:
+            i += 1 + option_arity
+            continue
+
+        if token.startswith("--") and "=" in token:
+            option_name, _ = token.split("=", 1)
+            option_arity = option_arg_counts.get(option_name)
+            if option_arity is not None:
+                i += 1
+                continue
+
+        positional.append(token)
+        i += 1
+
+    return positional
 
 
 def parse_args(argv=None):
@@ -277,52 +385,119 @@ examples:
         help="Fetch a single ticket by key (e.g. DO-2639750) or browse URL",
     )
     parser.add_argument(
+        "--number-of-tickets", type=int,
+        help="Fetch only the first N tickets and write them to a single file",
+    )
+    parser.add_argument(
+        "--output-file",
+        help="Path to save the limited ticket batch (requires --number-of-tickets)",
+    )
+    parser.add_argument(
         "positional", nargs="*", metavar="ARG",
         help="Relative days (-Nd), start date (YYYY-MM-DD), or start and end dates",
     )
 
-    args, remaining = parser.parse_known_args(argv)
+    if argv is None:
+        argv_list = sys.argv[1:]
+    else:
+        argv_list = list(argv)
 
-    # Merge remaining args (like -2d) into positional, excluding values that
-    # belong to known flags (e.g. --jql-file PATH).
-    positional = list(args.positional or [])
-    skip_next = False
-    for token in remaining:
-        if skip_next:
-            skip_next = False
-            continue
-        if token == "--jql-file":
-            skip_next = True
-            continue
-        positional.append(token)
+    args, _ = parser.parse_known_args(argv_list)
 
-    # Parse positional args into structured fields
+    positional = _extract_positional_tokens(argv_list)
+
+    # Enforce --jql-file usage
+    if args.jql_file and not args.fetch_all:
+        parser.error("--jql-file requires -a/--all")
+
+    if args.number_of_tickets is not None:
+        if not args.fetch_all:
+            parser.error("--number-of-tickets requires -a/--all")
+        if args.number_of_tickets <= 0:
+            parser.error("--number-of-tickets must be a positive integer")
+        if args.output_file is None:
+            args.output_file = str(OUTPUT_DIR / "limited-tickets.json")
+    else:
+        if args.output_file is not None:
+            parser.error("--output-file requires --number-of-tickets")
+
+    # Parse positional args into structured fields.
+    #
+    # Prefer the *last-specified* date filter when multiple are provided.
+    # Examples:
+    #   -a -1d 2026-01-01 2026-01-02  -> uses 2026-01-01..2026-01-02
+    #   -a 2026-01-01 2026-01-02 -1d  -> uses -1d
     args.relative_days = None
     args.start_date = None
     args.end_date = None
 
     date_re = re.compile(r"^\d{4}-\d{2}-\d{2}$")
     rel_re = re.compile(r"^-(\d+)d$")
-    if len(positional) == 1:
-        m = rel_re.match(positional[0])
-        if m:
-            args.relative_days = int(m.group(1))
-        elif date_re.match(positional[0]):
-            args.start_date = positional[0]
-        else:
-            parser.error(f"Invalid argument: {positional[0]}")
-    elif len(positional) == 2:
-        if date_re.match(positional[0]) and date_re.match(positional[1]):
-            args.start_date = positional[0]
-            args.end_date = positional[1]
-        else:
-            parser.error("Date range must be YYYY-MM-DD YYYY-MM-DD")
-    elif len(positional) > 2:
-        parser.error("Too many arguments")
 
-    # Enforce --jql-file usage
-    if args.jql_file and not args.fetch_all:
-        parser.error("--jql-file requires -a/--all")
+    selected = None
+    last_range = None
+    last_start = None
+    last_rel = None
+    invalid = []
+    i = 0
+    while i < len(positional):
+        token = positional[i]
+        m_rel = rel_re.match(token)
+        if m_rel:
+            last_rel = int(m_rel.group(1))
+            selected = ("relative_days", last_rel)
+            i += 1
+            continue
+
+        if date_re.match(token):
+            # Potentially a range; if next token is also a date, treat as a range.
+            if i + 1 < len(positional) and date_re.match(positional[i + 1]):
+                last_range = (token, positional[i + 1])
+                selected = ("date_range", last_range[0], last_range[1])
+                i += 2
+                continue
+            last_start = token
+            selected = ("start_date", last_start)
+
+        else:
+            invalid.append(token)
+
+        i += 1
+
+    # If we only have a partial date range (i.e. a start date plus junk), keep
+    # previous strict behavior.
+    if last_start is not None and last_range is None and invalid:
+        parser.error("Date range must be YYYY-MM-DD YYYY-MM-DD")
+
+    # If we have a valid date/relative filter, ignore other stray tokens.
+    if invalid and selected is None:
+        parser.error(f"Invalid argument(s): {' '.join(invalid)}")
+
+    if selected is None:
+        # Preserve previous behavior: allow no positional tokens, otherwise error.
+        # If no action specified, behave like the old script and show help.
+        if not args.fetch_all and not args.ticket:
+            parser.print_help()
+            sys.exit(0)
+        return args
+
+    # Apply selected filter.
+    #
+    # Rules:
+    # - If a date range appears anywhere, it wins over earlier -Nd.
+    # - If -Nd appears after the last range, -Nd wins.
+    if last_range is not None and last_rel is not None:
+        # Determine whether the last seen filter was -Nd.
+        if selected[0] == "relative_days":
+            args.relative_days = last_rel
+        else:
+            args.start_date, args.end_date = last_range
+    elif last_range is not None:
+        args.start_date, args.end_date = last_range
+    elif last_start is not None:
+        args.start_date = last_start
+    elif last_rel is not None:
+        args.relative_days = last_rel
 
     # Show help if no action specified
     if not args.fetch_all and not args.ticket:
@@ -351,6 +526,8 @@ def main(argv=None):
             include_unresolved=args.include_unresolved,
             unresolved_only=args.unresolved_only,
             jql=custom_jql,
+            number_of_tickets=args.number_of_tickets,
+            output_file=args.output_file,
         )
 
     elapsed = time.monotonic() - start_time

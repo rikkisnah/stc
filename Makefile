@@ -7,11 +7,10 @@ help:
 	@echo "  test-normalize-tickets Run normalize-tickets unit tests"
 
 test:
-	uv run pytest -q scripts/test-get-tickets.py scripts/test-normalize-tickets.py
+	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/test_get_tickets.py scripts/test-normalize-tickets.py
 
 test-get-tickets:
-	uv run pytest -q scripts/test-get-tickets.py
+	uv run pytest --cov=scripts/get-tickets.py --cov-report=term-missing -q scripts/test_get_tickets.py
 
 test-normalize-tickets:
 	uv run pytest -q scripts/test-normalize-tickets.py
-

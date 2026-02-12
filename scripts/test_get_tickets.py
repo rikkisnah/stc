@@ -83,9 +83,23 @@ class TestParseArgs:
         with pytest.raises(SystemExit):
             parse_args(["-a", "not-valid"])
 
-    def test_too_many_positional(self):
-        with pytest.raises(SystemExit):
-            parse_args(["-a", "2025-01-01", "2025-01-31", "extra"])
+    def test_prefers_last_date_filter_range_over_relative(self):
+        args = parse_args(["-a", "-1d", "2026-01-01", "2026-01-02"])
+        assert args.relative_days is None
+        assert args.start_date == "2026-01-01"
+        assert args.end_date == "2026-01-02"
+
+    def test_prefers_last_date_filter_relative_over_range(self):
+        args = parse_args(["-a", "2026-01-01", "2026-01-02", "-1d"])
+        assert args.relative_days == 1
+        assert args.start_date is None
+        assert args.end_date is None
+
+    def test_extra_positional_ignored_when_date_filter_present(self):
+        # Extra tokens should not abort the run; we pick the last valid filter.
+        args = parse_args(["-a", "2025-01-01", "2025-01-31", "extra"])
+        assert args.start_date == "2025-01-01"
+        assert args.end_date == "2025-01-31"
 
     def test_invalid_date_range(self):
         with pytest.raises(SystemExit):
@@ -102,6 +116,26 @@ class TestParseArgs:
         jql_file.write_text("project = \"DC Ops\"")
         with pytest.raises(SystemExit):
             parse_args(["--jql-file", str(jql_file)])
+
+    def test_number_of_tickets_sets_value_and_default_output_path(self):
+        args = parse_args(["-a", "--number-of-tickets", "5"])
+        assert args.number_of_tickets == 5
+        expected_default = get_tickets.OUTPUT_DIR / "limited-tickets.json"
+        assert args.output_file == str(expected_default)
+
+    @pytest.mark.parametrize("invalid", ["0", "-1", "-10"])
+    def test_number_of_tickets_requires_positive_integer(self, invalid):
+        with pytest.raises(SystemExit):
+            parse_args(["-a", "--number-of-tickets", invalid])
+
+    def test_number_of_tickets_requires_fetch_all(self):
+        with pytest.raises(SystemExit):
+            parse_args(["--number-of-tickets", "5"])
+
+    def test_output_file_requires_number_of_tickets(self, tmp_path):
+        target = tmp_path / "subset.json"
+        with pytest.raises(SystemExit):
+            parse_args(["-a", "--output-file", str(target)])
 
 
 # --- build_date_filter ---
@@ -325,3 +359,83 @@ class TestFetchSearch:
 
         params = mock_get.call_args[1]["params"]
         assert params["jql"].startswith(get_tickets.BASE_JQL)
+
+    def test_number_of_tickets_sets_max_results_and_stops(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        responses = iter([
+            {"issues": [{"key": "DO-1"}, {"key": "DO-2"}, {"key": "DO-3"}], "total": 50},
+            {"issues": [], "total": 50},
+        ])
+        captured_max = []
+
+        def fake_get(*args, **kwargs):
+            captured_max.append(kwargs["params"]["maxResults"])
+            return MagicMock(json=MagicMock(return_value=next(responses)))
+
+        monkeypatch.setattr(get_tickets.requests, "get", fake_get)
+
+        fetch_search(number_of_tickets=2, output_file=str(tmp_path / "subset.json"))
+
+        assert captured_max == [2]
+
+    def test_number_of_tickets_writes_output_file_only(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        responses = iter([
+            {"issues": [{"key": "DO-1"}], "total": 50},
+            {"issues": [{"key": "DO-2"}], "total": 50},
+        ])
+
+        def fake_get(*args, **kwargs):
+            return MagicMock(json=MagicMock(return_value=next(responses, {"issues": [], "total": 50})))
+
+        monkeypatch.setattr(get_tickets.requests, "get", fake_get)
+
+        limited_path = tmp_path / "limited.json"
+        fetch_search(number_of_tickets=2, output_file=str(limited_path))
+
+        assert limited_path.exists()
+        limited_data = json.loads(limited_path.read_text())
+        assert [ticket["key"] for ticket in limited_data["issues"]] == ["DO-1", "DO-2"]
+        assert not list(tmp_path.glob("page_*.json"))
+
+
+class TestMainLimitedFetch:
+    def test_threads_number_of_tickets_into_fetch_search(self, tmp_path, monkeypatch):
+        captured = {}
+
+        def fake_fetch_search(*args, **kwargs):
+            captured["called"] = True
+            captured["kwargs"] = kwargs
+
+        monkeypatch.setattr(get_tickets, "fetch_search", fake_fetch_search)
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        get_tickets.main(["-a", "--number-of-tickets", "2"])
+
+        assert captured.get("called") is True
+        assert captured["kwargs"]["number_of_tickets"] == 2
+        expected_default = tmp_path / "limited-tickets.json"
+        assert captured["kwargs"]["output_file"] == str(expected_default)
+
+    def test_threads_custom_output_file_to_fetch_search(self, tmp_path, monkeypatch):
+        captured = {}
+
+        def fake_fetch_search(*args, **kwargs):
+            captured["kwargs"] = kwargs
+
+        monkeypatch.setattr(get_tickets, "fetch_search", fake_fetch_search)
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        custom_path = tmp_path / "subset.json"
+        get_tickets.main([
+            "-a",
+            "--number-of-tickets",
+            "3",
+            "--output-file",
+            str(custom_path),
+        ])
+
+        assert captured["kwargs"]["number_of_tickets"] == 3
+        assert captured["kwargs"]["output_file"] == str(custom_path)

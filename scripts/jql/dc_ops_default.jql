@@ -10,4 +10,3 @@ AND (("Region / Domain" IN (aga.ad1, "AGA5 (AD)")
 AND project = "DC Ops"
 AND issuetype != "Service Request"
 AND "Component / Item" NOT IN cascadeOption(10046, 10064)
-

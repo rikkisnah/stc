@@ -66,6 +66,7 @@ uv run python scripts/get-tickets.py -2d                    # Last 2 days
 uv run python scripts/get-tickets.py 2025-01-01             # From start date to now
 uv run python scripts/get-tickets.py 2025-01-01 2025-01-31  # Date range
 uv run python scripts/get-tickets.py -t DO-2639750          # Single ticket by key
+uv run python scripts/get-tickets.py -a --number-of-tickets 5  # First 5 tickets to limited file
 uv run python scripts/get-tickets.py -h                     # Show help
 ```
 
@@ -182,7 +183,7 @@ These are retained for reference but may not reflect the current pipeline.
 # Running Tests
 
 ```bash
-uv run pytest scripts/test-get-tickets.py -v
+uv run pytest scripts/test_get_tickets.py -v
 ```
 
 # Glossary
