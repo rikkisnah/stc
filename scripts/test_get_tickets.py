@@ -1,18 +1,20 @@
-"""Tests for get-tickets.py"""
+"""Tests for get_tickets.py"""
 
 import importlib
 import json
+import sys
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
 
 # Import hyphenated module
-get_tickets = importlib.import_module("get-tickets")
+get_tickets = importlib.import_module("get_tickets")
 archive_existing = get_tickets.archive_existing
 build_date_filter = get_tickets.build_date_filter
 fetch_search = get_tickets.fetch_search
 fetch_single_ticket = get_tickets.fetch_single_ticket
+load_jql_from_file = get_tickets.load_jql_from_file
 parse_args = get_tickets.parse_args
 parse_ticket_key = get_tickets.parse_ticket_key
 load_jira_token = get_tickets.load_jira_token
@@ -398,7 +400,32 @@ class TestFetchSearch:
         assert limited_path.exists()
         limited_data = json.loads(limited_path.read_text())
         assert [ticket["key"] for ticket in limited_data["issues"]] == ["DO-1", "DO-2"]
+        assert limited_data["total"] == 50
+        assert limited_data["fetched"] == 2
+        assert limited_data["limited"] is True
         assert not list(tmp_path.glob("page_*.json"))
+
+    def test_number_of_tickets_payload_preserves_true_total(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        responses = iter([
+            {"issues": [{"key": "DO-1"}, {"key": "DO-1b"}], "total": 50},
+            {"issues": [{"key": "DO-2"}, {"key": "DO-2b"}], "total": 50},
+        ])
+
+        def fake_get(*args, **kwargs):
+            return MagicMock(json=MagicMock(return_value=next(responses, {"issues": [], "total": 50})))
+
+        monkeypatch.setattr(get_tickets.requests, "get", fake_get)
+
+        limited_path = tmp_path / "limited.json"
+        fetch_search(number_of_tickets=3, output_file=str(limited_path))
+
+        limited_data = json.loads(limited_path.read_text())
+        assert limited_data["total"] == 50
+        assert limited_data["fetched"] == 3
+        assert len(limited_data["issues"]) == 3
+        assert limited_data["limited"] is True
 
 
 class TestMainLimitedFetch:
@@ -439,3 +466,111 @@ class TestMainLimitedFetch:
 
         assert captured["kwargs"]["number_of_tickets"] == 3
         assert captured["kwargs"]["output_file"] == str(custom_path)
+
+
+# --- load_jql_from_file ---
+
+class TestLoadJqlFromFile:
+    def test_returns_stripped_content(self, tmp_path):
+        f = tmp_path / "test.jql"
+        f.write_text("  project = DC  \n")
+        assert load_jql_from_file(str(f)) == "project = DC"
+
+    def test_empty_file_returns_none(self, tmp_path, capsys):
+        f = tmp_path / "empty.jql"
+        f.write_text("   \n")
+        assert load_jql_from_file(str(f)) is None
+        assert "empty" in capsys.readouterr().out
+
+    def test_missing_file_returns_none(self, capsys):
+        assert load_jql_from_file("/nonexistent/path.jql") is None
+        assert "failed reading" in capsys.readouterr().out
+
+
+# --- _extract_positional_tokens ---
+
+class TestExtractPositionalTokens:
+    def test_double_dash_separator(self):
+        result = get_tickets._extract_positional_tokens(["-a", "--", "-2d", "--yes"])
+        assert result == ["-2d", "--yes"]
+
+    def test_option_equals_syntax_recognized(self):
+        result = get_tickets._extract_positional_tokens(
+            ["--jql-file=/path/f.jql", "2025-01-01"]
+        )
+        assert result == ["2025-01-01"]
+
+    def test_option_equals_syntax_unrecognized_treated_as_positional(self):
+        result = get_tickets._extract_positional_tokens(["--unknown=value"])
+        assert result == ["--unknown=value"]
+
+
+# --- additional parse_args edge cases ---
+
+class TestParseArgsEdgeCases:
+    def test_uses_sys_argv_when_argv_is_none(self, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["get_tickets.py", "-a"])
+        args = parse_args()
+        assert args.fetch_all is True
+
+    def test_date_filter_without_action_shows_help(self):
+        with pytest.raises(SystemExit) as exc_info:
+            parse_args(["-2d"])
+        assert exc_info.value.code == 0
+
+
+# --- additional load_jira_token edge cases ---
+
+class TestLoadJiraTokenEdgeCases:
+    def test_invalid_json_falls_back_to_embedded(self, tmp_path, monkeypatch, capsys):
+        env_path = tmp_path / "env.json"
+        env_path.write_text("{invalid json")
+        monkeypatch.setattr(get_tickets, "CONFIG_ENV_PATH", env_path)
+
+        token = load_jira_token()
+        assert token == get_tickets.DEFAULT_JIRA_TOKEN
+        out = capsys.readouterr().out
+        assert "failed reading" in out
+        assert "Using embedded Jira token." in out
+
+
+# --- additional fetch_search edge cases ---
+
+class TestFetchSearchEdgeCases:
+    def test_unresolved_only_filter(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        empty = {"issues": [], "total": 0}
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = empty
+        mock_get = MagicMock(return_value=mock_resp)
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get)
+
+        fetch_search(unresolved_only=True)
+
+        call_params = mock_get.call_args[1]["params"]
+        assert "resolution = Unresolved" in call_params["jql"]
+
+    def test_limited_mode_requires_output_file(self):
+        with pytest.raises(ValueError, match="output_file is required"):
+            fetch_search(number_of_tickets=5, output_file=None)
+
+
+# --- main() edge cases ---
+
+class TestMainEdgeCases:
+    def test_invalid_ticket_key_exits(self, capsys):
+        with pytest.raises(SystemExit) as exc_info:
+            get_tickets.main(["-t", "not-valid-key"])
+        assert exc_info.value.code == 1
+        assert "Invalid ticket key" in capsys.readouterr().err
+
+    def test_valid_ticket_calls_fetch(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"key": "DO-123", "fields": {"summary": "Test"}}
+        monkeypatch.setattr(get_tickets.requests, "get", lambda *a, **kw: mock_resp)
+
+        get_tickets.main(["-t", "DO-123"])
+
+        assert (tmp_path / "DO-123.json").exists()

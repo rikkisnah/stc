@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch tickets from Jira - Python version of get-tickets.sh.
+"""Fetch tickets from Jira - Python version of get_tickets.sh.
 
 Supports limiting output with `--number-of-tickets` to capture the first N
 tickets (written to `--output-file`, defaulting to
@@ -208,6 +208,7 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
     max_results = min(remaining, 100) if limited_mode else 100
     total_fetched = 0
     pages = 0
+    reported_total = None
 
     while True:
         print(f"Fetching tickets starting at {start_at}...")
@@ -235,6 +236,8 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
             break
 
         total = data.get("total", "?")
+        if reported_total is None and total not in (None, "?"):
+            reported_total = total
 
         if limited_mode:
             to_take = issues if remaining is None else issues[:remaining]
@@ -266,7 +269,8 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
     if limited_mode:
         payload = {
             "issues": limited_issues,
-            "total": len(limited_issues),
+            "total": reported_total if reported_total is not None else len(limited_issues),
+            "fetched": len(limited_issues),
             "limited": True,
         }
         output_path.write_text(json.dumps(payload, indent=2))

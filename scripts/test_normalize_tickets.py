@@ -1,4 +1,4 @@
-"""Tests for normalize-tickets.py"""
+"""Tests for normalize_tickets.py"""
 
 import importlib
 import json
@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 # Import hyphenated module
-normalize_tickets = importlib.import_module("normalize-tickets")
+normalize_tickets = importlib.import_module("normalize_tickets")
 archive_existing = normalize_tickets.archive_existing
 clean_jira_text = normalize_tickets.clean_jira_text
 extract_comments = normalize_tickets.extract_comments
@@ -819,3 +819,222 @@ class TestArchiveExisting:
         out_dir = tmp_path / "nonexistent"
         archive_path = archive_existing(out_dir)
         assert archive_path is None
+
+
+# --- extract_links edge cases ---
+
+class TestExtractLinksEdgeCases:
+    def test_skips_link_without_outward_or_inward(self):
+        fields = {"issuelinks": [{"id": "1", "type": {"name": "Relates"}}]}
+        assert extract_links(fields) == []
+
+
+# --- extract_comments edge cases ---
+
+class TestExtractCommentsEdgeCases:
+    def test_non_dict_non_list_comment_field(self):
+        assert extract_comments({"comment": "unexpected_string"}) == []
+
+    def test_string_author(self):
+        fields = {
+            "comment": {
+                "comments": [{
+                    "id": "1",
+                    "author": "plainuser",
+                    "body": "hello",
+                    "created": "2026-01-01T00:00:00.000+0000",
+                }],
+            },
+        }
+        result = extract_comments(fields)
+        assert len(result) == 1
+        assert result[0]["author"] == "plainuser"
+
+
+# --- normalize_issue edge cases ---
+
+class TestNormalizeIssueEdgeCases:
+    def test_issue_with_links(self):
+        issue = {
+            "key": "DO-1", "id": "1",
+            "fields": {
+                "project": {"key": "DO", "name": "DC Ops"},
+                "issuetype": {"name": "Incident"},
+                "summary": "Test", "priority": {"name": "High"},
+                "status": {"name": "Open"}, "labels": [],
+                "comment": {"comments": []},
+                "issuelinks": [{
+                    "type": {"name": "Blocks", "outward": "blocks"},
+                    "outwardIssue": {
+                        "key": "DO-2",
+                        "fields": {"summary": "Other", "status": {"name": "Open"}},
+                    },
+                }],
+            },
+        }
+        result = normalize_issue(issue)
+        assert "links" in result
+        assert result["links"][0]["key"] == "DO-2"
+
+    def test_issue_with_sla(self):
+        issue = {
+            "key": "DO-1", "id": "1",
+            "fields": {
+                "project": {"key": "DO", "name": "DC Ops"},
+                "issuetype": {"name": "Incident"},
+                "summary": "Test", "priority": {"name": "High"},
+                "status": {"name": "Open"}, "labels": [],
+                "comment": {"comments": []},
+                "customfield_10003": {
+                    "completedCycles": [{"elapsedTime": {"friendly": "5m"}}],
+                },
+            },
+        }
+        result = normalize_issue(issue)
+        assert "sla" in result
+        assert result["sla"]["time_to_first_response"] == "5m"
+
+
+# --- process_file edge cases ---
+
+MINIMAL_ISSUE = {
+    "key": "DO-1", "id": "1",
+    "fields": {
+        "project": {"key": "DO", "name": "DC Ops"},
+        "issuetype": {"name": "Incident"},
+        "summary": "Test", "priority": {"name": "High"},
+        "status": {"name": "Open"}, "labels": [],
+        "comment": {"comments": []},
+    },
+}
+
+
+class TestProcessFileEdgeCases:
+    def test_paginated_split_with_output_dir(self, tmp_path):
+        src = tmp_path / "src"
+        dst = tmp_path / "dst"
+        src.mkdir()
+
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        data = {"issues": [MINIMAL_ISSUE, issue2], "total": 2}
+        f = src / "page_0.json"
+        f.write_text(json.dumps(data))
+
+        results = process_file(str(f), output_dir=str(dst))
+        assert len(results) == 2
+        assert (dst / "DO-1.json").exists()
+        assert (dst / "DO-2.json").exists()
+        # First entry has original size, second has 0
+        assert results[0][1] > 0
+        assert results[1][1] == 0
+
+    def test_paginated_split_without_output_dir(self, tmp_path):
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        data = {"issues": [MINIMAL_ISSUE, issue2], "total": 2}
+        f = tmp_path / "page_0.json"
+        f.write_text(json.dumps(data))
+
+        results = process_file(str(f))
+        assert len(results) == 2
+        assert (tmp_path / "DO-1.json").exists()
+        assert (tmp_path / "DO-2.json").exists()
+
+    def test_no_output_dir_no_in_place(self, tmp_path):
+        f = tmp_path / "ticket.json"
+        f.write_text(json.dumps(MINIMAL_ISSUE))
+
+        results = process_file(str(f))
+        assert len(results) == 1
+        out_path = results[0][0]
+        assert out_path == str(f)
+        result = json.loads(f.read_text())
+        assert "ticket" in result
+
+
+# --- main() ---
+
+class TestMain:
+    def _write_ticket(self, path):
+        path.write_text(json.dumps(MINIMAL_ISSUE))
+
+    def test_explicit_files_in_place(self, tmp_path):
+        f = tmp_path / "ticket.json"
+        self._write_ticket(f)
+
+        normalize_tickets.main(["--in-place", str(f)])
+
+        result = json.loads(f.read_text())
+        assert "ticket" in result
+
+    def test_explicit_files_with_output_dir(self, tmp_path):
+        src = tmp_path / "src"
+        dst = tmp_path / "dst"
+        src.mkdir()
+        f = src / "ticket.json"
+        self._write_ticket(f)
+
+        normalize_tickets.main(["-o", str(dst), "--date", "2026-01-15", str(f)])
+
+        out_dir = dst / "2026-01-15"
+        assert (out_dir / "ticket.json").exists()
+
+    def test_default_input_dir(self, tmp_path, monkeypatch):
+        input_dir = tmp_path / "tickets-json"
+        input_dir.mkdir()
+        self._write_ticket(input_dir / "ticket.json")
+
+        output_dir = tmp_path / "normalized"
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_INPUT_DIR", input_dir)
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_OUTPUT_DIR", output_dir)
+
+        normalize_tickets.main([])
+
+        # Output dir should contain a date-stamped subdirectory
+        date_dirs = [d for d in output_dir.iterdir() if d.is_dir()]
+        assert len(date_dirs) == 1
+        assert (date_dirs[0] / "ticket.json").exists()
+
+    def test_no_files_exits(self, tmp_path, monkeypatch):
+        empty_dir = tmp_path / "empty-input"
+        empty_dir.mkdir()
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_INPUT_DIR", empty_dir)
+
+        with pytest.raises(SystemExit) as exc_info:
+            normalize_tickets.main([])
+        assert exc_info.value.code == 1
+
+    def test_invalid_date_format_exits(self, tmp_path):
+        f = tmp_path / "ticket.json"
+        self._write_ticket(f)
+
+        with pytest.raises(SystemExit):
+            normalize_tickets.main(["--date", "not-a-date", str(f)])
+
+    def test_archive_existing_with_yes(self, tmp_path, monkeypatch):
+        input_dir = tmp_path / "src"
+        input_dir.mkdir()
+        self._write_ticket(input_dir / "ticket.json")
+
+        output_base = tmp_path / "out"
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_OUTPUT_DIR", output_base)
+
+        # First run creates output
+        normalize_tickets.main(["-o", str(output_base), "--date", "2026-01-01", str(input_dir / "ticket.json")])
+        out_dir = output_base / "2026-01-01"
+        assert (out_dir / "ticket.json").exists()
+
+        # Second run with -y archives and overwrites
+        normalize_tickets.main(["-y", "-o", str(output_base), "--date", "2026-01-01", str(input_dir / "ticket.json")])
+        assert (out_dir / "ticket.json").exists()
+
+    def test_paginated_input_shows_split_stats(self, tmp_path, capsys):
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        data = {"issues": [MINIMAL_ISSUE, issue2], "total": 2}
+        f = tmp_path / "page_0.json"
+        f.write_text(json.dumps(data))
+
+        output_dir = tmp_path / "out"
+        normalize_tickets.main(["-o", str(output_dir), "--date", "2026-01-01", str(f)])
+
+        out = capsys.readouterr().out
+        assert "2 ticket(s)" in out

@@ -39,8 +39,8 @@ Step 5 Run Step 3 again to make sure rules were effect and it worked
 
 | Task | Script | Prompt |
 |---|---|---|
-| Fetch tickets from Jira | `scripts/get-tickets.py` | n/a |
-| Normalize tickets | `scripts/normalize-tickets.py` | n/a |
+| Fetch tickets from Jira | `scripts/get_tickets.py` | n/a |
+| Normalize tickets | `scripts/normalize_tickets.py` | n/a |
 | Train / categorize (batch) | `scripts/run-training.sh` | `prompts/train-to-categorize-tickets-prompt.md` |
 | Update rules from feedback | `scripts/run-update-rules.sh` | `prompts/update-rule-engine-prompt.md` |
 | Categorize using rules only | `scripts/rule-engine-categorize.py` | n/a |
@@ -61,13 +61,16 @@ Step 6  categorize all      ──►  scripts/analysis/tickets-categorized.csv
 Pull raw JSON from Jira.
 
 ```bash
-uv run python scripts/get-tickets.py                       # Fetch all tickets
-uv run python scripts/get-tickets.py -2d                    # Last 2 days
-uv run python scripts/get-tickets.py 2025-01-01             # From start date to now
-uv run python scripts/get-tickets.py 2025-01-01 2025-01-31  # Date range
-uv run python scripts/get-tickets.py -t DO-2639750          # Single ticket by key
-uv run python scripts/get-tickets.py -a --number-of-tickets 5  # First 5 tickets to limited file
-uv run python scripts/get-tickets.py -h                     # Show help
+uv run python scripts/get_tickets.py                       # Fetch all tickets
+uv run python scripts/get_tickets.py -2d                    # Last 2 days
+uv run python scripts/get_tickets.py 2025-01-01             # From start date to now
+uv run python scripts/get_tickets.py 2025-01-01 2025-01-31  # Date range
+uv run python scripts/get_tickets.py -t DO-2639750          # Single ticket by key
+uv run python scripts/get_tickets.py -a --number-of-tickets 5  \
+  --output-file scripts/tickets-json/limited-tickets.json      # First 5 tickets to a single file
+uv run python scripts/get_tickets.py -a --number-of-tickets 5  \
+  --include-unresolved --output-file /tmp/tickets.json         # Override filters + output path
+uv run python scripts/get_tickets.py -h                     # Show help
 ```
 
 Output: `scripts/tickets-json/`
@@ -77,7 +80,11 @@ Output: `scripts/tickets-json/`
 Transform raw Jira JSON into a compact per-ticket schema for LLM efficiency.
 
 ```bash
-uv run python scripts/normalize-tickets.py
+uv run python scripts/normalize_tickets.py
+# Add -y to auto-archive existing outputs, --date to pin directory, or --in-place to overwrite JSONs
+uv run python scripts/normalize_tickets.py -y
+uv run python scripts/normalize_tickets.py --date 2026-02-11
+uv run python scripts/normalize_tickets.py --in-place scripts/tickets-json/DO-*.json
 ```
 
 Output: `scripts/normalized-tickets/<date>/`
