@@ -1,4 +1,4 @@
-.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize clean fmt lint
+.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-csv_jql_transform clean fmt lint
 
 help:
 	@echo "Targets:"
@@ -22,6 +22,9 @@ test-get_tickets_cli:
 
 test-rule_engine_categorize:
 	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_rule_engine_categorize.py
+
+test-csv_jql_transform:
+	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_csv_jql_transform.py
 
 clean:
 	rm -f scripts/*.zip
