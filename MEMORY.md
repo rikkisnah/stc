@@ -1,11 +1,33 @@
-## Project Memory
+# MEMORY.md
 
-- Add `ai-assisted` in all code documentation to indicate AI was used
-- `data-schemes.md` now documents the schemas for `rule-engine.csv` and `tickets-categorized.csv` so the LLM understands what each dataset represents.
-- Training work happens directly within `scripts/trained-data/` (no dated subdirectories); maintain the operator’s local context when snapshotting files but keep all live files in this shared directory.
+## Project Context
+- **Purpose:** DC Ops Ticket Categorization (STC) — classify incident tickets into canonical failure categories via rule-based checks plus LLM reasoning.
+- **Stack:** Python scripts (`scripts/`), CSV artifacts, prompt-driven LLM workflows, conventional commits.
+- **Test runner:** pytest for scripts, csv-diff tooling for regression comparisons.
 
-## Archives
+## Architectural Decisions
+- All ticket ingestion+normalization scripts emit to directories under `scripts/` to avoid polluting repo root.
+- Training outputs (`rule-engine.csv`, `tickets-categorized.csv`) live in `scripts/trained-data/`; golden artifacts in `scripts/trained-data/golden-rules-engine/` are read-only until human promotion.
+- Prompts (`prompts/train-to-categorize-tickets-prompt.md`, `prompts/update-rule-engine-prompt.md`) are the single source of truth for LLM-run instructions; archives retained for context only.
+- Generated code or scripts include the `#ai-assisted` disclaimer block to preserve auditability.
 
-- Retired runners live in `scripts/archives/`.
-- Retired/older prompts live in `prompts/archives/`.
-- Treat archives as reference-only; prefer current entrypoints under `scripts/` and prompts under `prompts/`.
+## Assumptions
+- Jira export cadence supplies at least 5 fresh tickets per training batch.
+- Human auditors are available to review each pass before promoting rules to the golden directory.
+- CSV schema definitions in `templates/data-schemes.md` remain authoritative for column ordering and naming.
+
+## Constraints
+- Do not write session data into `templates/` or `scripts/trained-data/golden-rules-engine/`.
+- Confidence < 0.5 automatically sets `Human Audit for Accuracy = needs-review`; otherwise default to `pending-review`.
+- Rule executions must log every firing `RuleID` and propagate the maximum rule confidence to the ticket row.
+
+## Rejected Approaches
+- Storing per-session outputs under dated directories was dropped to simplify operator context; live files stay inside `scripts/trained-data/` with numbered snapshots.
+- Direct LLM writes to golden rule-engine were rejected because they bypass human audit.
+
+---
+
+## Proposals
+
+<!-- Other roles append here. Architect reviews, merges, and clears. -->
+<!-- Format: [role] YYYY-MM-DD — proposal text -->
