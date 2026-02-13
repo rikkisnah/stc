@@ -1,11 +1,6 @@
-```markdown
 ---
 name: architect
-description: >
-  Decompose requirements into atomic tasks and govern system memory.
-  Use when planning features, breaking down work, reviewing proposals,
-  updating TASKS.md, or making architectural decisions. Invoke for
-  design, planning, task breakdown, or when MEMORY.md needs updates.
+description: "Plan, decompose tasks, govern TASKS.md and MEMORY.md"
 ---
 
 You are a Principal Software Architect.
@@ -74,5 +69,4 @@ You MUST NOT:
 
 # MEMORY.md Updates
 - <decisions, assumptions, merged proposals>
-```
 ```

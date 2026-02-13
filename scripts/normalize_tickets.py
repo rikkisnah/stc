@@ -410,6 +410,50 @@ def archive_existing(output_dir, force=False):
     return archive_path
 
 
+def load_tickets_file(path):
+    """Load ticket keys from a text file for filtering.
+
+    Skips blank lines and lines starting with ``#``.  Validates each
+    line against the ``PROJ-NNNNN`` ticket key format or a Jira browse
+    URL.  Duplicates are removed.
+
+    Returns a set of validated ticket key strings.
+    Raises ``SystemExit`` on read errors or invalid/empty content.
+    """
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError as exc:
+        print(f"Error: cannot read tickets file {path}: {exc}", file=sys.stderr)
+        sys.exit(1)
+
+    seen = set()
+    invalid = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        # Accept plain key or browse URL
+        m = re.search(r"/browse/([A-Z]+-\d+)$", line)
+        if m:
+            seen.add(m.group(1))
+        elif re.match(r"^[A-Z]+-\d+$", line):
+            seen.add(line)
+        else:
+            invalid.append(line)
+
+    if invalid:
+        print(f"Error: invalid ticket key(s) in {path}:", file=sys.stderr)
+        for bad in invalid:
+            print(f"  {bad}", file=sys.stderr)
+        sys.exit(1)
+
+    if not seen:
+        print(f"Error: no ticket keys found in {path}", file=sys.stderr)
+        sys.exit(1)
+
+    return seen
+
+
 def main(argv=None):
     start_time = time.monotonic()
     parser = argparse.ArgumentParser(
@@ -444,6 +488,11 @@ examples:
         "-y", "--yes", action="store_true",
         help="Skip confirmation prompt when overwriting existing files",
     )
+    parser.add_argument(
+        "--tickets-file",
+        help="Path to a text file with ticket keys; only matching "
+             "tickets will be normalized (one key per line, '#' comments allowed)",
+    )
 
     args = parser.parse_args(argv)
 
@@ -455,6 +504,17 @@ examples:
             print(f"No JSON files found in {DEFAULT_INPUT_DIR}/", file=sys.stderr)
             sys.exit(1)
         print(f"Input: {DEFAULT_INPUT_DIR}/ ({len(files)} file(s))")
+
+    # Filter to specific tickets when --tickets-file is provided
+    if args.tickets_file:
+        ticket_keys = load_tickets_file(args.tickets_file)
+        files = [f for f in files if Path(f).stem in ticket_keys]
+        if not files:
+            print(f"No JSON files match ticket keys from {args.tickets_file}",
+                  file=sys.stderr)
+            sys.exit(1)
+        print(f"Filtered to {len(files)} file(s) matching "
+              f"{len(ticket_keys)} ticket key(s)")
 
     # Determine output mode
     if args.in_place:

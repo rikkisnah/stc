@@ -6,13 +6,17 @@ set -euo pipefail
 
 usage() {
     cat <<'USAGE'
-Usage: setup-skills.sh [--root DIR] [--skills DIR]
+Usage: setup-skills.sh [--root DIR] [--skills DIR] [--mirror DEST] [--strict-mirror]
 
 Options:
   --root DIR    Directory that should receive .claude/ and .codex/. Defaults to
                 the current git root when available, otherwise the script's
                 directory.
   --skills DIR  Explicit path to the SKILLS directory. Defaults to auto-detect.
+  --mirror DEST Mirror skills to an additional rsync destination (local or
+                remote path like host:/path). Can be repeated.
+  --strict-mirror
+                Exit non-zero if any --mirror sync fails.
   -h, --help    Show this help text.
 USAGE
 }
@@ -31,6 +35,8 @@ CURRENT_DIR="$(pwd)"
 PARENT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 TARGET_ROOT=""
 SKILLS_OVERRIDE=""
+STRICT_MIRROR=0
+declare -a MIRROR_TARGETS
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -43,6 +49,15 @@ while [ $# -gt 0 ]; do
             [ $# -ge 2 ] || { echo "ERROR: --skills requires a directory" >&2; usage; exit 1; }
             SKILLS_OVERRIDE="$(resolve_path "$2")"
             shift 2
+            ;;
+        --mirror)
+            [ $# -ge 2 ] || { echo "ERROR: --mirror requires a destination" >&2; usage; exit 1; }
+            MIRROR_TARGETS+=("$2")
+            shift 2
+            ;;
+        --strict-mirror)
+            STRICT_MIRROR=1
+            shift
             ;;
         -h|--help)
             usage
@@ -73,6 +88,8 @@ if [ -z "$SKILLS_OVERRIDE" ]; then
         "$PARENT_DIR/prompts/SKILLS"
         "$CURRENT_DIR/SKILLS"
         "$CURRENT_DIR/prompts/SKILLS"
+        "$HOME/.codex/skills"
+        "$HOME/.claude/skills"
     )
     for candidate in "${CANDIDATES[@]}"; do
         [ -d "$candidate" ] || continue
@@ -104,7 +121,9 @@ log_skills() {
         fi
     done
     shopt -u nullglob 2>/dev/null || true
-    [ "$found" -eq 0 ] && echo "    (no skills found)"
+    if [ "$found" -eq 0 ]; then
+        echo "    (no skills found)"
+    fi
 }
 
 ensure_skill_manifest() {
@@ -177,6 +196,27 @@ declare -a skills_buffer
 sync_skills_dir .claude
 sync_skills_dir .codex
 
+mirror_skills_dir() {
+    local dest="$1"
+
+    if rsync -av --delete "$SKILLS_DIR"/ "$dest" >/dev/null 2>&1; then
+        echo "✓ mirror refreshed at $dest"
+        return 0
+    fi
+
+    echo "WARN: mirror failed for $dest" >&2
+    return 1
+}
+
+mirror_failures=0
+for mirror_dest in "${MIRROR_TARGETS[@]}"; do
+    mirror_skills_dir "$mirror_dest" || mirror_failures=$((mirror_failures + 1))
+done
+
 echo "Skills available at source ($SKILLS_DIR):"
 log_skills "$SKILLS_DIR"
 echo ""
+
+if [ "$STRICT_MIRROR" -eq 1 ] && [ "$mirror_failures" -gt 0 ]; then
+    exit 1
+fi

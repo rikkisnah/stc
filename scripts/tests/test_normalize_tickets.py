@@ -25,6 +25,7 @@ normalize_issue = normalize_tickets.normalize_issue
 normalize_json = normalize_tickets.normalize_json
 process_file = normalize_tickets.process_file
 trim_date = normalize_tickets.trim_date
+load_tickets_file = normalize_tickets.load_tickets_file
 
 
 # --- trim_date ---
@@ -1038,3 +1039,147 @@ class TestMain:
 
         out = capsys.readouterr().out
         assert "2 ticket(s)" in out
+
+
+# --- load_tickets_file (normalize version) ---
+
+class TestLoadTicketsFile:
+    def test_simple_keys(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == {"DO-123", "HPC-456"}
+
+    def test_skips_blanks_and_comments(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("# comment\n\nDO-123\n  \n")
+        result = load_tickets_file(str(f))
+        assert result == {"DO-123"}
+
+    def test_deduplicates(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\nDO-123\n")
+        result = load_tickets_file(str(f))
+        assert result == {"DO-123"}
+
+    def test_accepts_browse_urls(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        url = "https://jira-sd.mc1.oracleiaas.com/browse/DO-123"
+        f.write_text(f"{url}\nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == {"DO-123", "HPC-456"}
+
+    def test_invalid_key_exits(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("not-valid\n")
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file(str(f))
+        assert exc_info.value.code == 1
+
+    def test_empty_file_exits(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("\n# comment\n")
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file(str(f))
+        assert exc_info.value.code == 1
+
+    def test_missing_file_exits(self):
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file("/nonexistent/tickets.txt")
+        assert exc_info.value.code == 1
+
+    def test_strips_whitespace(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("  DO-123  \n\tHPC-456\t\n")
+        result = load_tickets_file(str(f))
+        assert result == {"DO-123", "HPC-456"}
+
+
+# --- main() --tickets-file ---
+
+class TestMainTicketsFile:
+    def _write_ticket(self, path, key="DO-1"):
+        data = {
+            "key": key, "id": "1",
+            "fields": {
+                "project": {"key": "DO", "name": "DC Ops"},
+                "issuetype": {"name": "Incident"},
+                "summary": "Test", "priority": {"name": "High"},
+                "status": {"name": "Open"}, "labels": [],
+                "comment": {"comments": []},
+            },
+        }
+        path.write_text(json.dumps(data))
+
+    def test_filters_to_matching_tickets(self, tmp_path, monkeypatch):
+        input_dir = tmp_path / "tickets-json"
+        input_dir.mkdir()
+        self._write_ticket(input_dir / "DO-1.json", "DO-1")
+        self._write_ticket(input_dir / "DO-2.json", "DO-2")
+        self._write_ticket(input_dir / "DO-3.json", "DO-3")
+
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-1\nDO-3\n")
+
+        output_dir = tmp_path / "output"
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_INPUT_DIR", input_dir)
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_OUTPUT_DIR", output_dir)
+
+        normalize_tickets.main(["--tickets-file", str(tickets_file)])
+
+        date_dirs = [d for d in output_dir.iterdir() if d.is_dir()]
+        assert len(date_dirs) == 1
+        output_files = list(date_dirs[0].glob("*.json"))
+        output_stems = {f.stem for f in output_files}
+        assert output_stems == {"DO-1", "DO-3"}
+
+    def test_no_matching_tickets_exits(self, tmp_path, monkeypatch):
+        input_dir = tmp_path / "tickets-json"
+        input_dir.mkdir()
+        self._write_ticket(input_dir / "DO-1.json", "DO-1")
+
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-999\n")
+
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_INPUT_DIR", input_dir)
+
+        with pytest.raises(SystemExit) as exc_info:
+            normalize_tickets.main(["--tickets-file", str(tickets_file)])
+        assert exc_info.value.code == 1
+
+    def test_tickets_file_with_explicit_files(self, tmp_path):
+        self._write_ticket(tmp_path / "DO-1.json", "DO-1")
+        self._write_ticket(tmp_path / "DO-2.json", "DO-2")
+
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-1\n")
+
+        output_dir = tmp_path / "output"
+        normalize_tickets.main([
+            "--tickets-file", str(tickets_file),
+            "-o", str(output_dir),
+            "--date", "2026-01-01",
+            str(tmp_path / "DO-1.json"),
+            str(tmp_path / "DO-2.json"),
+        ])
+
+        out_dir = output_dir / "2026-01-01"
+        output_files = list(out_dir.glob("*.json"))
+        assert len(output_files) == 1
+        assert output_files[0].stem == "DO-1"
+
+    def test_printed_filter_summary(self, tmp_path, monkeypatch, capsys):
+        input_dir = tmp_path / "tickets-json"
+        input_dir.mkdir()
+        self._write_ticket(input_dir / "DO-1.json", "DO-1")
+
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-1\n")
+
+        output_dir = tmp_path / "output"
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_INPUT_DIR", input_dir)
+        monkeypatch.setattr(normalize_tickets, "DEFAULT_OUTPUT_DIR", output_dir)
+
+        normalize_tickets.main(["--tickets-file", str(tickets_file)])
+        out = capsys.readouterr().out
+        assert "Filtered to 1 file(s)" in out

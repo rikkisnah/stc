@@ -94,6 +94,68 @@ def parse_ticket_key(value):
     return None
 
 
+def load_tickets_file(path):
+    """Load ticket keys from a text file, one per line.
+
+    Skips blank lines and lines starting with ``#``.  Each non-comment
+    line is parsed via :func:`parse_ticket_key` (accepts both plain keys
+    and browse URLs).  Duplicates are removed while preserving first-seen
+    order.
+
+    Returns a list of validated, unique ticket keys.
+    Raises ``SystemExit`` if the file cannot be read, is empty after
+    filtering, or contains lines that are not valid ticket keys/URLs.
+    """
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError as exc:
+        print(f"Error: cannot read tickets file {path}: {exc}", file=sys.stderr)
+        sys.exit(1)
+
+    seen = {}
+    invalid = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        key = parse_ticket_key(line)
+        if key is None:
+            invalid.append(line)
+        elif key not in seen:
+            seen[key] = True
+
+    if invalid:
+        print(f"Error: invalid ticket key(s) in {path}:", file=sys.stderr)
+        for bad in invalid:
+            print(f"  {bad}", file=sys.stderr)
+        sys.exit(1)
+
+    if not seen:
+        print(f"Error: no ticket keys found in {path}", file=sys.stderr)
+        sys.exit(1)
+
+    return list(seen.keys())
+
+
+def fetch_tickets_from_file(file_path, force=False):
+    """Fetch multiple tickets listed in a text file.
+
+    Reads ticket keys via :func:`load_tickets_file`, archives existing
+    output in ``OUTPUT_DIR`` (prompting unless *force* is True), then
+    fetches each ticket individually.
+    """
+    keys = load_tickets_file(file_path)
+    print(f"Loaded {len(keys)} unique ticket(s) from {file_path}")
+
+    archive_existing(OUTPUT_DIR, force=force)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    for key in keys:
+        fetch_single_ticket(key)
+
+    print(f"Fetched {len(keys)} ticket(s) from file.")
+
+
 def archive_existing(output_dir, force=False):
     """If output_dir exists and has .json files, archive it as a timestamped zip."""
     json_files = list(output_dir.glob("*.json"))
@@ -309,6 +371,8 @@ def _extract_positional_tokens(argv_list):
         "-t": 1,
         "--ticket": 1,
         "--jql-file": 1,
+        "-f": 1,
+        "--tickets-file": 1,
         "--number-of-tickets": 1,
         "--output-file": 1,
         "-h": 0,
@@ -362,6 +426,8 @@ examples:
   %(prog)s -a 2025-01-01 2025-01-31     Between two dates
   %(prog)s -t DO-2639750                Fetch single ticket
   %(prog)s -t https://jira-sd.mc1.oracleiaas.com/browse/DO-2639750
+  %(prog)s -f tickets.txt                Fetch tickets listed in file
+  %(prog)s -f tickets.txt -y             Fetch from file, skip archive prompt
 """,
     )
     parser.add_argument(
@@ -389,6 +455,11 @@ examples:
         help="Fetch a single ticket by key (e.g. DO-2639750) or browse URL",
     )
     parser.add_argument(
+        "-f", "--tickets-file",
+        help="Path to a text file with ticket keys (one per line); "
+             "lines starting with '#' and blank lines are skipped",
+    )
+    parser.add_argument(
         "--number-of-tickets", type=int,
         help="Fetch only the first N tickets and write them to a single file",
     )
@@ -413,6 +484,12 @@ examples:
     # Enforce --jql-file usage
     if args.jql_file and not args.fetch_all:
         parser.error("--jql-file requires -a/--all")
+
+    # Enforce --tickets-file mutual exclusion
+    if args.tickets_file and args.ticket:
+        parser.error("--tickets-file and --ticket are mutually exclusive")
+    if args.tickets_file and args.fetch_all:
+        parser.error("--tickets-file and --all are mutually exclusive")
 
     if args.number_of_tickets is not None:
         if not args.fetch_all:
@@ -480,7 +557,7 @@ examples:
     if selected is None:
         # Preserve previous behavior: allow no positional tokens, otherwise error.
         # If no action specified, behave like the old script and show help.
-        if not args.fetch_all and not args.ticket:
+        if not args.fetch_all and not args.ticket and not args.tickets_file:
             parser.print_help()
             sys.exit(0)
         return args
@@ -521,6 +598,8 @@ def main(argv=None):
             print(f"Error: Invalid ticket key or URL: {args.ticket}", file=sys.stderr)
             sys.exit(1)
         fetch_single_ticket(ticket_key)
+    elif args.tickets_file:
+        fetch_tickets_from_file(args.tickets_file, force=args.yes)
     elif args.fetch_all:
         date_filter = build_date_filter(args)
         custom_jql = load_jql_from_file(args.jql_file) if args.jql_file else None

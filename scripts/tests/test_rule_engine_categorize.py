@@ -600,6 +600,15 @@ class TestMain:
             resumed = list(csv.DictReader(f))
         assert len(resumed) == 3
 
+    def test_setup_env_resume_flag(self, tmp_path):
+        """_setup_env with resume=True includes --resume in argv."""
+        argv, output_dir = self._setup_env(tmp_path, resume=True)
+        assert "--resume" in argv
+        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+            main()
+        csv_path = output_dir / "tickets-categorized.csv"
+        assert csv_path.is_file()
+
     def test_default_tickets_dir(self, tmp_path, monkeypatch):
         """When --tickets-dir is not given, find_latest_tickets_dir is used."""
         monkeypatch.setattr(rec, "REPO_ROOT", tmp_path)

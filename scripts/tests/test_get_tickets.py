@@ -18,6 +18,8 @@ load_jql_from_file = get_tickets.load_jql_from_file
 parse_args = get_tickets.parse_args
 parse_ticket_key = get_tickets.parse_ticket_key
 load_jira_token = get_tickets.load_jira_token
+load_tickets_file = get_tickets.load_tickets_file
+fetch_tickets_from_file = get_tickets.fetch_tickets_from_file
 
 
 
@@ -574,3 +576,207 @@ class TestMainEdgeCases:
         get_tickets.main(["-t", "DO-123"])
 
         assert (tmp_path / "DO-123.json").exists()
+
+
+# --- load_tickets_file ---
+
+class TestLoadTicketsFile:
+    def test_simple_keys(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == ["DO-123", "HPC-456"]
+
+    def test_skips_blank_lines(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\n\n  \nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == ["DO-123", "HPC-456"]
+
+    def test_skips_comments(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("# This is a comment\nDO-123\n# Another comment\nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == ["DO-123", "HPC-456"]
+
+    def test_strips_whitespace(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("  DO-123  \n  HPC-456\t\n")
+        result = load_tickets_file(str(f))
+        assert result == ["DO-123", "HPC-456"]
+
+    def test_deduplicates_preserving_order(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\nHPC-456\nDO-123\nHPC-789\nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == ["DO-123", "HPC-456", "HPC-789"]
+
+    def test_accepts_browse_urls(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        url = "https://jira-sd.mc1.oracleiaas.com/browse/DO-123"
+        f.write_text(f"{url}\nHPC-456\n")
+        result = load_tickets_file(str(f))
+        assert result == ["DO-123", "HPC-456"]
+
+    def test_invalid_key_exits(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\nnot-a-ticket\nHPC-456\n")
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file(str(f))
+        assert exc_info.value.code == 1
+
+    def test_empty_file_exits(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("# only comments\n\n  \n")
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file(str(f))
+        assert exc_info.value.code == 1
+
+    def test_missing_file_exits(self):
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file("/nonexistent/tickets.txt")
+        assert exc_info.value.code == 1
+
+    def test_all_invalid_exits(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("bad-key\nworse-key\n")
+        with pytest.raises(SystemExit) as exc_info:
+            load_tickets_file(str(f))
+        assert exc_info.value.code == 1
+
+
+# --- fetch_tickets_from_file ---
+
+class TestFetchTicketsFromFile:
+    def test_fetches_all_keys(self, tmp_path, monkeypatch):
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-123\nDO-456\n")
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        fetched = []
+        monkeypatch.setattr(get_tickets, "fetch_single_ticket",
+                            lambda k: fetched.append(k))
+
+        fetch_tickets_from_file(str(tickets_file), force=True)
+        assert fetched == ["DO-123", "DO-456"]
+
+    def test_archives_existing_with_force(self, tmp_path, monkeypatch):
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-123\n")
+
+        out_dir = tmp_path / "output"
+        out_dir.mkdir()
+        (out_dir / "old.json").write_text("{}")
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", out_dir)
+        monkeypatch.setattr(get_tickets, "fetch_single_ticket", lambda k: None)
+
+        fetch_tickets_from_file(str(tickets_file), force=True)
+        assert not (out_dir / "old.json").exists()
+
+    def test_deduplicates_keys(self, tmp_path, monkeypatch):
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-123\nDO-456\nDO-123\n")
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        fetched = []
+        monkeypatch.setattr(get_tickets, "fetch_single_ticket",
+                            lambda k: fetched.append(k))
+
+        fetch_tickets_from_file(str(tickets_file), force=True)
+        assert fetched == ["DO-123", "DO-456"]
+
+    def test_prints_summary(self, tmp_path, monkeypatch, capsys):
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-123\nDO-456\n")
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(get_tickets, "fetch_single_ticket", lambda k: None)
+
+        fetch_tickets_from_file(str(tickets_file), force=True)
+        out = capsys.readouterr().out
+        assert "2 unique ticket(s)" in out
+        assert "Fetched 2 ticket(s) from file" in out
+
+
+# --- parse_args --tickets-file ---
+
+class TestParseArgsTicketsFile:
+    def test_tickets_file_short_flag(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\n")
+        args = parse_args(["-f", str(f)])
+        assert args.tickets_file == str(f)
+
+    def test_tickets_file_long_flag(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\n")
+        args = parse_args(["--tickets-file", str(f)])
+        assert args.tickets_file == str(f)
+
+    def test_tickets_file_with_yes(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\n")
+        args = parse_args(["-f", str(f), "-y"])
+        assert args.tickets_file == str(f)
+        assert args.yes is True
+
+    def test_mutually_exclusive_with_ticket(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\n")
+        with pytest.raises(SystemExit):
+            parse_args(["-f", str(f), "-t", "DO-456"])
+
+    def test_mutually_exclusive_with_all(self, tmp_path):
+        f = tmp_path / "tickets.txt"
+        f.write_text("DO-123\n")
+        with pytest.raises(SystemExit):
+            parse_args(["-f", str(f), "-a"])
+
+    def test_not_set_by_default(self):
+        args = parse_args(["-a"])
+        assert args.tickets_file is None
+
+
+# --- _extract_positional_tokens --tickets-file ---
+
+class TestExtractPositionalTokensTicketsFile:
+    def test_short_flag_consumed(self):
+        result = get_tickets._extract_positional_tokens(
+            ["-f", "/path/to/file.txt", "2025-01-01"])
+        assert result == ["2025-01-01"]
+
+    def test_long_flag_consumed(self):
+        result = get_tickets._extract_positional_tokens(
+            ["--tickets-file", "/path/to/file.txt", "2025-01-01"])
+        assert result == ["2025-01-01"]
+
+
+# --- main() --tickets-file dispatch ---
+
+class TestMainTicketsFile:
+    def test_dispatches_to_fetch_tickets_from_file(self, tmp_path, monkeypatch):
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-123\n")
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        captured = {}
+        def fake_fetch(path, force=False):
+            captured["path"] = path
+            captured["force"] = force
+        monkeypatch.setattr(get_tickets, "fetch_tickets_from_file", fake_fetch)
+
+        get_tickets.main(["-f", str(tickets_file)])
+        assert captured["path"] == str(tickets_file)
+        assert captured["force"] is False
+
+    def test_dispatches_with_force(self, tmp_path, monkeypatch):
+        tickets_file = tmp_path / "tickets.txt"
+        tickets_file.write_text("DO-123\n")
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        captured = {}
+        def fake_fetch(path, force=False):
+            captured["force"] = force
+        monkeypatch.setattr(get_tickets, "fetch_tickets_from_file", fake_fetch)
+
+        get_tickets.main(["-f", str(tickets_file), "-y"])
+        assert captured["force"] is True

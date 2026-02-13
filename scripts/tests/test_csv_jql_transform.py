@@ -322,13 +322,17 @@ class TestMainCli:
         """--write-jql without --jql-dir uses the default scripts/jql/ dir."""
         src = tmp_path / "in.csv"
         out_dir = tmp_path / "out"
+        default_jql = tmp_path / "default_jql"
         _write_csv(src, ["Build", "Category", "Filter"],
                    [["b1", "Default Dir Test", "88"]])
 
-        with patch("sys.argv", ["prog", "-i", str(src), "-o", str(out_dir), "--write-jql"]):
+        with patch("sys.argv", ["prog", "-i", str(src), "-o", str(out_dir), "--write-jql"]), \
+             patch.object(mod, "DEFAULT_JQL_DIR", str(default_jql)):
             main()
 
-        assert "JQL: wrote 1 .jql file(s)" in capsys.readouterr().out
+        out = capsys.readouterr().out
+        assert "JQL: wrote 1 .jql file(s)" in out
+        assert (default_jql / "default_dir_test.jql").exists()
 
     def test_done_printed(self, tmp_path, capsys):
         src = tmp_path / "in.csv"
