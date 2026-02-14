@@ -63,3 +63,6 @@ scripts/overnight-logs/
 
 # Claude launcher scripts
 *claude*
+
+# codex configuration
+.codex
