@@ -1,4 +1,7 @@
-.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-csv_jql_transform clean fmt lint
+.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training test-csv_jql_transform clean fmt lint
+
+PROMPT ?= prompts/update-rule-engine-prompt.md
+CODEX_TIMEOUT ?= 180
 
 help:
 	@echo "Targets:"
@@ -6,6 +9,8 @@ help:
 	@echo "  test-get_tickets        Run get_tickets unit tests"
 	@echo "  test-normalize_tickets  Run normalize_tickets unit tests"
 	@echo "  test-get_tickets_cli    Run get_tickets CLI integration tests"
+	@echo "  test-run_training       Run run-training.py unit tests"
+	@echo "  run-training            Run run-training.py Step 1"
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
 
 test:
@@ -22,6 +27,16 @@ test-get_tickets_cli:
 
 test-rule_engine_categorize:
 	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_rule_engine_categorize.py
+
+test-run_training:
+	uv run pytest -q scripts/tests/test_run_training.py
+
+run-training:
+	uv run python scripts/run-training.py \
+		--tickets-categorized scripts/analysis/tickets-categorized.csv \
+		--rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
+		--prompt-file $(PROMPT) \
+		--codex-timeout $(CODEX_TIMEOUT)
 
 test-csv_jql_transform:
 	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_csv_jql_transform.py
