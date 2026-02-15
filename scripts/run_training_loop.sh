@@ -15,6 +15,7 @@ MAX_REVIEW_ROWS="200"
 ENGINE="codex"
 ML_MODEL="scripts/trained-data/ml-model/classifier.joblib"
 ML_CATEGORY_MAP="scripts/trained-data/ml-model/category_map.json"
+AUTO_RULES="false"
 ASSUME_YES="false"
 
 usage() {
@@ -35,6 +36,7 @@ Options:
   --max-review-rows N      Max review rows for run_training.py (default: 200).
   --ml-model PATH          ML model path (default: scripts/trained-data/ml-model/classifier.joblib).
   --ml-category-map PATH   ML category map (default: scripts/trained-data/ml-model/category_map.json).
+  --auto-rules             Auto-generate rules from all non-rule-matched tickets (no human audit needed).
   -y, --yes                Skip interactive confirmations in Python scripts.
   -h, --help               Show this help.
 EOF
@@ -85,6 +87,10 @@ while [[ $# -gt 0 ]]; do
     --ml-category-map)
       ML_CATEGORY_MAP="${2:-}"
       shift 2
+      ;;
+    --auto-rules)
+      AUTO_RULES="true"
+      shift
       ;;
     --max-review-rows)
       MAX_REVIEW_ROWS="${2:-}"
@@ -153,6 +159,9 @@ fi
 if [[ "$ENGINE" == "ml" || "$ENGINE" == "codex+ml" ]]; then
   echo "  --ml-model $ML_MODEL \\"
   echo "  --ml-category-map $ML_CATEGORY_MAP \\"
+fi
+if [[ "$AUTO_RULES" == "true" ]]; then
+  echo "  --auto-rules \\"
 fi
 echo "  --max-review-rows $MAX_REVIEW_ROWS \\"
 if [[ "$ASSUME_YES" == "true" ]]; then
