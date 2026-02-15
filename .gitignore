@@ -57,11 +57,10 @@ Thumbs.db
 ?LAUDE.md
 
 # Script ticket and output data
-scripts/tickets-json/
-scripts/normalized-tickets/
 scripts/overnight-logs/
 scripts/logs/
 scripts/analysis/
+!scripts/trained-data/tickets-categorized.csv
 
 # Claude launcher scripts
 *claude*
