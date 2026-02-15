@@ -109,6 +109,7 @@ class TestParseArgs:
         assert args.output_dir == rec.DEFAULT_OUTPUT_DIR
         assert args.project is None
         assert args.resume is False
+        assert args.yes is False
 
     def test_custom_options(self, tmp_path, monkeypatch):
         monkeypatch.setattr("sys.argv", [
@@ -118,6 +119,7 @@ class TestParseArgs:
             "--output-dir", str(tmp_path / "out"),
             "--project", "HPC",
             "--resume",
+            "--yes",
         ])
         args = parse_args()
         assert args.tickets_dir == tmp_path
@@ -125,6 +127,7 @@ class TestParseArgs:
         assert args.output_dir == tmp_path / "out"
         assert args.project == "HPC"
         assert args.resume is True
+        assert args.yes is True
 
     def test_project_do(self, monkeypatch):
         monkeypatch.setattr("sys.argv", ["rule_engine_categorize.py", "--project", "DO"])
@@ -669,3 +672,29 @@ class TestMain:
         assert "Runbook=TRUE" in output
         assert "Rule matched" in output
         assert "No match" in output
+
+    def test_existing_output_aborts_without_overwrite_confirmation(self, tmp_path, monkeypatch):
+        argv, output_dir = self._setup_env(tmp_path)
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            main()
+
+        monkeypatch.setattr("builtins.input", lambda _: "n")
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+        assert exc_info.value.code == 0
+
+    def test_existing_output_overwrites_when_confirmed(self, tmp_path, monkeypatch):
+        argv, output_dir = self._setup_env(tmp_path)
+        csv_path = output_dir / "tickets-categorized.csv"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        csv_path.write_text("sentinel\n", encoding="utf-8")
+
+        monkeypatch.setattr("builtins.input", lambda _: "y")
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            main()
+
+        with open(csv_path, encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        assert len(rows) == 3
+        assert rows[0]["Ticket"].startswith("DO-")

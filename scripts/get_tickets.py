@@ -419,7 +419,13 @@ def _extract_positional_tokens(argv_list):
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
-        description="Fetch tickets from Jira",
+        description=(
+            "Fetch tickets from Jira.\n\n"
+            "Modes:\n"
+            "  -a/--all          Bulk JQL search mode (required for --jql-file, date filters, and --number-of-tickets)\n"
+            "  -t/--ticket       Single-ticket mode\n"
+            "  -f/--tickets-file Ticket-list mode (one key per line)"
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""\
 examples:
@@ -435,7 +441,7 @@ examples:
     )
     parser.add_argument(
         "-a", "--all", action="store_true", dest="fetch_all",
-        help="Fetch all matching tickets (with optional date filter)",
+        help="Bulk JQL search mode; required for --jql-file, date filters, and --number-of-tickets",
     )
     parser.add_argument(
         "--jql-file",

@@ -177,6 +177,34 @@ def test_call_codex_validates_proposals_shape(monkeypatch):
     assert run_training.call_codex("prompt", [{"Ticket": "DO-100"}], 10) == []
 
 
+def test_call_codex_parses_json_from_fenced_block(monkeypatch):
+    def fake_fenced_json(cmd, **kwargs):
+        return SimpleNamespace(
+            returncode=0,
+            stderr="",
+            stdout="Here are proposals:\n```json\n{\"proposals\":[{\"Rule Pattern\":\"cpu\",\"Match Field\":\"summary\"}]}\n```",
+        )
+
+    monkeypatch.setattr(run_training.subprocess, "run", fake_fenced_json)
+    proposals = run_training.call_codex("prompt", [{"Ticket": "DO-100"}], 10)
+    assert isinstance(proposals, list)
+    assert proposals[0]["Rule Pattern"] == "cpu"
+
+
+def test_call_codex_parses_json_embedded_in_prose(monkeypatch):
+    def fake_embedded_json(cmd, **kwargs):
+        return SimpleNamespace(
+            returncode=0,
+            stderr="",
+            stdout='Plan complete. {"proposals":[{"Rule Pattern":"mem","Match Field":"description"}]} End.',
+        )
+
+    monkeypatch.setattr(run_training.subprocess, "run", fake_embedded_json)
+    proposals = run_training.call_codex("prompt", [{"Ticket": "DO-100"}], 10)
+    assert isinstance(proposals, list)
+    assert proposals[0]["Rule Pattern"] == "mem"
+
+
 def test_normalize_proposal_handles_empty_pattern_and_type_fallbacks():
     assert run_training.normalize_proposal({}, "", "R001") is None
 
@@ -651,7 +679,8 @@ def test_prompt_is_loaded_from_cli_or_markdown_file(tmp_path, monkeypatch):
         "--output-rule-engine",
         str(output_inline),
     )
-    assert observed["payload"].startswith("inline prompt text\n\nINPUT JSON:")
+    assert observed["payload"].startswith("inline prompt text\n\nRESPONSE FORMAT (STRICT):")
+    assert "INPUT JSON:" in observed["payload"]
 
     prompt_file = tmp_path / "prompt.md"
     prompt_file.write_text("markdown prompt text")
@@ -668,4 +697,10 @@ def test_prompt_is_loaded_from_cli_or_markdown_file(tmp_path, monkeypatch):
         "--output-rule-engine",
         str(output_markdown),
     )
-    assert observed["payload"].startswith("markdown prompt text\n\nINPUT JSON:")
+    assert observed["payload"].startswith("markdown prompt text\n\nRESPONSE FORMAT (STRICT):")
+    assert "INPUT JSON:" in observed["payload"]
+
+
+def test_long_inline_prompt_is_not_treated_as_path():
+    long_prompt = "x" * 5000
+    assert run_training.load_prompt_text(long_prompt, None) == long_prompt

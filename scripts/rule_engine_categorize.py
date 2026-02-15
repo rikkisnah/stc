@@ -45,6 +45,8 @@ def parse_args():
                         "If omitted, auto-detects from each ticket's project field.")
     p.add_argument("--resume", action="store_true",
                    help="Skip tickets already present in the output CSV")
+    p.add_argument("-y", "--yes", action="store_true",
+                   help="Skip overwrite confirmation when replacing output CSV")
     return p.parse_args()
 
 
@@ -275,6 +277,17 @@ def main():
 
     # Load already-done tickets if resuming
     output_csv = output_dir / "tickets-categorized.csv"
+    if output_csv.is_file() and not args.resume:
+        if args.yes:
+            print(f"Overwriting existing output: {output_csv}")
+        else:
+            answer = input(
+                f"Output CSV already exists at {output_csv}. Overwrite? [y/N] "
+            ).strip().lower()
+            if answer != "y":
+                print("Aborted.")
+                sys.exit(0)
+
     done_tickets = set()
     if args.resume and output_csv.is_file():
         with open(output_csv, newline="", encoding="utf-8") as f:

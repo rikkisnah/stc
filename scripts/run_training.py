@@ -16,9 +16,13 @@ import argparse
 import csv
 import json
 import re
+import shlex
 import shutil
 import subprocess
 import sys
+import threading
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict
 
@@ -53,6 +57,8 @@ RULE_ENGINE_COLUMNS = (
 RULE_ID_RE = re.compile(r"^R(\d+)$")
 CODEX_BIN = "codex"
 DEFAULT_CODEX_TIMEOUT_SEC = 180
+HEARTBEAT_INTERVAL_SEC = 10
+JSON_ERROR_PREVIEW_CHARS = 1000
 
 
 def parse_args(argv=None):
@@ -115,8 +121,12 @@ def load_prompt_text(prompt: str | None, prompt_file: Path | None):
         sys.exit("Error: missing required prompt input. Use --prompt or --prompt-file.")
 
     prompt_path = Path(prompt)
-    if prompt_path.exists() and prompt_path.is_file():
-        return prompt_path.read_text(encoding="utf-8")
+    try:
+        if prompt_path.exists() and prompt_path.is_file():
+            return prompt_path.read_text(encoding="utf-8")
+    except OSError:
+        # Treat non-path-safe values (e.g. very long inline text) as prompt text.
+        pass
 
     return prompt
 
@@ -279,7 +289,50 @@ def build_codex_input(prompt_text: str, rows):
     payload = {
         "feedback_rows": feedback_rows,
     }
-    return f"{prompt_text}\n\nINPUT JSON:\n{json.dumps(payload, ensure_ascii=False)}\n"
+    response_contract = (
+        "RESPONSE FORMAT (STRICT):\n"
+        "Return ONLY valid JSON. Do not include markdown, prose, code fences, or explanations.\n"
+        'Required top-level shape: {"proposals": [ ... ]}\n'
+        "Each proposal should be an object containing rule fields such as "
+        '"Rule Pattern", "Match Field", "Failure Category", and "Category".'
+    )
+    return (
+        f"{prompt_text}\n\n"
+        f"{response_contract}\n\n"
+        f"INPUT JSON:\n{json.dumps(payload, ensure_ascii=False)}\n"
+    )
+
+
+def _parse_codex_json_output(stdout_text: str):
+    text = (stdout_text or "").strip()
+    if not text:
+        return None
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Try fenced code blocks first (```json ...``` then generic ```...```).
+    for pattern in (r"```json\s*(\{.*?\})\s*```", r"```\s*(\{.*?\})\s*```"):
+        for match in re.finditer(pattern, text, flags=re.IGNORECASE | re.DOTALL):
+            candidate = match.group(1).strip()
+            try:
+                return json.loads(candidate)
+            except json.JSONDecodeError:
+                continue
+
+    # Finally, try the widest JSON object slice in mixed prose output.
+    start = text.find("{")
+    end = text.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        candidate = text[start:end + 1]
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            return None
+
+    return None
 
 
 def call_codex(prompt_text: str, rows, timeout_sec: int):
@@ -298,6 +351,7 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
         "-C",
         str(REPO_ROOT),
     ]
+    print(f"Codex command: {shlex.join(command)}")
     run_kwargs = {
         "input": payload,
         "text": True,
@@ -306,15 +360,40 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
     if timeout_sec > 0:
         run_kwargs["timeout"] = timeout_sec
 
+    started_at = datetime.now(timezone.utc)
+    print(f"Codex run started at: {started_at.isoformat()}")
+    stop_event = threading.Event()
+    start_monotonic = time.monotonic()
+
+    def _heartbeat():
+        while not stop_event.wait(HEARTBEAT_INTERVAL_SEC):
+            elapsed = int(time.monotonic() - start_monotonic)
+            print(f"Heartbeat: Codex still running ({elapsed}s elapsed)...")
+
+    heartbeat_thread = threading.Thread(target=_heartbeat, daemon=True)
+    heartbeat_thread.start()
+
     try:
         result = subprocess.run(command, **run_kwargs)
     except subprocess.TimeoutExpired:
+        stop_event.set()
+        heartbeat_thread.join(timeout=0.2)
+        ended_at = datetime.now(timezone.utc)
+        print(f"Codex run ended at: {ended_at.isoformat()}")
+        print(f"Codex elapsed: {time.monotonic() - start_monotonic:.2f}s")
         print(
             "Codex timed out while generating rule proposals. "
             f"Increase --codex-timeout from {timeout_sec}s.",
             file=sys.stderr,
         )
         return []
+    finally:
+        stop_event.set()
+        heartbeat_thread.join(timeout=0.2)
+
+    ended_at = datetime.now(timezone.utc)
+    print(f"Codex run ended at: {ended_at.isoformat()}")
+    print(f"Codex elapsed: {time.monotonic() - start_monotonic:.2f}s")
 
     if result.returncode != 0:
         print("Codex execution failed:")
@@ -322,10 +401,23 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
             print(result.stderr, file=sys.stderr)
         return []
 
-    try:
-        parsed = json.loads((result.stdout or "").strip())
-    except json.JSONDecodeError:
+    parsed = _parse_codex_json_output(result.stdout or "")
+    if parsed is None:
         print("Error: Codex did not return valid JSON.", file=sys.stderr)
+        stdout_preview = (result.stdout or "")[:JSON_ERROR_PREVIEW_CHARS]
+        stderr_preview = (result.stderr or "")[:JSON_ERROR_PREVIEW_CHARS]
+        if stdout_preview:
+            print(
+                f"Codex stdout preview (first {JSON_ERROR_PREVIEW_CHARS} chars):\n"
+                f"{stdout_preview}",
+                file=sys.stderr,
+            )
+        if stderr_preview:
+            print(
+                f"Codex stderr preview (first {JSON_ERROR_PREVIEW_CHARS} chars):\n"
+                f"{stderr_preview}",
+                file=sys.stderr,
+            )
         return []
 
     proposals = parsed.get("proposals") if isinstance(parsed, dict) else None
@@ -349,12 +441,22 @@ def append_rules(output_rule_engine: Path, new_rules):
 
 
 def main(argv=None):
+    script_started_at = datetime.now(timezone.utc)
+    print(f"Run started at: {script_started_at.isoformat()}")
+    run_start_monotonic = time.monotonic()
     args = parse_args(argv)
 
     validate_file(args.tickets_categorized, "Tickets CSV")
     validate_file(args.rules_engine_file, "Rules engine")
 
     prompt_text = load_prompt_text(args.prompt, args.prompt_file)
+    prompt_source = str(args.prompt_file) if args.prompt_file else "inline --prompt"
+    prompt_preview = prompt_text.replace("\n", "\\n")
+    if len(prompt_preview) > 200:
+        prompt_preview = prompt_preview[:200] + "..."
+    print(f"Prompt source: {prompt_source}")
+    print(f"Prompt chars: {len(prompt_text)}")
+    print(f"Prompt preview: {prompt_preview}")
 
     all_rows, incorrect_rows, skipped_missing_comments = load_feedback_rows(
         args.tickets_categorized
@@ -373,6 +475,9 @@ def main(argv=None):
         print("Rows skipped (missing comments): {0}".format(skipped_missing_comments))
         print("Rules added: 0")
         print(f"Output rule-engine file: {args.output_rule_engine}")
+        script_ended_at = datetime.now(timezone.utc)
+        print(f"Run ended at: {script_ended_at.isoformat()}")
+        print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
         return {
             "rows_scanned": rows_scanned,
             "incorrect_rows": incorrect_count,
@@ -403,11 +508,29 @@ def main(argv=None):
 
     append_rules(args.output_rule_engine, normalized)
 
+    if normalized:
+        print("Rules appended:")
+        for rule in normalized:
+            print(
+                "  - {rule_id} | project={project} | field={field} | "
+                "failure='{failure}' | category='{category}' | pattern='{pattern}'".format(
+                    rule_id=rule.get("RuleID", ""),
+                    project=rule.get("Project Key", ""),
+                    field=rule.get("Match Field", ""),
+                    failure=rule.get("Failure Category", ""),
+                    category=rule.get("Category", ""),
+                    pattern=rule.get("Rule Pattern", ""),
+                )
+            )
+
     print("Rows scanned: {0}".format(rows_scanned))
     print("Incorrect rows considered: {0}".format(incorrect_count))
     print("Rows skipped (missing comments): {0}".format(skipped_missing_comments))
     print("Rules added: {0}".format(len(normalized)))
     print(f"Output rule-engine file: {args.output_rule_engine}")
+    script_ended_at = datetime.now(timezone.utc)
+    print(f"Run ended at: {script_ended_at.isoformat()}")
+    print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
 
     return {
         "rows_scanned": rows_scanned,
