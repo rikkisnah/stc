@@ -60,6 +60,8 @@ Thumbs.db
 scripts/tickets-json/
 scripts/normalized-tickets/
 scripts/overnight-logs/
+scripts/logs/
+scripts/analysis/
 
 # Claude launcher scripts
 *claude*
