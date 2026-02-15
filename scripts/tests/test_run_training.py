@@ -1,6 +1,6 @@
 # Code was generated via OCI AI and was reviewed by a human SDE
 # Tag: #ai-assisted
-"""Tests for run-training.py."""
+"""Tests for run_training.py."""
 
 import csv
 import importlib
@@ -10,7 +10,7 @@ from types import SimpleNamespace
 
 import pytest
 
-run_training = importlib.import_module("run-training")
+run_training = importlib.import_module("run_training")
 parse_args = run_training.parse_args
 main = run_training.main
 

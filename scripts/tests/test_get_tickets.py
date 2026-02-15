@@ -121,6 +121,18 @@ class TestParseArgs:
         with pytest.raises(SystemExit):
             parse_args(["--jql-file", str(jql_file)])
 
+    def test_include_resolved_only_flag(self):
+        args = parse_args(["-a", "--include-resolved-only"])
+        assert args.include_resolved_only is True
+
+    def test_include_resolved_only_conflicts_with_include_unresolved(self):
+        with pytest.raises(SystemExit):
+            parse_args(["-a", "--include-resolved-only", "--include-unresolved"])
+
+    def test_include_resolved_only_conflicts_with_unresolved_only(self):
+        with pytest.raises(SystemExit):
+            parse_args(["-a", "--include-resolved-only", "--unresolved-only"])
+
     def test_number_of_tickets_sets_value_and_default_output_path(self):
         args = parse_args(["-a", "--number-of-tickets", "5"])
         assert args.number_of_tickets == 5
@@ -552,6 +564,20 @@ class TestFetchSearchEdgeCases:
 
         call_params = mock_get.call_args[1]["params"]
         assert "resolution = Unresolved" in call_params["jql"]
+
+    def test_include_resolved_only_filter(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(get_tickets, "OUTPUT_DIR", tmp_path)
+
+        empty = {"issues": [], "total": 0}
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = empty
+        mock_get = MagicMock(return_value=mock_resp)
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get)
+
+        fetch_search(include_resolved_only=True)
+
+        call_params = mock_get.call_args[1]["params"]
+        assert "resolution = Resolved" in call_params["jql"]
 
     def test_limited_mode_requires_output_file(self):
         with pytest.raises(ValueError, match="output_file is required"):

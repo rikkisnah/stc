@@ -10,9 +10,9 @@ help:
 	@echo "  test-get_tickets        Run get_tickets unit tests"
 	@echo "  test-normalize_tickets  Run normalize_tickets unit tests"
 	@echo "  test-get_tickets_cli    Run get_tickets CLI integration tests"
-	@echo "  test-run_training       Run run-training.py unit tests"
-	@echo "  run-training            Run run-training.py Step 1"
-	@echo "  run-training-inline     Run run-training.py with inline --prompt"
+	@echo "  test-run_training       Run run_training.py unit tests"
+	@echo "  run-training            Run run_training.py Step 1"
+	@echo "  run-training-inline     Run run_training.py with inline --prompt"
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
 
 test:
@@ -34,7 +34,7 @@ test-run_training:
 	uv run pytest -q scripts/tests/test_run_training.py
 
 run-training:
-	uv run python scripts/run-training.py \
+	uv run python scripts/run_training.py \
 		--tickets-categorized scripts/analysis/tickets-categorized.csv \
 		--rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
 		--prompt-file $(PROMPT) \
@@ -45,7 +45,7 @@ run-training-inline:
 		echo "Usage: make run-training-inline PROMPT_TEXT='your prompt text' [CODEX_TIMEOUT=SECONDS]"; \
 		exit 1; \
 	fi
-	uv run python scripts/run-training.py \
+	uv run python scripts/run_training.py \
 		--tickets-categorized scripts/analysis/tickets-categorized.csv \
 		--rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
 		--prompt "$(PROMPT_TEXT)" \

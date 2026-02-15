@@ -231,7 +231,7 @@ def load_jql_from_file(path):
 
 
 def fetch_search(date_filter="", force=False, include_unresolved=False,
-                 unresolved_only=False, jql=None, number_of_tickets=None,
+                 unresolved_only=False, include_resolved_only=False, jql=None, number_of_tickets=None,
                  output_file=None):
     """Fetch tickets via JQL search with optional date filter.
 
@@ -244,6 +244,8 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
     jql = base_jql
     if unresolved_only:
         jql += UNRESOLVED_FILTER
+    elif include_resolved_only:
+        jql += RESOLVED_FILTER
     elif not include_unresolved:
         jql += RESOLVED_FILTER
     jql += date_filter
@@ -365,6 +367,7 @@ def _extract_positional_tokens(argv_list):
         "-a": 0,
         "--all": 0,
         "--include-unresolved": 0,
+        "--include-resolved-only": 0,
         "--unresolved-only": 0,
         "-y": 0,
         "--yes": 0,
@@ -443,6 +446,10 @@ examples:
         help="Include unresolved tickets (default: only resolved)",
     )
     parser.add_argument(
+        "--include-resolved-only", action="store_true",
+        help="Fetch only resolved tickets (explicit mode)",
+    )
+    parser.add_argument(
         "--unresolved-only", action="store_true",
         help="Fetch only unresolved tickets",
     )
@@ -490,6 +497,12 @@ examples:
         parser.error("--tickets-file and --ticket are mutually exclusive")
     if args.tickets_file and args.fetch_all:
         parser.error("--tickets-file and --all are mutually exclusive")
+    if args.include_unresolved and args.unresolved_only:
+        parser.error("--include-unresolved and --unresolved-only are mutually exclusive")
+    if args.include_resolved_only and args.include_unresolved:
+        parser.error("--include-resolved-only and --include-unresolved are mutually exclusive")
+    if args.include_resolved_only and args.unresolved_only:
+        parser.error("--include-resolved-only and --unresolved-only are mutually exclusive")
 
     if args.number_of_tickets is not None:
         if not args.fetch_all:
@@ -608,6 +621,7 @@ def main(argv=None):
             force=args.yes,
             include_unresolved=args.include_unresolved,
             unresolved_only=args.unresolved_only,
+            include_resolved_only=args.include_resolved_only,
             jql=custom_jql,
             number_of_tickets=args.number_of_tickets,
             output_file=args.output_file,
