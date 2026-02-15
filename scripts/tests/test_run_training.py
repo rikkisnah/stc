@@ -48,7 +48,10 @@ def _write_csv(path: Path, header, rows):
 
 
 def _run_main(*args):
-    return main(list(args))
+    argv = list(args)
+    if "--yes" not in argv and "-y" not in argv:
+        argv.append("--yes")
+    return main(argv)
 
 
 def test_parse_args_requires_all_required_flags():
@@ -64,13 +67,16 @@ def test_parse_args_requires_prompt_input():
         ])
 
 
-def test_parse_args_default_max_review_rows_is_1():
+def test_parse_args_defaults():
     args = parse_args([
         "--tickets-categorized", "tickets.csv",
         "--rules-engine-file", "rules.csv",
         "--prompt", "inline prompt",
     ])
-    assert args.max_review_rows == 1
+    assert args.max_review_rows == 200
+    assert args.codex_batch_size == 2
+    assert args.codex_timeout == 120
+    assert args.yes is False
 
 
 def test_parse_args_rejects_non_positive_max_review_rows():
@@ -112,12 +118,24 @@ def test_format_duration_hms():
 
 
 def test_estimate_runtime_seconds():
-    estimated, worst = run_training.estimate_runtime_seconds(900, 2, 60)
+    estimated, worst, batches = run_training.estimate_runtime_seconds(900, 2, 60)
     assert estimated == 20250
     assert worst == 27000
-    estimated_zero, worst_zero = run_training.estimate_runtime_seconds(0, 2, 60)
+    assert batches == 450
+    estimated_zero, worst_zero, batches_zero = run_training.estimate_runtime_seconds(0, 2, 60)
     assert estimated_zero == 0
-    assert worst_zero == 0
+    assert worst_zero is None
+    assert batches_zero == 0
+
+
+def test_confirm_ready_to_run_accepts_yes(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda *_args, **_kwargs: "yes")
+    assert run_training.confirm_ready_to_run(30, 60, 2) is True
+
+
+def test_confirm_ready_to_run_rejects_default(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda *_args, **_kwargs: "")
+    assert run_training.confirm_ready_to_run(30, None, 2) is False
 
 
 def test_parse_args_rejects_non_positive_codex_batch_size():
@@ -232,6 +250,35 @@ def test_call_codex_handles_timeout_and_failure(monkeypatch):
 
     monkeypatch.setattr(run_training.subprocess, "run", fake_fail)
     assert run_training.call_codex("prompt", [{"Ticket": "DO-100"}], 10) == []
+
+
+def test_main_cancels_when_user_not_ready(tmp_path, monkeypatch):
+    rules = tmp_path / "source-rule-engine.csv"
+    _write_csv(rules, RULE_HEADER, [])
+    tickets = tmp_path / "tickets-categorized.csv"
+    _write_csv(tickets, TICKET_HEADER, [
+        {
+            "Project Key": "DO",
+            "Ticket": "DO-100",
+            "Ticket Description": "desc",
+            "Category of Issue": "CPU",
+            "Category": "CPU/Processor",
+            "Human Audit for Accuracy": "needs-review",
+            "Human Comments": "",
+        }
+    ])
+    prompt = tmp_path / "prompt.md"
+    prompt.write_text("prompt")
+    output = tmp_path / "rule-engine.local.csv"
+
+    monkeypatch.setattr("builtins.input", lambda *_args, **_kwargs: "n")
+    result = main([
+        "--tickets-categorized", str(tickets),
+        "--rules-engine-file", str(rules),
+        "--prompt", str(prompt),
+        "--output-rule-engine", str(output),
+    ])
+    assert result["rules_added"] == 0
 
 
 def test_call_codex_validates_proposals_shape(monkeypatch):
@@ -603,7 +650,7 @@ def test_review_rows_sent_to_codex_and_missing_comments_included(tmp_path, monke
     assert rows[2]["RuleID"] == "R003"
 
 
-def test_default_max_review_rows_limits_payload_to_one(tmp_path, monkeypatch):
+def test_max_review_rows_limits_payload_to_one(tmp_path, monkeypatch):
     rules = tmp_path / "source-rule-engine.csv"
     _write_csv(rules, RULE_HEADER, [])
 
@@ -658,6 +705,8 @@ def test_default_max_review_rows_limits_payload_to_one(tmp_path, monkeypatch):
         str(rules),
         "--prompt",
         "inline prompt text",
+        "--max-review-rows",
+        "1",
         "--output-rule-engine",
         str(output),
     )

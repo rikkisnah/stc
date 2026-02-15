@@ -57,7 +57,7 @@ RULE_ENGINE_COLUMNS = (
 
 RULE_ID_RE = re.compile(r"^R(\d+)$")
 CODEX_BIN = "codex"
-DEFAULT_CODEX_TIMEOUT_SEC = 180
+DEFAULT_CODEX_TIMEOUT_SEC = 120
 HEARTBEAT_INTERVAL_SEC = 10
 JSON_ERROR_PREVIEW_CHARS = 1000
 AUDIT_VERDICTS_TO_REVIEW = {"incorrect", "needs-review"}
@@ -103,29 +103,35 @@ def parse_args(argv=None):
         ),
     )
     parser.add_argument(
+        "-y",
+        "--yes",
+        action="store_true",
+        help="Skip estimated-runtime confirmation prompt and run immediately.",
+    )
+    parser.add_argument(
         "--codex-timeout",
         type=int,
         default=DEFAULT_CODEX_TIMEOUT_SEC,
         help=(
             "Max seconds to wait for Codex. "
-            "Default: 180. Use 0 to wait indefinitely."
+            "Default: 120. Use 0 to wait indefinitely."
         ),
     )
     parser.add_argument(
         "--codex-batch-size",
         type=int,
-        default=5,
-        help="Number of review rows to send per Codex call. Default: 5.",
+        default=2,
+        help="Number of review rows to send per Codex call. Default: 2.",
     )
     parser.add_argument(
         "--max-review-rows",
         "--max-incorrect-rows",
         dest="max_review_rows",
         type=int,
-        default=1,
+        default=200,
         help=(
             "Maximum number of review rows (incorrect/needs-review) to send to Codex per run. "
-            "Default: 1."
+            "Default: 200."
         ),
     )
     args = parser.parse_args(argv)
@@ -191,11 +197,22 @@ def _format_duration(seconds: int):
 
 def estimate_runtime_seconds(review_count: int, batch_size: int, timeout_sec: int):
     if review_count <= 0:
-        return 0, 0
+        return 0, None, 0
     batches = (review_count + batch_size - 1) // batch_size
-    worst_case = batches * timeout_sec if timeout_sec > 0 else 0
+    worst_case = batches * timeout_sec if timeout_sec > 0 else None
     estimated = batches * min(45, timeout_sec) if timeout_sec > 0 else batches * 45
-    return estimated, worst_case
+    return estimated, worst_case, batches
+
+
+def confirm_ready_to_run(estimated_sec: int, worst_sec: int | None, batches: int):
+    worst_case_text = _format_duration(worst_sec) if worst_sec is not None else "unbounded"
+    answer = input(
+        "Proceed with run? "
+        f"estimated={_format_duration(estimated_sec)}, "
+        f"worst_case={worst_case_text}, "
+        f"batches={batches} [y/N]: "
+    ).strip().lower()
+    return answer in {"y", "yes"}
 
 
 def load_prompt_text(prompt: str | None, prompt_file: Path | None):
@@ -624,15 +641,30 @@ def main(argv=None):
         failure_to_category = build_failure_to_category_map(existing_rules)
         next_id = next_rule_id(existing_rules)
 
-        est_sec, worst_sec = estimate_runtime_seconds(
+        est_sec, worst_sec, estimated_batches = estimate_runtime_seconds(
             review_count, args.codex_batch_size, args.codex_timeout
         )
         print(
             "Estimated total runtime: {0} (worst-case: {1})".format(
                 _format_duration(est_sec),
-                _format_duration(worst_sec) if worst_sec else "unbounded",
+                _format_duration(worst_sec) if worst_sec is not None else "unbounded",
             )
         )
+        print(f"Estimated batches: {estimated_batches}")
+        if review_count > 0 and not args.yes:
+            if not confirm_ready_to_run(est_sec, worst_sec, estimated_batches):
+                print("Run cancelled by user.")
+                script_ended_at = datetime.now(timezone.utc)
+                print(f"Run ended at: {script_ended_at.isoformat()}")
+                print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
+                return {
+                    "rows_scanned": rows_scanned,
+                    "incorrect_rows": review_count,
+                    "skipped": missing_comments_total,
+                    "rules_added": 0,
+                    "output_rule_engine": str(args.output_rule_engine),
+                    "log_file": str(log_path),
+                }
 
         all_proposals = []
         reason_counts: Dict[str, int] = {}

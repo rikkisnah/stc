@@ -32,6 +32,33 @@ Step 4.2 Add new rules via scripts/run_training.py
 Step 5 Run Step 3 again to make sure rules were effect and it worked
 ```
 
+## Practical Runbook (Recommended)
+
+Canonical runbook: `docs/training-runbook.md`
+
+One-command helper for steps 1-3 (fetch -> normalize -> categorize):
+```bash
+scripts/run_training_loop.sh \
+  --start-date 2026-02-10 \
+  --end-date 2026-02-12 \
+  --jql-file scripts/jql/mi355x_default.jql \
+  --rule-engine scripts/trained-data/rule-engine.local.csv \
+  --yes
+```
+
+Expected checkpoints in output:
+1. `[1/3] Fetching tickets...`
+2. `[2/3] Normalizing tickets...`
+3. `[3/3] Categorizing with rule engine...`
+4. Summary lines like `Rule matched`, `No match`, and `Runbook=TRUE`
+5. Printed `run_training.py` command for the next step
+
+After that:
+1. Audit `scripts/analysis/tickets-categorized.csv`
+2. Run `scripts/run_training.py` to append new rules
+3. Re-run `scripts/rule_engine_categorize.py`
+4. Repeat until stable
+
 ### Step 4.1 — What to look for in `tickets-categorized.csv`
 
 - Rows with `LLM Confidence < 0.5` or `Human Audit for Accuracy = needs-review`
