@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 type Stage = "landing" | "input" | "results";
 type InputMode = "jql" | "files" | "tickets";
 type ResolutionMode = "all" | "unresolved-only" | "resolved-only";
+type PipelineStepStatus = "pending" | "running" | "done" | "failed";
 type SummaryRow = {
   "Tickets Category": string;
   "Percentage of Total Tickets": string;
@@ -14,11 +15,24 @@ type SummaryRow = {
   "JQL Query": string;
 };
 
+const PIPELINE_STEPS = [
+  "get_tickets.py",
+  "normalize_tickets.py",
+  "rule_engine_categorize.py",
+  "create_summary.py"
+] as const;
+
 export default function HomePage() {
   const [stage, setStage] = useState<Stage>("landing");
   const [inputMode, setInputMode] = useState<InputMode>("jql");
-  const [jql, setJql] = useState('project="High Performance Computing"');
+  const [jql, setJql] = useState(
+    'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"'
+  );
   const [resolutionMode, setResolutionMode] = useState<ResolutionMode>("all");
+  const [ticketsFile, setTicketsFile] = useState(
+    "scripts/analysis/ui-runs/templates/tickets-template.txt"
+  );
+  const [ticketsText, setTicketsText] = useState("HPC-110621,HPC-110615");
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState("");
   const [summaryRows, setSummaryRows] = useState<SummaryRow[]>([]);
@@ -38,6 +52,10 @@ export default function HomePage() {
   const [lastLogAtMs, setLastLogAtMs] = useState<number | null>(null);
   const [heartbeatTick, setHeartbeatTick] = useState(0);
   const [renderedAt, setRenderedAt] = useState("-");
+  const [wrapLogs, setWrapLogs] = useState(true);
+  const [pipelineStatus, setPipelineStatus] = useState<PipelineStepStatus[]>(
+    PIPELINE_STEPS.map(() => "pending")
+  );
   const abortRef = useRef<AbortController | null>(null);
 
   function formatTimestamp(iso: string): string {
@@ -45,6 +63,24 @@ export default function HomePage() {
       return "-";
     }
     return new Date(iso).toLocaleString();
+  }
+
+  function nowTime(): string {
+    return new Date().toLocaleTimeString();
+  }
+
+  function validateJql(query: string): string | null {
+    const trimmed = query.trim();
+    if (!trimmed) {
+      return "JQL cannot be empty.";
+    }
+
+    // Guard against a common typo: `created "YYYY-MM-DD"` / `createdDate "YYYY-MM-DD"` without operator.
+    if (/\b(created|createdDate)\s+"[\d-]+"\b/i.test(trimmed)) {
+      return 'Invalid JQL near "created/createdDate". Use an operator, e.g. createdDate >= "YYYY-MM-DD".';
+    }
+
+    return null;
   }
 
   useEffect(() => {
@@ -68,8 +104,20 @@ export default function HomePage() {
   }, [isRunning, startedAt]);
 
   async function handleOk() {
-    if (inputMode !== "jql") {
-      setStage("results");
+    if (inputMode === "jql") {
+      const jqlError = validateJql(jql);
+      if (jqlError) {
+        setError(jqlError);
+        setStage("input");
+        return;
+      }
+    } else if (inputMode === "files" && !ticketsFile.trim()) {
+      setError("Ticket list file path is required.");
+      setStage("input");
+      return;
+    } else if (inputMode === "tickets" && !ticketsText.trim()) {
+      setError("Ticket list is required.");
+      setStage("input");
       return;
     }
 
@@ -88,6 +136,7 @@ export default function HomePage() {
     setLiveElapsedMs(0);
     setHeartbeatTick(0);
     setStage("results");
+    setPipelineStatus(PIPELINE_STEPS.map(() => "pending"));
 
     try {
       const abortController = new AbortController();
@@ -95,7 +144,7 @@ export default function HomePage() {
       const response = await fetch("/api/run-jql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jql, resolutionMode }),
+        body: JSON.stringify({ inputMode, jql, resolutionMode, ticketsFile, ticketsText }),
         signal: abortController.signal
       });
       if (!response.ok) {
@@ -142,18 +191,43 @@ export default function HomePage() {
             };
 
             if (event.type === "command-start" && event.command) {
+              const startIdx = PIPELINE_STEPS.findIndex((step) => event.command?.includes(step));
+              if (startIdx >= 0) {
+                setPipelineStatus((prev) =>
+                  prev.map((status, idx) => {
+                    if (idx < startIdx && status !== "done") {
+                      return "done";
+                    }
+                    if (idx === startIdx) {
+                      return "running";
+                    }
+                    return status;
+                  })
+                );
+              }
               setLastLogAtMs(Date.now());
               setExecutedCommands((prev) =>
                 prev.includes(event.command as string) ? prev : [...prev, event.command as string]
               );
-              setCommandLogs((prev) => [...prev, `> ${event.command}`]);
+              setCommandLogs((prev) => [...prev, `[${nowTime()}] > ${event.command}`]);
+            } else if (event.type === "command-end" && event.command) {
+              const endIdx = PIPELINE_STEPS.findIndex((step) => event.command?.includes(step));
+              if (endIdx >= 0) {
+                setPipelineStatus((prev) =>
+                  prev.map((status, idx) => (idx === endIdx ? "done" : status))
+                );
+              }
             } else if ((event.type === "stdout" || event.type === "stderr") && event.line) {
               const linesFromEvent = event.line.split(/\r?\n/).filter((chunk) => chunk.trim());
               if (linesFromEvent.length > 0) {
                 setLastLogAtMs(Date.now());
-                setCommandLogs((prev) => [...prev, ...linesFromEvent]);
+                setCommandLogs((prev) => [
+                  ...prev,
+                  ...linesFromEvent.map((entry) => `[${nowTime()}] ${entry}`)
+                ]);
               }
             } else if (event.type === "done") {
+              setPipelineStatus(PIPELINE_STEPS.map(() => "done"));
               setSummaryRows(event.summaryRows || []);
               setResultPaths(event.paths || {});
             } else if (event.type === "canceled") {
@@ -162,6 +236,13 @@ export default function HomePage() {
               setSummaryRows([]);
               setResultPaths({});
             } else if (event.type === "error") {
+              setPipelineStatus((prev) => {
+                const runningIdx = prev.findIndex((status) => status === "running");
+                if (runningIdx === -1) {
+                  return prev;
+                }
+                return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
+              });
               throw new Error(event.error || "Pipeline failed.");
             }
           }
@@ -211,11 +292,22 @@ export default function HomePage() {
     }
   }
 
+  const runState =
+    isRunning ? "running" : error ? "failed" : finishedAt ? "success" : "idle";
+
   return (
     <main>
       <section className="panel">
         <header className="header">
-          <h1 className="title">Smart (Sudha&apos;s) Tickets&apos; Classifier (STC)</h1>
+          <h1 className="title">
+            <button
+              className="home-link"
+              onClick={() => setStage("landing")}
+              aria-label="Go to home"
+            >
+              Smart (Sudha&apos;s) Tickets&apos; Classifier (STC)
+            </button>
+          </h1>
           <p className="subtitle">v0.1 wireframe preview</p>
         </header>
 
@@ -223,10 +315,10 @@ export default function HomePage() {
           <button
             className="primary"
             onClick={() => setStage("input")}
-            aria-label="Categorize unresolved tickets"
+            aria-label="Categorize tickets"
             disabled={isRunning}
           >
-            Categorize unresolved tickets
+            Categorize tickets
           </button>
           <button disabled aria-label="Train Learn WIP">
             Train Learn (WIP)
@@ -241,7 +333,7 @@ export default function HomePage() {
         <div className="content">
           {stage === "landing" && (
             <p className="small">
-              Click <strong>Categorize unresolved tickets</strong> to preview the next
+              Click <strong>Categorize tickets</strong> to preview the next
               wireframe step.
             </p>
           )}
@@ -293,6 +385,10 @@ export default function HomePage() {
                   onChange={(e) => setJql(e.target.value)}
                   disabled={inputMode !== "jql"}
                 />
+                <p className="small">
+                  Example: project="High Performance Computing" and createdDate &gt;= "2026-02-10"
+                  and createdDate &lt;= "2026-02-11"
+                </p>
               </div>
               <div className="field">
                 <label htmlFor="resolution-mode">Ticket resolution filter</label>
@@ -311,18 +407,29 @@ export default function HomePage() {
                 <label htmlFor="ticket-files">Enter ticket list files</label>
                 <input
                   id="ticket-files"
-                  placeholder="scripts/normalized-tickets/2026-02-15"
+                  placeholder="scripts/analysis/ui-runs/templates/tickets-template.txt"
+                  value={ticketsFile}
+                  onChange={(e) => setTicketsFile(e.target.value)}
                   disabled={inputMode !== "files"}
                 />
+                <p className="small">
+                  Template directory: <code>scripts/analysis/ui-runs/templates/</code>. One ticket
+                  per line in file (example: <code>HPC-101</code> or <code>DO-202</code>).
+                </p>
               </div>
               <div className="field">
                 <label htmlFor="ticket-list">Enter list of ticket IDs</label>
                 <textarea
                   id="ticket-list"
                   rows={4}
-                  placeholder="DCOPS-101, DCOPS-102, DCOPS-103"
+                  placeholder="HPC-110621,HPC-110615"
+                  value={ticketsText}
+                  onChange={(e) => setTicketsText(e.target.value)}
                   disabled={inputMode !== "tickets"}
                 />
+                <p className="small">
+                  You can paste comma-separated tickets, e.g. <code>HPC-110621,HPC-110615</code>.
+                </p>
               </div>
               <div>
                 <button className="primary" onClick={handleOk} disabled={isRunning}>
@@ -339,23 +446,21 @@ export default function HomePage() {
 
           {stage === "results" && (
             <div className="grid" aria-label="Results section">
-              <span className="badge">
-                {inputMode === "jql"
-                  ? isRunning
-                    ? "Live local pipeline run (in progress)"
-                    : "Live local pipeline run"
-                  : "Mocked output only (no backend call)"}
+              <span className={`badge run-state-${runState}`}>
+                {isRunning
+                  ? "Live local pipeline run (in progress)"
+                  : "Live local pipeline run"}
               </span>
               {isRunning && (
-                <p className="small heartbeat-row">
-                  <span className={`heartbeat-dot ${heartbeatTick % 2 === 0 ? "on" : ""}`} />
+                <p className={`small heartbeat-row run-state-${runState}`}>
+                  <span className={`heartbeat-dot ${heartbeatTick % 2 === 0 ? "on" : ""} run-state-${runState}`} />
                   Heartbeat active
                   {lastLogAtMs
                     ? ` | Last log ${Math.floor((Date.now() - lastLogAtMs) / 1000)}s ago`
                     : " | Waiting for first log..."}
                 </p>
               )}
-              {inputMode === "jql" && (
+              {stage === "results" && (
                 <p className="small">
                   Pipeline completed via: `get_tickets.py` → `normalize_tickets.py` →
                   `rule_engine_categorize.py` → `create_summary.py`
@@ -364,16 +469,27 @@ export default function HomePage() {
               {inputMode === "jql" && (
                 <p className="small">Resolution filter used: {resolutionMode}</p>
               )}
-              {inputMode === "jql" && (
-                <p className="small">
-                  Started: {formatTimestamp(startedAt)} | Finished: {formatTimestamp(finishedAt)} |
-                  {" "}Elapsed: {isRunning
-                    ? `${(liveElapsedMs / 1000).toFixed(2)}s`
-                    : elapsedMs > 0
-                      ? `${(elapsedMs / 1000).toFixed(2)}s`
-                      : "-"}
-                </p>
-              )}
+              <article className="card">
+                <h2>Pipeline Stages</h2>
+                <div className="pipeline-scroll">
+                  <div className="pipeline-grid">
+                    {PIPELINE_STEPS.map((step, idx) => (
+                      <div key={step} className={`pipeline-step step-${pipelineStatus[idx]}`}>
+                        <p className="pipeline-name">{step}</p>
+                        <p className="pipeline-state">{pipelineStatus[idx]}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+              <p className="small">
+                Started: {formatTimestamp(startedAt)} | Finished: {formatTimestamp(finishedAt)} |
+                {" "}Elapsed: {isRunning
+                  ? `${(liveElapsedMs / 1000).toFixed(2)}s`
+                  : elapsedMs > 0
+                    ? `${(elapsedMs / 1000).toFixed(2)}s`
+                    : "-"}
+              </p>
               {wasCanceled && (
                 <p className="small">Run was canceled and artifacts were cleaned.</p>
               )}
@@ -406,50 +522,78 @@ export default function HomePage() {
                 <article className="card">
                   <h2>Raw Data</h2>
                   <p className="small">
-                    {resultPaths.ticketsCsv || "tickets-categorized.csv"}
+                    {resultPaths.ticketsCsv ? (
+                      <a
+                        className="link"
+                        href={`/api/open-file?path=${encodeURIComponent(resultPaths.ticketsCsv)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {resultPaths.ticketsCsv}
+                      </a>
+                    ) : (
+                      "tickets-categorized.csv"
+                    )}
                   </p>
                   <p className="small">
-                    {resultPaths.summaryCsv || "tickets-summary.csv"}
+                    {resultPaths.summaryCsv ? (
+                      <a
+                        className="link"
+                        href={`/api/open-file?path=${encodeURIComponent(resultPaths.summaryCsv)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {resultPaths.summaryCsv}
+                      </a>
+                    ) : (
+                      "tickets-summary.csv"
+                    )}
                   </p>
                 </article>
               </div>
-              {inputMode === "jql" && (
-                <article className="card">
-                  <h2>Executed Commands</h2>
-                  <div className="copy-actions">
-                    <button
-                      onClick={() => copyText("Commands", executedCommands.join("\n"))}
-                      disabled={executedCommands.length === 0}
-                    >
-                      Copy commands
-                    </button>
-                    <button
-                      onClick={() => copyText("Logs", commandLogs.join("\n"))}
-                      disabled={commandLogs.length === 0}
-                    >
-                      Copy logs
-                    </button>
-                  </div>
-                  {copyStatus && <p className="small">{copyStatus}</p>}
-                  {executedCommands.length === 0 ? (
-                    <p className="small">Waiting for first command...</p>
-                  ) : (
-                    <ul className="cmd-list">
-                      {executedCommands.map((command) => (
-                        <li key={command}>
-                          <code>{command}</code>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  <h3>Live Logs</h3>
-                  <pre className="log-block">
-                    {commandLogs.length === 0
-                      ? "No logs yet."
-                      : commandLogs.join("\n")}
-                  </pre>
-                </article>
-              )}
+              <article className="card">
+                <h2>Executed Commands</h2>
+                <div className="copy-actions">
+                  <button
+                    onClick={() => copyText("Commands", executedCommands.join("\n"))}
+                    disabled={executedCommands.length === 0}
+                  >
+                    Copy commands
+                  </button>
+                  <button
+                    onClick={() => copyText("Logs", commandLogs.join("\n"))}
+                    disabled={commandLogs.length === 0}
+                  >
+                    Copy logs
+                  </button>
+                </div>
+                {copyStatus && <p className="small">{copyStatus}</p>}
+                {executedCommands.length === 0 ? (
+                  <p className="small">Waiting for first command...</p>
+                ) : (
+                  <ul className="cmd-list">
+                    {executedCommands.map((command) => (
+                      <li key={command}>
+                        <code>{command}</code>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <h3>Live Logs</h3>
+                <label className="small wrap-toggle">
+                  <input
+                    type="checkbox"
+                    checked={wrapLogs}
+                    onChange={(e) => setWrapLogs(e.target.checked)}
+                  />{" "}
+                  Wrap lines
+                </label>
+                <pre className={`log-block ${wrapLogs ? "wrap" : "no-wrap"}`}>
+                  {commandLogs.length === 0
+                    ? "No logs yet."
+                    : commandLogs.join("\n")}
+                </pre>
+              </article>
               <article className="card">
                 <h2>Graphs of the data</h2>
                 <p className="small">Graph region placeholder for wireframe</p>

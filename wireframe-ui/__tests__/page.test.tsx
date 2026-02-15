@@ -23,20 +23,24 @@ describe("STC wireframe flow", () => {
   it("shows input fields after clicking categorize", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize unresolved tickets/i }));
+    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
 
     expect(screen.getByLabelText(/enter jql/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/enter ticket list files/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/enter list of ticket ids/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/ticket resolution filter/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue('project="High Performance Computing"')).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue(
+        'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"'
+      )
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /^ok$/i })).toBeInTheDocument();
   });
 
   it("enforces either-or input mode", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize unresolved tickets/i }));
+    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
 
     const jqlInput = screen.getByLabelText(/enter jql/i);
     const filesInput = screen.getByLabelText(/enter ticket list files/i);
@@ -79,7 +83,7 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize unresolved tickets/i }));
+    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
     fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -88,13 +92,45 @@ describe("STC wireframe flow", () => {
       expect.objectContaining({
         method: "POST",
         body: JSON.stringify({
-          jql: 'project="High Performance Computing"',
-          resolutionMode: "all"
+          inputMode: "jql",
+          jql: 'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"',
+          resolutionMode: "all",
+          ticketsFile: "scripts/analysis/ui-runs/templates/tickets-template.txt",
+          ticketsText: "HPC-110621,HPC-110615"
         })
       })
     );
     expect(await screen.findByText(/live local pipeline run/i)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /summary output/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /graphs of the data/i })).toBeInTheDocument();
+  });
+
+  it("shows pipeline stages and logs UI for ticket-id mode runs", async () => {
+    const mockFetch = jest.fn().mockResolvedValue({
+      ok: true,
+      body: null,
+      json: async () => ({
+        summaryRows: [],
+        paths: {}
+      })
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
+    fireEvent.click(screen.getByRole("radio", { name: /ticket ids/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(await screen.findByRole("heading", { name: /pipeline stages/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /executed commands/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /live logs/i })).toBeInTheDocument();
+    expect(mockFetch).toHaveBeenCalledWith(
+      "/api/run-jql",
+      expect.objectContaining({
+        method: "POST",
+        body: expect.stringContaining('"inputMode":"tickets"')
+      })
+    );
   });
 });

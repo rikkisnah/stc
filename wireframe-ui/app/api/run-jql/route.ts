@@ -86,12 +86,16 @@ function parseCsv(csvText: string): SummaryRow[] {
 
 export async function POST(req: Request) {
   const body = (await req.json()) as {
+    inputMode?: "jql" | "files" | "tickets";
     jql?: string;
     resolutionMode?: "all" | "unresolved-only" | "resolved-only";
+    ticketsFile?: string;
+    ticketsText?: string;
   };
+  const inputMode = body.inputMode || "jql";
   const rawJql = body.jql?.trim();
   const resolutionMode = body.resolutionMode || "all";
-  if (!rawJql) {
+  if (inputMode === "jql" && !rawJql) {
     return NextResponse.json({ error: "JQL is required." }, { status: 400 });
   }
 
@@ -104,6 +108,7 @@ export async function POST(req: Request) {
       let activeChild: ChildProcessWithoutNullStreams | null = null;
       let outputDir = "";
       let jqlFile = "";
+      let ticketsTempFile = "";
 
       const abortHandler = async () => {
         try {
@@ -115,6 +120,9 @@ export async function POST(req: Request) {
           }
           if (jqlFile) {
             await fs.rm(jqlFile, { force: true });
+          }
+          if (ticketsTempFile) {
+            await fs.rm(ticketsTempFile, { force: true });
           }
         } catch {
           // best effort cleanup
@@ -137,31 +145,72 @@ export async function POST(req: Request) {
         const normalizedDir = path.join(normalizedBaseDir, normalizeDate);
 
         await fs.mkdir(jqlDir, { recursive: true });
-        await fs.writeFile(jqlFile, rawJql, "utf-8");
         await fs.mkdir(outputDir, { recursive: true });
         await fs.mkdir(ingestDir, { recursive: true });
 
-        const getTicketsArgs = ["scripts/get_tickets.py", "-a", "--jql-file", jqlFile, "-y"];
-        if (resolutionMode === "unresolved-only") {
-          getTicketsArgs.push("--unresolved-only");
-        } else if (resolutionMode === "resolved-only") {
-          getTicketsArgs.push("--include-resolved-only");
-        } else {
-          getTicketsArgs.push("--include-unresolved");
-        }
+        const commands: string[][] = [];
 
-        const commands: string[][] = [
-          [
+        if (inputMode === "jql") {
+          await fs.writeFile(jqlFile, rawJql || "", "utf-8");
+          const getTicketsArgs = ["scripts/get_tickets.py", "-a", "--jql-file", jqlFile, "-y"];
+          if (resolutionMode === "unresolved-only") {
+            getTicketsArgs.push("--unresolved-only");
+          } else if (resolutionMode === "resolved-only") {
+            getTicketsArgs.push("--include-resolved-only");
+          } else {
+            getTicketsArgs.push("--include-unresolved");
+          }
+          commands.push([
             ...getTicketsArgs,
             "--number-of-tickets",
             "100000",
             "--output-file",
             path.join(ingestDir, "limited-tickets.json")
-          ],
+          ]);
+        } else {
+          const parseTickets = (text: string) => {
+            const items = text
+              .split(/[\n,]+/)
+              .map((item) => item.trim())
+              .filter(Boolean)
+              .filter((item) => !item.startsWith("#"));
+            const unique = Array.from(new Set(items));
+            const invalid = unique.filter((item) => !/^[A-Z]+-\d+$/.test(item));
+            if (invalid.length > 0) {
+              throw new Error(`Invalid ticket key(s): ${invalid.join(", ")}`);
+            }
+            return unique;
+          };
+
+          let ticketKeys: string[] = [];
+          if (inputMode === "files") {
+            const filePath = (body.ticketsFile || "").trim();
+            if (!filePath) {
+              throw new Error("Ticket list file path is required.");
+            }
+            const resolved = path.isAbsolute(filePath)
+              ? filePath
+              : path.resolve(repoRoot, filePath);
+            const content = await fs.readFile(resolved, "utf-8");
+            ticketKeys = parseTickets(content);
+          } else {
+            ticketKeys = parseTickets(body.ticketsText || "");
+          }
+
+          if (ticketKeys.length === 0) {
+            throw new Error("No ticket keys provided.");
+          }
+
+          for (const ticket of ticketKeys) {
+            commands.push(["scripts/get_tickets.py", "-t", ticket]);
+          }
+        }
+
+        commands.push(
           [
             "scripts/normalize_tickets.py",
             "--input-dir",
-            ingestDir,
+            inputMode === "jql" ? ingestDir : path.join(scriptsDir, "tickets-json"),
             "--output-dir",
             normalizedBaseDir,
             "--date",
@@ -177,7 +226,7 @@ export async function POST(req: Request) {
             "-y"
           ],
           ["scripts/create_summary.py", "--tickets", ticketsCsv, "--output", summaryCsv]
-        ];
+        );
 
         for (const args of commands) {
           const cmd = `python3 ${args.join(" ")}`;
@@ -192,6 +241,17 @@ export async function POST(req: Request) {
             (line) => emit({ type: "stdout", command: cmd, line }),
             (line) => emit({ type: "stderr", command: cmd, line })
           );
+          if (inputMode !== "jql" && args[0] === "scripts/get_tickets.py" && args[1] === "-t") {
+            const ticketKey = args[2];
+            const sourcePath = path.join(scriptsDir, "tickets-json", `${ticketKey}.json`);
+            const targetPath = path.join(ingestDir, `${ticketKey}.json`);
+            await fs.copyFile(sourcePath, targetPath);
+            emit({
+              type: "stdout",
+              command: cmd,
+              line: `Copied ${ticketKey}.json to ${ingestDir}`
+            });
+          }
           emit({ type: "command-end", command: cmd });
         }
 
