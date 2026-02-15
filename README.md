@@ -74,6 +74,7 @@ After that:
 | Normalize tickets | `scripts/normalize_tickets.py` | n/a |
 | Train / update rules from feedback | `scripts/run_training.py` | `prompts/training.md` |
 | Categorize using rules only | `scripts/rule_engine_categorize.py` | n/a |
+| Summarize categorized output | `scripts/create_summary.py` | n/a |
 
 ## Training Phase
 
@@ -173,6 +174,25 @@ uv run python scripts/rule_engine_categorize.py --resume  # skip already-categor
 ```
 
 Output: `scripts/analysis/tickets-categorized.csv`
+
+### Step 7 — Create Category Summary
+
+Use `create_summary.py` to generate a compact category-level report from categorized tickets.
+
+Intent:
+- group tickets by `Category`
+- compute `% of total tickets` and `count`
+- produce a ready-to-use JQL query per category
+
+Default behavior:
+- input: `scripts/analysis/tickets-categorized.csv`
+- output: `scripts/analysis/tickets-summary.csv`
+
+```bash
+uv run python scripts/create_summary.py
+uv run python scripts/create_summary.py --tickets scripts/analysis/tickets-categorized.csv
+uv run python scripts/create_summary.py --output scripts/analysis/tickets-summary-custom.csv
+```
 
 ## Human Feedback Loop (post-Step 6)
 
