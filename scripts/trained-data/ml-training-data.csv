@@ -1,1 +1,292 @@
 Ticket,Category of Issue,Category,Label Source,Label Date,Notes
+HPC-108032,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108033,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108035,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108036,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108037,CPV CDFP Fault - Auto Resolved (TRS),CDFP,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108063,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108064,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108066,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108067,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108070,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108091,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108092,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108099,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108100,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108101,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108106,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108107,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108108,CPV CDFP Fault - Auto Resolved (TRS),CDFP,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108110,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108111,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108114,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108115,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108116,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108124,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108126,CPV CDFP Fault - Auto Resolved (TRS),CDFP,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108127,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108128,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108130,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108133,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108138,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108139,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108140,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108141,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108142,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108143,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108145,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108146,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108147,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108149,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108150,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108151,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108152,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108153,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108156,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108157,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108158,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108159,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108161,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108162,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108164,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108165,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108166,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108167,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108174,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108178,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108179,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108180,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108181,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108182,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108183,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108184,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108187,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108194,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108195,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108196,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108197,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108199,CPV CDFP Fault - Auto Resolved (TRS),CDFP,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108201,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108202,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108203,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108208,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108209,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108210,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108211,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108218,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108219,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108228,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108232,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108236,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108237,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108238,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108239,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108240,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108244,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108245,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108246,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108247,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108248,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108249,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108250,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108251,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108254,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108261,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108266,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108274,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108277,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108279,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108280,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108281,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108282,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108283,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108286,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108287,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108288,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108289,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108290,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108293,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108294,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108295,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108296,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108297,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108298,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108299,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108301,CPV CDFP Fault - Auto Resolved (TRS),CDFP,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108347,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108348,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108547,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108548,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108649,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108650,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108731,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108732,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108734,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108735,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108746,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108750,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108751,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108753,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108755,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108756,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108759,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108761,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108778,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108779,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108780,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108781,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108782,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108783,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108784,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108786,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108795,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108796,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108797,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108798,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108799,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108800,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108801,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108802,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108803,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108804,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108805,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108806,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108807,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108808,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108809,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108810,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108811,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108812,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108813,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108814,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108815,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108816,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108817,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108818,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108820,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108825,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108826,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108827,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108828,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108829,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108830,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108831,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108832,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108833,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108836,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108837,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108838,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108839,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108840,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108841,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108842,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108843,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108844,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108845,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108848,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108849,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108851,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108852,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108857,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108870,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108876,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108881,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108884,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108890,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108904,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108922,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108925,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108926,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108927,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108928,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108929,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108930,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108931,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108932,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108933,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108934,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108935,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108936,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108937,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108942,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108943,CPV General Failure,CPV,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108946,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108947,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108949,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108950,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108951,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108960,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108961,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108962,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108963,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108965,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108966,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108967,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108976,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108978,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108979,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108980,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-108981,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109008,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109204,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109205,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109305,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109327,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109329,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109332,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109342,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109343,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109344,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109345,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109347,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109354,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109355,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109358,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109365,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109368,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109369,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109374,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109377,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109379,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109380,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109382,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109385,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109390,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109391,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109392,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109402,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109412,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109414,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109417,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109418,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109419,Cable Validation Failure,RDMA Cable,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109420,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109421,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109423,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109425,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109428,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109429,Meta CPV Validation,Analysis,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109432,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109436,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109442,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109444,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109447,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109448,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109465,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109466,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109470,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109471,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109472,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109475,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109479,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109480,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109481,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109482,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109483,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109537,CPV Initial Setup Failure,Setup,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109543,AGFHC Test Failure,GPU,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109545,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109547,Potential Test Issue - Retest Passed,Potential Test Issue,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109550,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109555,CPV Job Timeout,Timeout,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run
+HPC-109558,Health Check Failure,Health Check,synthetic-dummy-run,2026-02-15,Auto-labeled for dummy pipeline run

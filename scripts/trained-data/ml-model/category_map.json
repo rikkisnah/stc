@@ -1,4 +1,11 @@
 {
+  "Health Check Failure": "Health Check",
+  "CPV Initial Setup Failure": "Setup",
+  "Potential Test Issue - Retest Passed": "Potential Test Issue",
   "CPV CDFP Fault - Auto Resolved (TRS)": "CDFP",
-  "Potential Test Issue - Retest Passed": "Potential Test Issue"
+  "AGFHC Test Failure": "GPU",
+  "CPV Job Timeout": "Timeout",
+  "Meta CPV Validation": "Analysis",
+  "Cable Validation Failure": "RDMA Cable",
+  "CPV General Failure": "CPV"
 }

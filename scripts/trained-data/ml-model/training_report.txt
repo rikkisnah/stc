@@ -1,22 +1,36 @@
 Training Report
 ===============
-Timestamp: 2026-02-15T19:43:49Z
-Training samples: 68
-Classes: 2
-CV Accuracy: 1.0
+Timestamp: 2026-02-15T20:01:37Z
+Training samples: 291
+Classes: 9
+CV Accuracy: 0.9794
 Confidence threshold: 0.4
 
 Class distribution:
-  CPV CDFP Fault - Auto Resolved (TRS): 56
-  Potential Test Issue - Retest Passed: 12
+  AGFHC Test Failure: 17
+  CPV CDFP Fault - Auto Resolved (TRS): 5
+  CPV General Failure: 10
+  CPV Initial Setup Failure: 25
+  CPV Job Timeout: 95
+  Cable Validation Failure: 8
+  Health Check Failure: 89
+  Meta CPV Validation: 22
+  Potential Test Issue - Retest Passed: 20
 
 Classification Report:
                                       precision    recall  f1-score   support
 
-CPV CDFP Fault - Auto Resolved (TRS)       1.00      1.00      1.00        56
-Potential Test Issue - Retest Passed       1.00      1.00      1.00        12
+                  AGFHC Test Failure       1.00      1.00      1.00        17
+CPV CDFP Fault - Auto Resolved (TRS)       1.00      1.00      1.00         5
+                 CPV General Failure       1.00      1.00      1.00        10
+           CPV Initial Setup Failure       1.00      1.00      1.00        25
+                     CPV Job Timeout       1.00      1.00      1.00        95
+            Cable Validation Failure       1.00      1.00      1.00         8
+                Health Check Failure       1.00      1.00      1.00        89
+                 Meta CPV Validation       1.00      1.00      1.00        22
+Potential Test Issue - Retest Passed       1.00      1.00      1.00        20
 
-                            accuracy                           1.00        68
-                           macro avg       1.00      1.00      1.00        68
-                        weighted avg       1.00      1.00      1.00        68
+                            accuracy                           1.00       291
+                           macro avg       1.00      1.00      1.00       291
+                        weighted avg       1.00      1.00      1.00       291
 

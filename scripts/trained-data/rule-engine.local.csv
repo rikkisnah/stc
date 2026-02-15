@@ -52,3 +52,23 @@ HPC,R050,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Faul
 HPC,R051,(?i)as per the slack thread[\s\S]*(power outage|planned power event),comments,Potential Test Issue - Power Outage,Potential Test Issue,83,1,human-feedback,0
 HPC,R052,(?i)\b(power\s*event|powerevent|planned power event|power outage)\b,comments,Potential Test Issue - Power Outage,Potential Test Issue,83,1,human-feedback,0
 DO,R053,"\[Prescriptive Action\]\s*Serial:\s*[^,]*,\s*SmartNIC experiencing connectivity issues",summary,SmartNIC DHCP Timeout,SmartNIC,80,1.0,human-feedback,0
+HPC,R054,health_check.*job\ failure,summary+description,Health Check Failure,Health Check,70,1.0,ml-generated,0
+HPC,R055,initial_setup.*job\ failure,summary+description,CPV Initial Setup Failure,Setup,70,1.0,ml-generated,0
+HPC,R056,minihpl,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R057,initial_setup.*job\ failure,summary+description,CPV Initial Setup Failure,Setup,70,1.0,ml-generated,0
+HPC,R058,ib_write_bw_pair.*job\ failure,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R059,agfhc_level_1_to_5,summary+description,AGFHC Test Failure,GPU,70,1.0,ml-generated,0
+HPC,R060,ib_write_bw_pair.*timeout,summary+description,CPV Job Timeout,Timeout,70,1.0,ml-generated,0
+HPC,R061,ib_write_bw_pair.*timeout,summary+description,CPV Job Timeout,Timeout,70,1.0,ml-generated,0
+HPC,R062,sunvts\ test.*sunvts,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R063,validation\ analysis.*validation,summary+description,Meta CPV Validation,Analysis,70,1.0,ml-generated,0
+HPC,R064,initial_setup.*fyv,summary+description,CPV Initial Setup Failure,Setup,70,1.0,ml-generated,0
+HPC,R065,agfhc_level_1_to_5.*fyv,summary+description,AGFHC Test Failure,GPU,70,1.0,ml-generated,0
+HPC,R066,cable_validation,summary+description,Cable Validation Failure,RDMA Cable,70,1.0,ml-generated,0
+HPC,R067,cable_validation,summary+description,Cable Validation Failure,RDMA Cable,70,1.0,ml-generated,0
+HPC,R068,cable_validation,summary+description,Cable Validation Failure,RDMA Cable,70,1.0,ml-generated,0
+HPC,R069,ib_write_bw_pair.*timeout,summary+description,CPV Job Timeout,Timeout,70,1.0,ml-generated,0
+HPC,R070,ib_write_bw_pair.*timeout,summary+description,CPV Job Timeout,Timeout,70,1.0,ml-generated,0
+HPC,R071,ib_write_bw_pair.*job\ failure,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R072,initial_setup.*job\ failure,summary+description,CPV Initial Setup Failure,Setup,70,1.0,ml-generated,0
+HPC,R073,initial_setup.*job\ failure,summary+description,CPV Initial Setup Failure,Setup,70,1.0,ml-generated,0
