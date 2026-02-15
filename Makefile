@@ -65,10 +65,14 @@ test-ml_train:
 	uv run pytest --cov=ml_train --cov-report=term-missing -q scripts/tests/test_ml_train.py
 
 ml-train:
+	@if [ ! -f scripts/trained-data/ml-training-data.csv ]; then \
+		echo "Initializing training data from template..."; \
+		cp templates/ml-training-data.csv scripts/trained-data/ml-training-data.csv; \
+	fi
 	uv run python scripts/ml_train.py \
 		--training-data scripts/trained-data/ml-training-data.csv \
 		--tickets-categorized scripts/analysis/tickets-categorized.csv \
-		--tickets-dir scripts/normalized-tickets/$$(ls scripts/normalized-tickets/ | sort | tail -1)
+		$(if $(wildcard scripts/normalized-tickets/),--tickets-dir scripts/normalized-tickets/$$(ls scripts/normalized-tickets/ | sort | tail -1))
 
 ml-categorize:
 	uv run python scripts/rule_engine_categorize.py \
