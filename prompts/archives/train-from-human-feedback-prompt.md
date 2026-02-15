@@ -5,7 +5,7 @@ You are an LLM agent that reads a human-audited `tickets-categorized.csv` and up
 ## Context
 
 The upstream workflow is:
-1. `rule-engine-categorize.py` applied the rule engine to all normalized tickets and wrote `scripts/analysis/tickets-categorized.csv`.
+1. `rule_engine_categorize.py` applied the rule engine to all normalized tickets and wrote `scripts/analysis/tickets-categorized.csv`.
 2. A human reviewed that CSV, filling in `Human Audit for Accuracy` (`correct`, `incorrect`, or `needs-review`) and `Human Comments` with corrections or notes.
 3. **You start here.** Read the audited CSV, interpret the feedback, and update the rule engine.
 
@@ -90,13 +90,13 @@ Rules modified: <list of RuleIDs with description of change>
 Rules removed:  <list of RuleIDs with reason>
 Rules created:  <list of new RuleIDs with pattern and category>
 
-Next step: Run rule-engine-categorize.py to verify the updated rules produce expected results.
+Next step: Run rule_engine_categorize.py to verify the updated rules produce expected results.
 ```
 
 ### Step 6 — Verification Guidance
 After updating the rules, instruct the human to run:
 ```
-python3 scripts/rule-engine-categorize.py \
+python3 scripts/rule_engine_categorize.py \
     --rule-engine scripts/analysis/rule-engine.csv \
     --output-dir scripts/analysis/verification
 ```

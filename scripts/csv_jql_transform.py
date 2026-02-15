@@ -2,10 +2,10 @@
 """Transform raw Venkat CSV files by inserting a Full Filter URL column.
 
 Usage:
-    python csv-jql-transform.py                          # process all CSVs in default original/ dir
-    python csv-jql-transform.py -i path/to/input.csv     # process a single file
-    python csv-jql-transform.py -d path/to/dir/           # process all CSVs in a directory
-    python csv-jql-transform.py -o path/to/output/        # specify output directory
+    python csv_jql_transform.py                          # process all CSVs in default original/ dir
+    python csv_jql_transform.py -i path/to/input.csv     # process a single file
+    python csv_jql_transform.py -d path/to/dir/           # process all CSVs in a directory
+    python csv_jql_transform.py -o path/to/output/        # specify output directory
 """
 
 import argparse

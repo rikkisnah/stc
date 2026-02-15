@@ -1,4 +1,4 @@
-"""Tests for csv-jql-transform.py — 100% coverage target."""
+"""Tests for csv_jql_transform.py — 100% coverage target."""
 
 import csv
 import importlib
@@ -11,7 +11,7 @@ import pytest
 # Import the hyphenated module via importlib
 SCRIPT_DIR = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
-    "csv_jql_transform", SCRIPT_DIR / "csv-jql-transform.py"
+    "csv_jql_transform", SCRIPT_DIR / "csv_jql_transform.py"
 )
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)

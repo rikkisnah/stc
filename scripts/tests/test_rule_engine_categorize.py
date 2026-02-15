@@ -1,4 +1,4 @@
-"""Tests for rule-engine-categorize.py"""
+"""Tests for rule_engine_categorize.py"""
 
 import csv
 import importlib
@@ -11,8 +11,8 @@ from unittest.mock import patch
 
 import pytest
 
-# Import hyphenated module
-rec = importlib.import_module("rule-engine-categorize")
+# Import module
+rec = importlib.import_module("rule_engine_categorize")
 parse_args = rec.parse_args
 find_latest_tickets_dir = rec.find_latest_tickets_dir
 load_rules = rec.load_rules
@@ -102,7 +102,7 @@ def _write_ticket_json(directory, ticket_id, ticket_data):
 
 class TestParseArgs:
     def test_defaults(self, monkeypatch):
-        monkeypatch.setattr("sys.argv", ["rule-engine-categorize.py"])
+        monkeypatch.setattr("sys.argv", ["rule_engine_categorize.py"])
         args = parse_args()
         assert args.tickets_dir is None
         assert args.rule_engine == rec.DEFAULT_RULE_ENGINE
@@ -112,7 +112,7 @@ class TestParseArgs:
 
     def test_custom_options(self, tmp_path, monkeypatch):
         monkeypatch.setattr("sys.argv", [
-            "rule-engine-categorize.py",
+            "rule_engine_categorize.py",
             "--tickets-dir", str(tmp_path),
             "--rule-engine", str(tmp_path / "rules.csv"),
             "--output-dir", str(tmp_path / "out"),
@@ -127,12 +127,12 @@ class TestParseArgs:
         assert args.resume is True
 
     def test_project_do(self, monkeypatch):
-        monkeypatch.setattr("sys.argv", ["rule-engine-categorize.py", "--project", "DO"])
+        monkeypatch.setattr("sys.argv", ["rule_engine_categorize.py", "--project", "DO"])
         args = parse_args()
         assert args.project == "DO"
 
     def test_invalid_project(self, monkeypatch):
-        monkeypatch.setattr("sys.argv", ["rule-engine-categorize.py", "--project", "INVALID"])
+        monkeypatch.setattr("sys.argv", ["rule_engine_categorize.py", "--project", "INVALID"])
         with pytest.raises(SystemExit):
             parse_args()
 
@@ -514,7 +514,7 @@ class TestMain:
 
     def test_normal_run(self, tmp_path):
         argv, output_dir = self._setup_env(tmp_path)
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         csv_path = output_dir / "tickets-categorized.csv"
         assert csv_path.is_file()
@@ -528,7 +528,7 @@ class TestMain:
 
     def test_project_filter(self, tmp_path):
         argv, output_dir = self._setup_env(tmp_path, project_filter="DO")
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         csv_path = output_dir / "tickets-categorized.csv"
         with open(csv_path, encoding="utf-8") as f:
@@ -543,7 +543,7 @@ class TestMain:
         # Need a valid rule engine file for the check to reach tickets dir check
         rules_csv = tmp_path / "rules.csv"
         _write_rule_csv(rules_csv, [])
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             with pytest.raises(SystemExit):
                 main()
 
@@ -554,7 +554,7 @@ class TestMain:
             "--tickets-dir", str(tickets_dir),
             "--rule-engine", str(tmp_path / "nonexistent.csv"),
         ]
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             with pytest.raises(SystemExit):
                 main()
 
@@ -568,7 +568,7 @@ class TestMain:
             "--rule-engine", str(rules_csv),
             "--output-dir", str(tmp_path / "output"),
         ]
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         # No output file created when no tickets
         assert not (tmp_path / "output" / "tickets-categorized.csv").is_file()
@@ -576,7 +576,7 @@ class TestMain:
     def test_resume_skips_done(self, tmp_path, capsys):
         # First run
         argv, output_dir = self._setup_env(tmp_path)
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         csv_path = output_dir / "tickets-categorized.csv"
         with open(csv_path, encoding="utf-8") as f:
@@ -590,7 +590,7 @@ class TestMain:
             "--output-dir", str(output_dir),
             "--resume",
         ]
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv_resume):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv_resume):
             main()
         captured = capsys.readouterr().out
         assert "Resuming" in captured
@@ -604,7 +604,7 @@ class TestMain:
         """_setup_env with resume=True includes --resume in argv."""
         argv, output_dir = self._setup_env(tmp_path, resume=True)
         assert "--resume" in argv
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         csv_path = output_dir / "tickets-categorized.csv"
         assert csv_path.is_file()
@@ -625,7 +625,7 @@ class TestMain:
             "--rule-engine", str(rules_csv),
             "--output-dir", str(output_dir),
         ]
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         csv_path = output_dir / "tickets-categorized.csv"
         assert csv_path.is_file()
@@ -649,7 +649,7 @@ class TestMain:
         ]
         argv, output_dir = self._setup_env(
             tmp_path, tickets=tickets, rules_data=rules_data)
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         csv_path = output_dir / "tickets-categorized.csv"
         with open(csv_path, encoding="utf-8") as f:
@@ -663,7 +663,7 @@ class TestMain:
     def test_runbook_stats(self, tmp_path, capsys):
         """Verify runbook count is printed in stats."""
         argv, output_dir = self._setup_env(tmp_path)
-        with patch("sys.argv", ["rule-engine-categorize.py"] + argv):
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
             main()
         output = capsys.readouterr().out
         assert "Runbook=TRUE" in output

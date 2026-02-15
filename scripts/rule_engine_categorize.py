@@ -3,11 +3,11 @@
 Categorize all normalized tickets using ONLY the rule engine (no LLM).
 
 Usage:
-    python3 scripts/rule-engine-categorize.py
-    python3 scripts/rule-engine-categorize.py --tickets-dir scripts/normalized-tickets/2026-02-08
-    python3 scripts/rule-engine-categorize.py --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv
-    python3 scripts/rule-engine-categorize.py --output-dir scripts/analysis
-    python3 scripts/rule-engine-categorize.py --project HPC
+    python3 scripts/rule_engine_categorize.py
+    python3 scripts/rule_engine_categorize.py --tickets-dir scripts/normalized-tickets/2026-02-08
+    python3 scripts/rule_engine_categorize.py --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv
+    python3 scripts/rule_engine_categorize.py --output-dir scripts/analysis
+    python3 scripts/rule_engine_categorize.py --project HPC
 """
 import argparse
 import csv

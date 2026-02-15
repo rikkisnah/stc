@@ -596,6 +596,9 @@ def test_call_codex_skips_when_no_rows(tmp_path, monkeypatch):
     def fail_if_called(*args, **kwargs):
         raise AssertionError("subprocess.run should not be called when rows are empty")
 
+    with pytest.raises(AssertionError, match="subprocess.run should not be called"):
+        fail_if_called()
+
     monkeypatch.setattr(run_training.subprocess, "run", fail_if_called)
     assert run_training.call_codex("prompt", [], 10) == []
 

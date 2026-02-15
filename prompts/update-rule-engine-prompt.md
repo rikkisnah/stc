@@ -33,12 +33,12 @@ RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Cr
 
 ## Dynamic Category Rules
 
-Some categories use dynamic extraction in `scripts/rule-engine-categorize.py`. If the Category value is one of these, the Python code extracts the actual value from the ticket:
+Some categories use dynamic extraction in `scripts/rule_engine_categorize.py`. If the Category value is one of these, the Python code extracts the actual value from the ticket:
 
 - **`TRS`** → extracts `TRS_\w+` from the summary (e.g. `TRS_DIMM_REPLACEMENT`)
 - **`PRESCRIPTIVE`** → extracts the component after the action verb in `Serial: XXX, ACTION COMPONENT` (e.g. `CHASSIS`, `GPU`)
 
-If a new dynamic pattern is needed, update `rule-engine-categorize.py` accordingly.
+If a new dynamic pattern is needed, update `rule_engine_categorize.py` accordingly.
 
 ## Conventions
 

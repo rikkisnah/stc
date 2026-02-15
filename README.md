@@ -43,7 +43,7 @@ Step 5 Run Step 3 again to make sure rules were effect and it worked
 | Normalize tickets | `scripts/normalize_tickets.py` | n/a |
 | Train / categorize (batch) | `scripts/run-training.sh` | `prompts/train-to-categorize-tickets-prompt.md` |
 | Update rules from feedback | `scripts/run-update-rules.sh` | `prompts/update-rule-engine-prompt.md` |
-| Categorize using rules only | `scripts/rule-engine-categorize.py` | n/a |
+| Categorize using rules only | `scripts/rule_engine_categorize.py` | n/a |
 
 ## Training Phase
 
@@ -127,10 +127,10 @@ Apply the golden rule engine to every normalized ticket. Two options:
 
 **Option A — Rule engine only (fast, no LLM)**
 ```bash
-uv run python scripts/rule-engine-categorize.py
-uv run python scripts/rule-engine-categorize.py --tickets-dir scripts/normalized-tickets/2026-02-08
-uv run python scripts/rule-engine-categorize.py --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv
-uv run python scripts/rule-engine-categorize.py --resume  # skip already-categorized tickets
+uv run python scripts/rule_engine_categorize.py
+uv run python scripts/rule_engine_categorize.py --tickets-dir scripts/normalized-tickets/2026-02-08
+uv run python scripts/rule_engine_categorize.py --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv
+uv run python scripts/rule_engine_categorize.py --resume  # skip already-categorized tickets
 ```
 
 **Option B — LLM-assisted (slower, handles uncategorized tickets with LLM reasoning)**

@@ -60,7 +60,7 @@ Exception:
 ```
 2. Re-run categorization:
 ```bash
-uv run python scripts/rule-engine-categorize.py \
+uv run python scripts/rule_engine_categorize.py \
   --tickets-dir scripts/normalized-tickets/<date> \
   --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv \
   --output-dir scripts/analysis
