@@ -1,0 +1,159 @@
+{
+  "ticket": {
+    "id": "55658833",
+    "key": "HPC-108123",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T06:22:04Z",
+    "resolved": "2026-02-11T05:07:26Z",
+    "updated": "2026-02-15T17:13:34Z"
+  },
+  "people": {
+    "assignee": "Arunkumar Duraisamy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XNG138, 2540XNG24L",
+    "rack_serial": null
+  },
+  "labels": [
+    "2540XN80DN",
+    "CPV-",
+    "CPV-Triage",
+    "DFW-CPV",
+    "GPU_GB200-NVL72_S.03",
+    "sk-f3627ab9-c28a-4623-93b6-42ec0b2a599e",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-99151",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | iperf_pair"
+    },
+    {
+      "key": "HPC-99178",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | iperf_pair"
+    },
+    {
+      "key": "HPC-100426",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-100800",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-102486",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "Hold for RDMA NTR testing"
+    },
+    {
+      "key": "HPC-104872",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-107378",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-109383",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-110609",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-109364",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-110120",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "8h",
+    "time_to_resolve": "22h 45m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : nvbandwidth_pair\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nnvbandwidth_pair -\n\n(flag) *Debugging nvbandwidth_pair*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200-v3.4 |2552XNG138 |10.0.126.155 |2026-02-10T06:12:27Z |2026-02-10T06:15:12Z |dfw5-qfab-2-400 |bldg5-block2-400 |dfw5-q2-b2-t0-r101, dfw5-q2-b2-t0-r102, dfw5-q2-b2-t0-r103, dfw5-q2-b2-t0-r104 |2540XN80DN |a93c83b7-34a7-4dd5-9dfa-3f5120700218 |\n|BM.GPU.GB200-v3.4 |2540XNG24L |10.0.93.166 |2026-02-10T06:12:27Z |2026-02-10T06:15:12Z |dfw5-qfab-2-400 |bldg5-block2-400 |dfw5-q2-b2-t0-r101, dfw5-q2-b2-t0-r102, dfw5-q2-b2-t0-r103, dfw5-q2-b2-t0-r104 |2540XN80DN |a93c83b7-34a7-4dd5-9dfa-3f5120700218 |",
+  "comments": [
+    {
+      "id": "357622625",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T06:22:05Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358022596",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T04:43:30Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358028288",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:03:37Z",
+      "body": "GPU Fabric GUID                                : 0x2d8fea353430ff47\n    Inforom Version\n        Image Version                                  : G548.0201.00.06\n        OEM Object                                     : 2.1\n        ECC Object                                     : 7.16\n        Power Management Object                        : N/A\n    Inforom BBX Object Flush\n--\n    Fabric\n        State                                          : Completed\n        Status                                         : Success\n        CliqueId                                       : 3279\n        ClusterUUID                                    : f9173e42-8cf9-47fa-8bc9-db3477a54b62\n        Health\n            Summary                                    : Healthy\n--\n        GPU Fabric GUID                                : 0x581e334adbf93c71\n    Inforom Version\n        Image Version                                  : G548.0201.00.06\n        OEM Object                                     : 2.1\n        ECC Object                                     : 7.16\n        Power Management Object                        : N/A\n    Inforom BBX Object Flush\n--\n    Fabric\n        State                                          : Completed\n        Status                                         : Success\n        CliqueId                                       : 3279\n        ClusterUUID                                    : f9173e42-8cf9-47fa-8bc9-db3477a54b62\n        Health\n            Summary                                    : Healthy\n--\n        GPU Fabric GUID                                : 0xf112bbf782308a10\n    Inforom Version\n        Image Version                                  : G548.0201.00.06\n        OEM Object                                     : 2.1\n        ECC Object                                     : 7.16\n        Power Management Object                        : N/A\n    Inforom BBX Object Flush\n--\n    Fabric\n        State                                          : Completed\n        Status                                         : Success\n        CliqueId                                       : 3279\n        ClusterUUID                                    : f9173e42-8cf9-47fa-8bc9-db3477a54b62\n        Health\n            Summary                                    : Healthy\n--\n        GPU Fabric GUID                                : 0x7df57ca3b777cd6f\n    Inforom Version\n        Image Version                                  : G548.0201.00.06\n        OEM Object                                     : 2.1\n        ECC Object                                     : 7.16\n        Power Management Object                        : N/A\n    Inforom BBX Object Flush\n--\n    Fabric\n        State                                          : Completed\n        Status                                         : Success\n        CliqueId                                       : 3279\n        ClusterUUID                                    : f9173e42-8cf9-47fa-8bc9-db3477a54b62\n        Health\n            Summary                                    : Healthy"
+    },
+    {
+      "id": "358028801",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:03:47Z",
+      "body": "Nodes:\nNode #0   - 10.0.93.166        - READY                - Version: 580.95.05\nNode #1   * 10.0.126.155 *     - READY                - Version: 580.126.09\n\n Nodes From\\To  0   1\n       0        C\n       1         C\nDomain State: DEGRADED"
+    },
+    {
+      "id": "358028851",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:05:21Z",
+      "body": "Already performed BVR on 2552XNG138 as per HPC-107378"
+    },
+    {
+      "id": "358028894",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:06:54Z",
+      "body": "Terminated the host - 2552XNG138"
+    },
+    {
+      "id": "358029604",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:07:18Z",
+      "body": "*Closure Summary:*\n\n1. What was the issue (1 liner): Version mismatch\n2. What we did to address the issue (1 liner - high level): Terminated the host - 2552XNG138\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

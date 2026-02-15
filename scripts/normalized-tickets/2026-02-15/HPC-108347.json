@@ -1,0 +1,231 @@
+{
+  "ticket": {
+    "id": "55701811",
+    "key": "HPC-108347",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T23:54:40Z",
+    "resolved": "2026-02-12T05:21:29Z",
+    "updated": "2026-02-14T04:18:52Z"
+  },
+  "people": {
+    "assignee": "Mathew Nobel Mammen",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2539XK1017, 2553XQ103W",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8005",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-a1fbee21-bdc1-4da8-812b-ffcd13e3c5b2",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79818",
+      "relation": "blocks",
+      "status": "Closed",
+      "summary": "[Standard] |  2539XK1017, 2553XQ103W | AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "CNE-16097",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "2539XK1017, 2553XQ103W  | AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "DO-2655992",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "AGA | 2539XK1017, 2553XQ103W | Flapping issue"
+    },
+    {
+      "key": "HPC-105303",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105669",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-105678",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105712",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-106162",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-107864",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108142",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108180",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108232",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108246",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-109850",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-110364",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "1h 5m",
+    "time_to_resolve": "29h 26m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : iperf_pair\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 4 times in past 24 hours\niperf_pair -\n\n(flag) *Debugging iperf_pair*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check/b51f0601-431a-4008-8fe1-1d41156e4589/health_check_2539XK1017.json\n - health_check_b51f0601-431a-4008-8fe1-1d41156e4589_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2539XK1017 |10.0.11.231 |2026-02-10T23:44:26Z |2026-02-10T23:45:59Z |aga4-qfab-3-400 |bldg4-block31-400 |aga4-q3-b31-t0-r1, aga4-q3-b31-t0-r2, aga4-q3-b31-t0-r3, aga4-q3-b31-t0-r4, aga4-q3-b31-t0-r5, aga4-q3-b31-t0-r6, aga4-q3-b31-t0-r7, aga4-q3-b31-t0-r8 |2552ZA8005 |dd8b6a7c-3882-42ac-a3e8-ade68eed1f81 |\n|BM.GPU.MI355X.8 |2553XQ103W |10.0.12.111 |2026-02-10T23:44:26Z |2026-02-10T23:45:59Z |aga4-qfab-3-400 |bldg4-block33-400 |aga4-q3-b33-t0-r1, aga4-q3-b33-t0-r2, aga4-q3-b33-t0-r3, aga4-q3-b33-t0-r4, aga4-q3-b33-t0-r5, aga4-q3-b33-t0-r6, aga4-q3-b33-t0-r7, aga4-q3-b33-t0-r8 |2602ZA8067 |dd8b6a7c-3882-42ac-a3e8-ade68eed1f81 |",
+  "comments": [
+    {
+      "id": "357952051",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T23:54:54Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358047508",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T06:26:58Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358103697",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T10:12:04Z",
+      "body": "Host is in broken pool\n\nNo open problems found on Head Node but there are open problem on tail node\n\n> host 2539XK1017\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 26.81it/s]\n[INFO 2026-02-11 15:39:59,375] Using HS host hops.svc.ad1.us-saltlake-2\nQuerying Hops:   0%|                                                   | 0/1 [00:00<?, ?it/s][INFO 2026-02-11 15:40:02,716] Connected to bastion-ad1.rb.us-saltlake-2.oci.oracleiaas.com, tunneling for 63582:hops.svc.ad1.us-saltlake-2:443\nQuerying Hops: 100% |  1/1 [00:05<00:00,  5.49s/it]\n[INFO 2026-02-11 15:40:04,864] Using HG host hops-gateway.svc.ad1.us-saltlake-2\n[INFO 2026-02-11 15:40:04,864] Using HDS host hops-data-service.svc.ad1.us-saltlake-2\nLoading 1 Hosts from Hops: 100% |  1/1 [00:01<00:00,  1.33s/it]\nLoading extended information on 1 hosts:   0%|                                                   | 0/1 [00:00<?, ?it/s][INFO 2026-02-11 15:40:09,063] Connected to bastion-ad1.rb.us-saltlake-2.oci.oracleiaas.com, tunneling for 63588:hops-gateway.svc.ad1.us-saltlake-2:443\nLoading extended information on 1 hosts: 100% |  1/1 [00:04<00:00,  4.37s/it]\n[INFO 2026-02-11 15:40:10,568] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2539XK1017>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2539XK1017   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b11-t0-r17-compute3   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoaclgcbi677ialq3libji3xvqmpmx7umluspwyknbz7okda   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   4829   16     NONE   2552ZA8005    2026-02-06T05:07:01+00:00   NONE\nM:ExtOC1:AGA:ad1:2539XK1017>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.92s/it]\nSerial\nM:ExtOC1:AGA:ad1:2539XK1017>gpu_info\nSerial       Gpu\n\n\n*Tail Node:*\n\nFound open problem on tail node of host \"2539XK1017\"\nM:ExtOC1:AGA:ad1:2539XK1017>gpu_info\nSerial       Gpu\n2539XK1017   H:2539XK1017 T:2549XK10X0 sled:2549XK10X0\nM:ExtOC1:AGA:ad1:2539XK1017>host 2549XK10X0\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.82s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.56s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  1.60it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.70it/s]\n[INFO 2026-02-11 15:40:39,258] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2549XK10X0>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.29s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2549XK10X0\n             2026-02-07 16:18:21+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   3387b0b3-24db-e026-8ad8-830c23319b5c   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:2549XK10X0>"
+    },
+    {
+      "id": "358104843",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T10:16:10Z",
+      "body": "Host is in broken pool\n\nNo open problems found on head node but there are open problems on tail node.\n\n*Head Node:*\n\nM:ExtOC1:AGA:ad1:2549XK10X0>host 2553XQ103W\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 22.80it/s]\nQuerying Hops: 100% |  1/1 [00:02<00:00,  2.21s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:01<00:00,  1.08s/it]\nLoading extended information on 1 hosts: 100% |  1/1 [00:01<00:00,  1.67s/it]\n[INFO 2026-02-11 15:43:19,112] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2553XQ103W>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  2.00s/it]\nSerial\nM:ExtOC1:AGA:ad1:2553XQ103W>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2553XQ103W   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b12-t0-r11-compute7   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacsvegp622k3yp2finefwuytjdzihowcemb3xohkak7dfq   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   6421   33     NONE   2602ZA8067    2026-02-01T09:30:39+00:00   NONE\n\n*Tail Node:*\n\nM:ExtOC1:AGA:ad1:2553XQ103W>gpu_info\nSerial       Gpu\n2553XQ103W   H:2553XQ103W T:2552XK103S sled:2552XK103S\nM:ExtOC1:AGA:ad1:2553XQ103W>host 2552XK103S\nQuerying Storekeeper: 100% |  1/1 [00:02<00:00,  2.08s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.68s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.27it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.63it/s]\n[INFO 2026-02-11 15:43:47,722] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2552XK103S>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.96s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2552XK103S\n             2026-02-10 20:22:15+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   c3767681-8e2c-611d-b1ed-d1a663ee61d1   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW"
+    },
+    {
+      "id": "358112187",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T10:46:34Z",
+      "body": "Initiate the DPC\n\nWe will manually run iperf test with below command once DPC is finished\n\n/opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-iperf -h 10.0.12.111,10.0.11.231\n\nubuntu@bio-2539xk1017:~$ cd bio/jobs/results/\nubuntu@bio-2539xk1017:~/bio/jobs/results$ ls\nblock.json     dr_hpc_iperf_2nodes.json  host.json          iperf_hostlist_2nodes.txt                                          island.json  results.json\ndetailed_logs  execute.sh.log            iperf_2nodes.json  iperf_pair_dd8b6a7c-3882-42ac-a3e8-ade68eed1f81_AllResults.tgz.gz  job.json     tor.json\nubuntu@bio-2539xk1017:~/bio/jobs/results$ cat execute.sh.log  | grep /opt | grep run-iperf\n+ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-iperf -h 10.0.12.111,10.0.11.231 -r /home/ubuntu/bio/jobs/results/iperf_2nodes.json"
+    },
+    {
+      "id": "358141669",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T12:45:11Z",
+      "body": "Post DPC Manually ran iperf test on both the host.\n\nit succeeded on host \"*10.0.12.111*\" but Test got failed on leader node \"*10.0.11.231*\"\n\n\n\nubuntu@bio-2539xk1017:~/bio/jobs/results$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-iperf -h 10.0.12.111,10.0.11.231\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...Map file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:iperf3_results.json auto_discovery_mode:True\n[server] Gathering the data from the server 10.0.12.111...\nStarting iperf3 servers on 10.0.12.111...\nStarting iperf clients on 10.0.11.231...\n[server] Gathering the data from the server 10.0.11.231...\nStarting iperf3 servers on 10.0.11.231...\nStarting iperf clients on 10.0.12.111...\n[{'10.0.12.111': {'10.0.11.231': {'ports': [{'bit-rate(Gbits/sec)': 12.570894321774018,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5907,\n                                             'protocol': 'TCP',\n                                             'retransmits': 77225},\n                                            {'bit-rate(Gbits/sec)': 10.581907217000975,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5902,\n                                             'protocol': 'TCP',\n                                             'retransmits': 67379},\n                                            {'bit-rate(Gbits/sec)': 12.794365638872385,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5906,\n                                             'protocol': 'TCP',\n                                             'retransmits': 78749},\n                                            {'bit-rate(Gbits/sec)': 10.326755436346772,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5909,\n                                             'protocol': 'TCP',\n                                             'retransmits': 66010},\n                                            {'bit-rate(Gbits/sec)': 11.751394787309781,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5903,\n                                             'protocol': 'TCP',\n                                             'retransmits': 71797},\n                                            {'bit-rate(Gbits/sec)': 12.391436232536583,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5908,\n                                             'protocol': 'TCP',\n                                             'retransmits': 78994},\n                                            {'bit-rate(Gbits/sec)': 12.907926969103565,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5905,\n                                             'protocol': 'TCP',\n                                             'retransmits': 80207},\n                                            {'bit-rate(Gbits/sec)': 12.424096653842524,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5904,\n                                             'protocol': 'TCP',\n                                             'retransmits': 75485}],\n                                  'summary': {'client_ip': '10.0.11.231',\n                                              'result': 'FAIL',\n                                              'server_ip': '10.0.12.111',\n                                              'threshold(Gbits/sec)': 160,\n                                              'total-bit-rate(Gbits/sec)': 95.74877725678661}}}},\n {'10.0.11.231': {'10.0.12.111': {'ports': [{'bit-rate(Gbits/sec)': 36.2306160189423,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5906,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 18.339568841203512,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5907,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 25.627480603676478,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5905,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 18.137199048563524,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5903,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 18.329367916165214,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5908,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 18.37798477041286,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5902,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 18.425957889966224,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5909,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0},\n                                            {'bit-rate(Gbits/sec)': 18.419390290980832,\n                                             'client_ip': '10.0.12.111',\n                                             'duration(sec)': 30,\n                                             'port': 5904,\n                                             'protocol': 'TCP',\n                                             'retransmits': 0}],\n                                  'summary': {'client_ip': '10.0.12.111',\n                                              'result': 'PASS',\n                                              'server_ip': '10.0.11.231',\n                                              'threshold(Gbits/sec)': 160,\n                                              'total-bit-rate(Gbits/sec)': 171.88756537991094}}}}]"
+    },
+    {
+      "id": "358141691",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T12:45:39Z",
+      "body": "rdma links are fine on both host\n\nubuntu@bio-2539xk1017:~/bio/jobs/results$ for x in $(cat host.json | jq -r .[].ipAddress); do echo $x; ssh $x rdma link; done\n10.0.11.231\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\n10.0.12.111\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1"
+    },
+    {
+      "id": "358148693",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T13:11:53Z",
+      "body": "Raised RHS Ticket:RHS-79818"
+    },
+    {
+      "id": "358150439",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T13:17:40Z",
+      "body": "Raised RHS Ticket:RHS-79818"
+    },
+    {
+      "id": "358158629",
+      "author": "Syed Rizwan",
+      "created": "2026-02-11T13:52:07Z",
+      "body": "Pending with CNE :CNE-16097"
+    },
+    {
+      "id": "358400538",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-12T04:24:14Z",
+      "body": "Manual test taking more time"
+    },
+    {
+      "id": "358401201",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-12T04:26:02Z",
+      "body": "[{'10.0.12.111': {'10.0.11.231': {'ports': [{'bit-rate(Gbits/sec)': 13.24879939471588,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5904,\n                                             'protocol': 'TCP',\n                                             'retransmits': 83750},\n                                            {'bit-rate(Gbits/sec)': 11.556280200341286,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5908,\n                                             'protocol': 'TCP',\n                                             'retransmits': 73554},\n                                            {'bit-rate(Gbits/sec)': 12.393259977502613,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5902,\n                                             'protocol': 'TCP',\n                                             'retransmits': 75837},\n                                            {'bit-rate(Gbits/sec)': 10.174878371344883,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5909,\n                                             'protocol': 'TCP',\n                                             'retransmits': 65244},\n                                            {'bit-rate(Gbits/sec)': 12.78955389449712,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5907,\n                                             'protocol': 'TCP',\n                                             'retransmits': 78414},\n                                            {'bit-rate(Gbits/sec)': 12.33270448019316,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5906,\n                                             'protocol': 'TCP',\n                                             'retransmits': 77512},\n                                            {'bit-rate(Gbits/sec)': 11.369940229261642,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5903,\n                                             'protocol': 'TCP',\n                                             'retransmits': 74761},\n                                            {'bit-rate(Gbits/sec)': 11.737665041518355,\n                                             'client_ip': '10.0.11.231',\n                                             'duration(sec)': 30,\n                                             'port': 5905,\n                                             'protocol': 'TCP',\n                                             'retransmits': 76253}],\n                                  'summary': {'client_ip': '10.0.11.231',\n                                              'result': 'FAIL',\n                                              'server_ip': '10.0.12.111',\n                                              'threshold(Gbits/sec)': 160,"
+    },
+    {
+      "id": "358403178",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-12T04:37:43Z",
+      "body": "Raised\n # DO-2655992"
+    },
+    {
+      "id": "358403188",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-12T04:37:56Z",
+      "body": "^"
+    },
+    {
+      "id": "358413612",
+      "author": "Mathew Nobel Mammen",
+      "created": "2026-02-12T05:20:40Z",
+      "body": "Performed Action Plan s suggested in HPC-109623"
+    }
+  ]
+}

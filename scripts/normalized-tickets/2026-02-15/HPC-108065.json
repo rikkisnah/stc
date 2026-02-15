@@ -1,0 +1,216 @@
+{
+  "ticket": {
+    "id": "55650417",
+    "key": "HPC-108065",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check",
+    "priority": "Highest"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T01:09:21Z",
+    "resolved": "2026-02-13T05:32:29Z",
+    "updated": "2026-02-13T05:32:29Z"
+  },
+  "people": {
+    "assignee": "Francisco Santos",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+    "watchers": 5
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2512XNG062",
+    "rack_serial": null
+  },
+  "labels": [
+    "2522XN80RW",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_GB200-NVL72_S.01",
+    "HSG-CPV",
+    "computeAdmin-audit",
+    "deleteHost",
+    "postDispatcher_markHostAsBrokenWithFaultDetails",
+    "sk-248e8107-f72b-49bf-9249-feb65a2906fa",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79652",
+      "relation": "is blocked by",
+      "status": "Closed",
+      "summary": "[Standard] |  HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-110075",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "Automated RMA request for host 2512XNG062"
+    },
+    {
+      "key": "DO-2654562",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "2512XNG062: Swap 2512XNG062 with 2520XNG05T"
+    },
+    {
+      "key": "BMP-836631",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "Request Assistance for GB200 Tray Swap: Obliterate the 1 hosts from HoPS (HSG BAD: 2512XNG062 / Donor: 2520XNG05T)"
+    },
+    {
+      "key": "HPC-57992",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Timeout | BM.GPU.GB200.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-58210",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | fdt_rack_level4_gb200"
+    },
+    {
+      "key": "HPC-58342",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | nccl_allreduce_perf_rack_ib"
+    },
+    {
+      "key": "HPC-84605",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-84729",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "RMA request for MT2502603F4N"
+    },
+    {
+      "key": "HPC-91865",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-97367",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Timeout | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-97550",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-97572",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-104505",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "RMA request for MT2502603F4N"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "8h",
+    "time_to_resolve": "76h 23m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 3 times in past 12 hours\nRepairScript invoked 4 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/4fa48d3c-40cf-475b-a99c-5f962701fe31/health_check_2512XNG062.json\n - health_check_4fa48d3c-40cf-475b-a99c-5f962701fe31_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200.4 |2512XNG062 |10.0.14.103 |2026-02-10T01:05:32Z |2026-02-10T01:06:33Z |hsg3-ifab-1 |bldg3-block5 |hsg3-i1-su5-t0-r29, hsg3-i1-su5-t0-r30, hsg3-i1-su5-t0-r31, hsg3-i1-su5-t0-r32 |2522XN80RW |4fa48d3c-40cf-475b-a99c-5f962701fe31 |",
+  "comments": [
+    {
+      "id": "357545363",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+      "created": "2026-02-10T01:09:24Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357980661",
+      "author": "David Oropeza",
+      "created": "2026-02-11T01:29:29Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357980675",
+      "author": "David Oropeza",
+      "created": "2026-02-11T01:30:41Z",
+      "body": "[opc@cpv-host-hsg ~]$ cpv state resource -t host -s Terminate -k 2521XNG073\n2026/02/11 00:26:41 Reading state file state.json\n2026/02/11 00:26:41 Object Store client initialized with host url https://objectstorage.ap-batam-1.oraclecloud.com\n2026/02/11 00:26:41 Changing host 2521XNG073 resource state from HoldingResourceState to TerminateResourceState\nUpdating resource \"2521XNG073\" state to \"TerminateResourceState\"\n2026/02/11 00:26:41 Saving state file state.json\nubuntu@instance20260209183935:~$ export LC_ALL=C.UTF-8 && export LANG=C.UTF-8 && /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-health-checks\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:hc_results.json auto_discovery_mode:True standalone_mode:True\nHealth Check starts at: 2026-02-11 01:30:17.233336\nHealth Check finishes at: 2026-02-11 01:30:26.423009, Elapsed time: 9.19 s\n{'localhost': {'authentication': [],\n               'c2c_check': [{'device': '0008:01:00.0', 'status': 'PASS'},\n                             {'device': '0009:01:00.0', 'status': 'PASS'},\n                             {'device': '0018:01:00.0', 'status': 'PASS'},\n                             {'device': '0019:01:00.0', 'status': 'PASS'}],\n               'eth_link': [{'device': 'eth0',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'},\n                            {'device': 'eth1',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'}],\n               'gid_index': [{'status': 'PASS'}],\n               'gpu': [{'nvidia_peermem': 'PASS'},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'device_count': 'PASS'},\n                       {'MIG Mode': 'PASS'},\n                       {'max_clock_speed': 'PASS'},\n                       {'nvlink': 'FAIL - check GPU 0'},\n                       {'bar1_util_check': 'PASS'},\n                       {'cdfp': 'PASS'},\n                       {'nvlink_err_check': {'crc_err': 'PASS',\n                                             'effective_ber': \"FAIL - The number of links on some GPUs is different from expected count 18. Check 'nvidia-smi \"\n                                                              \"nvlink -s' output.\",\n                                             'recovery_err': 'PASS',\n                                             'replay_err': 'PASS',\n                                             'symbol_ber': \"FAIL - The number of links on some GPUs is different from expected count 18. Check 'nvidia-smi \"\n                                                           \"nvlink -s' output.\"}}],\n               'gpu_xid': [],\n               'hpc_info': [],\n               'ipmi': [{'status': 'PASS'}],\n               'link': [{'device': 'rdma0',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'FAIL - 18240 greater than 10000',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma1',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma2',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma3',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'}],\n               'oca_version': [],\n               'pcie': [{'pci_busid': '0000:0000:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0002:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0010:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0012:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'}],\n               'pcie_config': [{'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0000:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0002:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0010:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0012:03:00.0'}],\n               'pcie_error': [{'status': 'PASS'}],\n               'rdma_link_flap': [{'status': 'PASS'}],\n               'rdma_nic_count': [{'num_rdma_nics': 4, 'status': 'PASS'}],\n               'rttcc': [],\n               'rx_discards': [{'device': 'rdma0', 'status': 'PASS'},\n                               {'device': 'rdma1', 'status': 'PASS'},\n                               {'device': 'rdma2', 'status': 'PASS'},\n                               {'device': 'rdma3', 'status': 'PASS'}],\n               'sram': [{'aggregated': {'correctable': 'PASS', 'threshold_exceeded': 'PASS', 'uncorrectable': 'PASS'},\n                         'ecc_mode': {'current': 'PASS', 'pending': 'PASS'},\n                         'volatile': {'correctable': 'PASS', 'uncorrectable': 'PASS'}}],\n               'summary': {'failed_tests': ['gpu', 'link'], 'status': 'FAIL', 'warning': ['gpu']},\n               'walk_pcie': []}}"
+    },
+    {
+      "id": "357981718",
+      "author": "David Oropeza",
+      "created": "2026-02-11T01:31:59Z",
+      "body": "Created RHS for action plan"
+    },
+    {
+      "id": "357990381",
+      "author": "PUNEET JAISWAL",
+      "created": "2026-02-11T02:12:21Z",
+      "body": "Who: [~david.oropeza@oracle.com]\nWhat: Open a DO ticket to replace the CT.\n * Once replace run the test and check the status.\n\nWhen: As soon as possible or when Part is available\nWhy: NVLINK-9 shows down for CM1/GPU2 even after deep power cycle.\n\n/SYS/CM1/GPU2\nHealth: OK\nPart Number: 2941-892-A1\nSerial Number: 1650325073247\nOperating Speed: 2062 MHz\nMinimum Speed: 120 MHz\nMaximum Speed: 2062 MHz\nPCIe Lanes in Use: 1/16\nNVLink Maximum speed: 425 MHz\nNVLink Link Status Port Status Speed(MHz)\n\n0 Enabled & LinkUp Enabled & OK 400\n1 Enabled & LinkUp Enabled & OK 400\n2 Enabled & LinkUp Enabled & OK 400\n3 Enabled & LinkUp Enabled & OK 400\n4 Enabled & LinkUp Enabled & OK 400\n5 Enabled & LinkUp Enabled & OK 400\n6 Enabled & LinkUp Enabled & OK 400\n7 Enabled & LinkUp Enabled & OK 400\n8 Enabled & LinkUp Enabled & OK 400\n9 Enabled & Starting Enabled & OK 0<<<<<<<<<<<<<<<<<<<\n10 Enabled & LinkUp Enabled & OK 400\n11 Enabled & LinkUp Enabled & OK 400\n12 Enabled & LinkUp Enabled & OK 400\n13 Enabled & LinkUp Enabled & OK 400\n14 Enabled & LinkUp Enabled & OK 400\n15 Enabled & LinkUp Enabled & OK 400\n16 Enabled & LinkUp Enabled & OK 400\n17 Enabled & LinkUp Enabled & OK 400\n\nFor further issue engage RHS via new ticket."
+    },
+    {
+      "id": "358205727",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-11T16:40:32Z",
+      "body": "Ocean has created an incident for this issue. (P2-4A63858C87FC1317E063C315000A775F)"
+    },
+    {
+      "id": "358218630",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+      "created": "2026-02-11T17:19:41Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-45bb8874-2890-46ef-8eee-40d5a1162a0b, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-11T17:19:11.940359892Z by user fjsantos"
+    },
+    {
+      "id": "358222785",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T17:36:18Z",
+      "body": "2512XNG062   REPAIR   NONE             NONE\nM:ExtOC1:HSG:ad1:2512XNG062>lhosts\nHost         State    Model                  Owner             Region           Updated                          Ticket\n2512XNG062   REPAIR   GPU_GB200-NVL72_S.01   compute-hsg-ad1   ad1.ap-batam-1   Wed Feb 11 2026 05:29:42PM CST   NONE\nM:ExtOC1:HSG:ad1:2512XNG062>"
+    },
+    {
+      "id": "358223585",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T17:38:29Z",
+      "body": ""
+    },
+    {
+      "id": "358224216",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+      "created": "2026-02-11T17:39:41Z",
+      "body": "delete host sk-45bb8874-2890-46ef-8eee-40d5a1162a0b, obliterate: true via compute-admin at 2026-02-11T17:37:53.417134328Z by user fjsantos"
+    },
+    {
+      "id": "358224819",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T17:41:41Z",
+      "body": "M:Ext|B:1]OC1:HSG:ad1:2512XNG062>lhosts\nHost         State    Model                  Owner             Region           Updated                          Ticket\n2512XNG062   REPAIR   GPU_GB200-NVL72_S.01   compute-hsg-ad1   ad1.ap-batam-1   Wed Feb 11 2026 05:29:42PM CST   NONE\nM:ExtOC1:HSG:ad1:2512XNG062>delete\n[INFO 2026-02-11 11:40:15,214] This will run commands: Delete Transition\n[INFO 2026-02-11 11:40:15,214]  on 1 hosts in 1 ADs.\n[INFO 2026-02-11 11:40:15,214] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nTransitioning: HostTransitionEvent.DELETE: 100% |  1/1 [00:01<00:00,  1.92s/it]\nSerial       Message                     Event                        Job   Job_Id   Tracking_Id\n2512XNG062\n             Successfully transitioned   HostTransitionEvent.DELETE   NONE  NONE     NONE\nM:ExtOC1:HSG:ad1:2512XNG062>delete_device cm=HPC-108065\n[WARNING 2026-02-11 11:41:09,873] Warning: You are about to delete 1 hosts from Hops using CM:HPC-108065\nConfirm that you want to delete hosts:[y/n]: y\nM:ExtOC1:>"
+    },
+    {
+      "id": "358226392",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T17:47:56Z",
+      "body": "M:ExtOC1:HSG:ad1:2512XNG062>state\nGet Tracking Instance(s): 100% |  1/1 [00:01<00:00,  1.73s/it]\nSerial       State         Tracking_State   Job\n2512XNG062   Not_in_HoPS   NONE             NONE\nM:ExtOC1:HSG:ad1:2512XNG062>"
+    },
+    {
+      "id": "358329420",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T23:33:35Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    }
+  ]
+}

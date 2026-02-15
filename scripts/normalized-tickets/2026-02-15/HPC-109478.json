@@ -1,0 +1,103 @@
+{
+  "ticket": {
+    "id": "55700994",
+    "key": "HPC-109478",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "host 2542XN108L replace the GB300 tray with a GB200",
+    "priority": "High"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T23:36:21Z",
+    "resolved": "2026-02-13T15:47:52Z",
+    "updated": "2026-02-13T15:48:48Z"
+  },
+  "people": {
+    "assignee": "Lisset Hernandez",
+    "reporter": "Kimia Hasani",
+    "watchers": 4
+  },
+  "location": {
+    "region": "DFW",
+    "availability_domain": null,
+    "building": "dfw5",
+    "rack_type": null,
+    "host_serial": "2542XN108L",
+    "rack_serial": null
+  },
+  "labels": [],
+  "links": [
+    {
+      "key": "DO-2655046",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "host 2542XN108L replace the GB300 tray with a GB200 Host "
+    },
+    {
+      "key": "HPC-107543",
+      "relation": "is duplicated by",
+      "status": "Resolved",
+      "summary": "GB200 Manually triggered RMA process"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "1m",
+    "time_to_resolve": "64h 11m"
+  },
+  "description": "This is a GB300 server installed, even though DCAMP says it is a GB200 [https://atlas.oci.oraclecorp.com/assets/sk-5d836773-4242-4610-a995-3eb26c2d481b]\n\nand the rack is a GB200 [https://atlas.oci.oraclecorp.com/assets/sk-1c1bf8f7-9ecb-4af7-a6e8-8ff405e586b9]\n\nHostname: ORACLESP-2542XN108L\n-> show /System/\n\n /System\n    Targets:\n        Open_Problems (0)\n        Power\n        Cooling\n        Storage\n        Firmware\n        Log\n\n    Properties:\n        health = OK\n        health_details = -\n        open_problems_count = 0\n        type = Rack Mount\n        model = ORACLE SERVER GB300\n        qpart_id = Q14596\n        part_number = 8228075\n        serial_number = 2542XN108L\n        rfid_serial_number = AAAF192867\n        component_model = ORACLE SERVER GB300\n        component_part_number = 8228075\n        component_serial_number = 2542XN108L\n        chassis_model = ORACLE SERVER GB300\n        chassis_part_number = OracleCloud.com\n        chassis_serial_number = 2542XN108L\n        system_identifier = (none)\n        system_fw_version = 5.1.5.96\n        primary_operating_system = Not Available\n        primary_operating_system_detail = Comprehensive System monitoring is not available. Ensure the host is running with the Hardware Management Pack. For details go to\n                                          http://www.oracle.com/goto/ilom-redirect/hmp\n        host_primary_mac_address = D0:F4:05:72:5D:04\n        ilom_address = 10.161.246.210\n        ilom_mac_address = D0:F4:05:72:5D:04\n        locator_indicator = Off\n        power_state = Off\n        actual_power_consumption = 93 watts\n        action = (Cannot show property)\n        host_poweron_time = Not Available",
+  "comments": [
+    {
+      "id": "357949400",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T23:36:26Z",
+      "body": "Ocean has created an incident for this issue. (P1-4A47CD998A05A89AE0634313000ADA5C)"
+    },
+    {
+      "id": "358265184",
+      "author": "Colton Prettyman",
+      "created": "2026-02-11T20:02:24Z",
+      "body": "Host is now showing as Not In HoPs. I am not sure who purged it but the replacement needs to be swapped in."
+    },
+    {
+      "id": "358288496",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-11T21:16:14Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358289258",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-11T21:17:34Z",
+      "body": "Subsequent comment:\n * Progress so far: I see host obliterated and not_in_hops state\n *\n\nM:ExtOC1:DFW:ad1:2542XN108L>info\nSerial       Model                  Arch    Owner   Pxe_Image   Hops_Hostname   Role      State         Halt_Mode   Instance_Id   Pool_Name   Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated   Test\n2542XN108L   GPU_GB200-NVL72_S.03   GB200   NONE    NONE        None            compute   Not_in_HoPS   False       NONE          NONE              OC1:us-dallas-1:ad1   dfw5   dfw5.1   1529   18     NONE   2541XN806X    NONE      NONE\nM:ExtOC1:DFW:ad1:2542XN108L>instance_info\nHost         Pool_Name   Instance_Id\n2542XN108L   NONE        NONE\nM:ExtOC1:DFW:ad1:2542XN108L>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  3.09it/s]\nSerial       State         Tracking_State   Job\n2542XN108L   Not_in_HoPS   NONE             NONE"
+    },
+    {
+      "id": "358293290",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-11T21:29:08Z",
+      "body": "DO ticket created DO-2655046"
+    },
+    {
+      "id": "358958783",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-13T15:41:40Z",
+      "body": "New host is now ingested\n\nM:ExtOC1:DFW:ad1:2552XNG16G>info\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2552XNG16G   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b12-t0-r25-compute8   compute   ALLOCATED   False       ocid1.instance.oc1.us-dallas-1.anqwyljr7rhxvoacpy2rqswh3dtlkcd4fswu5vd6tnpf5nlcei6k6xaeadja   broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   1529   18     NONE   2541XN806X    2026-02-12T04:37:06+00:00   NONE\nM:ExtOC1:DFW:ad1:2552XNG16G>instance_info\nHost         Pool_Name     Instance_Id\n2552XNG16G   broken_pool   ocid1.instance.oc1.us-dallas-1.anqwyljr7rhxvoacpy2rqswh3dtlkcd4fswu5vd6tnpf5nlcei6k6xaeadja\nM:ExtOC1:DFW:ad1:2552XNG16G>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  3.70it/s]\nSerial       State       Tracking_State   Job\n2552XNG16G   ALLOCATED   NONE             NONE"
+    },
+    {
+      "id": "358959624",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-13T15:42:28Z",
+      "body": "As per reporter confirmation, closing this ticket https://dyn.slack.com/archives/C09LJM76QGP/p1770996481208469?thread_ts=1770238108.116409&cid=C09LJM76QGP"
+    },
+    {
+      "id": "358960857",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-13T15:47:52Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): Tray swap request\n2. What we did to address the issue (1 liner - high level): Tray swap done, new host is ingested\n3. What was the Root Cause:  GB300 server installed, even though DCAMP says it is a GB200\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

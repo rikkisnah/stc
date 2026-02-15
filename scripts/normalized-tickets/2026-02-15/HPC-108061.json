@@ -1,0 +1,87 @@
+{
+  "ticket": {
+    "id": "55649771",
+    "key": "HPC-108061",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AMS | ad1 | CPV Job Timeout | BM.GPU.B300.8 | fdt_level2",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T00:55:50Z",
+    "resolved": "2026-02-10T19:11:54Z",
+    "updated": "2026-02-11T00:28:24Z"
+  },
+  "people": {
+    "assignee": null,
+    "reporter": "jirasd-gear-compute-vmi-notifier-eu-amsterdam-1",
+    "watchers": 1
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2549XL11V9",
+    "rack_serial": null
+  },
+  "labels": [
+    "2551XL8079",
+    "AMS-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V5_X11-2C_32000_S.02",
+    "sk-bc0b17bf-af9b-406e-a1d2-55e8931cf06e",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-104773",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | 6212 | 2549XL11V9 | 2550XR1031 | FDT level2 failure"
+    },
+    {
+      "key": "HPC-105757",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | dcgm_level_4"
+    },
+    {
+      "key": "HPC-106283",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | health_check_v2"
+    },
+    {
+      "key": "HPC-108592",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | fdt_level2"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 16m",
+    "time_to_resolve": "18h 16m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nfdt_level2 -\n\n(flag) *Debugging fdt_level2*\n\nSee the following runbooks for more information:\nHow to Triage FDT Level 1\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.B300.8 |2549XL11V9 |10.0.13.157 |2026-02-09T20:43:23Z |2026-02-10T00:40:32Z |ams4-qfab-3-400 |bldg4-block11-400 |ams4-q3-b11-t0-r65, ams4-q3-b11-t0-r66, ams4-q3-b11-t0-r67, ams4-q3-b11-t0-r68, ams4-q3-b11-t0-r69, ams4-q3-b11-t0-r70, ams4-q3-b11-t0-r71, ams4-q3-b11-t0-r72, ams4-q3-b11-t0-r73, ams4-q3-b11-t0-r74, ams4-q3-b11-t0-r75, ams4-q3-b11-t0-r76, ams4-q3-b11-t0-r77, ams4-q3-b11-t0-r78, ams4-q3-b11-t0-r79, ams4-q3-b11-t0-r80 |2551XL8079 |fcc98788-33d7-4056-b14b-bb442469f3b4 |",
+  "comments": [
+    {
+      "id": "357538663",
+      "author": "jirasd-gear-compute-vmi-notifier-eu-amsterdam-1",
+      "created": "2026-02-10T00:55:53Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357854157",
+      "author": "Lazaro Morales Pino",
+      "created": "2026-02-10T19:11:54Z",
+      "body": "Closing to retest."
+    }
+  ]
+}

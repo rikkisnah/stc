@@ -1,0 +1,160 @@
+{
+  "ticket": {
+    "id": "55666656",
+    "key": "HPC-108173",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_ist_3",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T10:57:31Z",
+    "resolved": "2026-02-10T16:18:54Z",
+    "updated": "2026-02-12T01:35:26Z"
+  },
+  "people": {
+    "assignee": "Daniel Copado",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-tokyo-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2419XLG0CB",
+    "rack_serial": null
+  },
+  "labels": [
+    "2420XL80JF",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "NRT-CPV",
+    "de-retrigger-feb11",
+    "sk-006d57b7-b44c-44cb-92e4-247cc4f4968b",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2650744",
+      "relation": "blocks",
+      "status": "In Progress",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | open Problems TN"
+    },
+    {
+      "key": "HPC-34239",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair | 296263da-4940-4a64-ade4-af03c8aab2cf"
+    },
+    {
+      "key": "HPC-34350",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair | 04301e91-7aec-4901-8092-cfd87240d8a7"
+    },
+    {
+      "key": "HPC-33726",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair_1_block | 5e87e600-dc14-4eb5-9031-790e9c000099"
+    },
+    {
+      "key": "HPC-94746",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | BM.GPU.H100.8 | fdt_level2"
+    },
+    {
+      "key": "HPC-95048",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | gpu_bandwidth"
+    },
+    {
+      "key": "HPC-95448",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | BM.GPU.H100.8 | tinymeg_short"
+    },
+    {
+      "key": "HPC-96183",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | dcgm_level_4"
+    },
+    {
+      "key": "HPC-96425",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-96470",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_ist"
+    },
+    {
+      "key": "HPC-96567",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | 3919 | 2419XLG0CB | 2419XKU01E | FDT ist failure"
+    },
+    {
+      "key": "HPC-96704",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | BM.GPU.H100.8 | tinymeg_short"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "5h 21m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nfdt_ist_3 -\n\n(flag) *Debugging fdt_ist_3*\n\nSee the following runbooks for more information:\nHow to Triage Nvidia FDT Failures\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2419XLG0CB |10.0.12.243 |2026-02-10T06:15:50Z |2026-02-10T10:57:01Z |nrt6-qfab-2-200 |bldg6-block7-200 |nrt6-q2-b7-t0-r10, nrt6-q2-b7-t0-r11, nrt6-q2-b7-t0-r12, nrt6-q2-b7-t0-r13, nrt6-q2-b7-t0-r14, nrt6-q2-b7-t0-r15, nrt6-q2-b7-t0-r16, nrt6-q2-b7-t0-r9 |2420XL80JF |d7e5bb8b-8416-4904-800a-00f0e8161ad2 |",
+  "comments": [
+    {
+      "id": "357702031",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-tokyo-1",
+      "created": "2026-02-10T10:57:34Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357772905",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:12:42Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357781592",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:48:30Z",
+      "body": "open problem on TN:\n\nM:ExtOC1:NRT:ad1:2419XKU01E>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.98s/it]\nSerial       Datetime                    Location           Subsystem     Resource        Uuid                                   Serial          Part_No       Probability   Reference\n2419XKU01E\n             2026-02-10 06:05:52+00:00   GBB/GPU7 (GPU 7)   PCI Devices   /SYS/GBB/GPU7   b45b16ad-bd51-e6cd-be39-9789b6582609   1650324052960   2330-885-A1   100           http://support.oracle.com/msg/SPGXTAIL-8000-R0"
+    },
+    {
+      "id": "357782305",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:48:58Z",
+      "body": "system fabric test failed on TN:\n\ndiag> hwdiag system fabric test all\nHWdiag (Diag Shell) - Build Number 167106 (Nov 05 2025, 20:50:22)\n         Current Date/Time: Feb 10 2026, 15:47:52\nBase Board Type: Nvidia HGX H100\n\nPlease make sure headnode has finished training PCIe devices, or there\nmight be training error from the retimers connected to upstream devices\n\n\nSWITCH: PCIE_SW1\n    PCIE_SW1 PCIe Slot1  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW1 PCIe Slot2  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW1 GPU2        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW1 SSD1        x4  @ 16.0GT/s       : PASSED\n    PCIE_SW1 SSD2        x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW2\n    PCIE_SW2 PCIe Slot3  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW2 PCIe Slot4  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW2 GPU4        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW2 SSD5        x4  @ 16.0GT/s       : PASSED\n    PCIE_SW2 SSD6        x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW3\n    PCIE_SW3 PCIe Slot6  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW3 PCIe Slot7  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW3 GPU3        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW3 SSD9        x4  @ 16.0GT/s       : PASSED\n    PCIE_SW3 SSD10       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW4\n    PCIE_SW4 PCIe Slot8  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW4 PCIe Slot9  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW4 GPU1        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW4 SSD13       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW4 SSD14       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW5\n    PCIE_SW5 PCIe Slot11 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW5 PCIe Slot12 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW5 GPU6        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW5 SSD17       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW5 SSD18       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW6\n    PCIE_SW6 PCIe Slot13 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW6 PCIe Slot14 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW6 GPU8        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW6 SSD21       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW6 SSD22       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW7\n    PCIE_SW7 PCIe Slot16 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW7 PCIe Slot17 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW7 GPU7        x8  @ 32.0GT/s       : FAILED\nERROR: PCIE_SW7 GPU7 trained at x8 @ 32.0GT/s vs. expected value of x16 @ 32.0GT/s\n    PCIE_SW7 SSD25       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW7 SSD26       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW8\n    PCIE_SW8 PCIe Slot18 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW8 PCIe Slot19 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW8 GPU5        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW8 SSD29       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW8 SSD30       x4  @ 16.0GT/s       : PASSED\n\nFABRIC Test Result: FAILED"
+    },
+    {
+      "id": "357790799",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:18:29Z",
+      "body": "cut DO-2650744"
+    },
+    {
+      "id": "357791905",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:18:54Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): fdt_ist_3\n2. What we did to address the issue (1 liner - high level): Cut a DO-2650744\n3. What was the Root Cause: open problem on TN\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

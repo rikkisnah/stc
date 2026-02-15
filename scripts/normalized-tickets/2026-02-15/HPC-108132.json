@@ -1,0 +1,147 @@
+{
+  "ticket": {
+    "id": "55661029",
+    "key": "HPC-108132",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | sunvts_burnin",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:23:52Z",
+    "resolved": "2026-02-10T16:13:13Z",
+    "updated": "2026-02-10T16:13:13Z"
+  },
+  "people": {
+    "assignee": "Carlos Patricio",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2336XLG02V",
+    "rack_serial": null
+  },
+  "labels": [
+    "2338XL802P",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "sk-6baf5c24-f3f6-4004-b72c-a187a628f572",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-53696",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | gpu_bandwidth | a4af2ffa-de8a-4062-b4ee-f0dc4df29eda"
+    },
+    {
+      "key": "HPC-53706",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | hpl_benchmark | ae5580a5-bfaa-4bec-8553-ef66827f6fc2"
+    },
+    {
+      "key": "HPC-53718",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | hpl_benchmark | f609e328-45f8-4d2e-88b8-8535562447e3"
+    },
+    {
+      "key": "HPC-53757",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | hpl_benchmark | 41e6b4af-743d-493a-9515-d7f3514902fa"
+    },
+    {
+      "key": "HPC-54443",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | hpl_benchmark | 5c1c2545-897c-427f-bbde-eccd16745416"
+    },
+    {
+      "key": "HPC-88351",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2443 | 2336XLG02V | 2335XKU0S8 | FDT gpufielddiag failure"
+    },
+    {
+      "key": "HPC-89463",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | hpl_benchmark"
+    },
+    {
+      "key": "HPC-93722",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2443 | 2336XLG02V | 2335XKU0S8 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-94042",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2443 | 2336XLG02V | 2335XKU0S8 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-94913",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2443 | 2336XLG02V | 2335XKU0S8 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-95394",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2443 | 2336XLG02V | 2335XKU0S8 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-103439",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2443 | 2336XLG02V | 2335XKU0S8 | SUNVTS test failure"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "8h 49m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nsunvts_burnin -\n\n(flag) *Debugging sunvts_burnin*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2336XLG02V | |2026-02-09T19:12:34Z |2026-02-10T07:14:51Z |aga1-qfab-2-200 |bldg1-block21-200 |aga1-q2-b21-t0-r10, aga1-q2-b21-t0-r11, aga1-q2-b21-t0-r12, aga1-q2-b21-t0-r13, aga1-q2-b21-t0-r14, aga1-q2-b21-t0-r15, aga1-q2-b21-t0-r16, aga1-q2-b21-t0-r9 |2338XL802P |58f305f3-fb14-4426-a90b-faa24e73e91f |",
+  "comments": [
+    {
+      "id": "357640482",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:23:54Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357788945",
+      "author": "Carlos Patricio",
+      "created": "2026-02-10T16:09:55Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357789367",
+      "author": "Carlos Patricio",
+      "created": "2026-02-10T16:11:52Z",
+      "body": "Host is not in allocated, it's in repair so there is no instace to work with. There are no open problems.\n\n[   {\n    \"serial\": \"2336XLG02V\",\n    \"model\": \"GPU_V4_X10-2C_32000_S.01\",\n    \"arch\": \"X10-2C\",\n    \"owner\": \"compute-aga-ad1\",\n    \"pxe_image\": \"ol7-uek6-x86_64\",\n    \"hops_hostname\": \"aga1-c1-b21-t0-r15-compute3\",\n    \"role\": \"compute\",\n    \"state\": \"REPAIR\",\n    \"halt_mode\": \"False\",\n    \"instance_id\": \"NONE\",\n    \"pool_name\": \"broken_pool\",\n    \"job\": \" \",\n    \"location\": \"OC1:us-saltlake-2:ad1\",\n    \"bldg\": \"aga1\",\n    \"room\": \"aga1.1\",\n    \"rack\": \"2443\",\n    \"elev\": \"18\",\n    \"slot\": \"NONE\",\n    \"rack_serial\": \"2338XL802P\",\n    \"updated\": \"2026-02-10T02:35:10+00:00\",\n    \"test\": \"NONE\"\n}]\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.89s/it]\n{}\n[   {\n    \"serial\": \"2336XLG02V\",\n    \"gpu\": \"H:2336XLG02V T:2335XKU0S8 sled:2335XKU0PB\"\n}]\nM:ExtOC1:AGA:ad1:2336XLG02V>host 2335XKU0S8\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 46.33it/s]\nQuerying Hops: 100% |  1/1 [00:00<00:00,  2.84it/s]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.79it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00, 415.81it/s]\n[INFO 2026-02-10 10:10:30,721] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2335XKU0S8>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.96s/it]\n{}"
+    },
+    {
+      "id": "357789949",
+      "author": "Carlos Patricio",
+      "created": "2026-02-10T16:13:13Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): Timeout\n2. What we did to address the issue (1 liner - high level): Resolve ticket\n3. What was the Root Cause: Host in REPAIR\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

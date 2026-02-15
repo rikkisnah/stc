@@ -1,0 +1,142 @@
+{
+  "ticket": {
+    "id": "55697739",
+    "key": "HPC-108280",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T22:09:38Z",
+    "resolved": "2026-02-11T06:12:21Z",
+    "updated": "2026-02-15T10:05:32Z"
+  },
+  "people": {
+    "assignee": "Joselet Devasia",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ10DX",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8011",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-498f0561-2b4d-4557-acb3-01d4a6da61e9",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-104212",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104383",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104704",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104999",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-105938",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-108904",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-110011",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-110486",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-110542",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 50m",
+    "time_to_resolve": "8h 2m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : initial_setup\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check/497ff753-f5fc-48fb-9f90-6f791e0a9ce6/health_check_2552XQ10DX.json\n - health_check_497ff753-f5fc-48fb-9f90-6f791e0a9ce6_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ10DX |10.0.14.4 |2026-02-10T21:46:53Z |2026-02-10T21:57:50Z |aga4-qfab-3-400 |bldg4-block43-400 |aga4-q3-b43-t0-r1, aga4-q3-b43-t0-r2, aga4-q3-b43-t0-r3, aga4-q3-b43-t0-r4, aga4-q3-b43-t0-r5, aga4-q3-b43-t0-r6, aga4-q3-b43-t0-r7, aga4-q3-b43-t0-r8 |2603ZA8011 |71a841e3-29a1-431d-858a-6f2d56602272 |",
+  "comments": [
+    {
+      "id": "357922334",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T22:10:05Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358033615",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:24:03Z",
+      "body": "Host is in broken pool.\n\nNo OP on HN and TN.\n\nM:ExtOC1:AGA:ad1:2552XQ10DX>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2552XQ10DX   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b16-t0-r11-compute1   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoaci64q3gnvhhfzuy5lmnre7fch6sezq6rcrchh737ueg5q   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   6412   8      NONE   2603ZA8011    2026-02-03T19:27:27+00:00   NONE\nM:ExtOC1:AGA:ad1:2552XQ10DX>gpu_info\nSerial       Gpu\n2552XQ10DX   H:2552XQ10DX T:2552XK1003 sled:2552XK1003\nM:ExtOC1:AGA:ad1:2552XQ10DX>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.96s/it]\nSerial\nM:ExtOC1:AGA:ad1:2552XQ10DX>host 2552XK1003\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.14s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.61s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.12it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.71it/s]\n[INFO 2026-02-11 10:53:15,755] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2552XK1003>open_problems\nChecking open problems: 100% |  1/1 [00:03<00:00,  3.46s/it]\nSerial\nM:ExtOC1:AGA:ad1:2552XK1003>"
+    },
+    {
+      "id": "358036534",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:36:25Z",
+      "body": "+ '[' e6-2c.128.3072.mi355x.gpu == gb200-v3.144.960.gpu ']'\n+ '[' e6-2c.128.3072.mi355x.gpu == gb300.144.960.gpu ']'\n+ '[' e6-2c.128.3072.mi355x.gpu == b300.128.4096.gpu ']'\n+ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\n+ EXIT_CODE=1\n+ '[' 1 -ne 0 ']'\n+ echo 'initial_setup failed'\ninitial_setup failed"
+    },
+    {
+      "id": "358036545",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:37:02Z",
+      "body": "ubuntu@bio-2552xq10dx:~/bio/jobs/results$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[INFO]  Standalone mode:\nls: cannot access '/sys/bus/pci/devices/0000:08:00.0/net': No such file or directory\nCommand '['ls', '/sys/bus/pci/devices/0000:08:00.0/net']' returned non-zero exit status 2.\nCannot run command ls /sys/bus/pci/devices/0000:08:00.0/net\nls: cannot access '/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:08.0/0000:08:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:08.0/0000:08:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:08.0/0000:08:00.0/infiniband\nTraceback (most recent call last):\n  File \"oci_dr_hpc.py\", line 760, in <module>\n  File \"click/core.py\", line 1128, in __call__\n  File \"click/core.py\", line 1053, in main\n  File \"click/core.py\", line 1659, in invoke\n  File \"click/core.py\", line 1395, in invoke\n  File \"click/core.py\", line 754, in invoke\n  File \"oci_dr_hpc.py\", line 632, in run_autodiscovery\n  File \"autodiscovery/auto_discover.py\", line 134, in discover_standalone\n  File \"autodiscovery/discovery_helpers.py\", line 143, in get_all_cfg_for_rdma_nics\n  File \"autodiscovery/discovery_helpers.py\", line 290, in _get_ip_from_interface\nValueError: You must specify a valid interface name.\n[658305] Failed to execute script 'oci_dr_hpc' due to unhandled exception!\nubuntu@bio-2552xq10dx:~/bio/jobs/results$"
+    },
+    {
+      "id": "358043296",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T06:10:32Z",
+      "body": "Performed BVR and sending for re-test."
+    },
+    {
+      "id": "358043748",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T06:12:06Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): initial_setup failed\n2. What we did to address the issue (1 liner - high level): Done BVR\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

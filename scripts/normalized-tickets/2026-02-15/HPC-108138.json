@@ -1,0 +1,159 @@
+{
+  "ticket": {
+    "id": "55660794",
+    "key": "HPC-108138",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:38:49Z",
+    "resolved": "2026-02-10T14:10:27Z",
+    "updated": "2026-02-11T23:26:11Z"
+  },
+  "people": {
+    "assignee": "Imane Barakate",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2545XK102W",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8018",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-f3530e0c-1ff0-45f5-9f89-262b2adab643",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-100583",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-101019",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | rccl_all_reduce_perf_2_hosts"
+    },
+    {
+      "key": "HPC-102815",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103058",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103326",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_2_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-103436",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_4_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-103961",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-105855",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | cable_validation"
+    },
+    {
+      "key": "HPC-108110",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109554",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "DO-2650411",
+      "relation": "is resolved by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | Failed Fabric test"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "6h 31m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : initial_setup\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2545XK102W |10.0.13.103 |2026-02-10T07:18:38Z |2026-02-10T07:29:25Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r10, aga4-q3-b32-t0-r11, aga4-q3-b32-t0-r12, aga4-q3-b32-t0-r13, aga4-q3-b32-t0-r14, aga4-q3-b32-t0-r15, aga4-q3-b32-t0-r16, aga4-q3-b32-t0-r9 |2552ZA8018 |113c91b1-13ea-4c2b-b557-2c65a9642851 |",
+  "comments": [
+    {
+      "id": "357644657",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:38:51Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357749858",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T13:55:29Z",
+      "body": "initial setup failed due to a failure running autodicovery\n\n+ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\n+ EXIT_CODE=1\n+ '[' 1 -ne 0 ']'\n+ echo 'initial_setup failed'\ninitial_setup failed\n+ add_host_details 2545XK102W Triage"
+    },
+    {
+      "id": "357749867",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T13:56:00Z",
+      "body": "Failed to run autodiscovery manually tdue to no AMD NICs being detected\n\nubuntu@bio-2545xk102w:~/bio/jobs$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[INFO]  Standalone mode:\nERROR - No AMD NICs detected\nCommand '['sudo', 'nicctl', 'show', 'card', '--detail']' returned non-zero exit status 255.\nCannot run command sudo nicctl show card --detail\ncat: '/sys/bus/pci/devices/0000:08:00.0/numa_node': No such file or directory\nCommand '['cat', '/sys/bus/pci/devices/0000:08:00.0/numa_node']' returned non-zero exit status 1.\nCannot run command cat /sys/bus/pci/devices/0000:08:00.0/numa_node\nls: cannot access '/sys/bus/pci/devices/0000:08:00.0/net': No such file or directory\nCommand '['ls', '/sys/bus/pci/devices/0000:08:00.0/net']' returned non-zero exit status 2.\nCannot run command ls /sys/bus/pci/devices/0000:08:00.0/net\nls: cannot access '/infiniband': No such file or directory\nCommand '['ls', '/infiniband']' returned non-zero exit status 2.\nCannot run command ls /infiniband\nTraceback (most recent call last):\n  File \"oci_dr_hpc.py\", line 760, in <module>\n  File \"click/core.py\", line 1128, in __call__\n  File \"click/core.py\", line 1053, in main\n  File \"click/core.py\", line 1659, in invoke\n  File \"click/core.py\", line 1395, in invoke\n  File \"click/core.py\", line 754, in invoke\n  File \"oci_dr_hpc.py\", line 632, in run_autodiscovery\n  File \"autodiscovery/auto_discover.py\", line 134, in discover_standalone\n  File \"autodiscovery/discovery_helpers.py\", line 143, in get_all_cfg_for_rdma_nics\n  File \"autodiscovery/discovery_helpers.py\", line 290, in _get_ip_from_interface\nValueError: You must specify a valid interface name.\n[90577] Failed to execute script 'oci_dr_hpc' due to unhandled exception!"
+    },
+    {
+      "id": "357749872",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T13:56:12Z",
+      "body": "amd-smi : Unable to detect any GPU devices\n\nubuntu@bio-2545xk102w:~/bio/jobs$ amd-smi\nERROR:root:Unable to detect any GPU devices, check amdgpu version and module status (sudo modprobe amdgpu)\nAMDSMI Tool: 26.0.0+37d158ab | AMDSMI Library version: 26.0.0 | ROCm version: 7.0.1"
+    },
+    {
+      "id": "357752003",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:02:53Z",
+      "body": "Open problems on the HN:\n * ILOM has determined that a PCIe retimer card has a missing cable (SPENV-8002-EL)\n * ILOM has determined that the expected number of GPUs were not present on the second attempt of system initialization (SPENV-8001-6U)\n\nM:ExtOC1:AGA:ad1:2545XK102W>open_problems\nChecking open problems:   0%|                                                  Checking open problems: 100% |  1/1 Checking open problems: 100%\n{\n    \"2545XK102W\": [\n        {\n            \"dateTime\": \"2026-02-10 06:47:28+00:00\",\n            \"location\": \"/System (Host System)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/CRB1/PCIE1\",\n            \"uuid\": \"7858a947-6985-cefd-ea1b-af4cc02fbcfa\",\n            \"serial\": \"2545XK102W\",\n            \"part_no\": \"8228282\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPENV-8002-EL\"\n        },\n        {\n            \"dateTime\": \"2026-02-10 06:47:28+00:00\",\n            \"location\": \"/System (Host System)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/CRB8/PCIE8\",\n            \"uuid\": \"9396f2a9-8009-6887-9037-b51078c251f9\",\n            \"serial\": \"2545XK102W\",\n            \"part_no\": \"8228282\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPENV-8002-EL\"\n        },\n        {\n            \"dateTime\": \"2026-02-10 06:52:25+00:00\",\n            \"location\": \"/System (Host System)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS\",\n            \"uuid\": \"b50a2573-1344-c854-a6eb-d7ab3db33392\",\n            \"serial\": \"2545XK102W\",\n            \"part_no\": \"8228282\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPENV-8001-6U\"\n        }\n    ]\n}"
+    },
+    {
+      "id": "357752033",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:03:28Z",
+      "body": "The fabric test failed on the head node\n\ndiag> hwdiag system fabric test all\nHWdiag (Diag Shell) - Build Number 167638 (Mon Dec  8 08:07:52 PST 2025)\n         Current Date/Time: Feb 10 2026, 13:57:45\nPlatform - WB SERVER E6-ISCPU 1 Memory\n    /SYS/MB/CPU1/A1        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A2        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A3        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A4        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A5        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A6        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A7        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A8        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A9        6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A10       6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A11       6000 MT/s              : PASSED\n    /SYS/MB/CPU1/A12       6000 MT/s              : PASSED\nERROR, cannot find pci capability pointer for slot1.\nERROR, cannot find pci capability pointer for slot2.\nERROR, cannot find pci capability pointer for slot3.\nERROR, cannot find pci capability pointer for slot4.\nERROR, cannot find pci capability pointer for slot5.\nERROR, cannot find pci capability pointer for slot6.\nERROR, cannot find pci capability pointer for slot7.\nERROR, cannot find pci capability pointer for slot8.\nERROR, cannot find pci capability pointer for slot10.\nERROR, cannot find pci capability pointer for slot11.CPU 1 PCI Devices:\n    PCIe 9                 x8  @ 32.0GT/s         : PASSED\n    SP                     x1  @ 2.5GT/s          : PASSEDCPU 2 Memory\n    /SYS/MB/CPU2/B1        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B2        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B3        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B4        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B5        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B6        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B7        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B8        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B9        6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B10       6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B11       6000 MT/s              : PASSED\n    /SYS/MB/CPU2/B12       6000 MT/s              : PASSEDCPU 2 PCI Devices:\n    PCIe 49                x8  @ 32.0GT/s         : PASSED\nFABRIC Test Result: FAILED"
+    },
+    {
+      "id": "357753810",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:10:18Z",
+      "body": "Raised   DO-2650411 to CHS and will mark the ticket as resolved to allow initial_setup to rerun once their action is done"
+    }
+  ]
+}

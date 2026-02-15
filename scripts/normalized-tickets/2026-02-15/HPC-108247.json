@@ -1,0 +1,88 @@
+{
+  "ticket": {
+    "id": "55686796",
+    "key": "HPC-108247",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T18:54:29Z",
+    "resolved": "2026-02-11T04:18:44Z",
+    "updated": "2026-02-12T01:10:42Z"
+  },
+  "people": {
+    "assignee": "Jagadabi Pradeep Varma",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2602XQ103Z, 2552XQ103Y",
+    "rack_serial": null
+  },
+  "labels": [
+    "2602ZA8013",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-394cc033-9570-425a-8e28-393def23260c",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2652894",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "2602XQ103Z / 2552XQ103Y | Open problems found"
+    },
+    {
+      "key": "HPC-108017",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "6h 5m",
+    "time_to_resolve": "9h 24m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2602XQ103Z |10.0.12.230 |2026-02-10T16:39:40Z |2026-02-10T18:42:42Z |aga4-qfab-3-400 |bldg4-block35-400 |aga4-q3-b35-t0-r10, aga4-q3-b35-t0-r11, aga4-q3-b35-t0-r12, aga4-q3-b35-t0-r13, aga4-q3-b35-t0-r14, aga4-q3-b35-t0-r15, aga4-q3-b35-t0-r16, aga4-q3-b35-t0-r9 |2602ZA8013 |68185ff2-cbf6-46c1-8bb4-59fde72e8c09 |\n|BM.GPU.MI355X.8 |2552XQ103Y |10.0.8.159 |2026-02-10T16:39:40Z |2026-02-10T18:42:42Z |aga4-qfab-3-400 |bldg4-block37-400 |aga4-q3-b37-t0-r10, aga4-q3-b37-t0-r11, aga4-q3-b37-t0-r12, aga4-q3-b37-t0-r13, aga4-q3-b37-t0-r14, aga4-q3-b37-t0-r15, aga4-q3-b37-t0-r16, aga4-q3-b37-t0-r9 |2602ZA8074 |68185ff2-cbf6-46c1-8bb4-59fde72e8c09 |",
+  "comments": [
+    {
+      "id": "357845252",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T18:54:41Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358015361",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-11T04:12:54Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358015933",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-11T04:14:20Z",
+      "body": "OP found in tail node:\n\nM:ExtOC1:AGA:ad1:2 Hosts>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2552XQ103Y   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b14-t0-r30-compute7   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacyz2zrmprxn6tznswzurcp2lwi4q6mvskgapor33tnbvq   holding             OC1:us-saltlake-2:ad1   aga4   aga4.2   5206   33     NONE   2602ZA8074    2026-02-09T18:36:26+00:00   NONE\n2602XQ103Z   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b14-t0-r16-compute2   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoaciupk2dmi4byfuzpefart7nhstggzqjkzwk6gixviwz3a   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   5314   12     NONE   2602ZA8013    2026-02-08T15:46:11+00:00   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:03<00:00,  1.64s/it]\nSerial\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2552XQ103Y   H:2552XQ103Y T:2552XK1074 sled:2552XK1074\n2602XQ103Z   H:2602XQ103Z T:2552XK101X sled:2552XK101X\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>host 2552XK1074 2552XK101X\nQuerying Storekeeper: 100% |  2/2 [00:01<00:00,  1.79it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.47s/it]\nLoading 2 Hosts from Hops: 100% |  2/2 [00:01<00:00,  1.27it/s]\nLoading extended information on 2 hosts: 100% |  2/2 [00:00<00:00,  3.55it/s]\n[INFO 2026-02-11 09:43:47,177] Successfully loaded extended information about 2 hosts\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:04<00:00,  2.11s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2552XK1074\n             2026-02-09 18:24:05+00:00   PSB/CDFP6 (Container)   System      /SYS/PSB/CDFP6   d16b53c6-2cee-cfd3-fdfa-9c5868b7ec20   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "358016577",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-11T04:18:44Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair\n2. What we did to address the issue (1 liner - high level): Cut a DO\n3. What was the Root Cause: OP found\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

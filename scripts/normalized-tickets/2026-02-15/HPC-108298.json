@@ -1,0 +1,165 @@
+{
+  "ticket": {
+    "id": "55699880",
+    "key": "HPC-108298",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T23:09:46Z",
+    "resolved": "2026-02-11T06:17:18Z",
+    "updated": "2026-02-11T12:40:31Z"
+  },
+  "people": {
+    "assignee": "Arunkumar Duraisamy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2544XK1032, 2541XK1092",
+    "rack_serial": null
+  },
+  "labels": [
+    "2551ZA8069",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-98a9b8f6-1da3-4140-9c4c-e5a0a872c9ef",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-100490",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-100501",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-100693",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-101035",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | rccl_all_reduce_perf_2_hosts"
+    },
+    {
+      "key": "HPC-102208",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-103285",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103698",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103900",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103966",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-104129",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_2_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-104222",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-104307",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2544XK1032 | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-105021",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2541XK1092 | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-105332",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2544XK1032 | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-108951",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109343",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2541XK1092 | Meta CPV Validation Analysis"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "1h 50m",
+    "time_to_resolve": "7h 7m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2544XK1032 |10.0.15.76 |2026-02-10T20:52:56Z |2026-02-10T22:55:38Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r1, aga4-q3-b32-t0-r2, aga4-q3-b32-t0-r3, aga4-q3-b32-t0-r4, aga4-q3-b32-t0-r5, aga4-q3-b32-t0-r6, aga4-q3-b32-t0-r7, aga4-q3-b32-t0-r8 |2551ZA8069 |a7221e1c-cef8-4ddc-8028-3d319f64a8e8 |\n|BM.GPU.MI355X.8 |2541XK1092 |10.0.10.18 |2026-02-10T20:52:56Z |2026-02-10T22:55:38Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r1, aga4-q3-b32-t0-r2, aga4-q3-b32-t0-r3, aga4-q3-b32-t0-r4, aga4-q3-b32-t0-r5, aga4-q3-b32-t0-r6, aga4-q3-b32-t0-r7, aga4-q3-b32-t0-r8 |2551ZA8061 |a7221e1c-cef8-4ddc-8028-3d319f64a8e8 |",
+  "comments": [
+    {
+      "id": "357942400",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T23:09:47Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358035697",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:35:03Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358039179",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T05:50:47Z",
+      "body": "M:ExtOC1:DFW:ad1:2551XNG42Y>host 2539XK100R 2541XK1051 2544XK10DL 2540XK10BX 2552XQ10LH 2542XK1036 2544XK10F1 2541XK10FD 2540XK10AF 2552XQ10E0 2543XQ10CL 2543XK1097 2553XQ104S 2544XK1021 2544XK10DJ 2544XK1032 2602XQ1180 2552XQ10ED 2543XK10DE 2540XK101L 2541XK1092 2543XK10FH 2544XK10DG 2602XQ10PA\nQuerying Storekeeper: 100% |  24/24 [00:00<00:00, 127.09it/s]\n[INFO 2026-02-11 11:15:31,031] Using HS host hops.svc.ad1.us-saltlake-2\nQuerying Hops:   0%|                                                   | 0/1 [00:00<?, ?it/s][INFO 2026-02-11 11:15:35,624] Connected to bastion-ad1.rb.us-saltlake-2.oci.oracleiaas.com, tunneling for 62826:hops.svc.ad1.us-saltlake-2:443\nQuerying Hops: 100% |  1/1 [00:09<00:00,  9.88s/it]\n[INFO 2026-02-11 11:15:40,911] Using HG host hops-gateway.svc.ad1.us-saltlake-2\n[INFO 2026-02-11 11:15:40,912] Using HDS host hops-data-service.svc.ad1.us-saltlake-2\nLoading 24 Hosts from Hops: 100% |  24/24 [01:15<00:00,  3.14s/it]\nLoading extended information on 24 hosts: 100% |  24/24 [00:00<00:00, 3906.22it/s]\n[INFO 2026-02-11 11:16:56,390] Successfully loaded extended information about 24 hosts\nM:ExtOC1:AGA:ad1:24 Hosts>open_problems\nChecking open problems:   0%|                                                  | 0/24 [00:00<?, ?it/s][INFO 2026-02-11 11:17:21,478] Connected to bastion-ad1.rb.us-saltlake-2.oci.oracleiaas.com, tunneling for 62977:hops-gateway.svc.ad1.us-saltlake-2:443\nChecking open problems: 100% |  24/24 [00:13<00:00,  1.80it/s]\nSerial"
+    }
+  ]
+}

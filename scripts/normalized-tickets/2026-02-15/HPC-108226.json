@@ -1,0 +1,189 @@
+{
+  "ticket": {
+    "id": "55682286",
+    "key": "HPC-108226",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_level2",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T17:12:52Z",
+    "resolved": "2026-02-13T15:43:35Z",
+    "updated": "2026-02-13T15:43:46Z"
+  },
+  "people": {
+    "assignee": "Federico Ramirez",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-tokyo-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2404XLG077",
+    "rack_serial": null
+  },
+  "labels": [
+    "2405XL809E",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "NRT-CPV",
+    "sk-9456acae-f983-47ca-aee9-1db546bbdd98",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-31498",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | hpl_benchmark | 64bb2451-148f-4ae3-ba19-f49e745e4f4f"
+    },
+    {
+      "key": "HPC-31608",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | hpl_benchmark | c19e29ff-3ed9-447b-8791-d97d2834b7ca"
+    },
+    {
+      "key": "HPC-31670",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | hpl_benchmark | de38c939-dd29-4682-8083-ca1768c27448"
+    },
+    {
+      "key": "HPC-31928",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | fdt_gpufielddiag | ac758526-f613-491b-9b50-9976cd94704b"
+    },
+    {
+      "key": "HPC-32018",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | tinymeg_1500_iterations | 5f320415-2ac4-4c79-b27d-5e5acb019df1"
+    },
+    {
+      "key": "HPC-32162",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | tinymeg_1500_iterations | 7bc5dfad-fba9-486f-a9cc-fa3c11e737a3"
+    },
+    {
+      "key": "HPC-32452",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | tinymeg_1500_iterations | 183cd002-5524-4e80-8254-cab9f0c2e349"
+    },
+    {
+      "key": "HPC-32756",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | tinymeg_1500_iterations | 2c4c2148-7ecb-48ae-8ab6-246f81090f7a"
+    },
+    {
+      "key": "HPC-32941",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | tinymeg_1500_iterations | c94f0e44-6f6d-40c2-86b7-91c947d7ed40"
+    },
+    {
+      "key": "HPC-33254",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair_1_block | 9a5266d0-f88a-4bfc-ad3a-257062e4f7d1"
+    },
+    {
+      "key": "HPC-33282",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair_1_block | bd73b7b8-43bb-4d13-9619-25987ee2928e"
+    },
+    {
+      "key": "HPC-33849",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | health_check | e7070075-6050-4569-bc76-0ae6b6d76e8d"
+    },
+    {
+      "key": "HPC-99216",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | 6304 | 2404XLG077 | 2403XKU0NA | FDT gpufielddiag failure"
+    },
+    {
+      "key": "HPC-106023",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | initial_setup"
+    },
+    {
+      "key": "DO-2654380",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_level2 | TN open problems | 2404XLG077:2403XKU0NA"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "7h 47m",
+    "time_to_resolve": "70h 30m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nfdt_level2 -\n\n(flag) *Debugging fdt_level2*\n\nSee the following runbooks for more information:\nHow to Triage FDT Level 1\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2404XLG077 |10.0.12.63 |2026-02-10T12:55:57Z |2026-02-10T16:58:02Z |nrt6-qfab-2-200 |bldg6-block20-200 |nrt6-q2-b20-t0-r10, nrt6-q2-b20-t0-r11, nrt6-q2-b20-t0-r12, nrt6-q2-b20-t0-r13, nrt6-q2-b20-t0-r14, nrt6-q2-b20-t0-r15, nrt6-q2-b20-t0-r16, nrt6-q2-b20-t0-r9 |2405XL809E |e8a6823e-fe77-44ea-8db9-6387f5183eb9 |",
+  "comments": [
+    {
+      "id": "357809120",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-tokyo-1",
+      "created": "2026-02-10T17:12:54Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358209354",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T16:51:48Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358210331",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T16:53:42Z",
+      "body": "Host is in broken pool. Non-spurious open problems reported for TN\n\nM:ExtOC1:NRT:ad1:2404XLG077>instance_info\nHost         Pool_Name     Instance_Id\n2404XLG077   broken_pool   ocid1.instance.oc1.ap-tokyo-1.anxhiljr7rhxvoac6yessrl7qogftpg7w73b2oijedfab5t5jcmzwhk2h45q\nM:ExtOC1:NRT:ad1:2404XLG077>gpu_info\nSerial       Gpu\n2404XLG077   H:2404XLG077 T:2403XKU0NA sled:2403XKU0VK\nM:ExtOC1:NRT:ad1:2404XLG077>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.06s/it]\nSerial\nM:ExtOC1:NRT:ad1:2404XLG077>\nM:ExtOC1:NRT:ad1:2404XLG077>host 2403XKU0NA\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00,  1.92it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.24s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.60it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.83it/s]\n[INFO 2026-02-11 10:53:06,449] Successfully loaded extended information about 1 hosts\nM:ExtOC1:NRT:ad1:2403XKU0NA>open_problems\nChecking open problems: 100% |  1/1 [00:03<00:00,  3.52s/it]\nSerial       Datetime                    Location           Subsystem     Resource        Uuid                                   Serial          Part_No       Probability   Reference\n2403XKU0NA\n             2026-02-10 12:13:45+00:00   GBB/GPU7 (GPU 7)   PCI Devices   /SYS/GBB/GPU7   86524b62-0acf-4d5d-a87f-f992b8cb4a26   1655223039991   2330-885-A1   100           http://support.oracle.com/msg/SPGXTAIL-8000-R0\nM:ExtOC1:NRT:ad1:2403XKU0NA>"
+    },
+    {
+      "id": "358210657",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T16:55:46Z",
+      "body": "Cut DO-2654380 to get help clearing open problems in TN"
+    },
+    {
+      "id": "358958700",
+      "author": "Federico Ramirez",
+      "created": "2026-02-13T15:38:38Z",
+      "body": "DO RMA'd GPU with SN 1655223039991"
+    },
+    {
+      "id": "358958780",
+      "author": "Federico Ramirez",
+      "created": "2026-02-13T15:41:32Z",
+      "body": "New GPU with different VBIOS version\n\n[opc@bio-2404xlg077 ~]$ nvidia-smi -q | grep VBIOS\n    VBIOS Version                         : 96.00.A5.00.01\n    VBIOS Version                         : 96.00.CF.00.01 <<<---- !!\n    VBIOS Version                         : 96.00.A5.00.01\n    VBIOS Version                         : 96.00.A5.00.01\n    VBIOS Version                         : 96.00.A5.00.01\n    VBIOS Version                         : 96.00.A5.00.01\n    VBIOS Version                         : 96.00.A5.00.01\n    VBIOS Version                         : 96.00.A5.00.01"
+    },
+    {
+      "id": "358959627",
+      "author": "Federico Ramirez",
+      "created": "2026-02-13T15:42:31Z",
+      "body": "Terminated instance to allow re-provisioning\n\n[opc@cpv-host-nrt ~]$ cpv state resource -t host -s Terminate -k 2404XLG077\n2026/02/13 15:41:57 Reading state file state.json\n2026/02/13 15:41:57 Object Store client initialized with host url https://objectstorage.ap-tokyo-1.oraclecloud.com\n2026/02/13 15:41:57 Changing host 2404XLG077 resource state from HoldingResourceState to TerminateResourceState\nUpdating resource \"2404XLG077\" state to \"TerminateResourceState\"\n2026/02/13 15:41:57 Saving state file state.json\n[opc@cpv-host-nrt ~]$ cpv state overview -t host -k 2404XLG077\n2026/02/13 15:42:06 Reading state file state.json\n2026/02/13 15:42:06 Object Store client initialized with host url https://objectstorage.ap-tokyo-1.oraclecloud.com\nOverview for type=host, key=2404XLG077\nOverview for Hosts\nOverview for Host \"2404XLG077\"\nCurrent Time: 2026-02-13T15:42:06Z\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 RESOURCESTATE \u2502 HOST       \u2502 IP         \u2502 TESTSTATE \u2502 TEST                             \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Terminate     \u2502 2404XLG077 \u2502 10.0.12.63 \u2502 Success   \u2502 initial_setup (1)                \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Failed    \u2502 fdt_level2 (5)                   \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 gpuburn_short (10)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 fdt_ist (30)                     \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 fdt_ist_2 (40)                   \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 fdt_ist_3 (50)                   \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 gpu_bandwidth (150)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 fdt_gpufielddiag (155)           \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 hpl_benchmark (160)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 tinymeg_short (165)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 nccl_allreduce_perf_single (170) \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 cable_validation (170)           \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 wait_for_wpa (180)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 health_check (190)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 tinymeg_1500_iterations (230)    \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 sunvts_burnin (240)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 dcgm_level_4 (250)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 cable_stress (470)               \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
+    },
+    {
+      "id": "358959686",
+      "author": "Federico Ramirez",
+      "created": "2026-02-13T15:43:35Z",
+      "body": "Resolving to allow re-testing after re-provisioning\n\nClosure Summary:\n\n1. What was the issue (1 liner): Failing FDT test / Open problems in TN\n2. What we did to address the issue (1 liner - high level): Cut a DO to clear OPs in TN\n3. What was the Root Cause: Faulty GPU\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

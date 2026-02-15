@@ -1,0 +1,159 @@
+{
+  "ticket": {
+    "id": "55649997",
+    "key": "HPC-108063",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T01:08:30Z",
+    "resolved": "2026-02-10T09:54:44Z",
+    "updated": "2026-02-13T22:48:37Z"
+  },
+  "people": {
+    "assignee": "Shiv Gupta",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2546XQ106N",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8004",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-124ae75e-990a-4992-ae49-cc54278c7060",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79426",
+      "relation": "is blocked by",
+      "status": "Closed",
+      "summary": "[Standard] |  AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "DO-2650005",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-103824",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105005",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105302",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105578",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-106192",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-107325",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-109448",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-110002",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-110099",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-110234",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-110312",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "8h 46m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : agfhc_level_1_to_5\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nagfhc_level_1_to_5 -\n\n(flag) *Debugging agfhc_level_1_to_5*\n\nSee the following runbooks for more information:\nas AMD GPU test: Identifying AMD Commands\\n\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2546XQ106N |10.0.11.230 |2026-02-09T23:16:09Z |2026-02-10T00:59:20Z |aga4-qfab-3-400 |bldg4-block51-400 |aga4-q3-b51-t0-r1, aga4-q3-b51-t0-r2, aga4-q3-b51-t0-r3, aga4-q3-b51-t0-r4, aga4-q3-b51-t0-r5, aga4-q3-b51-t0-r6, aga4-q3-b51-t0-r7, aga4-q3-b51-t0-r8 |2604ZA8004 |5ef74ee5-44a1-44ac-a887-095a78102ae6 |",
+  "comments": [
+    {
+      "id": "357545435",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T01:08:32Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357631448",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T06:54:12Z",
+      "body": "failed for below tests.\n\n\n\n  \"mall-1-1\": {\n      \"state\": \"failed\",\n      \"primary_status_name\": \"CPER_FATAL_ERROR_26\",\n      \"primary_status_value\": 1000026,\n      \"primary_status_description\": \"\",\n      \"primary_suggested_action\": \"Service\",\n      \"primary_action_subject\": \"GPU-01\",\n      \"primary_extended_info\": \"Follow SAG guidance in primary_service_info\",\n      \"primary_service_info\": {\n        \"afid\": 26,\n        \"error_category\": \"Device Internal Errors\",\n        \"error_type\": \"Hardware Assertion (HWA)\",\n        \"error_severity\": \"Fatal\",\n        \"service_action_num\": 15,\n        \"service_action\": \"Stress-test the System\"\n\n \"hbm_bw-1-1\": {\n      \"state\": \"failed\",\n      \"primary_status_name\": \"CPER_FATAL_ERROR_26\",\n      \"primary_status_value\": 1000026,\n      \"primary_status_description\": \"\",\n      \"primary_suggested_action\": \"Service\",\n      \"primary_action_subject\": \"GPU-01\",\n      \"primary_extended_info\": \"Follow SAG guidance in primary_service_info\",\n      \"primary_service_info\": {\n        \"afid\": 26,\n        \"error_category\": \"Device Internal Errors\",\n        \"error_type\": \"Hardware Assertion (HWA)\",\n        \"error_severity\": \"Fatal\",\n        \"service_action_num\": 15,\n        \"service_action\": \"Stress-test the System\"\n\n\n\n \"hbm_ds_ntd-1-1\": {\n      \"state\": \"failed\",\n      \"primary_status_name\": \"CPER_FATAL_ERROR_26\",\n      \"primary_status_value\": 1000026,\n      \"primary_status_description\": \"\",\n      \"primary_suggested_action\": \"Service\",\n      \"primary_action_subject\": \"GPU-01\",\n      \"primary_extended_info\": \"Follow SAG guidance in primary_service_info\",\n      \"primary_service_info\": {\n        \"afid\": 26,\n        \"error_category\": \"Device Internal Errors\",\n        \"error_type\": \"Hardware Assertion (HWA)\",\n        \"error_severity\": \"Fatal\",\n        \"service_action_num\": 15,\n        \"service_action\": \"Stress-test the System\"\n      },"
+    },
+    {
+      "id": "357632421",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T06:56:58Z",
+      "body": "RHS-79426 raised"
+    },
+    {
+      "id": "357684173",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T09:53:12Z",
+      "body": "# DO-2650005"
+    },
+    {
+      "id": "357685115",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T09:54:44Z",
+      "body": "raised.  DO-2650005"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "ticket": {
+    "id": "55649202",
+    "key": "HPC-108032",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T00:23:32Z",
+    "resolved": "2026-02-10T02:11:38Z",
+    "updated": "2026-02-13T11:18:01Z"
+  },
+  "people": {
+    "assignee": "Javier Del Pino",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ101D",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8053",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-203bff8b-4697-4ebd-96a4-cb20eb9ed44f",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-103809",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-104168",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | agfhc_hbm_8h"
+    },
+    {
+      "key": "HPC-105680",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-106184",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-107209",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-108114",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-110170",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "36m",
+    "time_to_resolve": "1h 48m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 1 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/1b9e6d9f-0bfd-4fe8-b6cb-e33a1ec1eb8c/health_check_2552XQ101D.json\n - health_check_1b9e6d9f-0bfd-4fe8-b6cb-e33a1ec1eb8c_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ101D |10.0.13.248 |2026-02-10T00:11:59Z |2026-02-10T00:15:10Z |aga4-qfab-3-400 |bldg4-block48-400 |aga4-q3-b48-t0-r10, aga4-q3-b48-t0-r11, aga4-q3-b48-t0-r12, aga4-q3-b48-t0-r13, aga4-q3-b48-t0-r14, aga4-q3-b48-t0-r15, aga4-q3-b48-t0-r16, aga4-q3-b48-t0-r9 |2603ZA8053 |1b9e6d9f-0bfd-4fe8-b6cb-e33a1ec1eb8c |",
+  "comments": [
+    {
+      "id": "357527699",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T00:23:34Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357559371",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T02:09:33Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357559389",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T02:10:34Z",
+      "body": "no instance found\n\nM:ExtOC1:AGA:ad1:2552XQ101D>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.78s/it]\nSerial\nM:ExtOC1:AGA:ad1:2552XQ101D>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id   Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2552XQ101D   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b17-t0-r24-compute2   compute   ALLOCATED   False       NONE          NONE              OC1:us-saltlake-2:ad1   aga4   aga4.2   8336   12     NONE   2603ZA8053    2026-02-01T07:45:24+00:00   NONE\nM:ExtOC1:AGA:ad1:2552XQ101D>gpu_info\nSerial       Gpu\n2552XQ101D   H:2552XQ101D T:2602XK1058 sled:2602XK1058\nM:ExtOC1:AGA:ad1:2552XQ101D>instance_info\nHost         Pool_Name   Instance_Id\n2552XQ101D   NONE        NONE\nM:ExtOC1:AGA:ad1:2552XQ101D>"
+    },
+    {
+      "id": "357560132",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T02:11:38Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): health_check\n2. What we did to address the issue (1 liner - high level): run basic commands\n3. What was the Root Cause: no instance asssigned\n4. Runbook was helpful - N\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

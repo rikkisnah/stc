@@ -1,0 +1,111 @@
+{
+  "ticket": {
+    "id": "55663790",
+    "key": "HPC-108154",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T09:07:13Z",
+    "resolved": "2026-02-10T14:23:42Z",
+    "updated": "2026-02-11T03:27:41Z"
+  },
+  "people": {
+    "assignee": "Ouassim Assoufi",
+    "reporter": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2551XNG3NY",
+    "rack_serial": null
+  },
+  "labels": [
+    "2540XN80AW",
+    "CPV-",
+    "CPV-Triage",
+    "DFW-CPV",
+    "GPU_GB200-NVL72_S.03",
+    "sk-f11089d5-63b3-436e-a521-8cf59a992567",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79458",
+      "relation": "is blocked by",
+      "status": "Closed",
+      "summary": "[Standard] |  DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | initial_setup"
+    },
+    {
+      "key": "HPC-108757",
+      "relation": "relates to",
+      "status": "In Progress",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | fdt_compute_tray_gb200_cx8_clustered"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "5h 16m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200-v3.4 |2551XNG3NY |10.0.93.179 |2026-02-10T08:34:01Z |2026-02-10T09:06:58Z |dfw5-qfab-2-400 |bldg5-block10-400 |dfw5-q2-b10-t0-r49, dfw5-q2-b10-t0-r50, dfw5-q2-b10-t0-r51, dfw5-q2-b10-t0-r52 |2540XN80AW |4146c610-2b8f-4ddc-9c68-bc4d616d6046 |",
+  "comments": [
+    {
+      "id": "357670987",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T09:07:15Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357696166",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T10:33:48Z",
+      "body": "the host is in holding pool :\n\nhost 2551XNG3NY\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 75.08it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.36s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.40it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00, 236.57it/s]\n[INFO 2026-02-10 11:33:27,400] Successfully loaded extended information about 1 hosts\nM:ExtOC1:DFW:ad1:2551XNG3NY>info_all\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                   Pool_Name   Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                      Mac_Addr   Boot_Mac_Addr       Boot_Ip       Host_Ip   Ilom_Ip          Ilom_Host_Info                                                 Rot                                                                       Ilom_Serial   Smartnic_Serials                        Smartnic_Ips                                                                                                                                     Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\n2551XNG3NY   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b10-t0-r26-compute9   compute   ALLOCATED   False       ocid1.instance.oc1.us-dallas-1.anqwyljr7rhxvoacx4l4hlsdfgyzk3zi3pcgwi4w2huanyvy5ex7v4qqo5sq   holding           OC1:us-dallas-1:ad1   dfw5   dfw5.1   0533   37     NONE   2540XN80AW    2026-02-10T08:05:06+00:00   NONE   sk-45c5d664-175e-4d6b-ba45-b2fe15c921df   sk-f11089d5-63b3-436e-a521-8cf59a992567   dfw5-c1-b10-t0-r26-compute9   NONE       d8:94:24:b6:a1:36   169.254.0.1   NONE      10.161.222.220   dfw5-c1-b10-t0-r26-compute9-ilom-net-mgt.net.ad1.us-dallas-1   Type: Rot3 Rot3Dns: dfw5-c1-b10-t0-r26-compute9-rot.net.ad1.us-dallas-1   NONE          465774X-2529700810,465774X-2529701073   10.5.17.33(dfw5-c1-b10-t0-r26-compute9-wic1-port1.net.ad1.us-dallas-1) 10.5.17.35(dfw5-c1-b10-t0-r26-compute9-wic2-port1.net.ad1.us-dallas-1)    NONE                   NONE               NONE\nM:ExtOC1:DFW:ad1:2551XNG3NY>"
+    },
+    {
+      "id": "357696194",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T10:34:33Z",
+      "body": "I found no open problems :\n\nM:ExtOC1:DFW:ad1:2551XNG3NY>open_problems\nChecking open problems: 100% |  1/1 [00:07<00:00,  7.62s/it]\nSerial\nM:ExtOC1:DFW:ad1:2551XNG3NY>sp_presence\nChecking SP presence: 100% |  1/1 [00:10<00:00, 11.00s/it]\nSerial       Sp_Is_Present   Version    Build_Number\n2551XNG3NY   Yes             5.1.5.96   167204"
+    },
+    {
+      "id": "357697371",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T10:40:11Z",
+      "body": "the host is unreachable, there is a hardware issue (storage):\n\n[ 8562.884205] systemd[18733]: serial-getty@ttyAMA0.service: Failed to execute /sbin/agetty: Input/output error\n[ 8562.894303] systemd[18733]: serial-getty@ttyAMA0.service: Failed at step EXEC spawning /sbin/agetty: Input/output error\n[ 8563.134017] systemd[18734]: serial-getty@ttyAMA0.service: Failed to execute /sbin/agetty: Input/output error\n[ 8563.144111] systemd[18734]: serial-getty@ttyAMA0.service: Failed at step EXEC spawning /sbin/agetty: Input/output error\n[ 8563.384038] systemd[18735]: serial-getty@ttyAMA0.service: Failed to execute /sbin/agetty: Input/output error\n[ 8563.394138] systemd[18735]: serial-getty@ttyAMA0.service: Failed at step EXEC spawning /sbin/agetty: Input/output error\n[ 8563.634026] systemd[18736]: serial-getty@ttyAMA0.service: Failed to execute /sbin/agetty: Input/output error\n[ 8563.644178] systemd[18736]: serial-getty@ttyAMA0.service: Failed at step EXEC spawning /sbin/agetty: Input/output error\n[ 8563.883973] systemd[18737]: serial-getty@ttyAMA0.service: Failed to execute /sbin/agetty: Input/output error\n[ 8563.894119] systemd[18737]: serial-getty@ttyAMA0.service: Failed at step EXEC spawning /sbin/agetty: Input/output error\n[ 8564.124364] systemd[1]: Failed to start Serial Getty on ttyAMA0."
+    },
+    {
+      "id": "357698854",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T10:44:48Z",
+      "body": "the fabric test passed :\n\nFABRIC Test Result: PASSED\n\nthe i2c test failed :\n\ndiag> hwdiag i2c test all\nHWdiag (Diag Shell) - Build Number 167204 (Wed Nov 12 10:35:22 PST 2025)\n         Current Date/Time: Feb 10 2026, 10:43:25\nPlatform - ORACLE SERVER GB200 SKU5 in Rack Compute Tray 17 Slot 27\nFailed to read I2C data from BF3_0_CTL0, offset=0x01\n  I2C DEVICE                          CHIP                 BUS/MUX1/CH1/MUX0/CH0/ADDR   RESULT\n  --------------------------------------------------------------------------------------------\n  /SYS/HMC/VIRTUAL_SENSOR_EEPROM1     AST2600               2/FF/FF/FF/FF/8A            OK\n  /SYS/HMC/EROT/ATTESTATION           CEC1736               2/FF/FF/FF/FF/A4            OK\n  /SYS/FPGA1/REGTABLE0                FPGA                  2/FF/FF/FF/FF/16            OK\n  /SYS/GPU2/SMBPBI                    GPU                   2/FF/FF/FF/FF/98            OK\n  /SYS/GPU3/SMBPBI                    GPU                   2/FF/FF/FF/FF/9A            OK\n  /SYS/COMPUTE_BOARD1/FRU             24AA64                2/FF/FF/FF/FF/A0            OK\n  /SYS/CBC3/FRU                       24C02                 2/FF/FF/FF/FF/A8            OK\n  /SYS/CBC4/FRU                       24C02                 2/FF/FF/FF/FF/AA            OK\n  /SYS/FPGA1/EROT/ATTESTATION         CEC1736               2/FF/FF/FF/FF/E4            OK\n  /SYS/HMC/FRU                        24C02                 3/FF/FF/FF/FF/AE            OK\n  /SYS/HMC/VIRTUAL_SENSOR_EEPROM0     AST2600               3/FF/FF/FF/FF/9E            OK\n  /SYS/FPGA0/REGTABLE0                FPGA                  3/FF/FF/FF/FF/16            OK\n  /SYS/GPU0/SMBPBI                    GPU                   3/FF/FF/FF/FF/98            OK\n  /SYS/GPU1/SMBPBI                    GPU                   3/FF/FF/FF/FF/9A            OK\n  /SYS/COMPUTE_BOARD0/FRU             24AA64                3/FF/FF/FF/FF/A0            OK\n  /SYS/CBC1/FRU                       24C02                 3/FF/FF/FF/FF/A8            OK\n  /SYS/CBC2/FRU                       24C02                 3/FF/FF/FF/FF/AA            OK\n  /SYS/FPGA0/EROT/ATTESTATION         CEC1736               3/FF/FF/FF/FF/E4            OK\n  /SYS/COMPUTE_BOARD0/B5_IO_EXPANDER  PCA9555               5/FF/FF/FF/FF/42            OK\n  /SYS/COMPUTE_BOARD0/RTC/SRAM        NCT3018Y              5/FF/FF/FF/FF/AE            OK\n  /SYS/COMPUTE_BOARD0/RTC/TIME        NCT3018Y              5/FF/FF/FF/FF/DE            OK\n  /SYS/SP/RTC                         DS1338                6/FF/FF/FF/FF/D0            OK\n  /SYS/COMPUTE_BOARD0/I2C_SWITCH0     TCA9546A              6/FF/FF/FF/FF/E2            OK\n  /SYS/CM1/MEZZ/PHY1_CTL0             CX_DEVICE             6/FF/FF/E2/00/3E            OK\n  /SYS/E1S_BP1/CPLD/CTL               CPLD                  6/FF/FF/E2/01/88            OK\n  /SYS/E1S_BP1/CPLD/EFB0              CPLD_EFB              6/FF/FF/E2/01/80            OK\n  /SYS/E1S_BP1/CPLD/EFB1              CPLD_EFB              6/FF/FF/E2/01/82            OK\n  /SYS/E1S_BP1/FRU                    M24128_BWMN6TP        6/FF/FF/E2/01/AC            OK\n  /SYS/E1S_BP1/SWITCH                 PCA9546A              6/FF/FF/E2/01/E8            OK\n  /SYS/E1S_BP1/HDD0_CTL2              E1S_BP                6/E2/01/E8/00/6C            OK\n  /SYS/E1S_BP1/HDD0_CTL3              E1S_BP                6/E2/01/E8/00/A6            OK\n  /SYS/E1S_BP1/HDD0_CTL4              E1S_BP                6/E2/01/E8/00/D4            OK\n  /SYS/E1S_BP1/HDD1_CTL2              E1S_BP                6/E2/01/E8/01/6C            OK\n  /SYS/E1S_BP1/HDD1_CTL3              E1S_BP                6/E2/01/E8/01/A6            OK\n  /SYS/E1S_BP1/HDD1_CTL4              E1S_BP                6/E2/01/E8/01/D4            OK\n  /SYS/E1S_BP1/HDD2_CTL2              E1S_BP                6/E2/01/E8/02/6C            OK\n  /SYS/E1S_BP1/HDD2_CTL3              E1S_BP                6/E2/01/E8/02/A6            OK\n  /SYS/E1S_BP1/HDD2_CTL4              E1S_BP                6/E2/01/E8/02/D4            OK\n  /SYS/E1S_BP1/HDD3_CTL2              E1S_BP                6/E2/01/E8/03/6C            OK\n  /SYS/E1S_BP1/HDD3_CTL3              E1S_BP                6/E2/01/E8/03/A6            OK\n  /SYS/E1S_BP1/HDD3_CTL4              E1S_BP                6/E2/01/E8/03/D4            OK\n  /SYS/CM1/MEZZ/PHY2_CTL0             CX_DEVICE             6/FF/FF/E2/02/3E            OK\n  /SYS/COMPUTE_BOARD0/I2C_SWITCH1     TCA9546A              6/FF/FF/FF/FF/E4            OK\n  /SYS/CM1/MEZZ_BOARD_FRU             24C02                 6/FF/FF/E4/01/A0            OK\n  /SYS/CM1/MEZZ_BOARD_IO_EXPANDER     TCA9555               6/FF/FF/E4/01/40            OK\n  /SYS/4OSFP/FRU                      M24256_BFMC6TG        6/FF/FF/E4/01/A4            OK\n  /SYS/COMPUTE_BOARD0/I2C_SWITCH2     TCA9546A              6/FF/FF/FF/FF/E6            OK\n  /SYS/CM1/MEZZ_DBU0_CTL0             CX_DEVICE             6/FF/FF/E6/00/3E            OK\n  /SYS/CM1/MEZZ_DBU0_CTL1             CX_DEVICE             6/FF/FF/E6/00/8E            OK\n  /SYS/CM1/MEZZ_DBU0_CTL2             CX_DEVICE             6/FF/FF/E6/00/90            OK\n  /SYS/CM1/MEZZ_DBU1_CTL0             CX_DEVICE             6/FF/FF/E6/03/3E            OK\n  /SYS/CM1/MEZZ_DBU1_CTL1             CX_DEVICE             6/FF/FF/E6/03/8E            OK\n  /SYS/CM1/MEZZ_DBU1_CTL2             CX_DEVICE             6/FF/FF/E6/03/90            OK\n  /SYS/COMPUTE_BOARD1/I2C_SWITCH0     TCA9546A              6/FF/FF/FF/FF/EA            OK\n  /SYS/CM2/MEZZ/PHY1_CTL0             CX_DEVICE             6/FF/FF/EA/00/3E            OK\n  /SYS/CM2/MEZZ/PHY2_CTL0             CX_DEVICE             6/FF/FF/EA/02/3E            OK\n  /SYS/COMPUTE_BOARD1/I2C_SWITCH1     TCA9546A              6/FF/FF/FF/FF/EC            OK\n  /SYS/CM2/MEZZ_BOARD_FRU             24C02                 6/FF/FF/EC/01/A0            OK\n  /SYS/CM2/MEZZ_BOARD_IO_EXPANDER     TCA9555               6/FF/FF/EC/01/42            OK\n  /SYS/COMPUTE_BOARD1/I2C_SWITCH2     TCA9546A              6/FF/FF/FF/FF/EE            OK\n  /SYS/CM2/MEZZ_DBU0_CTL0             CX_DEVICE             6/FF/FF/EE/00/3E            OK\n  /SYS/CM2/MEZZ_DBU0_CTL1             CX_DEVICE             6/FF/FF/EE/00/8E            OK\n  /SYS/CM2/MEZZ_DBU0_CTL2             CX_DEVICE             6/FF/FF/EE/00/90            OK\n  /SYS/CM2/MEZZ_DBU1_CTL0             CX_DEVICE             6/FF/FF/EE/03/3E            OK\n  /SYS/CM2/MEZZ_DBU1_CTL1             CX_DEVICE             6/FF/FF/EE/03/8E            OK\n  /SYS/CM2/MEZZ_DBU1_CTL2             CX_DEVICE             6/FF/FF/EE/03/90            OK\n  /SYS/COMPUTE_BOARD0/ADC_TI          ADS7142               7/FF/FF/FF/FF/30            OK\n  /SYS/FAN_CONTROL0                   MAX31790              7/FF/FF/FF/FF/40            OK\n  /SYS/FAN_CONTROL1                   MAX31790              7/FF/FF/FF/FF/46            OK\n  /SYS/COMPUTE_BOARD1/ADC_TI          ADS7142               7/FF/FF/FF/FF/3C            OK\n  /SYS/FAN_CONTROL2                   MAX31790              7/FF/FF/FF/FF/58            OK\n  /SYS/FAN_CONTROL3                   MAX31790              7/FF/FF/FF/FF/5E            OK\n  /SYS/PDB/EEPROM                     M24C02_FM             7/FF/FF/FF/FF/A0            OK\n  /SYS/HSC1                           LM5066I               7/FF/FF/FF/FF/24            OK\n  /SYS/48V_SW1_CONTROLLER             RAA228004GNP          7/FF/FF/FF/FF/C0            OK\n  /SYS/PMB_ZONE_READ                  PDB_ZONE              7/FF/FF/FF/FF/50            OK\n  /SYS/PDB/TEMP_SENSOR                TMP1075               7/FF/FF/FF/FF/9C            OK\n  /SYS/HSC2                           LM5066I               7/FF/FF/FF/FF/28            OK\n  /SYS/48V_SW2_CONTROLLER             RAA228004GNP          7/FF/FF/FF/FF/C2            OK\n  /SYS/PMB_ZONE_WRITE                 PDB_ZONE              7/FF/FF/FF/FF/6E            OK\n  /SYS/SP/FRU                         AT24C256              8/FF/FF/FF/FF/A0            OK\n  /SYS/SP/CPLD                        CPLD                  8/FF/FF/FF/FF/12            OK\n  /SYS/SP/CPLD/EFB0                   CPLD_EFB              8/FF/FF/FF/FF/80            OK\n  /SYS/SP/CPLD/EFB1                   CPLD_EFB              8/FF/FF/FF/FF/82            OK\n  /SYS/SP/SWITCH                      PCA9547               9/FF/FF/FF/FF/E4            OK\n  /SYS/SP/SWITCH/LED_DIMMER           PCA9532               9/FF/FF/E4/05/C0            OK\n  /SYS/HMC/IO_EXPANDER                PCA9555              10/FF/FF/FF/FF/4E            OK\n  /SYS/COMPUTE_BOARD0/B10_IO_EXPANDER TCA9555RTWR          10/FF/FF/FF/FF/40            OK\n  /SYS/CPU0/EEPROM                    24AA64               10/FF/FF/FF/FF/A0            OK\n  /SYS/COMPUTE_BOARD1/B10_IO_EXPANDER TCA9555RTWR          10/FF/FF/FF/FF/42            OK\n  /SYS/CPU1/EEPROM                    24AA64               10/FF/FF/FF/FF/A2            OK\n  /SYS/SP/ROT_PCA9555                 PCA9555              12/FF/FF/FF/FF/40            OK\n  /SYS/FIM                            AT24C64              13/FF/FF/FF/FF/A0            OK\n  /SYS/FIM/TEMP                       ADT7461              13/FF/FF/FF/FF/98            OK\n  /SYS/SW_BOARD/FRU                   M24256_BF            14/FF/FF/FF/FF/A8            OK\n  /SYS/SW_BOARD/CPLD                  CPLD                 14/FF/FF/FF/FF/12            OK\n  /SYS/SW_BOARD/CPLD/EFB0             CPLD_EFB             14/FF/FF/FF/FF/B8            OK\n  /SYS/SW_BOARD/CPLD/EFB1             CPLD_EFB             14/FF/FF/FF/FF/BA            OK\n  /SYS/SW_BOARD/SWITCH                PCA9547              14/FF/FF/FF/FF/E0            OK\n  /SYS/BF3_0/CONTROLLER0              BF3                  14/FF/FF/E0/01/3E            Access failed\n  /SYS/BF3_0/GPIO_EXPANDER            BF3                  14/FF/FF/E0/01/82            OK\n  /SYS/BF3_0/FRU                      BF3                  14/FF/FF/E0/01/A0            OK\n  /SYS/BF3_0/EROT                     BF3                  14/FF/FF/E0/01/A4            Access failed\n  /SYS/SW_BOARD/CX7_CTL0              CX7                  14/FF/FF/E0/02/3E            OK\n  /SYS/SW_BOARD/CX7_CTL2              CX7                  14/FF/FF/E0/02/A0            OK\n  /SYS/SW_BOARD/CLOCK_GEN             9FGL0851DKILFT       14/FF/FF/E0/03/D0            OK\n  /SYS/SW_BOARD/PEX_SW1               PEX89048             14/FF/FF/E0/04/D8            OK\n  /SYS/SW_BOARD/PEX_SW2               PEX89048             14/FF/FF/E0/06/D8            OK\n  /SYS/BF3_1/CONTROLLER0              BF3                  14/FF/FF/E0/07/3E            OK\n  /SYS/BF3_1/GPIO_EXPANDER            BF3                  14/FF/FF/E0/07/82            OK\n  /SYS/BF3_1/FRU                      BF3                  14/FF/FF/E0/07/A0            OK\n  /SYS/BF3_1/EROT                     BF3                  14/FF/FF/E0/07/A4            OK\n\nI2C Test Result: FAILED\ndiag>"
+    },
+    {
+      "id": "357698880",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T10:45:28Z",
+      "body": "Raised an RHS ticket : RHS-79458"
+    },
+    {
+      "id": "357757417",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T14:22:50Z",
+      "body": "performed the RHS action plan , now the i2c test passed :\n\nI2C Test Result: PASSED"
+    },
+    {
+      "id": "357757456",
+      "author": "Ouassim Assoufi",
+      "created": "2026-02-10T14:23:42Z",
+      "body": "Since this error happened for the first time Resolving to retest and monitoring the host"
+    }
+  ]
+}

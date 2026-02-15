@@ -1,0 +1,123 @@
+{
+  "ticket": {
+    "id": "55692273",
+    "key": "HPC-108263",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | fdt_compute_tray_gb200_cx8_clustered",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T20:37:41Z",
+    "resolved": "2026-02-11T12:13:20Z",
+    "updated": "2026-02-12T13:39:21Z"
+  },
+  "people": {
+    "assignee": "Arunkumar Duraisamy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2539XNG25A",
+    "rack_serial": null
+  },
+  "labels": [
+    "2540XN81E4",
+    "CPV-",
+    "CPV-Triage",
+    "DFW-CPV",
+    "GPU_GB200-NVL72_S.03",
+    "sk-15ca8e62-e279-45a3-92c7-bccb36954ea1",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-93347",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | fdt_compute_tray_gb200_cx8_clustered"
+    },
+    {
+      "key": "HPC-94718",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | ib_write_bw_stress_gb200"
+    },
+    {
+      "key": "HPC-94791",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-94897",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | ib_write_bw_stress_gb200"
+    },
+    {
+      "key": "HPC-105075",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | fdt_compute_tray_gb200_cx8_clustered"
+    },
+    {
+      "key": "HPC-109773",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | fdt_gpufielddiag_gb200_cx8"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "4h 22m",
+    "time_to_resolve": "15h 35m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nfdt_compute_tray_gb200_cx8_clustered -\n\n(flag) *Debugging fdt_compute_tray_gb200_cx8_clustered*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200-v3.4 |2539XNG25A |10.0.124.20 |2026-02-10T09:33:33Z |2026-02-10T20:25:55Z |dfw5-qfab-2-400 |bldg5-block10-400 |dfw5-q2-b10-t0-r57, dfw5-q2-b10-t0-r58, dfw5-q2-b10-t0-r59, dfw5-q2-b10-t0-r60 |2540XN81E4 |976030aa-5dc4-4f98-b35a-048d286f1c6e |",
+  "comments": [
+    {
+      "id": "357884733",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T20:37:44Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358132178",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T12:08:27Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358132183",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T12:08:39Z",
+      "body": "Host is not reachable"
+    },
+    {
+      "id": "358133201",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T12:09:57Z",
+      "body": "Already performed below steps as per HPC-105075\n\n\n # Deep power-cycle"
+    },
+    {
+      "id": "358133262",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T12:12:22Z",
+      "body": "H/W issue exist as per BMI-301319"
+    },
+    {
+      "id": "358133287",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T12:13:12Z",
+      "body": "*Closure Summary:*\n\n1. What was the issue (1 liner): Faulty CT connection\n2. What we did to address the issue (1 liner - high level): Terminated the CPV instance\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

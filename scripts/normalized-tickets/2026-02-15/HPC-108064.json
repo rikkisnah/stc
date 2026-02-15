@@ -1,0 +1,129 @@
+{
+  "ticket": {
+    "id": "55649998",
+    "key": "HPC-108064",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T01:08:31Z",
+    "resolved": "2026-02-10T05:54:52Z",
+    "updated": "2026-02-11T13:25:35Z"
+  },
+  "people": {
+    "assignee": "Joselet Devasia",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2603XQ101Z, 2602XQ10SM",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8058",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-42b2f7ca-0574-4007-923e-c9d903319c71",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-106310",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-107628",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108187",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109354",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "4h 46m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2603XQ101Z |10.0.11.186 |2026-02-09T22:59:40Z |2026-02-10T01:00:14Z |aga4-qfab-3-400 |bldg4-block49-400 |aga4-q3-b49-t0-r10, aga4-q3-b49-t0-r11, aga4-q3-b49-t0-r12, aga4-q3-b49-t0-r13, aga4-q3-b49-t0-r14, aga4-q3-b49-t0-r15, aga4-q3-b49-t0-r16, aga4-q3-b49-t0-r9 |2603ZA8058 |8056fc7c-8a9a-4ba9-99d6-f77f8bffdc12 |\n|BM.GPU.MI355X.8 |2602XQ10SM |10.0.9.77 |2026-02-09T22:59:40Z |2026-02-10T01:00:14Z |aga4-qfab-3-400 |bldg4-block50-400 |aga4-q3-b50-t0-r10, aga4-q3-b50-t0-r11, aga4-q3-b50-t0-r12, aga4-q3-b50-t0-r13, aga4-q3-b50-t0-r14, aga4-q3-b50-t0-r15, aga4-q3-b50-t0-r16, aga4-q3-b50-t0-r9 |2603ZA8069 |8056fc7c-8a9a-4ba9-99d6-f77f8bffdc12 |",
+  "comments": [
+    {
+      "id": "357545532",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T01:08:33Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357596031",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T04:47:10Z",
+      "body": "Host is in holding pool.\n\nNo OP on HN and TN of the leader.\n\nM:ExtOC1:AGA:ad1:2603XQ101Z>gpu_info\nSerial       Gpu\n2603XQ101Z   H:2603XQ101Z T:2602XQ1074 sled:2602XQ1074\nM:ExtOC1:AGA:ad1:2603XQ101Z>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2603XQ101Z   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b17-t0-r30-compute3   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoac4ikbvjshv4i7gvjcfu3wiafebhdicrg26ubhtmgdqrbq   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   8232   16     NONE   2603ZA8058    2026-02-09T09:18:02+00:00   NONE\nM:ExtOC1:AGA:ad1:2603XQ101Z>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.97s/it]\nSerial\nM:ExtOC1:AGA:ad1:2603XQ101Z>host 2602XQ1074\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.11s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.45s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.33it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.74it/s]\n[INFO 2026-02-10 10:16:32,160] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2602XQ1074>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.90s/it]\nSerial\nM:ExtOC1:AGA:ad1:2602XQ1074>"
+    },
+    {
+      "id": "357596084",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T04:48:42Z",
+      "body": "No OP on the worker node.\n\nM:ExtOC1:AGA:ad1:2602XQ10SM>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2602XQ10SM   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b12-t0-r21-compute8   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacpp6flrkr6n4czj36366ssfkesc2z4wft7m5e5z2mw6la   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   8227   37     NONE   2603ZA8069    2026-02-08T19:22:08+00:00   NONE\nM:ExtOC1:AGA:ad1:2602XQ10SM>gpu_info\nSerial       Gpu\n2602XQ10SM   H:2602XQ10SM T:2602XQ10AK sled:2602XQ10AK\nM:ExtOC1:AGA:ad1:2602XQ10SM>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.86s/it]\nSerial\nM:ExtOC1:AGA:ad1:2602XQ10SM>host 2602XQ10AK\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.14s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.46s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.34it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.70it/s]\n[INFO 2026-02-10 10:18:15,850] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2602XQ10AK>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.77s/it]\nSerial\nM:ExtOC1:AGA:ad1:2602XQ10AK>"
+    },
+    {
+      "id": "357596731",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T04:49:54Z",
+      "body": "ubuntu@bio-2603xq101z:~$ rdma link\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1"
+    },
+    {
+      "id": "357597420",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T04:52:46Z",
+      "body": "No failures in previous run.\n\nubuntu@bio-2603xq101z:~/bio/jobs/results$ cat ib_write_bw_2nodes.out.json\n{\n  \"10.0.9.77\": [\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp112s0\",\n      \"device_name\": \"ionic_4\",\n      \"gpu\": \"0\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp8s0\",\n      \"device_name\": \"ionic_0\",\n      \"gpu\": \"1\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp88s0\",\n      \"device_name\": \"ionic_3\",\n      \"gpu\": \"2\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp33s0\",\n      \"device_name\": \"ionic_2\",\n      \"gpu\": \"3\",\n      \"bw(Gb/s)\": \" 391.49 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp239s0\",\n      \"device_name\": \"ionic_9\",\n      \"gpu\": \"4\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp137s0\",\n      \"device_name\": \"ionic_5\",\n      \"gpu\": \"5\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp215s0\",\n      \"device_name\": \"ionic_8\",\n      \"gpu\": \"6\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.11.186\",\n      \"interface\": \"enp162s0\",\n      \"device_name\": \"ionic_7\",\n      \"gpu\": \"7\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    }\n  ],\n  \"10.0.11.186\": [\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp112s0\",\n      \"device_name\": \"ionic_4\",\n      \"gpu\": \"0\",\n      \"bw(Gb/s)\": \" 390.97 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp8s0\",\n      \"device_name\": \"ionic_0\",\n      \"gpu\": \"1\",\n      \"bw(Gb/s)\": \" 390.96 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp88s0\",\n      \"device_name\": \"ionic_3\",\n      \"gpu\": \"2\",\n      \"bw(Gb/s)\": \" 390.97 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp33s0\",\n      \"device_name\": \"ionic_2\",\n      \"gpu\": \"3\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp239s0\",\n      \"device_name\": \"ionic_9\",\n      \"gpu\": \"4\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp137s0\",\n      \"device_name\": \"ionic_5\",\n      \"gpu\": \"5\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp215s0\",\n      \"device_name\": \"ionic_8\",\n      \"gpu\": \"6\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    },\n    {\n      \"client_hostname\": \"10.0.9.77\",\n      \"interface\": \"enp162s0\",\n      \"device_name\": \"ionic_7\",\n      \"gpu\": \"7\",\n      \"bw(Gb/s)\": \" 391.50 \",\n      \"result\": \"PASS\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "357611610",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T05:42:03Z",
+      "body": "Performed Deep power cycle on the hosts."
+    },
+    {
+      "id": "357614480",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T05:53:19Z",
+      "body": "Manual Health check passed after DPC.\n\nubuntu@bio-2603xq101z:~$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-ib-write-bw -h 10.0.11.186,10.0.9.77\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:ibwrite_bw_results.json auto_discovery_mode:True\nib-write-bw starts at: 2026-02-10 05:31:41.175749\nBuild host objects with rdma ips for each interfaces for the cluster\nBuilding RDMA NIC objects\nLaunching ib_write_bw services on RDMA NIC objects\nSleeping for 10 s  to allow servers to start/settle in\nStarting ib_write_bw clientsresult:  65536      22370778         0.00               391.50              0.746723: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_4', 'interface': 'enp112s0', 'gpu': '0', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22370771         0.00               391.50              0.746723: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_3', 'interface': 'enp88s0', 'gpu': '2', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}result:  65536      22370263         0.00               391.50              0.746724: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_5', 'interface': 'enp137s0', 'gpu': '5', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}result:  65536      22370617         0.00               391.50              0.746718: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_7', 'interface': 'enp162s0', 'gpu': '7', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}result:  65536      22370724         0.00               391.50              0.746722: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_9', 'interface': 'enp239s0', 'gpu': '4', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22370202         0.00               391.50              0.746723: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_0', 'interface': 'enp8s0', 'gpu': '1', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22370745         0.00               391.50              0.746722: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_5', 'interface': 'enp137s0', 'gpu': '5', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22370736         0.00               391.50              0.746722: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_2', 'interface': 'enp33s0', 'gpu': '3', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}result:  65536      22370186         0.00               391.50              0.746722: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_7', 'interface': 'enp162s0', 'gpu': '7', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}result:  65536      22369996         0.00               391.49              0.746716: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.49          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_4', 'interface': 'enp112s0', 'gpu': '0', 'bw(Gb/s)': ' 391.49 ', 'result': 'PASS'}result:  65536      22370173         0.00               391.50              0.746722: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_2', 'interface': 'enp33s0', 'gpu': '3', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22370220         0.00               391.50              0.746723: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_8', 'interface': 'enp215s0', 'gpu': '6', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22369990         0.00               391.49              0.746716: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.49          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_3', 'interface': 'enp88s0', 'gpu': '2', 'bw(Gb/s)': ' 391.49 ', 'result': 'PASS'}result:  65536      22370753         0.00               391.50              0.746722: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_0', 'interface': 'enp8s0', 'gpu': '1', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}result:  65536      22370240         0.00               391.50              0.746724: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.9.77', 'client_hostname': '10.0.11.186', 'device_name': 'ionic_9', 'interface': 'enp239s0', 'gpu': '4', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nresult:  65536      22370767         0.00               391.50              0.746723: msg_tag: BW average[Gb/sec]: index: 3\nTest: bw Value:  391.50          Threshold: 384\n{'hostname': '10.0.11.186', 'client_hostname': '10.0.9.77', 'device_name': 'ionic_8', 'interface': 'enp215s0', 'gpu': '6', 'bw(Gb/s)': ' 391.50 ', 'result': 'PASS'}\nib-write-bw finishes at: 2026-02-10 05:51:44.571133\nSummary of results:\n{'10.0.11.186': [{'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_4',\n                  'gpu': '0',\n                  'interface': 'enp112s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_0',\n                  'gpu': '1',\n                  'interface': 'enp8s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_3',\n                  'gpu': '2',\n                  'interface': 'enp88s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_2',\n                  'gpu': '3',\n                  'interface': 'enp33s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_9',\n                  'gpu': '4',\n                  'interface': 'enp239s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_5',\n                  'gpu': '5',\n                  'interface': 'enp137s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_8',\n                  'gpu': '6',\n                  'interface': 'enp215s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.9.77',\n                  'device_name': 'ionic_7',\n                  'gpu': '7',\n                  'interface': 'enp162s0',\n                  'result': 'PASS'}],\n '10.0.9.77': [{'bw(Gb/s)': ' 391.49 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_4',\n                'gpu': '0',\n                'interface': 'enp112s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.50 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_0',\n                'gpu': '1',\n                'interface': 'enp8s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.49 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_3',\n                'gpu': '2',\n                'interface': 'enp88s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.50 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_2',\n                'gpu': '3',\n                'interface': 'enp33s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.50 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_9',\n                'gpu': '4',\n                'interface': 'enp239s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.50 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_5',\n                'gpu': '5',\n                'interface': 'enp137s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.50 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_8',\n                'gpu': '6',\n                'interface': 'enp215s0',\n                'result': 'PASS'},\n               {'bw(Gb/s)': ' 391.50 ',\n                'client_hostname': '10.0.11.186',\n                'device_name': 'ionic_7',\n                'gpu': '7',\n                'interface': 'enp162s0',\n                'result': 'PASS'}]}"
+    },
+    {
+      "id": "357614494",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T05:53:36Z",
+      "body": "Hence resolving this ticket for re-test."
+    },
+    {
+      "id": "357615144",
+      "author": "Joselet Devasia",
+      "created": "2026-02-10T05:54:37Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): ib_write_bw_pair failed\n2. What we did to address the issue (1 liner - high level): DPC\n3. What was the Root Cause: BW issue\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

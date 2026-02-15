@@ -1,0 +1,81 @@
+{
+  "ticket": {
+    "id": "55684297",
+    "key": "HPC-108235",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "LHR | ad3 | CPV Job Timeout | BM.GPU.B200.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T18:04:36Z",
+    "resolved": "2026-02-11T13:06:01Z",
+    "updated": "2026-02-11T13:06:07Z"
+  },
+  "people": {
+    "assignee": "Sai Krishna Pedagadi",
+    "reporter": "jirasd-gear-compute-vmi-notifier-uk-london-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2603XL12G2",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603XL8058",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V5_X11-2C_32000_S.01",
+    "LHR-CPV",
+    "sk-7d47d6dc-5632-43b7-9a80-9835616bde8e",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2653788",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "2603XL12G2 | Open problems present"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "6h 55m",
+    "time_to_resolve": "19h 1m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.B200.8 |2603XL12G2 |10.0.10.93 |2026-02-10T17:23:01Z |2026-02-10T17:54:55Z |bldg18-block7-400 |bldg18-block7-400 |lhr18-q1-b7-t0-r33, lhr18-q1-b7-t0-r34, lhr18-q1-b7-t0-r35, lhr18-q1-b7-t0-r36, lhr18-q1-b7-t0-r37, lhr18-q1-b7-t0-r38, lhr18-q1-b7-t0-r39, lhr18-q1-b7-t0-r40 |2603XL8058 |c836fc2d-fdbd-489f-b193-df0606644ddf |",
+  "comments": [
+    {
+      "id": "357828026",
+      "author": "jirasd-gear-compute-vmi-notifier-uk-london-1",
+      "created": "2026-02-10T18:04:39Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358143899",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-11T12:53:26Z",
+      "body": "M:ExtOC1:LHR:ad3:2603XL12G2>info_all\nSerial       Model                      Arch     Owner             Pxe_Image         Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                   Pool_Name     Job   Location              Bldg    Room      Rack   Elev   Slot   Rack_Serial   Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                      Mac_Addr   Boot_Mac_Addr       Boot_Ip       Host_Ip   Ilom_Ip          Ilom_Host_Info                                                 Rot                                                                       Ilom_Serial   Smartnic_Serials          Smartnic_Ips                                                                                                                                        Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\n2603XL12G2   GPU_V5_X11-2C_32000_S.01   X11-2C   compute-lhr-ad3   ol8-uek7-x86_64   lhr18-c1-b9-t0-r15-compute3   compute   ALLOCATED   False       ocid1.instance.oc1.uk-london-1.anwgiljt7rhxvoacngy3v5z2kbdnp72hhzzy53hcmq6pnrfmmbdq2yl2ak3a   broken_pool         OC1:uk-london-1:ad3   lhr18   lhr18.2   5141   21     NONE   2603XL8058    2026-02-07T05:58:08+00:00   NONE   sk-3c11e048-2dac-42a5-bf1c-7450f81fb86f   sk-7d47d6dc-5632-43b7-9a80-9835616bde8e   lhr18-c1-b9-t0-r15-compute3   NONE       f0:fb:7f:37:e4:70   169.254.0.1   NONE      10.164.235.206   lhr18-c1-b9-t0-r15-compute3-ilom-net-mgt.net.ad3.uk-london-1   Type: Rot3 Rot3Dns: lhr18-c1-b9-t0-r15-compute3-rot.net.ad3.uk-london-1   NONE          FPF2539023E,FPF25390294   10.16.142.11(lhr18-c1-b9-t0-r15-compute3-wic2-port1.net.ad3.uk-london-1) 10.16.142.9(lhr18-c1-b9-t0-r15-compute3-wic1-port1.net.ad3.uk-london-1)    NONE                   NONE               H:2603XL12G2 T:2520XKU00C sled:2521XKU01X\n\nM:ExtOC1:LHR:ad3:2603XL12G2>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.11s/it]\nSerial       Datetime                    Location                      Subsystem     Resource              Uuid                                   Serial                Part_No   Probability   Reference\n2603XL12G2\n             2026-02-10 17:35:10+00:00   PCIE1000 (IOU 10 PCIE 1000)   PCI Devices   /SYS/IOU10/PCIE1000   55754b2b-8983-4efd-b00d-9d2a9305fd2b   N/A                   8216272   80            http://support.oracle.com/msg/SPINTEL-8005-WJ\n             2026-02-10 17:35:10+00:00   MB (Motherboard)              System        /SYS/MB               55754b2b-8983-4efd-b00d-9d2a9305fd2b   465136V+2552VF00KL    8223093   5             http://support.oracle.com/msg/SPINTEL-8005-WJ\n             2026-02-10 17:35:10+00:00   P1 (CPU 1)                    Processors    /SYS/MB/P1            ddbef85b-bcbc-c7c4-c608-b2ee5b42e5fc   F2-33D0E78693D5D5C2   SRN55     15            http://support.oracle.com/msg/SPINTEL-8005-WJ\n             2026-02-10 17:35:10+00:00   P1 (CPU 1)                    Processors    /SYS/MB/P1            55754b2b-8983-4efd-b00d-9d2a9305fd2b   F2-33D0E78693D5D5C2   SRN55     15            http://support.oracle.com/msg/SPINTEL-8005-WJ\n             2026-02-10 17:35:10+00:00   PCIE500 (IOU 5 PCIE 500)      PCI Devices   /SYS/IOU5/PCIE500     ddbef85b-bcbc-c7c4-c608-b2ee5b42e5fc   N/A                   8216272   80            http://support.oracle.com/msg/SPINTEL-8005-WJ\n             2026-02-10 17:35:10+00:00   MB (Motherboard)              System        /SYS/MB               ddbef85b-bcbc-c7c4-c608-b2ee5b42e5fc   465136V+2552VF00KL    8223093   5             http://support.oracle.com/msg/SPINTEL-8005-WJ\n             2026-02-10 17:35:23+00:00   /System (Host System)         System        /SYS                  c94cd189-35f1-c32d-c0ea-ac3247a45343   2603XL12G2            8223088   100           http://support.oracle.com/msg/SPENV-8001-6U\n\nM:ExtOC1:LHR:ad3:2603XL12G2>gpu_info\nSerial       Gpu\n2603XL12G2   H:2603XL12G2 T:2520XKU00C sled:2521XKU01X\n\nM:ExtOC1:LHR:ad3:2603XL12G2>host 2520XKU00C\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.01s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.07s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.88it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.89it/s]\n[INFO 2026-02-11 18:22:50,727] Successfully loaded extended information about 1 hosts\n\nM:ExtOC1:LHR:ad3:2520XKU00C>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.86s/it]\nSerial       Datetime                    Location                    Subsystem     Resource            Uuid                                   Serial   Part_No           Probability   Reference\n2520XKU00C\n             2026-02-07 23:00:32+00:00   IOB/PCIE16 (PCIE Card 16)   PCI Devices   /SYS/IOB/PCIE16     64187cb9-001d-4cac-8a71-ecc4a4fd1040   N/A      8216956           100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\n             2026-02-07 23:00:33+00:00   IOB/PCIE17 (PCIE Card 17)   PCI Devices   /SYS/IOB/PCIE17     cbdb10c4-70f5-c1d2-b036-ca6f554472f6   N/A      8219495/8219505   100           http://support.oracle.com/msg/SPGXTAIL-8000-E6\n             2026-02-07 23:00:36+00:00   IOB/PCIE_SW7 (Container)    System        /SYS/IOB/PCIE_SW7   54b492cb-2bd0-e0da-8622-8d4f0e1e6aa5   N/A      N/A               100           http://support.oracle.com/msg/SPGXTAIL-8000-G9\nM:ExtOC1:LHR:ad3:2520XKU00C>"
+    },
+    {
+      "id": "358146763",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-11T13:05:42Z",
+      "body": "Found open problems on HN and TN, Created DO-2653788"
+    },
+    {
+      "id": "358146767",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-11T13:05:49Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Found open problems on HN and TN, Created DO-2653788\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "ticket": {
+    "id": "55658429",
+    "key": "HPC-108116",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T05:53:50Z",
+    "resolved": "2026-02-10T08:08:34Z",
+    "updated": "2026-02-10T08:08:39Z"
+  },
+  "people": {
+    "assignee": "Sachin Janawade Janawade",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ102W",
+    "rack_serial": null
+  },
+  "labels": [
+    "2602ZA8063",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-ad3b0d4a-582a-4b85-bd6c-5405dcd828ce",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79425",
+      "relation": "is blocked by",
+      "status": "Closed",
+      "summary": "[Standard] |  AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "DO-2649855",
+      "relation": "is blocked by",
+      "status": "Pending Part(s)",
+      "summary": "AGA4.2 | 5303 U29 | 2552XQ102W | AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-103138",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104011",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-104366",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-106135",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-106753",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "2h 14m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ102W |10.0.9.169 |2026-02-10T05:13:45Z |2026-02-10T05:47:26Z |aga4-qfab-3-400 |bldg4-block37-400 |aga4-q3-b37-t0-r10, aga4-q3-b37-t0-r11, aga4-q3-b37-t0-r12, aga4-q3-b37-t0-r13, aga4-q3-b37-t0-r14, aga4-q3-b37-t0-r15, aga4-q3-b37-t0-r16, aga4-q3-b37-t0-r9 |2602ZA8063 |b1a911d7-db31-4e83-9aaa-d392b8f1f770 |",
+  "comments": [
+    {
+      "id": "357614867",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T05:53:53Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357616280",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T05:59:46Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357618648",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:08:09Z",
+      "body": "No open problems"
+    },
+    {
+      "id": "357619506",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:10:06Z",
+      "body": "Installation path: /opt/amd/agfhcAGFHC Installation Succeeded!+ '[' e6-2c.128.3072.mi355x.gpu == gb200-v3.144.960.gpu ']'\n+ '[' e6-2c.128.3072.mi355x.gpu == gb300.144.960.gpu ']'\n+ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\n+ EXIT_CODE=1\n+ '[' 1 -ne 0 ']'\n+ echo 'initial_setup failed'\ninitial_setup failed"
+    },
+    {
+      "id": "357619527",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:11:12Z",
+      "body": "ubuntu@bio-2552xq102w:~/bio/jobs/results$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[INFO]  Standalone mode:\nERROR - NIC  (0000:05:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:05:00.0 information\nERROR - NIC  (0000:1e:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:1e:00.0 information\nERROR - NIC  (0000:55:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:55:00.0 information\nERROR - NIC  (0000:6d:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:6d:00.0 information\nERROR - NIC  (0000:86:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:86:00.0 information\nERROR - NIC  (0000:9f:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:9f:00.0 information\nERROR - NIC  (0000:ec:00.0) : ERROR - Invalid card handle\nERROR - Failed to get NIC 0000:ec:00.0 information\nERROR - No AMD NICs detected\nCommand '['sudo', 'nicctl', 'show', 'card', '--detail']' returned non-zero exit status 255.\nCannot run command sudo nicctl show card --detail\nls: cannot access '/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0/0000:04:10.0/0000:05:00.0/0000:06:01.0/0000:08:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0/0000:04:10.0/0000:05:00.0/0000:06:01.0/0000:08:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0/0000:04:10.0/0000:05:00.0/0000:06:01.0/0000:08:00.0/infiniband\nls: cannot access '/sys/devices/pci0000:19/0000:19:01.1/0000:1a:00.0/0000:1b:00.0/0000:1c:00.0/0000:1d:10.0/0000:1e:00.0/0000:1f:01.0/0000:21:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:19/0000:19:01.1/0000:1a:00.0/0000:1b:00.0/0000:1c:00.0/0000:1d:10.0/0000:1e:00.0/0000:1f:01.0/0000:21:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:19/0000:19:01.1/0000:1a:00.0/0000:1b:00.0/0000:1c:00.0/0000:1d:10.0/0000:1e:00.0/0000:1f:01.0/0000:21:00.0/infiniband\nls: cannot access '/sys/devices/pci0000:50/0000:50:01.1/0000:51:00.0/0000:52:00.0/0000:53:00.0/0000:54:10.0/0000:55:00.0/0000:56:01.0/0000:58:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:50/0000:50:01.1/0000:51:00.0/0000:52:00.0/0000:53:00.0/0000:54:10.0/0000:55:00.0/0000:56:01.0/0000:58:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:50/0000:50:01.1/0000:51:00.0/0000:52:00.0/0000:53:00.0/0000:54:10.0/0000:55:00.0/0000:56:01.0/0000:58:00.0/infiniband\nls: cannot access '/sys/devices/pci0000:68/0000:68:01.1/0000:69:00.0/0000:6a:00.0/0000:6b:00.0/0000:6c:10.0/0000:6d:00.0/0000:6e:01.0/0000:70:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:68/0000:68:01.1/0000:69:00.0/0000:6a:00.0/0000:6b:00.0/0000:6c:10.0/0000:6d:00.0/0000:6e:01.0/0000:70:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:68/0000:68:01.1/0000:69:00.0/0000:6a:00.0/0000:6b:00.0/0000:6c:10.0/0000:6d:00.0/0000:6e:01.0/0000:70:00.0/infiniband\nls: cannot access '/sys/devices/pci0000:81/0000:81:01.1/0000:82:00.0/0000:83:00.0/0000:84:00.0/0000:85:10.0/0000:86:00.0/0000:87:01.0/0000:89:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:81/0000:81:01.1/0000:82:00.0/0000:83:00.0/0000:84:00.0/0000:85:10.0/0000:86:00.0/0000:87:01.0/0000:89:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:81/0000:81:01.1/0000:82:00.0/0000:83:00.0/0000:84:00.0/0000:85:10.0/0000:86:00.0/0000:87:01.0/0000:89:00.0/infiniband\nls: cannot access '/sys/devices/pci0000:9a/0000:9a:01.1/0000:9b:00.0/0000:9c:00.0/0000:9d:00.0/0000:9e:10.0/0000:9f:00.0/0000:a0:01.0/0000:a2:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:9a/0000:9a:01.1/0000:9b:00.0/0000:9c:00.0/0000:9d:00.0/0000:9e:10.0/0000:9f:00.0/0000:a0:01.0/0000:a2:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:9a/0000:9a:01.1/0000:9b:00.0/0000:9c:00.0/0000:9d:00.0/0000:9e:10.0/0000:9f:00.0/0000:a0:01.0/0000:a2:00.0/infiniband\ncat: '/sys/bus/pci/devices/0000:d7:00.0/numa_node': No such file or directory\nCommand '['cat', '/sys/bus/pci/devices/0000:d7:00.0/numa_node']' returned non-zero exit status 1.\nCannot run command cat /sys/bus/pci/devices/0000:d7:00.0/numa_node\nls: cannot access '/sys/bus/pci/devices/0000:d7:00.0/net': No such file or directory\nCommand '['ls', '/sys/bus/pci/devices/0000:d7:00.0/net']' returned non-zero exit status 2.\nCannot run command ls /sys/bus/pci/devices/0000:d7:00.0/net\nls: cannot access '/infiniband': No such file or directory\nCommand '['ls', '/infiniband']' returned non-zero exit status 2.\nCannot run command ls /infiniband\nTraceback (most recent call last):\n  File \"oci_dr_hpc.py\", line 760, in <module>\n  File \"click/core.py\", line 1128, in __call__\n  File \"click/core.py\", line 1053, in main\n  File \"click/core.py\", line 1659, in invoke\n  File \"click/core.py\", line 1395, in invoke\n  File \"click/core.py\", line 754, in invoke\n  File \"oci_dr_hpc.py\", line 632, in run_autodiscovery\n  File \"autodiscovery/auto_discover.py\", line 134, in discover_standalone\n  File \"autodiscovery/discovery_helpers.py\", line 143, in get_all_cfg_for_rdma_nics\n  File \"autodiscovery/discovery_helpers.py\", line 290, in _get_ip_from_interface\nValueError: You must specify a valid interface name.\n[416502] Failed to execute script 'oci_dr_hpc' due to unhandled exception!\nubuntu@bio-2552xq102w:~/bio/jobs/results$"
+    },
+    {
+      "id": "357620548",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:15:25Z",
+      "body": "Performed the soft reset"
+    },
+    {
+      "id": "357629975",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:49:34Z",
+      "body": "Manual test is failing with below errors\n\nubuntu@bio-2552xq102w:~/bio/jobs/results$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[INFO]  Standalone mode:\nls: cannot access '/sys/bus/pci/devices/0000:08:00.0/net': No such file or directory\nCommand '['ls', '/sys/bus/pci/devices/0000:08:00.0/net']' returned non-zero exit status 2.\nCannot run command ls /sys/bus/pci/devices/0000:08:00.0/net\nls: cannot access '/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:08.0/0000:08:00.0/infiniband': No such file or directory\nCommand '['ls', '/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:08.0/0000:08:00.0/infiniband']' returned non-zero exit status 2.\nCannot run command ls /sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:08.0/0000:08:00.0/infiniband\nTraceback (most recent call last):\n  File \"oci_dr_hpc.py\", line 760, in <module>\n  File \"click/core.py\", line 1128, in __call__\n  File \"click/core.py\", line 1053, in main\n  File \"click/core.py\", line 1659, in invoke\n  File \"click/core.py\", line 1395, in invoke\n  File \"click/core.py\", line 754, in invoke\n  File \"oci_dr_hpc.py\", line 632, in run_autodiscovery\n  File \"autodiscovery/auto_discover.py\", line 134, in discover_standalone\n  File \"autodiscovery/discovery_helpers.py\", line 143, in get_all_cfg_for_rdma_nics\n  File \"autodiscovery/discovery_helpers.py\", line 290, in _get_ip_from_interface\nValueError: You must specify a valid interface name.\n[7489] Failed to execute script 'oci_dr_hpc' due to unhandled exception!\nubuntu@bio-2552xq102w:~/bio/jobs/results$"
+    },
+    {
+      "id": "357630739",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:51:40Z",
+      "body": "RHS-79425"
+    },
+    {
+      "id": "357653675",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T08:08:34Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Cut a DO-2649855\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "ticket": {
+    "id": "55666971",
+    "key": "HPC-108176",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Automated RMA request for host 2543XN10FF",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T11:23:00Z",
+    "resolved": "2026-02-10T14:00:31Z",
+    "updated": "2026-02-12T01:09:33Z"
+  },
+  "people": {
+    "assignee": "Sachin Janawade Janawade",
+    "reporter": "Vladimir Saint Louis",
+    "watchers": 3
+  },
+  "location": {
+    "region": "DFW",
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2543XN10FF",
+    "rack_serial": null
+  },
+  "labels": [
+    "GB300_RMA_TO_TRAY_SWAP",
+    "TRS_RMA_POLICY",
+    "TRS_RMA_TRACKING",
+    "chs_RMA_request",
+    "de-retrigger-feb11"
+  ],
+  "links": [
+    {
+      "key": "HPC-107505",
+      "relation": "clones",
+      "status": "Resolved",
+      "summary": "Automated RMA request for host 2539XNG417"
+    },
+    {
+      "key": "DO-2649978",
+      "relation": "Problem(s) to Incident(s)",
+      "status": "Resolved",
+      "summary": "[Pending HPC-108176] DFW | 2929 | 2543XN10FF | mlxlink_check | Cable is unplugged"
+    },
+    {
+      "key": "DO-2648079",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW5.1 | 2929 U28 | 2543XN10FF | DFW | 2929 |  | mlxlink_check | Cable is unplugged"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "2h 37m"
+  },
+  "description": "*Please initiate Donor Tray Replacement Request - RHS Verified* RHS-70314",
+  "comments": [
+    {
+      "id": "357708348",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T11:23:04Z",
+      "body": "Ocean has created an incident for this issue. (P1-4A47CD9611F8A89AE0634313000ADA5C)"
+    },
+    {
+      "id": "357750099",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T13:57:54Z",
+      "body": "M:ExtOC1:DFW:ad1:2543XN10FF>info\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State    Halt_Mode   Instance_Id   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2543XN10FF   GPU_GB300_NVL72_S.01   GB300   compute-dfw-ad1   NONE        dfw5-c1-b16-t0-r17-compute9   compute   REPAIR   False       NONE          broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   2929   28     NONE   2542XN80K1    2026-02-10T13:06:53+00:00   NONE\nM:ExtOC1:DFW:ad1:2543XN10FF>sp_presence\nChecking SP presence: 100% |  1/1 [00:09<00:00,  9.16s/it]\nSerial       Sp_Is_Present   Version    Build_Number\n2543XN10FF   Yes             5.1.5.96   166246\n\nM:ExtOC1:DFW:ad1:2543XN10FF>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:01<00:00,  1.21s/it]\nSerial   Sk_Id   Is_Supported_By_Trcp   Trs_Case\nNONE     NONE    None                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=None\nM:ExtOC1:DFW:ad1:2543XN10FF>"
+    },
+    {
+      "id": "357751536",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T14:02:22Z",
+      "body": "Initiated the RMA\n\nM:ExtOC1:DFW:ad1:2543XN10FF>trs_add_case {\"serial\":\"2543XN10FF\",\"type\":\"TERMINATING\",\"source\":\"HOPS\",\"ticket_data\":{\"summary\":\"GB300 Manually triggered RMA process\",\"description\":\"testdescription\",\"project\":\"GPUPR\",\"severity\":\"2\",\"labels\":[\"GB300_COMPUTE_TRAY_REPLACEMENT\"]}}\n[INFO 2026-02-10 19:32:00,516] Creating case with <class 'triage_repair_service.models.case_detail.CaseDetail'>\ncaseId               tr-6cbf5aea-3b66-4dc9-98e4-642535ce8886\ncreated              2026-02-10 14:02:00.245000+00:00\nis_active            True\nis_supported_by_trcp True\nserial               2543XN10FF\nsk_id                sk-ea0f3b36-4f91-45c7-90d0-6ba7389827e2\nstate                OPEN\nstate_sla_in_seconds 6000\nTypeError: unsupported format string passed to NoneType.__format__To enable full traceback, run the following command: set debug trueM:ExtOC1:DFW:ad1:2543XN10FF>"
+    }
+  ]
+}

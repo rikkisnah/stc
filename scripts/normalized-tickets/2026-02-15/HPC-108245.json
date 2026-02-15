@@ -1,0 +1,141 @@
+{
+  "ticket": {
+    "id": "55686700",
+    "key": "HPC-108245",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T18:44:50Z",
+    "resolved": "2026-02-13T15:10:40Z",
+    "updated": "2026-02-13T15:10:40Z"
+  },
+  "people": {
+    "assignee": "Mohammed Es-sousy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2603XQ103F",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8050",
+    "CPV-",
+    "CPV-Triage",
+    "FYV-CPV",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-c5ef7c29-92ba-41fc-b30f-9e54dafa62b3",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-80027",
+      "relation": "is blocked by",
+      "status": "Closed",
+      "summary": "[Standard] |  FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "6h 15m",
+    "time_to_resolve": "68h 25m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : agfhc_level_1_to_5\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nagfhc_level_1_to_5 -\n\n(flag) *Debugging agfhc_level_1_to_5*\n\nSee the following runbooks for more information:\nas AMD GPU test: Identifying AMD Commands\\n\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2603XQ103F |10.0.112.1 |2026-02-10T16:53:00Z |2026-02-10T18:41:54Z |fyv4-qfab-2-400 |bldg4-block19-400 |fyv4-q2-b19-t0-r17, fyv4-q2-b19-t0-r18, fyv4-q2-b19-t0-r19, fyv4-q2-b19-t0-r20, fyv4-q2-b19-t0-r21, fyv4-q2-b19-t0-r22, fyv4-q2-b19-t0-r23, fyv4-q2-b19-t0-r24 |2604ZA8050 |071477cb-f4a0-4cd4-9af0-2f5889e486ef |",
+  "comments": [
+    {
+      "id": "357844200",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-10T18:44:56Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358156060",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:40:18Z",
+      "body": "[opc@cpv-host-fyv ~]$ cpv state overview-count | grep 2603XQ103F\n2026/02/11 13:40:06 Reading state file state.json\n2026/02/11 13:40:06 Object Store client initialized with host url https://objectstorage.ap-kulai-1.oraclecloud.com\n2603XQ103F       10.0.112.1    BM.GPU.MI355X.8    Holding                   N/A        sk-c5ef7c29-92ba-41fc-b30f-9e54dafa62b3  bldg4-block19-400  1 HPC-108245               0                        agfhc_level_1_to_5                   Failed      2603XQ103F       2026-02-10T16:53:00Z  2026-02-10T18:41:54Z\n[opc@cpv-host-fyv ~]$"
+    },
+    {
+      "id": "358156663",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:42:36Z",
+      "body": "No open problems\n\nM:ExtOC1:FYV:ad1:2603XQ103F>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.06s/it]\n{}\nM:ExtOC1:FYV:ad1:2603XQ103F>gpu_info\n[   {\n    \"serial\": \"2603XQ103F\",\n    \"gpu\": \"H:2603XQ103F T:2603XQ10FD sled:2603XQ10FD\"\n}]\nM:ExtOC1:FYV:ad1:2603XQ103F>host 2603XQ10FD\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00,  1.23it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.43s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  1.96it/s]\nLoading extended information on 1 hosts:   0%|                                                   | 0/1 00:00<?, ?it/sLoading extended information on 1 hosts: 100%\n[INFO 2026-02-11 14:40:49,670] Successfully loaded extended information about 1 hosts\nM:ExtOC1:FYV:ad1:2603XQ10FD>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.92s/it]\n{}\nM:ExtOC1:FYV:ad1:2603XQ10FD>"
+    },
+    {
+      "id": "358157012",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:43:49Z",
+      "body": "From logs, test fail due to\n\nubuntu@bio-2603xq103f:~$ sudo find /root/agfhc/logs -name error.json -exec grep -E \"recipe|primary_status\" {} \\;\n      \"primary_status_name\": \"TEST_GFX_GEMM_COMMAND_FAIL\",\n      \"primary_status_value\": 15005,\n      \"primary_status_name\": \"TEST_GFX_GEMM_COMMAND_FAIL\",\n      \"primary_status_value\": 15005,\n      \"primary_status_description\": \"Error while executing GEMM command\",\n    \"recipes\": [\n      \"/opt/amd/agfhc/recipes/mi355x/all_lvl5.yml\""
+    },
+    {
+      "id": "358157028",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:44:21Z",
+      "body": "Metrics\n\nubuntu@bio-2603xq103f:~$ amd-smi metric -x\nGPU: 0\n    XGMI_ERR: N/AGPU: 1\n    XGMI_ERR: N/AGPU: 2\n    XGMI_ERR: N/AGPU: 3\n    XGMI_ERR: N/AGPU: 4\n    XGMI_ERR: N/AGPU: 5\n    XGMI_ERR: N/AGPU: 6\n    XGMI_ERR: N/AGPU: 7\n    XGMI_ERR: N/A"
+    },
+    {
+      "id": "358157055",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:45:26Z",
+      "body": "xgmi\n\nubuntu@bio-2603xq103f:~$ amd-smi xgmiLINK METRIC TABLE:\n       bdf           bit_rate  max_bandwidth  link_type  0000:0d:00.0 0000:26:00.0 0000:5d:00.0 0000:75:00.0 0000:8e:00.0 0000:a7:00.0 0000:dc:00.0 0000:f4:00.0\nGPU0   0000:0d:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    N/A          30.25 TB     30.24 TB     30.34 TB     30.28 TB     30.22 TB     30.34 TB     30.23 TB\n Write                                                   N/A          30.22 TB     30.30 TB     30.34 TB     30.26 TB     30.14 TB     30.31 TB     30.38 TB\nGPU1   0000:26:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.21 TB     N/A          30.06 TB     30.23 TB     30.33 TB     30.23 TB     30.25 TB     30.35 TB\n Write                                                   30.22 TB     N/A          30.11 TB     30.23 TB     30.30 TB     30.29 TB     30.30 TB     30.22 TB\nGPU2   0000:5d:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.28 TB     30.16 TB     N/A          30.21 TB     30.29 TB     30.28 TB     30.25 TB     30.31 TB\n Write                                                   30.29 TB     30.11 TB     N/A          30.28 TB     30.28 TB     30.28 TB     30.34 TB     30.34 TB\nGPU3   0000:75:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.34 TB     30.24 TB     30.28 TB     N/A          30.29 TB     30.25 TB     30.20 TB     30.23 TB\n Write                                                   30.32 TB     30.24 TB     30.26 TB     N/A          30.18 TB     30.21 TB     30.12 TB     30.35 TB\nGPU4   0000:8e:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.25 TB     30.30 TB     30.28 TB     30.15 TB     N/A          30.25 TB     30.25 TB     30.20 TB\n Write                                                   30.26 TB     30.33 TB     30.29 TB     30.31 TB     N/A          30.29 TB     30.25 TB     30.12 TB\nGPU5   0000:a7:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.10 TB     30.31 TB     30.27 TB     30.22 TB     30.29 TB     N/A          30.28 TB     30.23 TB\n Write                                                   30.13 TB     30.23 TB     30.29 TB     30.25 TB     30.26 TB     N/A          30.32 TB     30.33 TB\nGPU6   0000:dc:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.31 TB     30.30 TB     30.34 TB     30.04 TB     30.25 TB     30.32 TB     N/A          30.23 TB\n Write                                                   30.33 TB     30.29 TB     30.25 TB     30.13 TB     30.25 TB     30.33 TB     N/A          30.28 TB\nGPU7   0000:f4:00.0  38 Gb/s   608 Gb/s       XGMI\n Read                                                    30.38 TB     30.22 TB     30.34 TB     30.35 TB     30.08 TB     30.33 TB     30.28 TB     N/A\n Write                                                   30.29 TB     30.32 TB     30.34 TB     30.23 TB     30.12 TB     30.23 TB     30.21 TB     N/AXGMI LINK STATUS:\n       bdf           link_status\nGPU0   0000:0d:00.0  X  U  U  U  U  U  U  U\nGPU1   0000:26:00.0  X  U  U  U  U  U  U  U\nGPU2   0000:5d:00.0  X  U  U  U  U  U  U  U\nGPU3   0000:75:00.0  X  U  U  U  U  U  U  U\nGPU4   0000:8e:00.0  X  U  U  U  U  U  U  U\nGPU5   0000:a7:00.0  X  U  U  U  U  U  U  U\nGPU6   0000:dc:00.0  X  U  U  U  U  U  U  U\nGPU7   0000:f4:00.0  X  U  U  U  U  U  U  U"
+    },
+    {
+      "id": "358157076",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:45:45Z",
+      "body": "Drivers\n\nubuntu@bio-2603xq103f:~$ amd-smi static --driver --csv | grep -oP \"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\"\n6.14.14\n6.14.14\n6.14.14\n6.14.14\n6.14.14\n6.14.14\n6.14.14\n6.14.14"
+    },
+    {
+      "id": "358157084",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:46:01Z",
+      "body": "No bad pages\n\nubuntu@bio-2603xq103f:~$ amd-smi bad-pages\nGPU: 0\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 1\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 2\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 3\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 4\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 5\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 6\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found.GPU: 7\n    RETIRED: No bad pages found.\n    PENDING: No bad pages found.\n    UN_RES: No bad pages found."
+    },
+    {
+      "id": "358157089",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:46:20Z",
+      "body": "amd-smi output\n\nubuntu@bio-2603xq103f:~$ amd-smi\n+------------------------------------------------------------------------------+\n| AMD-SMI 26.0.0+37d158ab      amdgpu version: 6.14.14  ROCm version: 7.0.1    |\n| Platform: Linux Baremetal                                                    |\n|-------------------------------------+----------------------------------------|\n| BDF                        GPU-Name | Mem-Uti   Temp   UEC       Power-Usage |\n| GPU  HIP-ID  OAM-ID  Partition-Mode | GFX-Uti    Fan               Mem-Usage |\n|=====================================+========================================|\n| 0000:0d:00.0    AMD Instinct MI355X | 0 %      56 \u00b0C   0          245/1400 W |\n|   0       1       7        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:26:00.0    AMD Instinct MI355X | 0 %      55 \u00b0C   0          253/1400 W |\n|   1       3       5        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:5d:00.0    AMD Instinct MI355X | 0 %      56 \u00b0C   0          242/1400 W |\n|   2       2       6        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:75:00.0    AMD Instinct MI355X | 0 %      53 \u00b0C   0          256/1400 W |\n|   3       0       2        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:8e:00.0    AMD Instinct MI355X | 0 %      53 \u00b0C   0          241/1400 W |\n|   4       5       0        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:a7:00.0    AMD Instinct MI355X | 0 %      53 \u00b0C   0          248/1400 W |\n|   5       7       4        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:dc:00.0    AMD Instinct MI355X | 0 %      58 \u00b0C   0          255/1400 W |\n|   6       6       1        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n|-------------------------------------+----------------------------------------|\n| 0000:f4:00.0    AMD Instinct MI355X | 0 %      56 \u00b0C   0          245/1400 W |\n|   7       4       3        SPX/NPS1 | 0 %        N/A           283/294896 MB |\n+-------------------------------------+----------------------------------------+\n+------------------------------------------------------------------------------+\n| Processes:                                                                   |\n|  GPU        PID  Process Name          GTT_MEM  VRAM_MEM  MEM_USAGE     CU % |\n|==============================================================================|\n|  No running processes found                                                  |\n+------------------------------------------------------------------------------+"
+    },
+    {
+      "id": "358157099",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:46:36Z",
+      "body": "rdma links\n\nubuntu@bio-2603xq103f:~$ rdma l\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1"
+    },
+    {
+      "id": "358158588",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:53:34Z",
+      "body": "Running the manual test\n\nubuntu@bio-2603xq103f:~$ tmux new-session -d '/opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-agfhc -t recipe -n all_lvl5 > agfhc.log'\nubuntu@bio-2603xq103f:~$ tmux ls\n0: 1 windows (created Wed Feb 11 13:53:01 2026)\nubuntu@bio-2603xq103f:~$"
+    },
+    {
+      "id": "358455341",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-12T08:16:34Z",
+      "body": "Manual run fail\n\nubuntu@bio-2603xq103f:~$ cat agfhc.log\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:agfhc_results.json auto_discovery_mode:True standalone_mode:True\nAGFHC starts at: 2026-02-11 13:53:04.369666\nAGFHC finishes at: 2026-02-11 15:40:02.402236, Elapsed time: 6418.03 s\n{'localhost': {'gfx_maxpower-1-1': {'arguments': {'bw_workload': True,\n                                                  'cp_workload': False,\n                                                  'device': 'all',\n                                                  'log_interval': 5000,\n                                                  'module': 'iet',\n                                                  'name': 'iet-stress-1400W-true',\n                                                  'nt_loads': True,\n                                                  'parallel': True,\n                                                  'ramp_interval': 1000,\n                                                  'sample_interval': 1000,\n                                                  'wg_count': 256},\n                                    'device_ids': [],\n                                    'extended_results': [{'action_subject': 'PROGRAM',\n                                                          'dmesg': [],\n                                                          'extended_info': ['Contact AMD service representative'],\n                                                          'ras': [],\n                                                          'service_info': {},\n                                                          'status_codes': {'TEST_GFX_GEMM_COMMAND_FAIL': 15005},\n                                                          'suggested_action': 'Contact AMD',\n                                                          'test': ['[RESULT] [ 77993.803632] [iet-stress-1400W-true] [GPU:: 17010] Power(W) 270.000000',\n                                                                   '[RESULT] [ 77993.803671] [iet-stress-1400W-true] [GPU:: 24656] Power(W) 277.000000',\n                                                                   '[RESULT] [ 77993.804004] [iet-stress-1400W-true] [GPU:: 29394] Power(W) 277.000000',\n                                                                   '[RESULT] [ 77993.804021] [iet-stress-1400W-true] [GPU:: 23660] Power(W) 277.000000',\n                                                                   'Segmentation fault (core dumped)',\n                                                                   'stdbuf -oL /opt/rocm/bin/rvs -c '\n                                                                   '/root/agfhc/logs/agfhc_20260211-135304/tests/gfx_maxpower-1-1/rvs.conf: 139']}],\n                                    'iteration': 1,\n                                    'primary_action_subject': 'PROGRAM',\n                                    'primary_extended_info': 'Not covered in Service Action Guide',\n                                    'primary_service_info': {},\n                                    'primary_status_description': 'Error while executing GEMM command',\n                                    'primary_status_name': 'TEST_GFX_GEMM_COMMAND_FAIL',\n                                    'primary_status_value': 15005,\n                                    'primary_suggested_action': 'Contact AMD',\n                                    'run': 1,\n                                    'state': 'failed',\n                                    'target_source': 'platform',\n                                    'test': 'gfx_maxpower',\n                                    'time_end': '20260211-141250',\n                                    'time_start': '20260211-141249',\n                                    'time_total': '00:00:00',\n                                    'title_tag': ''},\n               'overall_summary': {'failed_instances': ['gfx_maxpower-1-1'],\n                                   'recommended_action': 'Check actions on specific test failures',\n                                   'status_code_numeric': 13,\n                                   'status_code_text': 'PROG_FAIL_IN_TEST_EXECUTION',\n                                   'time_end': '20260211-154002',\n                                   'time_start': '20260211-135304',\n                                   'time_total': '01:46:57',\n                                   'total_executed_tests': 31,\n                                   'total_failed': 1,\n                                   'total_passed': 30,\n                                   'total_queued': 0,\n                                   'total_selected_tests': 31,\n                                   'total_skipped': 0},\n               'program_args': {'console_log_level': 'PRINT',\n                                'device_ids': ['GPU-00', 'GPU-01', 'GPU-02', 'GPU-03', 'GPU-04', 'GPU-05', 'GPU-06', 'GPU-07'],\n                                'disable_bad_pages_checks': False,\n                                'disable_cper_checks': False,\n                                'disable_dmesg_checks': False,\n                                'disable_env_update': True,\n                                'disable_hsio_gather': False,\n                                'disable_numa_control': False,\n                                'disable_ras_checks': False,\n                                'disable_sysmon': False,\n                                'disable_timeout': False,\n                                'error_json_version': '1.11',\n                                'error_to_console': False,\n                                'exit_on_failure': False,\n                                'ignore_cper': False,\n                                'ignore_dmesg': False,\n                                'ignore_performance': False,\n                                'ignore_ras': False,\n                                'inject_sw_errors': False,\n                                'journal_log_level': 'INFO',\n                                'known_dmesg_only': False,\n                                'output_dir': '/root/agfhc/logs',\n                                'prefix': 'agfhc',\n                                'recipes': ['/opt/amd/agfhc/recipes/mi355x/all_lvl5.yml'],\n                                'results_json_version': '3.15',\n                                'set_timeout_mult': -1,\n                                'simple_output': False,\n                                'suffix': '20260211-135304',\n                                'sysmon_interval': 5,\n                                'tar_logs': False,\n                                'tests': ['dma_bidi_peak',\n                                          'gfx_fp8ri',\n                                          'roctwitch',\n                                          'dma_d2h_peak',\n                                          'hbm_s16_ds',\n                                          'hbm_remix2',\n                                          'sprites',\n                                          'xgmi_a2a',\n                                          'hbm_s16',\n                                          'gfx_bf8ri',\n                                          'edp',\n                                          'pcie_h2d_peak',\n                                          'pcie_d2h_peak',\n                                          'gfx_fp16tf',\n                                          'gfx_bf16ri',\n                                          'gfx_bf16tf',\n                                          'minihpl',\n                                          'gfx_fp16ri',\n                                          'athub',\n                                          'gfx_bf8tf',\n                                          'gfx_fp8tf',\n                                          'gfx_maxpower',\n                                          'pcie_link_status',\n                                          'dma_h2d_peak',\n                                          'hbm_bw',\n                                          'hbm_ds_ntd',\n                                          'hbm_ds',\n                                          'mall'],\n                                'update_interval': 1},\n               'status': 'FAIL - Check /root/agfhc/logs/agfhc_20260211-135304 folder for logs.'}}\nubuntu@bio-2603xq103f:~$"
+    },
+    {
+      "id": "358456028",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-12T08:18:52Z",
+      "body": "Raise to RHS-80027"
+    },
+    {
+      "id": "358462665",
+      "author": "Mihai Valcu",
+      "created": "2026-02-12T08:49:42Z",
+      "body": "[~mohammed.es-sousy@oracle.com]\n\ngfx_maxpower subtest passes when running it manually\nSegmentation fault (core dumped) suggests there is a software issue ( most probably within the agfhc version )\nFor MI355X, AMD recommended to use agfhc v1.28.2\n\nPlease update agfhc version and retest."
+    }
+  ]
+}

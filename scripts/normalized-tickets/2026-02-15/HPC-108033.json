@@ -1,0 +1,141 @@
+{
+  "ticket": {
+    "id": "55649282",
+    "key": "HPC-108033",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T00:38:26Z",
+    "resolved": "2026-02-10T01:38:12Z",
+    "updated": "2026-02-10T01:38:12Z"
+  },
+  "people": {
+    "assignee": "Javier Del Pino",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2601XQ100Z",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8022",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-426765bf-0929-4533-8a04-170178176e76",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-103016",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104219",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104291",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104717",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "21m",
+    "time_to_resolve": "59m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : initial_setup\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2601XQ100Z |10.0.10.164 |2026-02-10T00:29:22Z |2026-02-10T00:29:33Z |aga4-qfab-3-400 |bldg4-block37-400 |aga4-q3-b37-t0-r1, aga4-q3-b37-t0-r2, aga4-q3-b37-t0-r3, aga4-q3-b37-t0-r4, aga4-q3-b37-t0-r5, aga4-q3-b37-t0-r6, aga4-q3-b37-t0-r7, aga4-q3-b37-t0-r8 |2552ZA8022 |8d1625fb-240e-4827-93d7-07dbcd315ca8 |",
+  "comments": [
+    {
+      "id": "357535588",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T00:38:27Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357546709",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:13:26Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357546740",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:14:28Z",
+      "body": "no open problems\n\nM:ExtOC1:AGA:ad1:2601XQ100Z>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.27s/it]\nSerial\nM:ExtOC1:AGA:ad1:2601XQ100Z>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2601XQ100Z   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b14-t0-r25-compute6   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacnxcw2k4utnisntykn4k3flm6ftg6g4ohjt52nbmg2ofq   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   4803   29     NONE   2552ZA8022    2026-02-04T21:58:31+00:00   NONE\nM:ExtOC1:AGA:ad1:2601XQ100Z>gpu_info\nSerial       Gpu\n2601XQ100Z   H:2601XQ100Z T:2552XK1081 sled:2552XK1081\nM:ExtOC1:AGA:ad1:2601XQ100Z>instance_info\nHost         Pool_Name     Instance_Id\n2601XQ100Z   broken_pool   ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacnxcw2k4utnisntykn4k3flm6ftg6g4ohjt52nbmg2ofq\nM:ExtOC1:AGA:ad1:2601XQ100Z>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  1.34it/s]\nSerial       State       Tracking_State   Job\n2601XQ100Z   ALLOCATED   NONE             NONE\nM:ExtOC1:AGA:ad1:2601XQ100Z>\n\nM:ExtOC1:AGA:ad1:2552XK1081>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.20s/it]\nSerial\nM:ExtOC1:AGA:ad1:2552XK1081>"
+    },
+    {
+      "id": "357546750",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:14:55Z",
+      "body": "[opc@cpv-host-aga ~]$ cpv state overview -t host -k  2601XQ100Z\n2026/02/10 01:14:43 Reading state file state.json\n2026/02/10 01:14:43 Object Store client initialized with host url https://objectstorage.us-saltlake-2.oraclecloud.com\nOverview for type=host, key=2601XQ100Z\nOverview for Hosts\nOverview for Host \"2601XQ100Z\"\nCurrent Time: 2026-02-10T01:14:43Z\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 RESOURCESTATE \u2502 HOST       \u2502 IP          \u2502 TESTSTATE \u2502 TEST                                 \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Holding       \u2502 2601XQ100Z \u2502 10.0.10.164 \u2502 Failed    \u2502 initial_setup (1)                    \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 gpuburn_short (10)                   \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 agfhc_level_1_to_5 (40)              \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 agfhc_hbm_8h (45)                    \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 sunvts_burnin (140)                  \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Failed    \u2502 cable_validation (170)               \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 rccl_allreduce_perf_single (180)     \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Waiting   \u2502 wait_for_wpa (190)                   \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Waiting   \u2502 health_check (200)                   \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 miniHPL (210)                        \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Waiting   \u2502 ib_write_bw_pair (220)               \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 iperf_pair (290)                     \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 rccl_all_reduce_perf_2_hosts (300)   \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 rccl_allgather_perf_2_hosts (301)    \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 rccl_alltoall_perf_2_hosts (302)     \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 rccl_allbroadcast_perf_2_hosts (303) \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "357546780",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:15:59Z",
+      "body": "Subsequent comment:\n * Progress so far:\nno open problems\n * Next Steps:\ncheck logs, run basic commands, run manual test"
+    },
+    {
+      "id": "357546792",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:16:28Z",
+      "body": "ubuntu@bio-2601xq100z:~$ uptime\n 01:15:07 up 1 day,  2:18,  1 user,  load average: 32.40, 32.35, 32.37\nubuntu@bio-2601xq100z:~$ cd bio/jobs/results/\nubuntu@bio-2601xq100z:~/bio/jobs/results$\n\nubuntu@bio-2601xq100z:~/bio/jobs/results$ cat results.json\n{\n  \"jobId\": \"8d1625fb-240e-4827-93d7-07dbcd315ca8\",\n  \"testName\": \"initial_setup\",\n  \"testState\": \"Failed\",\n  \"endTime\": \"2026-02-10T00:29:33.307578452+00:00\",\n  \"details\": {},\n  \"failureDetails\": {\n    \"errorCode\": \"\",\n    \"logs\": {},\n    \"uploadedFiles\": {},\n    \"deferredTickets\": {}\n  }\n}\nubuntu@bio-2601xq100z:~/bio/jobs/results$"
+    },
+    {
+      "id": "357547729",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:17:02Z",
+      "body": "+ echo 'Removing iperf3 on ubuntu...'\nRemoving iperf3 on ubuntu...\n+ sudo apt-get update -y\nReading package lists...\nE: Could not get lock /var/lib/apt/lists/lock. It is held by process 1042420 (apt-get)\nE: Unable to lock directory /var/lib/apt/lists/\n+ '[' 100 -ne 0 ']'\n+ echo 'Failed to apt-get update on ubuntu'\n+ writeResults Failed\n+ testState=Failed"
+    },
+    {
+      "id": "357548153",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:20:18Z",
+      "body": "apt config issue\n\nubuntu@bio-2601xq100z:~$ sudo apt-get update\nGet:1 file:/opt/amd/ainic/deb-repo ./ InRelease\nIgn:1 file:/opt/amd/ainic/deb-repo ./ InRelease\nGet:2 file:/opt/amd/ainic/deb-repo ./ Release\nIgn:2 file:/opt/amd/ainic/deb-repo ./ Release\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages\nIgn:3 file:/opt/amd/ainic/deb-repo ./ Packages\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages\nIgn:3 file:/opt/amd/ainic/deb-repo ./ Packages\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages\nIgn:3 file:/opt/amd/ainic/deb-repo ./ Packages\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages [2155 B]\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nErr:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\n  File not found - /opt/amd/ainic/deb-repo/./en.gz (2: No such file or directory)\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nErr:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\n  File not found - /opt/amd/ainic/deb-repo/./en.lz4 (2: No such file or directory)\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nErr:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\n  File not found - /opt/amd/ainic/deb-repo/./en.zst (2: No such file or directory)\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nHit:5 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy InRelease\nHit:6 https://repo.radeon.com/amdgpu/30.10.1/ubuntu jammy InRelease\nGet:7 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]\nHit:8 https://repo.radeon.com/rocm/apt/7.0.1 jammy InRelease\nHit:9 https://repo.radeon.com/graphics/7.0.1/ubuntu jammy InRelease\nGet:10 https://apt.kitware.com/ubuntu jammy InRelease [15.5 kB]\nGet:11 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]\nErr:10 https://apt.kitware.com/ubuntu jammy InRelease\n  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 65ADECD7A7039392\n0% [Waiting for headers]\nGet:12 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]\nFetched 400 kB in 31s (12.9 kB/s)\nReading package lists... Done\nW: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://apt.kitware.com/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 65ADECD7A7039392\nW: Failed to fetch https://apt.kitware.com/ubuntu/dists/jammy/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 65ADECD7A7039392\nW: Some index files failed to download. They have been ignored, or old ones used instead.\nubuntu@bio-2601xq100z:~$"
+    },
+    {
+      "id": "357548898",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:23:09Z",
+      "body": "apt config fixed\n\nubuntu@bio-2601xq100z:~$ sudo apt-get update\nGet:1 file:/opt/amd/ainic/deb-repo ./ InRelease\nIgn:1 file:/opt/amd/ainic/deb-repo ./ InRelease\nGet:2 file:/opt/amd/ainic/deb-repo ./ Release\nIgn:2 file:/opt/amd/ainic/deb-repo ./ Release\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages\nIgn:3 file:/opt/amd/ainic/deb-repo ./ Packages\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages\nIgn:3 file:/opt/amd/ainic/deb-repo ./ Packages\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages\nIgn:3 file:/opt/amd/ainic/deb-repo ./ Packages\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nGet:3 file:/opt/amd/ainic/deb-repo ./ Packages [2155 B]\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nErr:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\n  File not found - /opt/amd/ainic/deb-repo/./en.gz (2: No such file or directory)\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nErr:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\n  File not found - /opt/amd/ainic/deb-repo/./en.lz4 (2: No such file or directory)\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nErr:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\n  File not found - /opt/amd/ainic/deb-repo/./en.zst (2: No such file or directory)\nGet:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nIgn:4 file:/opt/amd/ainic/deb-repo ./ Translation-en\nHit:5 https://repo.radeon.com/amdgpu/30.10.1/ubuntu jammy InRelease\nHit:6 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy InRelease\nHit:7 http://security.ubuntu.com/ubuntu jammy-security InRelease\nHit:8 https://repo.radeon.com/rocm/apt/7.0.1 jammy InRelease\nHit:9 https://repo.radeon.com/graphics/7.0.1/ubuntu jammy InRelease\nGet:10 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]\nGet:11 https://apt.kitware.com/ubuntu jammy InRelease [15.5 kB]\nGet:12 https://apt.kitware.com/ubuntu jammy/main amd64 Packages [89.1 kB]\nGet:13 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]\nFetched 360 kB in 1s (348 kB/s)\nReading package lists... Done\nubuntu@bio-2601xq100z:~$"
+    },
+    {
+      "id": "357551741",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:35:39Z",
+      "body": "manual test completed successfully\n\n+ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-autodiscovery\n+ EXIT_CODE=0\n+ '[' 0 -ne 0 ']'\n+ echo 'initial_setup succeeded'"
+    },
+    {
+      "id": "357552634",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T01:38:12Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): initial_setup\n2. What we did to address the issue (1 liner - high level): fixed APT GPG key\n3. What was the Root Cause: APT configuration\n4. Runbook was helpful - N / NA\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

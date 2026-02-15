@@ -1,0 +1,92 @@
+{
+  "ticket": {
+    "id": "55649749",
+    "key": "HPC-108040",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AMS | 6617 | 2548XL11G9 | 2550XR106N | FDT level2 failure",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T00:55:09Z",
+    "resolved": "2026-02-10T19:03:48Z",
+    "updated": "2026-02-12T01:50:51Z"
+  },
+  "people": {
+    "assignee": null,
+    "reporter": "jirasd-gear-compute-vmi-notifier-eu-amsterdam-1",
+    "watchers": 1
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2548XL11G9",
+    "rack_serial": null
+  },
+  "labels": [
+    "2548XL11G9",
+    "2552XL801M",
+    "AMS-CPV",
+    "CPV-FDT-level2",
+    "CPV-NaN",
+    "CPV-Triage",
+    "GPU_V5_X11-2C_32000_S.02",
+    "ams4-qfab-3-400",
+    "bldg4-block11-400",
+    "de-retrigger-feb11",
+    "sk-a8783356-e21b-4942-aed2-fffc763f04fe",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-105537",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | dcgm_level_4"
+    },
+    {
+      "key": "HPC-105823",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | dcgm_level_4"
+    },
+    {
+      "key": "HPC-105891",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | dcgm_level_4"
+    },
+    {
+      "key": "HPC-108514",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | fdt_level2"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 8m",
+    "time_to_resolve": "18h 8m"
+  },
+  "description": "FDT level 2 failure.\nVerify the GPU errors in the job log.\nCreate a RHS ticket with the FDT logs to request an action plan to address the failures.\nIf necessary, open a DO ticket with the RHS action plan for repair. Then soft-reset the instance before resolving this ticket to re-test.\n\nDGX-000000000170 | inventory | inventory | | System | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000170 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_5 | ERROR: get Raw Physical BER: N/A, threshold: 1.0\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_5 | ERROR: get Effective Physical Errors: N/A, threshold: inf\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_5 | ERROR: get Effective Physical BER: N/A, threshold: 1.0\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_5 | ERROR: get Symbol Errors: N/A, threshold: 99999999\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_5 | ERROR: get Symbol BER: N/A, threshold: 1.0\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_4 | ERROR: get Raw Physical BER: N/A, threshold: 1.0\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_4 | ERROR: get Effective Physical Errors: N/A, threshold: inf\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_4 | ERROR: get Effective Physical BER: N/A, threshold: 1.0\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_4 | ERROR: get Symbol Errors: N/A, threshold: 99999999\nDGX-000000000129 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_4 | ERROR: get Symbol BER: N/A, threshold: 1.0\nDGX-000000000170 | connectivity | connectivity | | GPU, PCIE, Nvlink, I2C | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_0 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_0 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_1 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_1 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_10 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_10 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_11 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_11 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_12 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_12 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_13 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_13 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_14 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_14 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_16 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_16 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_17 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_17 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_18 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_18 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_19 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_19 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_20 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_20 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_21 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_21 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_7 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_7 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_8 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_8 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_9 | ERROR: get Cable Speed: 400G, expect_cable_speed: IB-XDR\nDGX-000000000129 | CX8IBconnectivity | connectivity | | GPU, PCIE, Nvlink, I2C | mlx5_9 | ERROR: get Cable Width: 4x, expect_cable_width: 2x\nDGX-000000000170 | nvlink | nvlink | | NVLink | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000170 | ThetaBgStart | theta | | ConnectX, NVSwitch | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000170 | EyeGradeBgStart | cxeyegrade | | ConnectX, NVSwitch | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000170 | ibstressmad | ibstressmad | | Infiniband | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\nDGX-000000000001 | EyeGradeBgStop | cxeyegrade | | ConnectX, NVSwitch | | Failed\nDGX-000000000001 | ThetaBgStop | theta | | ConnectX, NVSwitch | | Failed\nDGX-000000000009 | ibstress | ibstress | | Infiniband | | mlx5_5(0000:1d:00.3) in LinkLayerMode.IB mode incompatible with mlx5_8(0000:2f:00.1) in LinkLayerMode.ETH mode. Check if IB cards are configured correctly.\nDGX-000000000170 | power | power | | | | Failed to start fabric manager. Command failed: systemctl restart nvidia-fabricmanager\n\nFDT level 2 log files:\nhttps://objectstorage.eu-amsterdam-1.oraclecloud.com/p/LRx5P6E2Zp7x057kGZIbkRA3mEg_cr3jPvSN-fAqdL1F0v-LchS8MR5hW9RDD03T/n/hpc/b/Debug/o/2548XL11G9/2548XL11G9-nvidia-bug-report-2026-02-09-231838.log.gz\nhttps://objectstorage.eu-amsterdam-1.oraclecloud.com/p/LRx5P6E2Zp7x057kGZIbkRA3mEg_cr3jPvSN-fAqdL1F0v-LchS8MR5hW9RDD03T/n/hpc/b/Debug/o/fdt_level2/5cdbf611-aefa-4ea1-bdf0-895e2a9ed7a7/logs-20260209-235214.tgz\nhttps://hpc.objectstorage.eu-amsterdam-1.oci.customer-oci.com/p/uaoYlph0vQ58rY4OOkFk2j2iXIqC8MzwGcrmWf3XClOBbYKuFKKAPwcRCs3qJuCV/n/hpc/b/JobResults/o/raw/fdt_level2_5cdbf611-aefa-4ea1-bdf0-895e2a9ed7a7_AllResults.tgz.gz\n\n*Job ID:* 5cdbf611-aefa-4ea1-bdf0-895e2a9ed7a7\n*Test Name:* fdt_level2\n*Asset ID:* 2548XL11G9\n*Need help?:* Submit a ticket to the HPC queue\n\nHealth Check Result JSON. Check the Uploaded Log Bundle for Downloadable Log File:\n\nTicket created after rules engine evaluated rules for test : fdt_level2\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours",
+  "comments": [
+    {
+      "id": "357540215",
+      "author": "jirasd-gear-compute-vmi-notifier-eu-amsterdam-1",
+      "created": "2026-02-10T00:55:11Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357850769",
+      "author": "Lazaro Morales Pino",
+      "created": "2026-02-10T19:03:48Z",
+      "body": "Closing to retest."
+    }
+  ]
+}

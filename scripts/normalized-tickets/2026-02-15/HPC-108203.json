@@ -1,0 +1,165 @@
+{
+  "ticket": {
+    "id": "55679656",
+    "key": "HPC-108203",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T15:54:18Z",
+    "resolved": "2026-02-10T22:51:19Z",
+    "updated": "2026-02-11T10:25:27Z"
+  },
+  "people": {
+    "assignee": "Mario Guzman",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2602XQ11JR, 2543XK10EM",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8003",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-332a9f92-9722-42b1-9a3d-19c2cd62d193",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-105910",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | agfhc_hbm_8h"
+    },
+    {
+      "key": "HPC-106145",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-106334",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-106845",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-107333",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-107340",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108016",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108106",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108156",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108759",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108980",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "4h 48m",
+    "time_to_resolve": "6h 57m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2602XQ11JR |10.0.15.83 |2026-02-10T13:47:41Z |2026-02-10T15:50:51Z |aga4-qfab-3-400 |bldg4-block51-400 |aga4-q3-b51-t0-r1, aga4-q3-b51-t0-r2, aga4-q3-b51-t0-r3, aga4-q3-b51-t0-r4, aga4-q3-b51-t0-r5, aga4-q3-b51-t0-r6, aga4-q3-b51-t0-r7, aga4-q3-b51-t0-r8 |2604ZA8003 |6918c41f-560c-4a30-b1fc-0b02c4fcbc12 |\n|BM.GPU.MI355X.8 |2543XK10EM |10.0.11.76 |2026-02-10T13:47:41Z |2026-02-10T15:50:51Z |aga4-qfab-3-400 |bldg4-block55-400 |aga4-q3-b55-t0-r10, aga4-q3-b55-t0-r11, aga4-q3-b55-t0-r12, aga4-q3-b55-t0-r13, aga4-q3-b55-t0-r14, aga4-q3-b55-t0-r15, aga4-q3-b55-t0-r16, aga4-q3-b55-t0-r9 |2551ZA8045 |6918c41f-560c-4a30-b1fc-0b02c4fcbc12 |",
+  "comments": [
+    {
+      "id": "357783385",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T15:54:21Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357912874",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:48:48Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357913632",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:49:51Z",
+      "body": "OP found\n\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2543XK10EM   H:2543XK10EM T:2543XK101J sled:2543XK101J\n2602XQ11JR   H:2602XQ11JR T:2602XQ10C5 sled:2602XQ10C5\nM:ExtOC1:AGA:ad1:2 Hosts>host 2602XQ11JR 2543XK10EM 2602XQ10C5 2543XK101J\nQuerying Storekeeper: 100% |  4/4 [00:00<00:00,  4.72it/s]\nQuerying Hops: 100% |  1/1 [00:00<00:00,  1.92it/s]\nLoading 4 Hosts from Hops: 100% |  4/4 [00:01<00:00,  3.61it/s]e\nLoading extended information on 4 hosts: 100% |  4/4 [00:00<00:00,  9.64it/s]\n[INFO 2026-02-10 15:49:24,250] Successfully loaded extended information about 4 hosts\nM:ExtOC1:AGA:ad1:4 Hosts>open_problems\nChecking open problems: 100% |  4/4 [00:03<00:00,  1.19it/s]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2543XK101J\n             2026-02-10 06:11:47+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   3d339144-e467-61b9-db61-a75dd95c4a3a   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\n2602XQ10C5\n             2026-02-09 12:37:12+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   263c90df-63d9-e428-9f7d-a5c9401c9a12   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:4 Hosts>clear_open_problems\n[INFO 2026-02-10 15:49:33,105] This will run commands: clear_open_problems\n[INFO 2026-02-10 15:49:33,106]  on 4 hosts in 1 ADs.\n[INFO 2026-02-10 15:49:33,106] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nClearing Open Problems: 100% |  4/4 [00:02<00:00,  1.58it/s]\nSerial       Success\n2543XK101J   True\n2543XK10EM   True\n2602XQ10C5   True\n2602XQ11JR   True\nM:ExtOC1:AGA:ad1:4 Hosts>open_problems\nChecking open problems: 100% |  4/4 [00:02<00:00,  1.72it/s]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2543XK101J\n             2026-02-10 06:11:47+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   3d339144-e467-61b9-db61-a75dd95c4a3a   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\n2602XQ10C5\n             2026-02-09 12:37:12+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   263c90df-63d9-e428-9f7d-a5c9401c9a12   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:4 Hosts>"
+    },
+    {
+      "id": "357914432",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:51:52Z",
+      "body": "Neither TN shows OP on fault management shell\n\nHostname: ORACLESP-2543XK101J-> start /SP/faultmgmt/shell\nAre you sure you want to start /SP/faultmgmt/shell (y/n)? yfaultmgmtsp> fmadm faulty -e\nNo faults found\nfaultmgmtsp> fmadm faulty\nNo faults found\nfaultmgmtsp>\nfaultmgmtsp> [INFO 2026-02-10 15:51:07,417] Escape sequence found exiting.\n[INFO 2026-02-10 15:51:07,417] Closing websocket writer. Bytes Sent:53\n[INFO 2026-02-10 15:51:11,690] Closing websocket reader. Bytes Received:499\n[INFO 2026-02-10 15:51:11,777] Closing websockets\nM:ExtOC1:AGA:ad1:2543XK101J>\n\nHostname: ORACLESP-2602XQ10C5-> start /SP/faultmgmt/shell\nAre you sure you want to start /SP/faultmgmt/shell (y/n)? yfaultmgmtsp> fmadm faulty\nNo faults found\nfaultmgmtsp> fmadm faulty -e\nNo faults found\nfaultmgmtsp>\nfaultmgmtsp> [INFO 2026-02-10 15:51:09,791] Escape sequence found exiting.\n[INFO 2026-02-10 15:51:09,791] Closing websocket writer. Bytes Sent:51\n[INFO 2026-02-10 15:51:14,406] Closing websocket reader. Bytes Received:490\n[INFO 2026-02-10 15:51:14,572] Closing websockets\nM:ExtOC1:AGA:ad1:2602XQ10C5>"
+    },
+    {
+      "id": "357920071",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T22:03:12Z",
+      "body": "enp137s0 (192.168.39.83) is not receiving connections\n\nubuntu@bio-2543xk10em:~$ time rping -ca 192.168.39.83 -d\ncreated cm_id 0x56439c083920\ncma_event type RDMA_CM_EVENT_ADDR_RESOLVED cma_id 0x56439c083920 (parent)\ncma_event type RDMA_CM_EVENT_ROUTE_RESOLVED cma_id 0x56439c083920 (parent)\nrdma_resolve_addr - rdma_resolve_route successful\ncreated pd 0x56439c0840c0\ncreated channel 0x56439c079630\ncreated cq 0x56439c084100\ncreated qp 0x56439c084410\nrping_setup_buffers called on cb 0x56439c079830\nallocated & registered buffers...\ncq_thread started.\n^Creal    2m0.654s\nuser    0m0.000s\nsys     0m0.008s\nubuntu@bio-2543xk10em:~$\n\nSame for enp162s0 (192.168.47.83)\n\nubuntu@bio-2543xk10em:~$ time rping -ca 192.168.47.83 -d\ncreated cm_id 0x556069a70920\ncma_event type RDMA_CM_EVENT_ADDR_RESOLVED cma_id 0x556069a70920 (parent)\ncma_event type RDMA_CM_EVENT_ROUTE_RESOLVED cma_id 0x556069a70920 (parent)\nrdma_resolve_addr - rdma_resolve_route successful\ncreated pd 0x556069a710c0\ncreated channel 0x556069a66630\ncreated cq 0x556069a71100\ncreated qp 0x556069a71410\nrping_setup_buffers called on cb 0x556069a66830\nallocated & registered buffers...\ncq_thread started.\n^Creal    4m24.442s\nuser    0m0.000s\nsys     0m0.007s\nubuntu@bio-2543xk10em:~$"
+    },
+    {
+      "id": "357922404",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T22:09:51Z",
+      "body": "Connection from 2543xk10em to 2602xq11jr shows no issues so far\n\nDPC in progress\n\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec stop -f -script /SYS\n[INFO 2026-02-10 16:09:27,749] This will run commands: stop -f -script /SYS\n[INFO 2026-02-10 16:09:27,750]  on 2 hosts in 1 ADs.\n[INFO 2026-02-10 16:09:27,750] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:07<00:00,  3.74s/it]\nSerial       Command                Response                    Error\n2543XK10EM\n             stop -f -script /SYS   Stopping /SYS immediately   NONE\n2602XQ11JR\n             stop -f -script /SYS   Stopping /SYS immediately   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec set -script /system deep_power_cycle=true\n[INFO 2026-02-10 16:09:40,983] This will run commands: set -script /system deep_power_cycle=true\n[INFO 2026-02-10 16:09:40,984]  on 2 hosts in 1 ADs.\n[INFO 2026-02-10 16:09:40,984] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:04<00:00,  2.36s/it]\nSerial       Command                                     Response                                   Error\n2543XK10EM\n             set -script /system deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\n2602XQ11JR\n             set -script /system deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "357935834",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T22:50:34Z",
+      "body": "Test passed\n\nubuntu@bio-2602xq11jr:~$ jq . /home/ubuntu/bio/jobs/results/ib_write_bw_2nodes.out | egrep -i \"pass|fail\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\nubuntu@bio-2602xq11jr:~$"
+    },
+    {
+      "id": "357935844",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T22:50:50Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): job timeout\n2. What we did to address the issue (1 liner - high level): test RDMA with rping, DPC and retest\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

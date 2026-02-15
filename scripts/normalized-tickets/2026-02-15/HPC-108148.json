@@ -1,0 +1,124 @@
+{
+  "ticket": {
+    "id": "55662954",
+    "key": "HPC-108148",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_gpufielddiag",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T08:38:54Z",
+    "resolved": "2026-02-10T15:41:26Z",
+    "updated": "2026-02-13T20:48:25Z"
+  },
+  "people": {
+    "assignee": "Daniel Copado",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2411XLG0BR",
+    "rack_serial": null
+  },
+  "labels": [
+    "2412XL80B6",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "de-retrigger-feb11",
+    "sk-37afa83e-6b1d-4079-aa72-7f53a79c9292",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-29174",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | nccl_all_reduce_perf_2_hosts | 1b5e37c2-6f8b-4320-a3ea-77791c32a594"
+    },
+    {
+      "key": "HPC-99251",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 9206 | 2411XLG0BR | 2444XKU00C | FDT level2 failure"
+    },
+    {
+      "key": "HPC-99526",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-101261",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_ist"
+    },
+    {
+      "key": "HPC-108034",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_ist_2"
+    },
+    {
+      "key": "HPC-110288",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | hpl_benchmark"
+    },
+    {
+      "key": "HPC-110271",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | hpl_benchmark"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "7h 2m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nfdt_gpufielddiag -\n\n(flag) *Debugging fdt_gpufielddiag*\n\nSee the following runbooks for more information:\n1. How to Triage Nvidia FDT Failures\n2. How to Triage FDT Level 1\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2411XLG0BR | |2026-02-09T21:38:31Z |2026-02-10T08:30:47Z |aga1-qfab-3-200 |bldg1-block86-200 |aga1-q3-b86-t0-r1, aga1-q3-b86-t0-r2, aga1-q3-b86-t0-r3, aga1-q3-b86-t0-r4, aga1-q3-b86-t0-r5, aga1-q3-b86-t0-r6, aga1-q3-b86-t0-r7, aga1-q3-b86-t0-r8 |2412XL80B6 |c4258b3c-53c2-4a68-b80f-196213711d1a |",
+  "comments": [
+    {
+      "id": "357662975",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T08:38:55Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357772920",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:13:07Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357779156",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:38:44Z",
+      "body": "host in repair:\n\nM:ExtOC1:AGA:ad1:2411XLG0BR>info\nSerial       Model                   Arch     Owner             Pxe_Image         Hops_Hostname                Role      State    Halt_Mode   Instance_Id   Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2411XLG0BR   GPU_V4_X10-2C_RS_S.01   X10-2C   compute-aga-ad1   ol7-uek6-x86_64   aga1-c1-b86-t0-r6-compute2   compute   REPAIR   False       NONE          holding           OC1:us-saltlake-2:ad1   aga1   aga1.1   9206   18     NONE   2412XL80B6    2026-02-09T23:47:00+00:00   NONE"
+    },
+    {
+      "id": "357779184",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:40:04Z",
+      "body": "[opc@cpv-host-aga ~]$ cpv state overview -t host -k 2411XLG0BR\n2026/02/10 15:38:11 Reading state file state.json\n2026/02/10 15:38:11 Object Store client initialized with host url https://objectstorage.us-saltlake-2.oraclecloud.com\nOverview for type=host, key=2411XLG0BR\nOverview for Hosts\nOverview for Host \"2411XLG0BR\"\nCurrent Time: 2026-02-10T15:38:11Z\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 RESOURCESTATE \u2502 HOST       \u2502 IP \u2502 TESTSTATE \u2502 TEST                             \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Launch        \u2502 2411XLG0BR \u2502    \u2502 Waiting   \u2502 initial_setup (1)                \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Success   \u2502 fdt_level2 (5)                   \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Success   \u2502 gpuburn_short (10)               \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Success   \u2502 fdt_ist (30)                     \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Failed    \u2502 fdt_ist_2 (40)                   \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Success   \u2502 fdt_ist_3 (50)                   \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Success   \u2502 gpu_bandwidth (150)              \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Failed    \u2502 fdt_gpufielddiag (155)           \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 hpl_benchmark (160)              \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 tinymeg_short (165)              \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 cable_validation (170)           \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 nccl_allreduce_perf_single (170) \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 wait_for_wpa (180)               \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 health_check (190)               \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 tinymeg_1500_iterations (230)    \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 sunvts_burnin (240)              \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 dcgm_level_4 (250)               \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 iperf_pair (290)                 \u2502\n\u2502               \u2502            \u2502    \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502    \u2502 Waiting   \u2502 cable_stress (470)               \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
+    },
+    {
+      "id": "357780212",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:41:26Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): fdt_gpufielddiag\n2. What we did to address the issue (1 liner - high level): N/A\n3. What was the Root Cause: host in repair, without instance\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

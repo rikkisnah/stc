@@ -1,0 +1,118 @@
+{
+  "ticket": {
+    "id": "55662951",
+    "key": "HPC-108145",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T08:38:50Z",
+    "resolved": "2026-02-10T13:32:51Z",
+    "updated": "2026-02-12T01:52:28Z"
+  },
+  "people": {
+    "assignee": "Sachin Janawade Janawade",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2545XK104K, 2602XQ11J2",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8036",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-6c0d9ec6-0d22-4f01-bbd1-b4f94350cc55",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-106053",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8221 | 2602XQ11J2 | 2602XQ10DY | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-107330",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108210",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108237",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "4h 54m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2545XK104K |10.0.11.185 |2026-02-10T06:35:22Z |2026-02-10T08:37:39Z |aga4-qfab-3-400 |bldg4-block41-400 |aga4-q3-b41-t0-r10, aga4-q3-b41-t0-r11, aga4-q3-b41-t0-r12, aga4-q3-b41-t0-r13, aga4-q3-b41-t0-r14, aga4-q3-b41-t0-r15, aga4-q3-b41-t0-r16, aga4-q3-b41-t0-r9 |2552ZA8036 |0a5c4291-166b-4027-9012-c882993284a0 |\n|BM.GPU.MI355X.8 |2602XQ11J2 |10.0.12.22 |2026-02-10T06:35:22Z |2026-02-10T08:37:39Z |aga4-qfab-3-400 |bldg4-block50-400 |aga4-q3-b50-t0-r10, aga4-q3-b50-t0-r11, aga4-q3-b50-t0-r12, aga4-q3-b50-t0-r13, aga4-q3-b50-t0-r14, aga4-q3-b50-t0-r15, aga4-q3-b50-t0-r16, aga4-q3-b50-t0-r9 |2603ZA8080 |0a5c4291-166b-4027-9012-c882993284a0 |",
+  "comments": [
+    {
+      "id": "357663006",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T08:38:52Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357675808",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T09:22:00Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357733991",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T13:01:01Z",
+      "body": "No open problems present"
+    },
+    {
+      "id": "357741952",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T13:26:16Z",
+      "body": "ubuntu@bio-2545xk104k:~/bio/jobs/results$ ls block.json  detailed_logs  dr_hpc_ib_write_bw.out  execute.sh.log  host.json  ib_write_bw_hostlist_2nodes.txt  island.json  job.json  tor.json\nubuntu@bio-2545xk104k:~/bio/jobs/results$ cat dr_hpc_ib_write_bw.out  ubuntu@bio-2545xk104k:~/bio/jobs/results$"
+    },
+    {
+      "id": "357741957",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T13:26:28Z",
+      "body": "ubuntu@bio-2545xk104k:~/bio/jobs/results$ for x in $(cat host.json | jq -r .[].ipAddress); do echo $x; ssh $x rdma link; done\n10.0.11.185\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\n10.0.12.22\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\nubuntu@bio-2545xk104k:~/bio/jobs/results$"
+    },
+    {
+      "id": "357743662",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T13:32:30Z",
+      "body": "Manual test is passing after DPC\n\nib-write-bw finishes at: 2026-02-10 13:27:52.000123\nSummary of results:\n{'10.0.11.185': [{'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_4',\n                  'gpu': '0',\n                  'interface': 'enp112s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 390.94 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_0',\n                  'gpu': '1',\n                  'interface': 'enp8s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.49 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_3',\n                  'gpu': '2',\n                  'interface': 'enp88s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_2',\n                  'gpu': '3',\n                  'interface': 'enp33s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_9',\n                  'gpu': '4',\n                  'interface': 'enp239s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_5',\n                  'gpu': '5',\n                  'interface': 'enp137s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 390.94 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_8',\n                  'gpu': '6',\n                  'interface': 'enp215s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.12.22',\n                  'device_name': 'ionic_7',\n                  'gpu': '7',\n                  'interface': 'enp162s0',\n                  'result': 'PASS'}],\n '10.0.12.22': [{'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_4',\n                 'gpu': '0',\n                 'interface': 'enp112s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_0',\n                 'gpu': '1',\n                 'interface': 'enp8s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_3',\n                 'gpu': '2',\n                 'interface': 'enp88s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_2',\n                 'gpu': '3',\n                 'interface': 'enp33s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_9',\n                 'gpu': '4',\n                 'interface': 'enp239s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_5',\n                 'gpu': '5',\n                 'interface': 'enp137s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_8',\n                 'gpu': '6',\n                 'interface': 'enp215s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.11.185',\n                 'device_name': 'ionic_7',\n                 'gpu': '7',\n                 'interface': 'enp162s0',\n                 'result': 'PASS'}]}\nubuntu@bio-2545xk104k:~/bio/jobs/results$"
+    },
+    {
+      "id": "357743678",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T13:32:51Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Manual test is passing after DPC\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

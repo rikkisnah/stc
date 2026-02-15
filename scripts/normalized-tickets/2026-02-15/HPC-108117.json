@@ -1,0 +1,183 @@
+{
+  "ticket": {
+    "id": "55658430",
+    "key": "HPC-108117",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | nccl_allreduce_perf_single",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T05:53:51Z",
+    "resolved": "2026-02-12T11:20:03Z",
+    "updated": "2026-02-13T17:03:19Z"
+  },
+  "people": {
+    "assignee": "Rajat Rajat",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2342XLG01M",
+    "rack_serial": null
+  },
+  "labels": [
+    "2342XL8034",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "sk-353fbcdb-8784-477f-babc-0b72146729d7",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-6021",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | ib_write_bw_pair | 1595ebda-5f4c-4fa0-b618-41f2fe2f767b"
+    },
+    {
+      "key": "HPC-6024",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | ib_write_bw_3_hosts | 9c965d74-f2f5-47df-9a19-ba0bf4a716d6"
+    },
+    {
+      "key": "HPC-6027",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | nccl_all_reduce_perf_2_hosts | 2c4c2bc2-0959-4294-9ee0-20b67a6eb360"
+    },
+    {
+      "key": "HPC-6036",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | ib_write_bw_pair | 2e2fb82b-5bca-4372-8a70-5e5c58ecb74f"
+    },
+    {
+      "key": "HPC-6037",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | nccl_all_reduce_perf_2_hosts | 204a054b-c037-4a18-8f26-c71f1337bb31"
+    },
+    {
+      "key": "HPC-6043",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | nccl_all_reduce_perf_2_hosts | 7944e2a2-50cc-42cf-92d9-2d38ae2712b5"
+    },
+    {
+      "key": "HPC-6110",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | nccl_all_reduce_perf_16_hosts | 62e57f30-3079-4783-a720-b1c39e27af6e"
+    },
+    {
+      "key": "HPC-98512",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-99318",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | fdt_ist_2"
+    },
+    {
+      "key": "HPC-99377",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 3137 | 2342XLG01M | 2339XKU042 | FDT ist failure"
+    },
+    {
+      "key": "HPC-100383",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | gpu_bandwidth"
+    },
+    {
+      "key": "HPC-102341",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.H100.8 | gpu_bandwidth"
+    },
+    {
+      "key": "HPC-108015",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | initial_setup"
+    },
+    {
+      "key": "HPC-110264",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.H100.8 | dcgm_level_4"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "16h",
+    "time_to_resolve": "53h 26m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : nccl_allreduce_perf_single\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nnccl_allreduce_perf_single -\n\n(flag) *Debugging nccl_allreduce_perf_single*\n\nSee the following runbooks for more information:\nHow to Fix NCCL Connection Failure\\n\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2342XLG01M |10.0.13.1 |2026-02-10T05:42:03Z |2026-02-10T05:42:49Z |aga1-qfab-2-200 |bldg1-block29-200 |aga1-q2-b29-t0-r1, aga1-q2-b29-t0-r2, aga1-q2-b29-t0-r3, aga1-q2-b29-t0-r4, aga1-q2-b29-t0-r5, aga1-q2-b29-t0-r6, aga1-q2-b29-t0-r7, aga1-q2-b29-t0-r8 |2342XL8034 |f2e9d075-230b-445f-a33e-1edebb78f871 |",
+  "comments": [
+    {
+      "id": "357615013",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T05:53:54Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358492434",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T10:52:15Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358492981",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T10:57:00Z",
+      "body": "OP found on TN.\n\nM:ExtOC1:AGA:ad1:2342XLG01M>info\nSerial       Model                      Arch     Owner             Pxe_Image         Hops_Hostname                Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2342XLG01M   GPU_V4_X10-2C_32000_S.01   X10-2C   compute-aga-ad1   ol7-uek6-x86_64   aga1-c1-b29-t0-r2-compute3   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoac67xyshkmlssrkf7tbsmuc735onrfi34lfcz5mx4yvxya   holding           OC1:us-saltlake-2:ad1   aga1   aga1.1   3137   18     NONE   2342XL8034    2026-02-10T00:45:26+00:00   NONE\nM:ExtOC1:AGA:ad1:2342XLG01M>\n\nM:ExtOC1:AGA:ad1:2342XLG01M>gpu_info\nSerial       Gpu\n2342XLG01M   H:2342XLG01M T:2339XKU042 sled:2339XKU07J\nM:ExtOC1:AGA:ad1:2342XLG01M>\n\nM:ExtOC1:AGA:ad1:2342XLG01M>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.07s/it]\nSerial\nM:ExtOC1:AGA:ad1:2342XLG01M>\n\nM:ExtOC1:AGA:ad1:2339XKU042>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.27s/it]\nSerial       Datetime                    Location           Subsystem     Resource        Uuid                                   Serial          Part_No       Probability   Reference\n2339XKU042\n             2026-02-10 00:50:07+00:00   GBB/GPU8 (GPU 8)   PCI Devices   /SYS/GBB/GPU8   8e5d6e89-7d70-6a76-c36b-ba4f7eebe96c   1653723008769   2330-885-A1   100           http://support.oracle.com/msg/SPGXTAIL-8000-R0\nM:ExtOC1:AGA:ad1:2339XKU042>"
+    },
+    {
+      "id": "358493876",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T10:59:41Z",
+      "body": "Host unreachable.\n\n[opc@cpv-host-aga ~]$ ssh 10.0.13.1\n\nssh: connect to host 10.0.13.1 port 22: Connection timed out\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "358494605",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T11:00:33Z",
+      "body": "Performing DPC\n\nM:ExtOC1:AGA:ad1:2342XLG01M>sp_exec stop -f -script system\n[INFO 2026-02-12 16:29:55,677] This will run commands: stop -f -script system\n[INFO 2026-02-12 16:29:55,677]  on 1 hosts in 1 ADs.\n[INFO 2026-02-12 16:29:55,677] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  1/1 [00:08<00:00,  8.27s/it]\nSerial       Command                  Response                       Error\n2342XLG01M\n             stop -f -script system   Stopping /System immediately   NONE\nM:ExtOC1:AGA:ad1:2342XLG01M>\n\nM:ExtOC1:AGA:ad1:2342XLG01M>sp_exec set /System/ deep_power_cycle=true\n[INFO 2026-02-12 16:30:05,813] This will run commands: set /System/ deep_power_cycle=true\n[INFO 2026-02-12 16:30:05,813]  on 1 hosts in 1 ADs.\n[INFO 2026-02-12 16:30:05,813] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  1/1 [00:05<00:00,  5.04s/it]\nSerial       Command                              Response                                   Error\n2342XLG01M\n             set /System/ deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\nM:ExtOC1:AGA:ad1:2342XLG01M>"
+    },
+    {
+      "id": "358499106",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T11:18:46Z",
+      "body": "Acceptable badnwidth is\n\n    BM.GPU.H100.8 | x10-2c.112.2048.gpu | BM.GPU.H100T.8 | x10-2c.112.3072.gpu.t )\n        NCCL_ACCEPTABLE_BW=360 ;;"
+    },
+    {
+      "id": "358499125",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T11:19:20Z",
+      "body": "Manual test BW is above the threshold BW\n\n[opc@bio-2342xlg01m results]$ /usr/mpi/gcc/openmpi-4.1.7a1/bin/mpirun  -mca pml ucx -mca coll ^hcoll --bind-to numa -x RX_QUEUE_LEN=8192 -x IB_RX_QUEUE_LEN=8192 -x UCX_TLS=tcp -x HCOLL_ENABLE_MCAST_ALL=0 -x coll_hcoll_enable=0 -x UCX_NET_DEVICES=eth0  -x NCCL_DEBUG=WARN -x NCCL_IB_TIMEOUT=16 -x NCCL_IB_SL=0 -x NCCL_IB_TC=41 -x NCCL_IB_GID_INDEX=3 -x NCCL_ALGO=Ring -x NCCL_IB_QPS_PER_CONNECTION=4 -x NCCL_IB_HCA=\"=mlx5_0,mlx5_1,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_7,mlx5_8,mlx5_9,mlx5_10,mlx5_12,mlx5_13,mlx5_14,mlx5_15,mlx5_16,mlx5_17\" --host localhost:8 -N 8 -np 8 /opt/oci-hpc/nccl-test/build/all_reduce_perf -b 1G -e 10G -i 9663676416 -g 1 -n 20\n# nThread 1 nGpus 1 minBytes 1073741824 maxBytes 10737418240 step: 9663676416(bytes) warmup iters: 5 iters: 20 agg iters: 1 validation: 1 graph: 0\n#\n# Using devices\n#  Rank  0 Group  0 Pid  23301 on bio-2342xlg01m device  0 [0x0f] NVIDIA H100 80GB HBM3\n#  Rank  1 Group  0 Pid  23302 on bio-2342xlg01m device  1 [0x2d] NVIDIA H100 80GB HBM3\n#  Rank  2 Group  0 Pid  23303 on bio-2342xlg01m device  2 [0x44] NVIDIA H100 80GB HBM3\n#  Rank  3 Group  0 Pid  23304 on bio-2342xlg01m device  3 [0x5b] NVIDIA H100 80GB HBM3\n#  Rank  4 Group  0 Pid  23305 on bio-2342xlg01m device  4 [0x89] NVIDIA H100 80GB HBM3\n#  Rank  5 Group  0 Pid  23306 on bio-2342xlg01m device  5 [0xa8] NVIDIA H100 80GB HBM3\n#  Rank  6 Group  0 Pid  23307 on bio-2342xlg01m device  6 [0xc0] NVIDIA H100 80GB HBM3\n#  Rank  7 Group  0 Pid  23308 on bio-2342xlg01m device  7 [0xd8] NVIDIA H100 80GB HBM3\nNCCL version 2.23.4+cuda12.6\n#\n#                                                              out-of-place                       in-place\n#       size         count      type   redop    root     time   algbw   busbw #wrong     time   algbw   busbw #wrong\n#        (B)    (elements)                               (us)  (GB/s)  (GB/s)            (us)  (GB/s)  (GB/s)\n  1073741824     268435456     float     sum      -1   5214.5  205.92  360.35      0   5210.7  206.06  360.61      0\n 10737418240    2684354560     float     sum      -1    51148  209.93  367.37      0    51032  210.41  368.21      0\n# Out of bounds values : 0 OK\n# Avg bus bandwidth    : 364.137\n#\n\n[opc@bio-2342xlg01m results]$"
+    },
+    {
+      "id": "358499134",
+      "author": "Rajat Rajat",
+      "created": "2026-02-12T11:19:48Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): nccl_allreduce_perf_single\n2. What we did to address the issue (1 liner - high level): DPC the host and ran manual test\n3. What was the Root Cause: Host unreachable\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

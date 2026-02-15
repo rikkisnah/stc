@@ -1,0 +1,88 @@
+{
+  "ticket": {
+    "id": "55682259",
+    "key": "HPC-108230",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "2540XNG23V : GPU_GB200-NVL72_S.03 found HPC fault on host.",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T17:07:42Z",
+    "resolved": "2026-02-11T16:13:56Z",
+    "updated": "2026-02-11T16:14:04Z"
+  },
+  "people": {
+    "assignee": "Lisset Hernandez",
+    "reporter": "jirasd-gear-rcp-autocut-ad1-us-dallas-1",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": "dfw5",
+    "rack_type": null,
+    "host_serial": "2540XNG23V",
+    "rack_serial": "2541XN806R"
+  },
+  "labels": [
+    "2540XNG23V",
+    "Architecture:GB200",
+    "Compute",
+    "DeviceModel:GPU_GB200-NVL72_S.03",
+    "GPU_GB200-NVL72_S.03",
+    "HPCRDMA-0002-02",
+    "HPCRDMA_000X_Pulse_FAILURE",
+    "TRSTriage",
+    "TRS_HPCRDMA_FAULT_GPUPR_TICKET",
+    "TRS_PRESCRIPTIVE_TICKET",
+    "broken_pool",
+    "currentPool:broken_pool",
+    "degree_1",
+    "dfw5",
+    "previousPool:trainingzoomai",
+    "triage"
+  ],
+  "sla": {
+    "time_to_first_response": "1m",
+    "time_to_resolve": "23h 6m"
+  },
+  "description": "*Server Details*\nSerial: 2540XNG23V\nModel: GPU_GB200-NVL72_S.03\nRack Number: 1630\nTailNode Serial:\n\nFollowing are the HPC fault ids found on the host.\n\n     HPCRDMA-0002-02\n\nBelow is the metadata of HPC faults found on host.\n\n            - FmaId: HPCRDMA-0002-02 at PcieAddress: 0002:03:00.0 [slot1/port2-1]\n\n* Use the runbook below to create a DO ticket for resolving HPC faults. Do not close this ticket until the issue is resolved on the host.*\n\nRunBook:  https://confluence.oraclecorp.com/confluence/display/CHMDP/Runbook+for+handling+tickets+with+HPC+faults\n* | 2540XNG23V host page* |",
+  "comments": [
+    {
+      "id": "357807510",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T17:07:47Z",
+      "body": "Ocean has created an incident for this issue. (P2-4A779E288E1599BDE0632B16000AFE2D)"
+    },
+    {
+      "id": "357815458",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T17:32:05Z",
+      "body": "Ocean Stakeholder ACK from HPC team"
+    },
+    {
+      "id": "358196809",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-11T16:09:58Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358197362",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-11T16:13:20Z",
+      "body": "Subsequent comment:\n * Progress so far:\nHost is in not_in_hops state, lasts tickets indicate RMA\n *\n\nM:ExtOC1:DFW:ad1:2540XNG23V>info\nSerial       Model                  Arch    Owner   Pxe_Image   Hops_Hostname   Role      State         Halt_Mode   Instance_Id   Pool_Name   Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated   Test\n2540XNG23V   GPU_GB200-NVL72_S.03   GB200   NONE    NONE        None            compute   Not_in_HoPS   False       NONE          NONE              OC1:us-dallas-1:ad1   dfw5   dfw5.1   1630   30     NONE   2541XN806R    NONE      NONE\nM:ExtOC1:DFW:ad1:2540XNG23V>instance_info\nHost         Pool_Name   Instance_Id\n2540XNG23V   NONE        NONE\nM:ExtOC1:DFW:ad1:2540XNG23V>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  3.21it/s]\nSerial       State         Tracking_State   Job\n2540XNG23V   Not_in_HoPS   NONE             NONE"
+    },
+    {
+      "id": "358197376",
+      "author": "Lisset Hernandez",
+      "created": "2026-02-11T16:13:56Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): HPC fault reported\n2. What we did to address the issue (1 liner - high level): Host is in not_in_hops state, lasts tickets indicate RMA, resolving ticket\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

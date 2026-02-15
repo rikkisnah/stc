@@ -1,0 +1,147 @@
+{
+  "ticket": {
+    "id": "55675204",
+    "key": "HPC-108194",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T14:09:12Z",
+    "resolved": "2026-02-10T15:23:14Z",
+    "updated": "2026-02-14T22:04:52Z"
+  },
+  "people": {
+    "assignee": "Mohammed Es-sousy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2543XQ104A",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8009",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-05e402fe-709e-4f34-bf61-65ee658235b4",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2650563",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-106463",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-106710",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-108127",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109561",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109634",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109656",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109805",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-110010",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-110200",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-110476",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "1h 14m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 2 times in past 12 hours\nRepairScript invoked 1 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check_fba75a55-1f8f-47b2-9f84-7c44a31b129a_AllResults.tgz.gz}\n - health_check/fba75a55-1f8f-47b2-9f84-7c44a31b129a/health_check_2543XQ104A.json\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2543XQ104A |10.0.11.210 |2026-02-10T13:47:40Z |2026-02-10T13:50:50Z |aga4-qfab-3-400 |bldg4-block51-400 |aga4-q3-b51-t0-r10, aga4-q3-b51-t0-r11, aga4-q3-b51-t0-r12, aga4-q3-b51-t0-r13, aga4-q3-b51-t0-r14, aga4-q3-b51-t0-r15, aga4-q3-b51-t0-r16, aga4-q3-b51-t0-r9 |2604ZA8009 |fba75a55-1f8f-47b2-9f84-7c44a31b129a |",
+  "comments": [
+    {
+      "id": "357753464",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T14:09:15Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357767302",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T14:59:04Z",
+      "body": "[opc@cpv-host-aga ~]$ cpv state overview-count | grep 2543XQ104A\n2026/02/10 14:58:50 Reading state file state.json\n2026/02/10 14:58:51 Object Store client initialized with host url https://objectstorage.us-saltlake-2.oraclecloud.com\n2543XQ104A  10.0.11.210  BM.GPU.MI355X.8     Holding     N/A        sk-05e402fe-709e-4f34-bf61-65ee658235b4  bldg4-block51-400  1 HPC-108194                         0                health_check                   Failed      2543XQ104A  2026-02-10T13:47:40Z  2026-02-10T13:50:50Z\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "357774459",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T15:19:05Z",
+      "body": "No open problems\n\nM:ExtOC1:AGA:ad1:2602XK10MR>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.32s/it]\n{\n    \"2602XK10MR\": [\n        {\n            \"dateTime\": \"2026-02-06 07:43:41+00:00\",\n            \"location\": \"PSB/CDFP7 (Container)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/PSB/CDFP7\",\n            \"uuid\": \"6c1699c3-5449-ca2b-9b49-d9a41461eee3\",\n            \"serial\": \"N/A\",\n            \"part_no\": \"N/A\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPGXTAIL-8000-KW\"\n        }\n    ]\n}"
+    },
+    {
+      "id": "357775018",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T15:20:29Z",
+      "body": "HC fail due to\n\n {\n        \"cdfp\": \"FAIL - Mismatch for PCI 0000:0d:00.0: Expected module_id 7, found 6, Mismatch for PCI 0000:5d:00.0: Expected module_id 6, found 7\"\n      },"
+    },
+    {
+      "id": "357775716",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T15:23:14Z",
+      "body": "Cut to DO-2650563\n\nResolve to retest once DO team are done with their actions"
+    }
+  ]
+}

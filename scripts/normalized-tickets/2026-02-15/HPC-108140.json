@@ -1,0 +1,165 @@
+{
+  "ticket": {
+    "id": "55660796",
+    "key": "HPC-108140",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:38:51Z",
+    "resolved": "2026-02-10T10:03:24Z",
+    "updated": "2026-02-13T07:17:44Z"
+  },
+  "people": {
+    "assignee": "Mohammed Es-sousy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2542XK102S",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8019",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-339068ed-ed66-4f04-893e-204774fe0f41",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2650017",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-103124",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103324",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_2_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-103436",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_4_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-104539",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2542XK102S | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-104575",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2542XK102S | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-104629",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2542XK102S | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-104680",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2542XK102S | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-106564",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | cable_validation"
+    },
+    {
+      "key": "HPC-108111",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-108239",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109562",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109648",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109682",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-110096",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "2h 24m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : initial_setup\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2542XK102S |10.0.14.83 |2026-02-10T07:22:08Z |2026-02-10T07:32:57Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r10, aga4-q3-b32-t0-r11, aga4-q3-b32-t0-r12, aga4-q3-b32-t0-r13, aga4-q3-b32-t0-r14, aga4-q3-b32-t0-r15, aga4-q3-b32-t0-r16, aga4-q3-b32-t0-r9 |2552ZA8019 |b7df0d74-1f39-4b8d-9d90-ca5778752f2b |",
+  "comments": [
+    {
+      "id": "357642168",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:38:53Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357683625",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T09:50:42Z",
+      "body": "[opc@cpv-host-aga ~]$ cpv state overview-count | grep 2542XK102S\n2026/02/10 09:50:29 Reading state file state.json\n2026/02/10 09:50:30 Object Store client initialized with host url https://objectstorage.us-saltlake-2.oraclecloud.com\n2542XK102S  10.0.14.83   BM.GPU.MI355X.8     Holding     N/A        sk-339068ed-ed66-4f04-893e-204774fe0f41  bldg4-block32-400  1 HPC-108140                         0                initial_setup                  Failed      2542XK102S  2026-02-10T07:22:08Z  2026-02-10T07:32:57Z\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "357685699",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T10:00:25Z",
+      "body": "OP in the TN of the host\n\nM:ExtOC1:AGA:ad1:2545XK101C>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.57s/it]\n{\n    \"2545XK101C\": [\n        {\n            \"dateTime\": \"2026-02-10 06:52:51+00:00\",\n            \"location\": \"PSB/CDFP7 (Container)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/PSB/CDFP7\",\n            \"uuid\": \"631d8875-b83a-4c9e-d2c4-a97999ec7332\",\n            \"serial\": \"N/A\",\n            \"part_no\": \"N/A\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPGXTAIL-8000-KW\"\n        }\n    ]\n}"
+    },
+    {
+      "id": "357686873",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T10:03:24Z",
+      "body": "Cut to DO-2650017\n\nResolve to retest once DO team are done with their actions"
+    }
+  ]
+}

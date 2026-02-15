@@ -1,0 +1,80 @@
+{
+  "ticket": {
+    "id": "55667238",
+    "key": "HPC-108177",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T11:24:01Z",
+    "resolved": "2026-02-10T15:08:10Z",
+    "updated": "2026-02-12T01:00:11Z"
+  },
+  "people": {
+    "assignee": "Imane Barakate",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2538XK1050",
+    "rack_serial": null
+  },
+  "labels": [
+    "2541ZA8001",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.02",
+    "de-retrigger-feb11",
+    "sk-482ab388-0f5e-4c6e-b11f-59dd376f7fc4",
+    "triage-rules-engine"
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "3h 44m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : initial_setup\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X-v1.8 |2538XK1050 |10.0.15.52 |2026-02-10T11:16:28Z |2026-02-10T11:16:41Z |aga4-qfab-2-400 |bldg4-block28-400 |aga4-q2-b28-t0-r1, aga4-q2-b28-t0-r2, aga4-q2-b28-t0-r3, aga4-q2-b28-t0-r4, aga4-q2-b28-t0-r5, aga4-q2-b28-t0-r6, aga4-q2-b28-t0-r7, aga4-q2-b28-t0-r8 |2541ZA8001 |ba6d040a-0bfe-4e68-b9c9-9eae8b958742 |",
+  "comments": [
+    {
+      "id": "357708806",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T11:24:03Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357763708",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:45:16Z",
+      "body": "initial setup failed on the host due to a failure while running sudo apt-get update\n\nE: Could not get lock /var/lib/apt/lists/lock. It is held by process 1389851 (apt-get)\nE: Unable to lock directory /var/lib/apt/lists/\n+ '[' 100 -ne 0 ']'\n+ echo 'Failed to apt-get update on ubuntu'\n+ writeResults Failed\n+ testState=Failed\n+ '[' Failed == Success ']'\n+ '[' Failed == Detailed ']'"
+    },
+    {
+      "id": "357763721",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:45:38Z",
+      "body": "Tried running sudo apt-get update manually and failed due to an error occurring during the signature verification, the kitware GPG public key was not available\n\nubuntu@bio-2538xk1050:~/bio/jobs$ sudo apt-get update -y\nGet:1 file:/usr/share/doca-host-3.1.0-091000-25.07-ubuntu2204/repo ./ InRelease [1888 B]\nGet:1 file:/usr/share/doca-host-3.1.0-091000-25.07-ubuntu2204/repo ./ InRelease [1888 B]\nHit:2 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy InRelease\nHit:3 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy-updates InRelease\nHit:4 https://repo.radeon.com/amdgpu/30.10.2/ubuntu jammy InRelease\nHit:5 http://us-saltlake-2-ad-1.clouds.archive.ubuntu.com/ubuntu jammy-backports InRelease\nGet:6 https://apt.kitware.com/ubuntu jammy InRelease [15.5 kB]\nHit:7 https://repo.radeon.com/rocm/apt/7.0.2 jammy InRelease\nErr:6 https://apt.kitware.com/ubuntu jammy InRelease\n  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 65ADECD7A7039392\nHit:8 http://security.ubuntu.com/ubuntu jammy-security InRelease\nHit:9 https://repo.radeon.com/graphics/7.0.2/ubuntu jammy InRelease\nFetched 15.5 kB in 1s (23.4 kB/s)\nReading package lists... Done\nW: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://apt.kitware.com/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 65ADECD7A7039392\nW: Failed to fetch https://apt.kitware.com/ubuntu/dists/jammy/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 65ADECD7A7039392\nW: Some index files failed to download. They have been ignored, or old ones used instead."
+    },
+    {
+      "id": "357763759",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:47:05Z",
+      "body": "Manually added the Kitware APT GPG key\n\nubuntu@bio-2538xk1050:~/bio/jobs$ curl -fsSL https://apt.kitware.com/keys/kitware-archive-latest.asc |   gpg --dearmor | sudo tee /etc/apt/keyrings/kitware.gpg > /dev/null\n\nubuntu@bio-2538xk1050:~/bio/jobs$ cat /etc/apt/sources.list.d/kitware.list\ndeb https://apt.kitware.com/ubuntu/ jammy main\n\nubuntu@bio-2538xk1050:~/bio/jobs$ sudo vim /etc/apt/sources.list.d/kitware.list\n\nubuntu@bio-2538xk1050:~/bio/jobs$ cat /etc/apt/sources.list.d/kitware.list\ndeb [signed-by=/etc/apt/keyrings/kitware.gpg] https://apt.kitware.com/ubuntu/ jammy main"
+    },
+    {
+      "id": "357770868",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T15:08:01Z",
+      "body": "Initial setup succeeded on the host\n\n+ EXIT_CODE=0\n+ '[' 0 -ne 0 ']'\n+ echo 'initial_setup succeeded'\ninitial_setup succeeded\n+ add_host_details 2538XK1050 Softreset\n+ local STATE=Softreset"
+    }
+  ]
+}

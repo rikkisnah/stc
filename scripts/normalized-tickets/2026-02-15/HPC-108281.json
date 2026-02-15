@@ -1,0 +1,147 @@
+{
+  "ticket": {
+    "id": "55697740",
+    "key": "HPC-108281",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T22:09:39Z",
+    "resolved": "2026-02-11T09:20:42Z",
+    "updated": "2026-02-12T23:17:16Z"
+  },
+  "people": {
+    "assignee": "Rajat Rajat",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2550XQ101E",
+    "rack_serial": null
+  },
+  "labels": [
+    "2602ZA8015",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-3c3fcb16-e405-4382-873c-91cd3941b99d",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2653358",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "2550XQ101E | cfdp cabling issue"
+    },
+    {
+      "key": "HPC-106074",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-106721",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-108128",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109418",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109639",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109792",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109872",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109932",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 50m",
+    "time_to_resolve": "11h 11m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 1 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/d5baba61-42cb-42d3-8dc5-4de68f4ddd99/health_check_2550XQ101E.json\n - health_check_d5baba61-42cb-42d3-8dc5-4de68f4ddd99_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2550XQ101E |10.0.13.17 |2026-02-10T21:59:27Z |2026-02-10T22:02:37Z |aga4-qfab-3-400 |bldg4-block54-400 |aga4-q3-b54-t0-r10, aga4-q3-b54-t0-r11, aga4-q3-b54-t0-r12, aga4-q3-b54-t0-r13, aga4-q3-b54-t0-r14, aga4-q3-b54-t0-r15, aga4-q3-b54-t0-r16, aga4-q3-b54-t0-r9 |2602ZA8015 |d5baba61-42cb-42d3-8dc5-4de68f4ddd99 |",
+  "comments": [
+    {
+      "id": "357922339",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T22:10:09Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358003513",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T03:13:49Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358089747",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:13:02Z",
+      "body": "No OP found.\n\nM:ExtOC1:AGA:ad1:2550XQ101E>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2550XQ101E   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b19-t0-r29-compute2   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacz2oeyfgsktrbuojknknm243gt7or6ghpfqusw4nluwyq   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   8203   12     NONE   2602ZA8015    2026-02-01T09:57:17+00:00   NONE\nM:ExtOC1:AGA:ad1:2550XQ101E>\n\nM:ExtOC1:AGA:ad1:2550XQ101E>gpu_info\nSerial       Gpu\n2550XQ101E   H:2550XQ101E T:2552XK1082 sled:2552XK1082\nM:ExtOC1:AGA:ad1:2550XQ101E>\n\nM:ExtOC1:AGA:ad1:2550XQ101E>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.04s/it]\nSerial\nM:ExtOC1:AGA:ad1:2550XQ101E>\n\nessfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2552XK1082>\nM:ExtOC1:AGA:ad1:2552XK1082>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.87s/it]\nSerial\nM:ExtOC1:AGA:ad1:2552XK1082>"
+    },
+    {
+      "id": "358090207",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:14:18Z",
+      "body": "ubuntu@bio-2550xq101e:~$ rdma link\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\nubuntu@bio-2550xq101e:~$"
+    },
+    {
+      "id": "358090222",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:14:57Z",
+      "body": "{'cdfp': 'FAIL - Mismatch for PCI 0000:0d:00.0: Expected module_id 7, found 6, Mismatch for PCI 0000:5d:00.0: Expected module_id 6, '\n                                'found 7'},"
+    },
+    {
+      "id": "358091285",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:19:12Z",
+      "body": "Created DO-2653358"
+    },
+    {
+      "id": "358091823",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:20:19Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):  health_check test failed\n2. What we did to address the issue (1 liner - high level): Created DO-2653358\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

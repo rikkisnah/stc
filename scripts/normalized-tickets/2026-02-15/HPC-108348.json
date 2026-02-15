@@ -1,0 +1,135 @@
+{
+  "ticket": {
+    "id": "55701814",
+    "key": "HPC-108348",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T23:54:49Z",
+    "resolved": "2026-02-12T04:44:02Z",
+    "updated": "2026-02-12T09:41:40Z"
+  },
+  "people": {
+    "assignee": "Mathew Nobel Mammen",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2539XK108T",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8092",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-9e4aff79-a5af-49f3-87d1-267087f6ccd9",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-103885",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | agfhc_hbm_8h"
+    },
+    {
+      "key": "HPC-104515",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8319 | 2539XK108T | 2602XK10M7 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-105579",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-106885",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-107306",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109649",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109668",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109708",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | wait_for_wpa"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "1h 5m",
+    "time_to_resolve": "28h 49m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2539XK108T |10.0.12.113 |2026-02-10T23:16:45Z |2026-02-10T23:47:35Z |aga4-qfab-3-400 |bldg4-block51-400 |aga4-q3-b51-t0-r10, aga4-q3-b51-t0-r11, aga4-q3-b51-t0-r12, aga4-q3-b51-t0-r13, aga4-q3-b51-t0-r14, aga4-q3-b51-t0-r15, aga4-q3-b51-t0-r16, aga4-q3-b51-t0-r9 |2603ZA8092 |e7018535-85bd-48a3-abc4-b8c40a10f48e |",
+  "comments": [
+    {
+      "id": "357953946",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T23:54:56Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358011569",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-11T03:54:23Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358394516",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T03:54:43Z",
+      "body": "Host already failed with initial setup last 3 times"
+    },
+    {
+      "id": "358394519",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T03:54:51Z",
+      "body": "BVR'ing the host"
+    },
+    {
+      "id": "358394565",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T03:56:04Z",
+      "body": "BVR'd the host"
+    },
+    {
+      "id": "358405054",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T04:43:43Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): BVR'd the host\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

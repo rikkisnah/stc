@@ -1,0 +1,147 @@
+{
+  "ticket": {
+    "id": "55683779",
+    "key": "HPC-108232",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T17:39:20Z",
+    "resolved": "2026-02-10T18:09:01Z",
+    "updated": "2026-02-14T04:18:52Z"
+  },
+  "people": {
+    "assignee": "Javier Del Pino",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2553XQ103W, 2602XQ104N",
+    "rack_serial": null
+  },
+  "labels": [
+    "2602ZA8067",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-f0f7082a-1d05-4896-a7fc-ee917b8b5e6c",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-103153",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104401",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105303",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105678",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105712",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-107864",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108142",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108180",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108246",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108347",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-109850",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-110364",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "25m",
+    "time_to_resolve": "29m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : iperf_pair\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\niperf_pair -\n\n(flag) *Debugging iperf_pair*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check/94b45c66-0acd-400a-9c6c-fc4eba3078cd/health_check_2553XQ103W.json\n - health_check_94b45c66-0acd-400a-9c6c-fc4eba3078cd_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2553XQ103W |10.0.12.111 |2026-02-10T17:27:09Z |2026-02-10T17:28:38Z |aga4-qfab-3-400 |bldg4-block33-400 |aga4-q3-b33-t0-r1, aga4-q3-b33-t0-r2, aga4-q3-b33-t0-r3, aga4-q3-b33-t0-r4, aga4-q3-b33-t0-r5, aga4-q3-b33-t0-r6, aga4-q3-b33-t0-r7, aga4-q3-b33-t0-r8 |2602ZA8067 |b9284fb6-fbaa-474f-8a35-837b3f80cba0 |\n|BM.GPU.MI355X.8 |2602XQ104N |10.0.9.41 |2026-02-10T17:27:09Z |2026-02-10T17:28:38Z |aga4-qfab-3-400 |bldg4-block35-400 |aga4-q3-b35-t0-r10, aga4-q3-b35-t0-r11, aga4-q3-b35-t0-r12, aga4-q3-b35-t0-r13, aga4-q3-b35-t0-r14, aga4-q3-b35-t0-r15, aga4-q3-b35-t0-r16, aga4-q3-b35-t0-r9 |2602ZA8013 |b9284fb6-fbaa-474f-8a35-837b3f80cba0 |",
+  "comments": [
+    {
+      "id": "357818630",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T17:39:22Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357828130",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T18:05:10Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357828610",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T18:06:13Z",
+      "body": "duplicate of HPC-107864"
+    },
+    {
+      "id": "357829729",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T18:09:01Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): iperf_pair\n2. What we did to address the issue (1 liner - high level): Found previous DO-2649612 pending\n3. What was the Root Cause: Duplicate of HPC-107864\n4. Runbook was helpful - N\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

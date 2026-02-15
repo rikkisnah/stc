@@ -1,0 +1,93 @@
+{
+  "ticket": {
+    "id": "55662108",
+    "key": "HPC-108144",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Automated RMA request for host 2539XNG417",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T08:03:32Z",
+    "resolved": "2026-02-10T09:42:00Z",
+    "updated": "2026-02-10T09:42:00Z"
+  },
+  "people": {
+    "assignee": "SANDEEP REDDY",
+    "reporter": "Hassan Javaid",
+    "watchers": 3
+  },
+  "location": {
+    "region": "DFW",
+    "availability_domain": null,
+    "building": "dfw5",
+    "rack_type": null,
+    "host_serial": "2539XNG417",
+    "rack_serial": null
+  },
+  "labels": [
+    "chs_RMA_request"
+  ],
+  "links": [
+    {
+      "key": "DO-2649036",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "Host 2539XNG417 Open problems present"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "37m",
+    "time_to_resolve": "1h 38m"
+  },
+  "description": "* *Please initiate RMA Tray Replacement Request - RHS Verified* RHS-79389\n\nPlease follow this runbook [https://confluence.oraclecorp.com/confluence/display/CHMDP/GB200+Compute+Tray+RMA+Runbook+-++Manual+trigger+steps]",
+  "comments": [
+    {
+      "id": "357652439",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T08:03:36Z",
+      "body": "Ocean has created an incident for this issue. (P1-4A47B0B5CE5AD3FEE0634313000A5292)"
+    },
+    {
+      "id": "357675033",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T09:19:44Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357675044",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T09:20:00Z",
+      "body": "Host is in Repair state\n\nM:ExtOC1:DFW:ad1:2539XNG417>info_all\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State    Halt_Mode   Instance_Id   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                      Mac_Addr   Boot_Mac_Addr       Boot_Ip       Host_Ip   Ilom_Ip         Ilom_Host_Info                                                 Rot                                                                       Ilom_Serial   Smartnic_Serials                        Smartnic_Ips                                                                                                                                     Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\n2539XNG417   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b10-t0-r28-compute4   compute   REPAIR   False       NONE          broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   0534   32     NONE   2540XN80DW    2026-01-22T03:53:08+00:00   NONE   sk-be0fceaa-b09c-4f09-b47a-5c67d57dc667   sk-c1460cec-3829-4d59-a79d-b6f121560179   dfw5-c1-b10-t0-r28-compute4   NONE       90:e3:17:a7:ec:da   169.254.0.1   NONE      10.161.223.87   dfw5-c1-b10-t0-r28-compute4-ilom-net-mgt.net.ad1.us-dallas-1   Type: Rot3 Rot3Dns: dfw5-c1-b10-t0-r28-compute4-rot.net.ad1.us-dallas-1   NONE          465774X-2528700300,465774X-2528700609   10.5.19.13(dfw5-c1-b10-t0-r28-compute4-wic1-port1.net.ad1.us-dallas-1) 10.5.19.15(dfw5-c1-b10-t0-r28-compute4-wic2-port1.net.ad1.us-dallas-1)    NONE                   NONE               NONE\nM:ExtOC1:DFW:ad1:2539XNG417>"
+    },
+    {
+      "id": "357675058",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T09:20:19Z",
+      "body": "M:ExtOC1:DFW:ad1:2539XNG417>sp_presence\nChecking SP presence: 100% |  1/1 [00:04<00:00,  4.53s/it]\nSerial       Sp_Is_Present   Version    Build_Number\n2539XNG417   Yes             5.1.5.96   167204\nM:ExtOC1:DFW:ad1:2539XNG417>"
+    },
+    {
+      "id": "357680165",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T09:40:04Z",
+      "body": "Terminated active TRS case\n\nM:ExtOC1:DFW:ad1:2539XNG417>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:01<00:00,  1.42s/it]\nCaseid                                    Serial       Type          State       Created                            Sk_Id                                     Updated                            Is_Active   State_Sla_In_Seconds   Is_Supported_By_Trcp   Trs_Case\ntr-74b83b96-89ce-4595-9855-c63908a54b0d   2539XNG417   TERMINATING   REPAIRING   2026-01-22 01:23:05.180000+00:00   sk-be0fceaa-b09c-4f09-b47a-5c67d57dc667   2026-01-22 04:18:39.322000+00:00   True        5184000                True                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=tr-74b83b96-89ce-4595-9855-c63908a54b0d\nM:ExtOC1:DFW:ad1:2539XNG417>trs_update_all_cases state=TERMINATED\n[INFO 2026-02-10 15:09:32,927] Argument values {'state': 'TERMINATED'}\n[INFO 2026-02-10 15:09:34,570] Updating case: tr-74b83b96-89ce-4595-9855-c63908a54b0d\n[INFO 2026-02-10 15:09:35,451] Updated case with case_id:tr-74b83b96-89ce-4595-9855-c63908a54b0d\nCaseid                                    Serial       Type          State        Created                            Sk_Id                                     Updated                            Is_Active   State_Sla_In_Seconds   Is_Supported_By_Trcp   Trs_Case\ntr-74b83b96-89ce-4595-9855-c63908a54b0d   2539XNG417   TERMINATING   TERMINATED   2026-01-22 01:23:05.180000+00:00   sk-be0fceaa-b09c-4f09-b47a-5c67d57dc667   2026-02-10 09:39:35.414000+00:00   NONE        NONE                   True                   NONE\nM:ExtOC1:DFW:ad1:2539XNG417>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:00<00:00,  1.96it/s]\nSerial   Sk_Id   Is_Supported_By_Trcp   Trs_Case\nNONE     NONE    None                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=None\nM:ExtOC1:DFW:ad1:2539XNG417>"
+    },
+    {
+      "id": "357680195",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T09:41:14Z",
+      "body": "Initiated RMA\n\nM:ExtOC1:DFW:ad1:2539XNG417>trs_add_case {\"serial\":\"2539XNG417\",\"type\":\"TERMINATING\",\"source\":\"HOPS\",\"ticket_data\":{\"summary\":\"GB200 Manually triggered RMA process\",\"description\":\"testdescription\",\"project\":\"GPUPR\",\"severity\":\"2\",\"labels\":[\"GB200_COMPUTE_TRAY_REPLACEMENT\"]}}\n[INFO 2026-02-10 15:10:57,977] Creating case with <class 'triage_repair_service.models.case_detail.CaseDetail'>\ncaseId               tr-e171e659-a42e-4d68-a35d-38711636c1cf\ncreated              2026-02-10 09:40:58.151000+00:00\nis_active            True\nis_supported_by_trcp True\nserial               2539XNG417\nsk_id                sk-be0fceaa-b09c-4f09-b47a-5c67d57dc667\nstate                OPEN\nstate_sla_in_seconds 6000"
+    },
+    {
+      "id": "357681120",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T09:41:46Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Initiated RMA\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

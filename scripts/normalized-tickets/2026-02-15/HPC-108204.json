@@ -1,0 +1,89 @@
+{
+  "ticket": {
+    "id": "55676806",
+    "key": "HPC-108204",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "2351XLG01E : GPU_V4_X10-2C_32000_S.01 found HPC fault on host.",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T14:35:20Z",
+    "resolved": "2026-02-11T04:29:54Z",
+    "updated": "2026-02-12T01:37:29Z"
+  },
+  "people": {
+    "assignee": "Francisco Santos",
+    "reporter": "jirasd-gear-rcp-autocut-ad1-ap-tokyo-1",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": "nrt3",
+    "rack_type": null,
+    "host_serial": "2351XLG01E",
+    "rack_serial": "2401XL803C"
+  },
+  "labels": [
+    "2351XLG01E",
+    "Architecture:X10",
+    "Compute",
+    "DeviceModel:GPU_V4_X10-2C_32000_S.01",
+    "GPU_V4_X10-2C_32000_S.01",
+    "HPCGPU-0001-01",
+    "HPCGPU_000X_Pulse_FAILURE",
+    "TRSTriage",
+    "TRS_HPCRDMA_FAULT_GPUPR_TICKET",
+    "TRS_PRESCRIPTIVE_TICKET",
+    "broken_pool",
+    "currentPool:broken_pool",
+    "de-retrigger-feb11",
+    "degree_1",
+    "nrt3",
+    "previousPool:holding",
+    "triage"
+  ],
+  "sla": {
+    "time_to_first_response": "1m",
+    "time_to_resolve": "13h 54m"
+  },
+  "description": "*Server Details*\nSerial: 2351XLG01E\nModel: GPU_V4_X10-2C_32000_S.01\nRack Number: 2515\nTailNode Serial: 2346XKU12S\n\nFollowing are the HPC fault ids found on the host.\n\n     HPCGPU-0001-01\n\nBelow is the metadata of HPC faults found on host.\n\n            - FmaId: HPCGPU-0001-01 at PcieAddress: 00000000:D8:00.0\n\n* Use the runbook below to create a DO ticket for resolving HPC faults. Do not close this ticket until the issue is resolved on the host.*\n\nRunBook:  https://confluence.oraclecorp.com/confluence/display/CHMDP/Runbook+for+handling+tickets+with+HPC+faults\n* | 2351XLG01E host page* |",
+  "comments": [
+    {
+      "id": "357760638",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T14:35:26Z",
+      "body": "Ocean has created an incident for this issue. (P3-4A383136B0421F62E0635018000A64BA)"
+    },
+    {
+      "id": "357803255",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T16:56:06Z",
+      "body": "Ocean Stakeholder ACK from HPC team"
+    },
+    {
+      "id": "358018490",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T04:28:51Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358018497",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T04:29:08Z",
+      "body": "2351XLG01E   ALLOCATED   GPU_V4_X10-2C_32000_S.01   compute-nrt-ad1   ad1.ap-tokyo-1   Wed Feb 11 2026 04:19:08AM CST   NONE"
+    },
+    {
+      "id": "358019128",
+      "author": "Francisco Santos",
+      "created": "2026-02-11T04:29:34Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): Sunvts stress test failed\n2. What we did to address the issue (1 liner - high level):\nNo issue were found, host is allocated\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

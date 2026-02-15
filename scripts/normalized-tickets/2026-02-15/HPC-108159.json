@@ -1,0 +1,117 @@
+{
+  "ticket": {
+    "id": "55664801",
+    "key": "HPC-108159",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T09:38:53Z",
+    "resolved": "2026-02-10T15:55:41Z",
+    "updated": "2026-02-12T08:41:33Z"
+  },
+  "people": {
+    "assignee": "EDGAR MARTINEZ",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2551XQ1064",
+    "rack_serial": null
+  },
+  "labels": [
+    "2501ZA8015",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-3a2ac4a5-4e2d-448f-8de4-46679ffa71f7",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2650633",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | open problems"
+    },
+    {
+      "key": "HPC-104056",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-104327",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105135",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-109543",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-109691",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "6h 16m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : agfhc_level_1_to_5\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nagfhc_level_1_to_5 -\n\n(flag) *Debugging agfhc_level_1_to_5*\n\nSee the following runbooks for more information:\nas AMD GPU test: Identifying AMD Commands\\n\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2551XQ1064 |10.0.12.142 |2026-02-10T07:25:36Z |2026-02-10T09:24:00Z |aga4-qfab-3-400 |bldg4-block41-400 |aga4-q3-b41-t0-r1, aga4-q3-b41-t0-r2, aga4-q3-b41-t0-r3, aga4-q3-b41-t0-r4, aga4-q3-b41-t0-r5, aga4-q3-b41-t0-r6, aga4-q3-b41-t0-r7, aga4-q3-b41-t0-r8 |2501ZA8015 |bd159db4-4f31-416e-ba9e-faf893162185 |",
+  "comments": [
+    {
+      "id": "357680246",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T09:38:55Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357723444",
+      "author": "EDGAR MARTINEZ",
+      "created": "2026-02-10T12:19:07Z",
+      "body": "HN and TN with open problems\n\nM:ExtOC1:AGA:ad1:2551XQ1064>gpu_info\nSerial       Gpu\n2551XQ1064   H:2551XQ1064 T:2548XK103S sled:2548XK103S\nM:ExtOC1:AGA:ad1:2551XQ1064>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.35s/it]\nSerial       Datetime                    Location              Subsystem     Resource          Uuid                                   Serial   Part_No   Probability   Reference\n2551XQ1064\n             2026-02-10 07:10:13+00:00   PCIE1 (PCIe Slot 1)   PCI Devices   /SYS/CRB1/PCIE1   382f34df-b6d6-606b-cc66-a6c994fe804a   N/A      8216700   100           http://support.oracle.com/msg/SPAMD-8001-WR\nM:ExtOC1:AGA:ad1:2551XQ1064>host 2548XK103S\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 61.77it/s]\nQuerying Hops: 100% |  1/1 [00:00<00:00,  1.18it/s]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  3.46it/s]\nLoading extended information on 1 hosts:   0%|                                                   | 0/1 00:00<?, ?itLoading extended information on 1 hosts: 100%\n[INFO 2026-02-10 06:18:40,591] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2548XK103S>open_problems\nChecking open problems: 100% |  1/1 [00:03<00:00,  3.07s/it]\nSerial       Datetime                    Location                  Subsystem     Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2548XK103S\n             2026-02-10 07:17:25+00:00   PSB/PCIE1 (PCIE Card 1)   PCI Devices   /SYS/PSB/PCIE1   a3efdb14-6d03-e839-bf37-edd65ad18c2c   N/A      8225099   100           http://support.oracle.com/msg/SPGXTAIL-8000-Q8"
+    },
+    {
+      "id": "357723478",
+      "author": "EDGAR MARTINEZ",
+      "created": "2026-02-10T12:20:08Z",
+      "body": "Clearing open problems and performing cold drain."
+    },
+    {
+      "id": "357776837",
+      "author": "EDGAR MARTINEZ",
+      "created": "2026-02-10T15:28:18Z",
+      "body": "Open problems in TN persist\n\nM:ExtOC1:AGA:ad1:2551XQ1064>gpu_info\nSerial       Gpu\n2551XQ1064   H:2551XQ1064 T:2548XK103S sled:2548XK103S\nM:ExtOC1:AGA:ad1:2551XQ1064>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.37s/it]\nSerial\nM:ExtOC1:AGA:ad1:2551XQ1064>reload_hosts\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 61.27it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.15s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  1.34it/s]\nLoading extended information on 1 hosts:   0%|                                                   | 0/1 00Loading extended information on 1 hosts: 100%\n[INFO 2026-02-10 09:27:34,776] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2551XQ1064>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.88s/it]\nSerial\nM:ExtOC1:AGA:ad1:2551XQ1064>host 2548XK103S\nQuerying Storekeeper: 100% |  1/1 [00:00<00:00, 79.03it/s]\nQuerying Hops: 100% |  1/1 [00:00<00:00,  3.36it/s]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  3.35it/s]\nLoading extended information on 1 hosts:   0%|                                                   | 0/1 00Loading extended information on 1 hosts: 100%\n[INFO 2026-02-10 09:27:40,777] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2548XK103S>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.67s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2548XK103S\n             2026-02-10 12:21:15+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   13230906-d591-630e-bfbb-808d4800ab34   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW"
+    },
+    {
+      "id": "357784215",
+      "author": "EDGAR MARTINEZ",
+      "created": "2026-02-10T15:55:41Z",
+      "body": "cut DO-2650633"
+    }
+  ]
+}

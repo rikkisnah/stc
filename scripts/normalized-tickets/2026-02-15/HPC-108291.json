@@ -1,0 +1,82 @@
+{
+  "ticket": {
+    "id": "55699685",
+    "key": "HPC-108291",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | gpuburn_short",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T22:56:22Z",
+    "resolved": "2026-02-12T01:47:15Z",
+    "updated": "2026-02-13T00:41:43Z"
+  },
+  "people": {
+    "assignee": null,
+    "reporter": "jirasd-gear-compute-vmi-notifier-eu-amsterdam-1",
+    "watchers": 1
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2548XL11FH",
+    "rack_serial": null
+  },
+  "labels": [
+    "2550XL804V",
+    "AMS-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V5_X11-2C_32000_S.02",
+    "de-retrigger-feb11",
+    "sk-af7a7294-3853-484b-85d1-f5e5fd9e4cf2",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-105756",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-109982",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-109587",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AMS | ad1 | CPV Job Failure | BM.GPU.B300.8 | gpuburn_short"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "10h 3m",
+    "time_to_resolve": "26h 50m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : gpuburn_short\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ngpuburn_short -\n\n(flag) *Debugging gpuburn_short*\n\nSee the following runbooks for more information:\n1. How to Debug GPU Burn - PCIe Link Width Mismatch\n2. How to Debug GPU Burn - Pending Memory Remap\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.B300.8 |2548XL11FH |10.0.11.54 |2026-02-10T22:42:16Z |2026-02-10T22:42:45Z |ams4-qfab-3-400 |bldg4-block11-400 |ams4-q3-b11-t0-r100, ams4-q3-b11-t0-r101, ams4-q3-b11-t0-r102, ams4-q3-b11-t0-r103, ams4-q3-b11-t0-r104, ams4-q3-b11-t0-r105, ams4-q3-b11-t0-r106, ams4-q3-b11-t0-r107, ams4-q3-b11-t0-r108, ams4-q3-b11-t0-r109, ams4-q3-b11-t0-r110, ams4-q3-b11-t0-r111, ams4-q3-b11-t0-r112, ams4-q3-b11-t0-r97, ams4-q3-b11-t0-r98, ams4-q3-b11-t0-r99 |2550XL804V |d97800b2-82ae-4c36-9de7-d457d35a2bdf |",
+  "comments": [
+    {
+      "id": "357937582",
+      "author": "jirasd-gear-compute-vmi-notifier-eu-amsterdam-1",
+      "created": "2026-02-10T22:56:25Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358366490",
+      "author": "Lazaro Morales Pino",
+      "created": "2026-02-12T01:47:15Z",
+      "body": "Resolving to retest."
+    }
+  ]
+}

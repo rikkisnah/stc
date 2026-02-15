@@ -1,0 +1,106 @@
+{
+  "ticket": {
+    "id": "55691012",
+    "key": "HPC-108257",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | dcgm_level_4",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T20:10:15Z",
+    "resolved": "2026-02-13T20:43:46Z",
+    "updated": "2026-02-13T20:43:46Z"
+  },
+  "people": {
+    "assignee": "Rodrigo Ochoa",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2512XNG06F",
+    "rack_serial": null
+  },
+  "labels": [
+    "2512XN8012",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_GB200-NVL72_S.01",
+    "HSG-CPV",
+    "de-retrigger-feb11",
+    "sk-ff5ee7dd-7c9c-4312-a3ed-066e751e784f",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-56799",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-58736",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Timeout | BM.GPU.GB200.4 | nvbandwidth_multi"
+    },
+    {
+      "key": "HPC-60255",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | nvbandwidth_multi"
+    },
+    {
+      "key": "HPC-61518",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-102681",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Timeout | BM.GPU.GB200.4 | sunvts_burnin"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "23h 59m",
+    "time_to_resolve": "72h 33m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : dcgm_level_4\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ndcgm_level_4 -\n\n(flag) *Debugging dcgm_level_4*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check/4baaeeab-c925-4501-9c24-4cb8dfea1014/health_check_2512XNG06F.json\n - health_check_4baaeeab-c925-4501-9c24-4cb8dfea1014_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200.4 |2512XNG06F |10.0.15.88 |2026-02-10T19:13:58Z |2026-02-10T20:05:27Z |hsg3-ifab-1 |bldg3-block1 |hsg3-i1-su1-t0-r10, hsg3-i1-su1-t0-r11, hsg3-i1-su1-t0-r12, hsg3-i1-su1-t0-r9 |2512XN8012 |e48e3814-846a-4a02-b7e8-f18c271c4eab |",
+  "comments": [
+    {
+      "id": "357874362",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+      "created": "2026-02-10T20:10:30Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "359035113",
+      "author": "Rodrigo Ochoa",
+      "created": "2026-02-13T20:10:06Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "359035174",
+      "author": "Rodrigo Ochoa",
+      "created": "2026-02-13T20:10:58Z",
+      "body": "host has another IP, missing bio directory\n\nOverview for Host \"2512XNG06F\"\nCurrent Time: 2026-02-13T20:09:39Z\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 RESOURCESTATE \u2502 HOST       \u2502 IP          \u2502 TESTSTATE \u2502 TEST                                      \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Holding       \u2502 2512XNG06F \u2502 10.0.11.247 \u2502 Waiting   \u2502 initial_setup (1)                         \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502             \u2502 Success   \u2502 install_custom_oca_build (2)              \u2502\n\u2502               \u2502            \u2502             \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\nubuntu@instance20260212035714:~$ cd bio\n-bash: cd: bio: No such file or directory"
+    },
+    {
+      "id": "359044847",
+      "author": "Rodrigo Ochoa",
+      "created": "2026-02-13T20:43:30Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): dcgm_level_4\n2. What we did to address the issue (1 liner - high level): reset initial setup\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "ticket": {
+    "id": "55667205",
+    "key": "HPC-108174",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T11:09:02Z",
+    "resolved": "2026-02-11T06:16:31Z",
+    "updated": "2026-02-13T07:47:48Z"
+  },
+  "people": {
+    "assignee": "Imane Barakate",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ10BV",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8029",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-ba0ea0be-17dd-431c-8fb1-b6993f1477c4",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2653086",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "RHS-79480",
+      "relation": "relates to",
+      "status": "Closed",
+      "summary": "[Standard] |  AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-105160",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-106201",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-107337",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-107557",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-110106",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "19h 7m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 2 times in past 12 hours\nRepairScript invoked 1 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/43014080-ccb9-43d2-a3b1-58659c8b3b12/health_check_2552XQ10BV.json\n - health_check_43014080-ccb9-43d2-a3b1-58659c8b3b12_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ10BV |10.0.11.145 |2026-02-10T10:55:46Z |2026-02-10T10:58:56Z |aga4-qfab-3-400 |bldg4-block47-400 |aga4-q3-b47-t0-r1, aga4-q3-b47-t0-r2, aga4-q3-b47-t0-r3, aga4-q3-b47-t0-r4, aga4-q3-b47-t0-r5, aga4-q3-b47-t0-r6, aga4-q3-b47-t0-r7, aga4-q3-b47-t0-r8 |2552ZA8029 |43014080-ccb9-43d2-a3b1-58659c8b3b12 |",
+  "comments": [
+    {
+      "id": "357704219",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T11:09:04Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357754912",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:14:31Z",
+      "body": "Open problem detected on the TN (non spurious):\n * ILOM has determined that a problem in an upstream device has caused a PCIe reset failure\n\n    \"gpu\": \"H:2552XQ10BV T:2602XK10A1 sled:2602XK10A1\"\n\nM:ExtOC1:AGA:ad1:2602XK10A1>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.82s/it]\n{\n    \"2602XK10A1\": [\n        {\n            \"dateTime\": \"2026-02-10 08:07:56+00:00\",\n            \"location\": \"PSB/CDFP8 (Container)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/PSB/CDFP8\",\n            \"uuid\": \"ac48a986-29b5-436b-b50a-c1e118bd8dfc\",\n            \"serial\": \"N/A\",\n            \"part_no\": \"N/A\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPGXTAIL-8000-KW\"\n        }\n    ]\n}"
+    },
+    {
+      "id": "357757477",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:24:11Z",
+      "body": "Dr. hpc's gpu and walk_pcie health checks failed on the host with the below output\n\n               'summary': {'failed_tests': ['gpu', 'walk_pcie'], 'status': 'FAIL', 'warning': ['gpu', 'diagnostics']},\n\n 'walk_pcie': [{'gpus': {'0000:9b:00.0': {'device_name': ' Broadcom / LSI PEX890xx PCIe Gen 5 Switch (rev b0) (prog-if 00 [Normal decode])',\n                                                        'link_speed': 'FAIL - Max link speed: 32GT/s, Current link speed: 16GT/s'}},\n                              'rdmas': {'0000:9b:00.0': {'device_name': ' Broadcom / LSI PEX890xx PCIe Gen 5 Switch (rev b0) (prog-if 00 [Normal decode])',\n                                                         'link_speed': 'FAIL - Max link speed: 32GT/s, Current link speed: 16GT/s'}},\n                              'status': 'FAIL'}]}}\n\n'gpu': [{'bad-pages': {'status': 'PASS'}},\n                       {'retired-pages': {0: {'retired': 'PASS'},\n                                          1: {'retired': 'PASS'},\n                                          2: {'retired': 'PASS'},\n                                          3: {'retired': 'PASS'},\n                                          4: {'retired': 'PASS'},\n                                          5: {'retired': 'PASS'},\n                                          6: {'retired': 'PASS'},\n                                          7: {'retired': 'PASS'},\n                                          'status': 'PASS'}},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'cdfp': 'FAIL - Mismatch for PCI 0000:0d:00.0: Expected module_id 7, found 6, Mismatch for PCI 0000:5d:00.0: Expected module_id 6, '\n                                'found 7'},\n                       {'max_clock_speed': 'WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 '\n                                           'GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7'},\n                       {'device_count': 'PASS'},\n                       {'xgmi': 'PASS', 'xgmi_error': 'PASS'}],"
+    },
+    {
+      "id": "357758928",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:28:39Z",
+      "body": "The hwdiag i2c test failed for the HN\n\ndiag> hwdiag i2c test all\nHWdiag (Diag Shell) - Build Number 167990 (Mon Jan 12 11:01:54 PST 2026)\n         Current Date/Time: Feb 10 2026, 14:16:44\nPlatform - WB SERVER E6-IS\n  I2C DEVICE                          CHIP                 BUS/MUX1/CH1/MUX0/CH0/ADDR   RESULT\n  --------------------------------------------------------------------------------------------\n  /SYS/MB/CLK_MNG                     9FGP204BKLFT          1/FF/FF/FF/FF/C0            OK\n  /SYS/MB/CLK_GEN1                    9SQ440NQQI8           1/FF/FF/FF/FF/D2            OK\n  /SYS/MB/CLK_GEN2                    9QXL2001BNHGI8        1/FF/FF/FF/FF/CA            OK\n  /SYS/MB/CLK_GEN3                    9QXL2001BNHGI8        1/FF/FF/FF/FF/DE            OK\n  /SYS/MB/CLK_GEN4                    9ZXL0851EKILFT        1/FF/FF/FF/FF/D8            OK\n  /SYS/MB/VRD_MUX                     PCA9542               2/FF/FF/FF/FF/E0            OK\n  /SYS/MB/VDD_CORE0_CPU1_REN          RAA229620GNP          2/FF/FF/E0/00/C2            OK\n  /SYS/MB/VDD_CORE1_CPU1_REN          RAA229620GNP          2/FF/FF/E0/00/C4            OK\n  /SYS/MB/VDD_IO_CPU1_REN             RAA229621GNP          2/FF/FF/E0/00/C6            OK\n  /SYS/MB/VDD_CORE0_CPU2_REN          RAA229620GNP          2/FF/FF/E0/01/E8            OK\n  /SYS/MB/VDD_CORE1_CPU2_REN          RAA229620GNP          2/FF/FF/E0/01/EA            OK\n  /SYS/MB/VDD_IO_CPU2_REN             RAA229621GNP          2/FF/FF/E0/01/EC            OK\n  /SYS/MB/FANCTRL1_1                  MAX31790              3/FF/FF/FF/FF/58            OK\n  /SYS/MB/FANCTRL2_1                  MAX31790              3/FF/FF/FF/FF/5E            OK\n  /SYS/PDB/CPLD/CTL                   LCMXO2_4000           3/FF/FF/FF/FF/12            OK\n  /SYS/PDB/CPLD/EFB0                  LCMXO2_4000_EFB       3/FF/FF/FF/FF/B8            OK\n  /SYS/PDB/CPLD/EFB1                  LCMXO2_4000_EFB       3/FF/FF/FF/FF/BA            OK\n  /SYS/PDB/VRD12V                     RAA228004GNPHA        3/FF/FF/FF/FF/C0            OK\n  /SYS/PDB/VRD12V_STBY                RAA228000GNPHA        3/FF/FF/FF/FF/C2            OK\n  /SYS/PDB/HSC48V_FAN1                TPS16890VMAR          3/FF/FF/FF/FF/8A            OK\n  /SYS/PDB/HSC48V_FAN2                TPS16890VMAR          3/FF/FF/FF/FF/8C            OK\n  /SYS/PDB/HSC48V_FAN3                TPS16890VMAR          3/FF/FF/FF/FF/8E            OK\n  /SYS/PDB/HSC48V_FAN4                TPS16890VMAR          3/FF/FF/FF/FF/90            OK\n  /SYS/PDB/HSC48V                     LTC4286AUK            3/FF/FF/FF/FF/82            OK\n  /SYS/PDB/HSC48V_AUX                 LTC4286AUK            3/FF/FF/FF/FF/86            OK\n  /SYS/PDB/HSC48V_PLD                 LTC4286AUK            3/FF/FF/FF/FF/84            OK\n  /SYS/PDB/FRUID                      M24256_BFMC6TG        3/FF/FF/FF/FF/A6            OK\n  /SYS/PDB/TEMP                       TMP1075DR             3/FF/FF/FF/FF/92            OK\n  /SYS/PDB/LEAK_DET                   MAX1363               3/FF/FF/FF/FF/6A            OK\n  /SYS/MB/INLET_TEMP                  TMP1075DR             4/FF/FF/FF/FF/92            OK\n  /SYS/MB/OUTLET1_TEMP                TMP1075DR             4/FF/FF/FF/FF/94            OK\n  /SYS/MB/OUTLET2_TEMP                TMP1075DR             4/FF/FF/FF/FF/90            OK\n  /SYS/MB/FRUID                       M24C64_FMN6TP         4/FF/FF/FF/FF/A0            OK\n  /SYS/MB/CPLD/CTL                    LCMXO3LF_9400C        4/FF/FF/FF/FF/12            OK\n  /SYS/SP/TEMP                        TMP1075DR             5/FF/FF/FF/FF/92            OK\n  /SYS/SP/RTC                         DS1338                6/FF/FF/FF/FF/D0            OK\n  /SYS/MB/PCA9547_SMB6                PCA9547               6/FF/FF/FF/FF/E2            OK\n  /SYS/CRB1/FRUID                     M24256_BFMC6TG        6/FF/FF/E2/01/AE            OK\n  /SYS/CRB1/TEMP                      TMP1075DR             6/FF/FF/E2/01/92            OK\n  /SYS/CRB1/PCIE1/GXR3                AT24C128              6/FF/FF/E2/01/A0            OK\n  /SYS/CRB1/PCIE1/GXR3_STATUS         PCA9554A              6/FF/FF/E2/01/42            OK\n  /SYS/CRB2/FRUID                     M24256_BFMC6TG        6/FF/FF/E2/03/AE            OK\n  /SYS/CRB2/TEMP                      TMP1075DR             6/FF/FF/E2/03/92            OK\n  /SYS/CRB2/PCIE2/GXR3                AT24C128              6/FF/FF/E2/03/A0            OK\n  /SYS/CRB2/PCIE2/GXR3_STATUS         PCA9554A              6/FF/FF/E2/03/42            OK\n  /SYS/CRB3/FRUID                     M24256_BFMC6TG        6/FF/FF/E2/05/AE            OK\n  /SYS/CRB3/TEMP                      TMP1075DR             6/FF/FF/E2/05/92            OK\n  /SYS/CRB3/PCIE3/GXR3                AT24C128              6/FF/FF/E2/05/A0            OK\n  /SYS/CRB3/PCIE3/GXR3_STATUS         PCA9554A              6/FF/FF/E2/05/42            OK\n  /SYS/CRB7/FRUID                     M24256_BFMC6TG        6/FF/FF/E2/07/AE            OK\n  /SYS/CRB7/TEMP                      TMP1075DR             6/FF/FF/E2/07/92            OK\n  /SYS/CRB7/PCIE7/GXR3                AT24C128              6/FF/FF/E2/07/A0            OK\n  /SYS/CRB7/PCIE7/GXR3_STATUS         PCA9554A              6/FF/FF/E2/07/42            OK\n  /SYS/SP/FRUID                       M24256_BRMN6TP        8/FF/FF/FF/FF/A0            OK\n  /SYS/SP/CPLD/CTL                    LCMXO3LF_4300         8/FF/FF/FF/FF/12            OK\n  /SYS/SP/CPLD/EFB0                   LCMXO3LF_4300_EFB     8/FF/FF/FF/FF/80            OK\n  /SYS/SP/CPLD/EFB1                   LCMXO3LF_4300_EFB     8/FF/FF/FF/FF/82            OK\n  /SYS/SP/LED_DIMMER                  PCA9532               9/FF/FF/FF/FF/C0            OK\n  /SYS/MB/HPM_I2C_MUX2                PCA9547              10/FF/FF/FF/FF/E0            OK\n  /SYS/CRB8/FRUID                     M24256_BFMC6TG       10/FF/FF/E0/02/AE            OK\n  /SYS/CRB8/TEMP                      TMP1075DR            10/FF/FF/E0/02/92            OK\n  /SYS/CRB8/PCIE8/GXR3                AT24C128             10/FF/FF/E0/02/A0            OK\n  /SYS/CRB8/PCIE8/GXR3_STATUS         PCA9554A             10/FF/FF/E0/02/42            OK\n  /SYS/MB/HPM_I2C_MUX3                PCA9547              10/FF/FF/FF/FF/E2            OK\n  /SYS/CRB4/FRUID                     M24256_BFMC6TG       10/FF/FF/E2/01/AE            OK\n  /SYS/CRB4/TEMP                      TMP1075DR            10/FF/FF/E2/01/92            OK\n  /SYS/CRB4/PCIE4/GXR3                AT24C128             10/FF/FF/E2/01/A0            OK\n  /SYS/CRB4/PCIE4/GXR3_STATUS         PCA9554A             10/FF/FF/E2/01/42            OK\n  /SYS/CRB6/FRUID                     M24256_BFMC6TG       10/FF/FF/E2/02/AE            OK\n  /SYS/CRB6/TEMP                      TMP1075DR            10/FF/FF/E2/02/92            OK\n  /SYS/CRB6/PCIE6/GXR3                AT24C128             10/FF/FF/E2/02/A0            OK\n  /SYS/CRB6/PCIE6/GXR3_STATUS         PCA9554A             10/FF/FF/E2/02/42            OK\n  /SYS/CRB5/FRUID                     M24256_BFMC6TG       10/FF/FF/E2/05/AE            OK\n  /SYS/CRB5/TEMP                      TMP1075DR            10/FF/FF/E2/05/92            OK\n  /SYS/CRB5/PCIE5/GXR3                AT24C128             10/FF/FF/E2/05/A0            OK\n  /SYS/CRB5/PCIE5/GXR3_STATUS         PCA9554A             10/FF/FF/E2/05/42            OK\n  /SYS/MB/CPU1/SBRMI                  SBRMI                11/FF/FF/FF/FF/78            OK\n  /SYS/MB/CPU1/SBTSI                  SBTSI                11/FF/FF/FF/FF/98            OK\n  /SYS/SP/ROT_PCA9555                 PCA9555              12/FF/FF/FF/FF/40            OK\n  /SYS/FIM                            AT24C64              13/FF/FF/FF/FF/A0            OK\n  /SYS/FIM/TEMP                       ADT7461              13/FF/FF/FF/FF/98            OK\n  /SYS/MB/CPU2/SBRMI                  SBRMI                14/FF/FF/FF/FF/70            OK\n  /SYS/MB/CPU2/SBTSI                  SBTSI                14/FF/FF/FF/FF/90            OK\n  /SYS/MB/DBG_EEPROM1                 M24C64_FMN6TP        15/FF/FF/FF/FF/A4            OK\n  /SYS/MB/DBG_EEPROM2                 M24C64_FMN6TP        16/FF/FF/FF/FF/A4            Access failed\nI2C Test Result: FAILED"
+    },
+    {
+      "id": "357761367",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:39:15Z",
+      "body": "The pcie switch at the address 0000:9b:00.0's status is Active and trauning done\n\nSWITCH: PCIE_SW3\n    Retimer 3      STATION: 0 ACTIVE: yes, TRAINING: done, Gen4x16, SLOT: NA, TYPE: Upstream Port of PCI Express Switch\n                              BUSES: 9B (9C<->B0), CAP: Gen5x16, DIDVID: C0301000, SUB_DIDVID: 00721000\n    PCIe Slot 3    STATION: 1 ACTIVE: yes, TRAINING: done, Gen5x16, SLOT: 0, TYPE: Downstream Port of PCI Express Switch\n                              BUSES: 9E (9F<->A2), CAP: Gen5x16, DIDVID: C0301000, SUB_DIDVID: 00721000\n    OAM8           STATION: 2 ACTIVE: yes, TRAINING: done, Gen5x16, SLOT: 0, TYPE: Downstream Port of PCI Express Switch\n                              BUSES: A4 (A5<->A7), CAP: Gen5x16, DIDVID: C0301000, SUB_DIDVID: 00721000\n    DBP2_SSD5      STATION: 3 ACTIVE: yes, TRAINING: done, Gen4x4, SLOT: 54, TYPE: Downstream Port of PCI Express Switch\n                              BUSES: A9 (AD<->AD), CAP: Gen5x4, DIDVID: C0301000, SUB_DIDVID: 00721000\n\nubuntu@bio-2552xq10bv:~$ sudo dmesg -T | grep 0000:9b:00.0\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0: [1000:c030] type 01 class 0x060400\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0: reg 0x10: [mem 0xb8000000-0xb8ffffff]\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0: PME# supported from D0 D3hot D3cold\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0: 252.048 Gb/s available PCIe bandwidth, limited by 16.0 GT/s PCIe x16 link at 0000:9a:01.1 (capable of 504.112 Gb/s with 32.0 GT/s PCIe x16 link)\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0: PCI bridge to [bus 9c-b0]\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0:   bridge window [mem 0xb9000000-0xb9cfffff]\n[Tue Feb 10 10:41:12 2026] pci 0000:9b:00.0:   bridge window [mem 0x378000000000-0x384183ffffff 64bit pref]\n[Tue Feb 10 10:41:19 2026] pci 0000:9b:00.0: PCI bridge to [bus 9c-b0]\n[Tue Feb 10 10:41:19 2026] pci 0000:9b:00.0:   bridge window [mem 0xb9000000-0xb9cfffff]\n[Tue Feb 10 10:41:19 2026] pci 0000:9b:00.0:   bridge window [mem 0x378000000000-0x384183ffffff 64bit pref]\n[Tue Feb 10 10:41:21 2026] pci 0000:9b:00.0: Adding to iommu group 286"
+    },
+    {
+      "id": "357762864",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T14:43:49Z",
+      "body": "Raised RHS-79480 to RHS and pending their input"
+    },
+    {
+      "id": "357778192",
+      "author": "Mihai Valcu",
+      "created": "2026-02-10T15:34:27Z",
+      "body": "[~imane.barakate@oracle.com]\n\nPlease open a new CHS case and ask them to :\n\nstop HN & TN\nrecheck the HN to TN CDFP cables physically ( do not run the cable flow as it might not show the correct result )\nThe CDFP cables from SYS/CRB1/PCIE1  &  /SYS/CRB2/PCIE2 might be reversed.\nThey should be like below\n\n!Screenshot 2026-02-10 at 17.25.43.png|width=571,height=156!\n\nOnce the cabling issue is fixed or if CHS says the cables are connected as shown above, start /SYS and recheck the OAM mapping ( either with amd-smi or just run healtcheck again ).\nIf the issue still persists, please reload the live image (probably terminate and relaunch the instance on this host)."
+    },
+    {
+      "id": "358044390",
+      "author": "Mathew Nobel Mammen",
+      "created": "2026-02-11T06:16:31Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Cut a DO DO-2653086\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

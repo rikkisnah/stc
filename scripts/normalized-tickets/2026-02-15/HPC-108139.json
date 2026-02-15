@@ -1,0 +1,141 @@
+{
+  "ticket": {
+    "id": "55660795",
+    "key": "HPC-108139",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:38:50Z",
+    "resolved": "2026-02-10T10:40:11Z",
+    "updated": "2026-02-12T17:12:02Z"
+  },
+  "people": {
+    "assignee": "Imane Barakate",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ10F6",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8014",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-56215eb7-525b-42fc-84f3-4f61663030dd",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-104707",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-105007",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-105829",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-106882",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-109684",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-109751",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-109785",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-109819",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "DO-2650065",
+      "relation": "is resolved by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | cdfp cabling error"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "3h 1m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 2 times in past 12 hours\nRepairScript invoked 1 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/79a1a221-a7de-401d-ae7a-b34deb697989/health_check_2552XQ10F6.json\n - health_check_79a1a221-a7de-401d-ae7a-b34deb697989_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ10F6 |10.0.13.0 |2026-02-10T07:18:38Z |2026-02-10T07:21:48Z |aga4-qfab-3-400 |bldg4-block42-400 |aga4-q3-b42-t0-r10, aga4-q3-b42-t0-r11, aga4-q3-b42-t0-r12, aga4-q3-b42-t0-r13, aga4-q3-b42-t0-r14, aga4-q3-b42-t0-r15, aga4-q3-b42-t0-r16, aga4-q3-b42-t0-r9 |2603ZA8014 |79a1a221-a7de-401d-ae7a-b34deb697989 |",
+  "comments": [
+    {
+      "id": "357644845",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:38:52Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357694141",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:26:53Z",
+      "body": "* No open problems detected on the HN\n * Non spurious open problem detected on the TN (SPGXTAIL-8000-KW)\n\n    \"gpu\": \"H:2552XQ10F6 T:2552XK105L sled:2552XK105L\"\n\nM:ExtOC1:AGA:ad1:2552XQ10F6>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.26s/it]\n{}\n\nM:ExtOC1:AGA:ad1:2552XK105L>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.64s/it]\n{\n    \"2552XK105L\": [\n        {\n            \"dateTime\": \"2026-02-10 01:08:27+00:00\",\n            \"location\": \"PSB/CDFP6 (Container)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/PSB/CDFP6\",\n            \"uuid\": \"0e28070c-2e6d-cf6d-9cf2-a5c74dc365f7\",\n            \"serial\": \"N/A\",\n            \"part_no\": \"N/A\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPGXTAIL-8000-KW\"\n        }\n    ]\n}\n\nHostname: ORACLESP-2552XK105L-> show /system/open_problemsOpen Problems (1)\nDate/Time                 Subsystems          Component\n------------------------  ------------------  ------------\nTue Feb 10 01:08:27 2026  System              PSB/CDFP6 (Container)\n        ILOM has determined that a problem in an upstream device has caused a PCIe reset failure. (Probability:100, UUID:0e28070c-2e6d-cf6d-9cf2-a5c74dc365f7, Resource:/SYS/PSB/CDFP6, Part\n        Number:N/A, Serial Number:N/A, Reference Document:http://support.oracle.com/msg/SPGXTAIL-8000-KW)"
+    },
+    {
+      "id": "357694173",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:27:55Z",
+      "body": "Dr. hpc's authetntication and gpu health checks failed with the below output\n\nHealth Check starts at: 2026-02-10 10:24:14.503551\nHealth Check finishes at: 2026-02-10 10:25:35.289815, Elapsed time: 80.79 s\n\n 'summary': {'failed_tests': ['authentication', 'gpu'], 'status': 'FAIL', 'warning': ['gpu']},\n\n{'authentication': [{'device': 'enp8s0', 'status': 'PASS'},\n                                  {'device': 'enp33s0', 'status': 'PASS'},\n                                  {'device': 'enp88s0', 'status': 'PASS'},\n                                  {'device': 'enp112s0', 'status': 'FAIL'},\n                                  {'device': 'enp137s0', 'status': 'PASS'},\n                                  {'device': 'enp162s0', 'status': 'PASS'},\n                                  {'device': 'enp215s0', 'status': 'PASS'},\n                                  {'device': 'enp239s0', 'status': 'PASS'}],\n\n 'gpu': [{'retired-pages': {0: {'retired': 'PASS'},\n                                          1: {'retired': 'PASS'},\n                                          2: {'retired': 'PASS'},\n                                          3: {'retired': 'PASS'},\n                                          4: {'retired': 'PASS'},\n                                          5: {'retired': 'PASS'},\n                                          6: {'retired': 'PASS'},\n                                          7: {'retired': 'PASS'},\n                                          'status': 'PASS'}},\n                       {'bad-pages': {'status': 'PASS'}},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'max_clock_speed': 'WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 '\n                                           'GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7'},\n                       {'device_count': 'PASS'},\n                       {'cdfp': 'FAIL - Mismatch for PCI 0000:0d:00.0: Expected module_id 7, found 4, Mismatch for PCI 0000:a7:00.0: Expected module_id 4, '\n                                'found 7'},\n                       {'xgmi': 'PASS', 'xgmi_error': 'PASS'}],"
+    },
+    {
+      "id": "357695073",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:31:24Z",
+      "body": "The wpa tool indicates the interface enp112s0's supplicant state is Authenticated and authorized\n\nubuntu@bio-2552xq10f6:~$ sudo wpa_cli status -i enp112s0\nbssid=01:80:c2:00:00:03\nfreq=0\nssid=\nid=0\nmode=station\npairwise_cipher=NONE\ngroup_cipher=NONE\nkey_mgmt=IEEE 802.1X (no WPA)\nwpa_state=COMPLETED\nip_address=192.168.29.0\naddress=04:90:81:39:db:60\nSupplicant PAE state=AUTHENTICATED\nsuppPortStatus=Authorized\nEAP state=SUCCESS\nselectedMethod=13 (EAP-TLS)\neap_tls_version=TLSv1.2\nEAP TLS cipher=ECDHE-RSA-AES256-GCM-SHA384\ntls_session_reused=0\neap_session_id=0d95481d5e152f49298bf9115754fcab97ea1922dc04de7d00109ab72a96d9af54703905d6a78f101fea7cf68803a05f6fc60914a7a3b6c3f811e08d67f3e983f9\nuuid=8fa556de-8489-5a97-8a22-efcd885797e1"
+    },
+    {
+      "id": "357696188",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:34:21Z",
+      "body": "Reran the health checks and the authentication test passed\n\n               'summary': {'failed_tests': ['gpu'], 'status': 'FAIL', 'warning': ['gpu']},\n\n 'gpu': [{'bad-pages': {'status': 'PASS'}},\n                       {'retired-pages': {0: {'retired': 'PASS'},\n                                          1: {'retired': 'PASS'},\n                                          2: {'retired': 'PASS'},\n                                          3: {'retired': 'PASS'},\n                                          4: {'retired': 'PASS'},\n                                          5: {'retired': 'PASS'},\n                                          6: {'retired': 'PASS'},\n                                          7: {'retired': 'PASS'},\n                                          'status': 'PASS'}},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'device_count': 'PASS'},\n                       {'cdfp': 'FAIL - Mismatch for PCI 0000:0d:00.0: Expected module_id 7, found 4, Mismatch for PCI 0000:a7:00.0: Expected module_id 4, '\n                                'found 7'},\n                       {'max_clock_speed': 'WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 '\n                                           'GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7'},\n                       {'xgmi': 'PASS', 'xgmi_error': 'PASS'}],"
+    },
+    {
+      "id": "357697366",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:40:00Z",
+      "body": "Raised   DO-2650065 to CHS and will mark the ticket as resolved to allow the test to rerun once their action is done"
+    }
+  ]
+}

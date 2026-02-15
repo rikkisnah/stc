@@ -1,0 +1,93 @@
+{
+  "ticket": {
+    "id": "55655523",
+    "key": "HPC-108099",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | cable_validation",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T04:17:37Z",
+    "resolved": "2026-02-12T12:28:43Z",
+    "updated": "2026-02-13T13:28:36Z"
+  },
+  "people": {
+    "assignee": "SANDEEP REDDY",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2602XQ11MZ",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8050",
+    "CPV-",
+    "CPV-Triage",
+    "FYV-CPV",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-c5ef7c29-92ba-41fc-b30f-9e54dafa62b3",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-110209",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-109763",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "56h 11m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : cable_validation\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ncable_validation -\n\n(flag) *Debugging cable_validation*\n\nSee the following runbooks for more information:\nHow to Debug Cable Validation Failures\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2602XQ11MZ |10.0.121.114 |2026-02-10T03:59:14Z |2026-02-10T04:00:22Z |fyv4-qfab-2-400 |bldg4-block19-400 |fyv4-q2-b19-t0-r17, fyv4-q2-b19-t0-r18, fyv4-q2-b19-t0-r19, fyv4-q2-b19-t0-r20, fyv4-q2-b19-t0-r21, fyv4-q2-b19-t0-r22, fyv4-q2-b19-t0-r23, fyv4-q2-b19-t0-r24 |2604ZA8050 |0dd91cdd-73be-4d77-ad9c-014b6bb55c5d |",
+  "comments": [
+    {
+      "id": "357588597",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-10T04:17:38Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357603749",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-10T05:13:53Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358514912",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T12:26:30Z",
+      "body": "ubuntu@bio-2602xq11mz:~$ rdma link\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\nubuntu@bio-2602xq11mz:~$"
+    },
+    {
+      "id": "358514936",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T12:27:11Z",
+      "body": "Performed DPC as its first occurrence"
+    },
+    {
+      "id": "358514940",
+      "author": "SANDEEP REDDY",
+      "created": "2026-02-12T12:27:22Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Performed DPC\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

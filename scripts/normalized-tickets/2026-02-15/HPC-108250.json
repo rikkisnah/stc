@@ -1,0 +1,184 @@
+{
+  "ticket": {
+    "id": "55687097",
+    "key": "HPC-108250",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_alltoall_perf_2_hosts",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T19:09:33Z",
+    "resolved": "2026-02-11T09:10:24Z",
+    "updated": "2026-02-12T01:51:10Z"
+  },
+  "people": {
+    "assignee": "Rajat Rajat",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2539XK107T, 2540XK10BK",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8005",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-a1fbee21-bdc1-4da8-812b-ffcd13e3c5b2",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-99907",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-100220",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-100260",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | gpuburn_short"
+    },
+    {
+      "key": "HPC-100480",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-100510",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-100647",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-100679",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-101004",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | rccl_all_reduce_perf_2_hosts"
+    },
+    {
+      "key": "HPC-102831",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-103323",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_2_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-103437",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_4_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-103685",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 4829 | 2539XK107T | 2543XK1028 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-104677",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2540XK10BK | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-108180",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108978",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2540XK10BK | Meta CPV Validation Analysis"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "5h 50m",
+    "time_to_resolve": "14h"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : rccl_alltoall_perf_2_hosts\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nrccl_alltoall_perf_2_hosts -\n\n(flag) *Debugging rccl_alltoall_perf_2_hosts*\n\nSee the following runbooks for more information:\nas AMD GPU test: Identifying AMD Commands\\n\n\nRelevant logs\n\nOther uploaded files\n - health_check/e3654ca7-6fd6-4c39-b95c-2aaed754d983/health_check_2539XK107T.json\n - health_check_e3654ca7-6fd6-4c39-b95c-2aaed754d983_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2539XK107T |10.0.11.157 |2026-02-10T18:39:34Z |2026-02-10T18:56:00Z |aga4-qfab-3-400 |bldg4-block31-400 |aga4-q3-b31-t0-r1, aga4-q3-b31-t0-r2, aga4-q3-b31-t0-r3, aga4-q3-b31-t0-r4, aga4-q3-b31-t0-r5, aga4-q3-b31-t0-r6, aga4-q3-b31-t0-r7, aga4-q3-b31-t0-r8 |2552ZA8005 |a6adab93-5281-4a33-a758-b8052434600d |\n|BM.GPU.MI355X.8 |2540XK10BK |10.0.10.16 |2026-02-10T18:39:34Z |2026-02-10T18:56:00Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r1, aga4-q3-b32-t0-r2, aga4-q3-b32-t0-r3, aga4-q3-b32-t0-r4, aga4-q3-b32-t0-r5, aga4-q3-b32-t0-r6, aga4-q3-b32-t0-r7, aga4-q3-b32-t0-r8 |2601ZA8005 |a6adab93-5281-4a33-a758-b8052434600d |",
+  "comments": [
+    {
+      "id": "357853325",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T19:09:36Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358076457",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T08:20:58Z",
+      "body": "No OP found.\n\nM:ExtOC1:AGA:ad1:2 Hosts>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2539XK107T   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b11-t0-r17-compute8   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoac5gzv2wgcizm5t6c4yxqejn4w5hfi6mnfh446cjlel5za   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   4829   37     NONE   2552ZA8005    2026-02-09T23:06:01+00:00   NONE\n2540XK10BK   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b12-t0-r3-compute5    compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoaca64reabpluoccimulbga535qvllcaq6wa2sjpn6ynhhq   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   4921   25     NONE   2601ZA8005    2026-02-10T15:47:01+00:00   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2539XK107T   H:2539XK107T T:2543XK1028 sled:2543XK1028\n2540XK10BK   H:2540XK10BK T:2550XK10GE sled:2550XK10GE\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.11s/it]\nSerial\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.15s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2550XK10GE\n             2026-02-10 15:34:30+00:00   PSB/CDFP7 (Container)   System      /SYS/PSB/CDFP7   8cc2e9c8-8e62-ced8-dd1d-ecaf377b5b47   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "358077130",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T08:22:22Z",
+      "body": "ubuntu@bio-2539xk107t:~$ rdma link\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\nubuntu@bio-2539xk107t:~$"
+    },
+    {
+      "id": "358077602",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T08:24:08Z",
+      "body": "acceptable bandwidth is 70.\n\ncase $SHAPE in\n    BM.GPU.MI300X.8 | x10-2c.112.2048.mi300x.gpu )\n        export RCCL_MAX_SIZE=\"4G\"\n        export RCCL_SIZES=\"64M 256M 1G 4G ALL\"\n        export RCCL_QPS=\"1 2 4 16\"\n        RCCL_ACCEPTABLE_BW=70 ;;\n    BM.GPU.MI355X.8 | e6-2c.128.3072.mi355x.gpu | BM.GPU.MI355X-v1.8 | e6-2c.128.3072.mi355x.v1.gpu )\n        export RCCL_MAX_SIZE=\"4G\"\n        export RCCL_SIZES=\"64M 256M 1G 4G ALL\"\n        export RCCL_QPS=\"1 2 4 16\"\n        RCCL_ACCEPTABLE_BW=70 ;;\nesac"
+    },
+    {
+      "id": "358077619",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T08:24:37Z",
+      "body": "Performing a DPC"
+    },
+    {
+      "id": "358089015",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:08:59Z",
+      "body": "Post DPC bandwidth is above threshold.\n\nubuntu@bio-2539xk107t:~$ /opt/openmpi-4.1.6/bin/mpirun -H 10.0.10.16:8,10.0.11.157:8 -x NCCL_IB_HCA==ionic_0,ionic_2,ionic_3,ionic_4,ionic_5,ionic_7,ionic_8,ionic_9 -x PATH=/opt/openmpi-4.1.6/bin:/opt/rocm/bin:/home/ubuntu/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/ubuntu/go/bin:/usr/local/go/bin:/home/ubuntu/go/bin -x LD_LIBRARY_PATH=/opt/rocm/lib:/opt/rocm/lib64:/opt/rccl/build/release:/opt/amd-anp/build:/opt/openmpi-4.1.6/lib: -mca coll ^hcoll --bind-to numa -x NCCL_GDR_FLUSH_DISABLE=1 -x RCCL_GDR_FLUSH_GPU_MEM_NO_RELAXED_ORDERING=0 --mca btl ^vader,openib --mca osc ^ucx --mca pml ob1 --mca btl_tcp_if_include ens9np0 --mca oob_tcp_if_include ens9np0 -x NCCL_SOCKET_IFNAME=ens9np0 -x NCCL_IB_QPS_PER_CONNECTION=1 -x NCCL_TOPO_DUMP_FILE=/home/ubuntu/bio/jobs/results/rccl-alltoall_perf-n2-nproc16-mess64M-qp1-2026-02-10-183946.log.topo -x HSA_NO_SCRATCH_RECLAIM=1 -x NCCL_IB_TC=41 -x NCCL_IB_FIFO_TC=185 -x NCCL_IGNORE_CPU_AFFINITY=1 -x NCCL_PXN_DISABLE=0 -x NCCL_DMABUF_ENABLE=1 -x NCCL_DEBUG=WARN -x NCCL_DEBUG_SUBSYS=INIT,NET,IB,SOCK,PROXY,GRAPH,ENV -x NCCL_DEBUG_FILE=/tmp/rccl_%h_rank%r_pid%p.log -x NCCL_NET_OPTIONAL_RECV_COMPLETION=1 -x RCCL_IB_ABORT_ON_ERROR=1 -x NCCL_IB_USE_INLINE=1 -x IONIC_LOCKFREE=all -x NCCL_NET_PLUGIN=librccl-anp.so -x RCCL_LL128_FORCE_ENABLE=1 -x LD_PRELOAD=/opt/rccl/build/release/librccl.so.1.0 -N 8 -np 16 /opt/rccl-tests/build/alltoall_perf -b 64M -e 64M -f 2 -g 1 -c 1\n# Collective test starting: alltoall_perf\n# nThread 1 nGpus 1 minBytes 67108864 maxBytes 67108864 step: 2(factor) warmup iters: 5 iters: 20 agg iters: 1 validation: 1 graph: 0\n#\nrccl-tests: Version HEAD:e1b8a3a\n# Using devices\n#  Rank  0 Group  0 Pid  13346 on bio-2539xk107t device  0 [0000:75:00] AMD Instinct MI355X\n#  Rank  1 Group  0 Pid  13347 on bio-2539xk107t device  1 [0000:0d:00] AMD Instinct MI355X\n#  Rank  2 Group  0 Pid  13348 on bio-2539xk107t device  2 [0000:5d:00] AMD Instinct MI355X\n#  Rank  3 Group  0 Pid  13349 on bio-2539xk107t device  3 [0000:26:00] AMD Instinct MI355X\n#  Rank  4 Group  0 Pid  13350 on bio-2539xk107t device  4 [0000:f4:00] AMD Instinct MI355X\n#  Rank  5 Group  0 Pid  13351 on bio-2539xk107t device  5 [0000:8e:00] AMD Instinct MI355X\n#  Rank  6 Group  0 Pid  13352 on bio-2539xk107t device  6 [0000:dc:00] AMD Instinct MI355X\n#  Rank  7 Group  0 Pid  13353 on bio-2539xk107t device  7 [0000:a7:00] AMD Instinct MI355X\n#  Rank  8 Group  0 Pid  14857 on bio-2540xk10bk device  0 [0000:75:00] AMD Instinct MI355X\n#  Rank  9 Group  0 Pid  14858 on bio-2540xk10bk device  1 [0000:0d:00] AMD Instinct MI355X\n#  Rank 10 Group  0 Pid  14859 on bio-2540xk10bk device  2 [0000:5d:00] AMD Instinct MI355X\n#  Rank 11 Group  0 Pid  14860 on bio-2540xk10bk device  3 [0000:26:00] AMD Instinct MI355X\n#  Rank 12 Group  0 Pid  14861 on bio-2540xk10bk device  4 [0000:f4:00] AMD Instinct MI355X\n#  Rank 13 Group  0 Pid  14862 on bio-2540xk10bk device  5 [0000:8e:00] AMD Instinct MI355X\n#  Rank 14 Group  0 Pid  14863 on bio-2540xk10bk device  6 [0000:dc:00] AMD Instinct MI355X\n#  Rank 15 Group  0 Pid  14864 on bio-2540xk10bk device  7 [0000:a7:00] AMD Instinct MI355X\n#\n#                                                              out-of-place                       in-place\n#       size         count      type   redop    root     time   algbw   busbw #wrong     time   algbw   busbw #wrong\n#        (B)    (elements)                               (us)  (GB/s)  (GB/s)            (us)  (GB/s)  (GB/s)\n    67108864       1048576     float    none      -1    783.4   85.66   80.31      0    781.2   85.91   80.54    N/A\n# Errors with asterisks indicate errors that have exceeded the maximum threshold.\n# Out of bounds values : 0 OK\n# Avg bus bandwidth    : 80.4237\n#\n# Collective test concluded: alltoall_perf\n\nubuntu@bio-2539xk107t:~$"
+    },
+    {
+      "id": "358089041",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T09:10:06Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): rccl_alltoall_perf_2_hosts test failed\n2. What we did to address the issue (1 liner - high level): Post DPC bandwidth above threshold.\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

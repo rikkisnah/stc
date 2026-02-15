@@ -1,0 +1,111 @@
+{
+  "ticket": {
+    "id": "55684393",
+    "key": "HPC-108240",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T18:09:37Z",
+    "resolved": "2026-02-11T06:51:35Z",
+    "updated": "2026-02-12T23:32:17Z"
+  },
+  "people": {
+    "assignee": "Joselet Devasia",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ10EA, 2602XK102P",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8054",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-702d4b0d-18ae-4d40-834d-373e67d3a57d",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2653050",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "Host Serial: 2602XK102P | Open Problem found"
+    },
+    {
+      "key": "HPC-106013",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-106843",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-109579",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109935",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "6h 50m",
+    "time_to_resolve": "12h 41m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ10EA |10.0.13.246 |2026-02-10T16:05:09Z |2026-02-10T18:08:07Z |aga4-qfab-3-400 |bldg4-block44-400 |aga4-q3-b44-t0-r1, aga4-q3-b44-t0-r2, aga4-q3-b44-t0-r3, aga4-q3-b44-t0-r4, aga4-q3-b44-t0-r5, aga4-q3-b44-t0-r6, aga4-q3-b44-t0-r7, aga4-q3-b44-t0-r8 |2603ZA8054 |d9d238a6-6daa-4e78-9f35-4b6260243567 |\n|BM.GPU.MI355X.8 |2602XK102P |10.0.8.234 |2026-02-10T16:05:09Z |2026-02-10T18:08:07Z |aga4-qfab-3-400 |bldg4-block46-400 |aga4-q3-b46-t0-r1, aga4-q3-b46-t0-r2, aga4-q3-b46-t0-r3, aga4-q3-b46-t0-r4, aga4-q3-b46-t0-r5, aga4-q3-b46-t0-r6, aga4-q3-b46-t0-r7, aga4-q3-b46-t0-r8 |2603ZA8048 |d9d238a6-6daa-4e78-9f35-4b6260243567 |",
+  "comments": [
+    {
+      "id": "357829948",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T18:09:39Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358039180",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:50:48Z",
+      "body": "Host is in holding pool for the leader.\n\nNo OP on HN and TN.\n\nM:ExtOC1:AGA:ad1:2552XQ10EA>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2552XQ10EA   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b16-t0-r17-compute1   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoaclglumjx4i2kxvrqr3fz43uy6jnuxobwaudtok6dyw2qq   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   6308   8      NONE   2603ZA8054    2026-02-08T21:35:03+00:00   NONE\nM:ExtOC1:AGA:ad1:2552XQ10EA>gpu_info\nSerial       Gpu\n2552XQ10EA   H:2552XQ10EA T:2602XK1078 sled:2602XK1078\nM:ExtOC1:AGA:ad1:2552XQ10EA>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.96s/it]\nSerial\nM:ExtOC1:AGA:ad1:2552XQ10EA>host 2602XK1078\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.11s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.62s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  1.95it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.70it/s]\n[INFO 2026-02-11 11:18:56,830] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2602XK1078>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.92s/it]\nSerial"
+    },
+    {
+      "id": "358039733",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:52:30Z",
+      "body": "Found Non-spurious OP on TN of the worker.\n\nM:ExtOC1:AGA:ad1:2602XK102P>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2602XK102P   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b17-t0-r3-compute4   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacqbrgpmo3x33g4joxwizkuiwfw4pgumvwvxkaf2ab45ba   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   7942   20     NONE   2603ZA8048    2026-02-10T01:05:17+00:00   NONE\nM:ExtOC1:AGA:ad1:2602XK102P>gpu_info\nSerial       Gpu\n2602XK102P   H:2602XK102P T:2551XK10AZ sled:2551XK10AZ\nM:ExtOC1:AGA:ad1:2602XK102P>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.08s/it]\nSerial\nM:ExtOC1:AGA:ad1:2602XK102P>host 2551XK10AZ\nQuerying Storekeeper: 100% |  1/1 [00:01<00:00,  1.12s/it]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.66s/it]\nLoading 1 Hosts from Hops: 100% |  1/1 [00:00<00:00,  2.27it/s]\nLoading extended information on 1 hosts: 100% |  1/1 [00:00<00:00,  1.63it/s]\n[INFO 2026-02-11 11:19:27,301] Successfully loaded extended information about 1 hosts\nM:ExtOC1:AGA:ad1:2551XK10AZ>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.89s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2551XK10AZ\n             2026-02-10 00:52:12+00:00   PSB/CDFP6 (Container)   System      /SYS/PSB/CDFP6   b56d0ea9-f158-e4b4-8ca7-ab0289a43252   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:2551XK10AZ>"
+    },
+    {
+      "id": "358040439",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:56:52Z",
+      "body": "Raised DO-2653050"
+    },
+    {
+      "id": "358040459",
+      "author": "Joselet Devasia",
+      "created": "2026-02-11T05:57:46Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): ib_write_bw_pair failed\n2. What we did to address the issue (1 liner - high level): Cut a DO\n3. What was the Root Cause: Non-spurious OP found\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "ticket": {
+    "id": "55655966",
+    "key": "HPC-108103",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "IAD | ad1 | CPV Job Failure | BM.GPU.H100.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T04:53:40Z",
+    "resolved": "2026-02-10T16:32:58Z",
+    "updated": "2026-02-12T01:03:28Z"
+  },
+  "people": {
+    "assignee": "Javier Del Pino",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2343XLG002",
+    "rack_serial": null
+  },
+  "labels": [
+    "2344XL802L",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "IAD-CPV",
+    "de-retrigger-feb11",
+    "sk-d225ebe0-04b7-41c2-a712-253e85b9c71c",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-5775",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "IAD | ad1 | CPV Job Failure | ib_write_bw_pair | aecd7cd6-04d7-48b3-ae94-00b8e91ed063"
+    },
+    {
+      "key": "HPC-5840",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "IAD | ad1 | CPV Job Failure | nccl_all_reduce_perf_4_hosts | de9bbfb9-cc03-459b-b216-f73235deb870"
+    },
+    {
+      "key": "HPC-5850",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "IAD | ad1 | CPV Job Failure | nccl_all_reduce_perf_4_hosts | 37041ca0-574c-4945-aac6-d800c891bc42"
+    },
+    {
+      "key": "HPC-5856",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "IAD | ad1 | CPV Job Failure | nccl_all_reduce_perf_4_hosts | bee16ede-7e4a-40c2-8005-f07d1ab66647"
+    },
+    {
+      "key": "HPC-103576",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "IAD | ad1 | CPV Job Failure | BM.GPU.H100.8 | initial_setup"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "11h 39m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : initial_setup\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2343XLG002 |10.0.12.42 |2026-02-10T04:43:56Z |2026-02-10T04:44:10Z |bldg26-block15-200 |bldg26-block15-200 |iad26-q1-b15-t0-r25, iad26-q1-b15-t0-r26, iad26-q1-b15-t0-r27, iad26-q1-b15-t0-r28, iad26-q1-b15-t0-r29, iad26-q1-b15-t0-r30, iad26-q1-b15-t0-r31, iad26-q1-b15-t0-r32 |2344XL802L |d77fcf68-bac5-4f86-9bd3-38a3e217b9e0 |",
+  "comments": [
+    {
+      "id": "357593196",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T04:53:42Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357785613",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:00:08Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357786345",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:02:51Z",
+      "body": "no open problems found\n\nM:ExtOC1:IAD:ad1:2343XLG002>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.56s/it]\nSerial\nM:ExtOC1:IAD:ad1:2343XLG002>info\nSerial       Model                      Arch     Owner             Pxe_Image         Hops_Hostname                  Role      State       Halt_Mode   Instance_Id                                                                           Pool_Name     Job   Location               Bldg    Room      Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2343XLG002   GPU_V4_X10-2C_32000_S.01   X10-2C   compute-iad-ad1   ol7-uek6-x86_64   iad26-c1-b15-t0-r29-compute2   compute   ALLOCATED   False       ocid1.instance.oc1.iad.anuwcljr7rhxvoac3z2zk66mt5uen57mcievoksnj53nw6wghjzcokxtiura   broken_pool         OC1:us-ashburn-1:ad1   iad26   iad26.2   4116   18     NONE   2344XL802L    2026-01-29T03:24:06+00:00   NONE\nM:ExtOC1:IAD:ad1:2343XLG002>gpu_info\nSerial       Gpu\n2343XLG002   H:2343XLG002 T:2339XKU065 sled:2339XKU08Y\nM:ExtOC1:IAD:ad1:2343XLG002>instance_info\nHost         Pool_Name     Instance_Id\n2343XLG002   broken_pool   ocid1.instance.oc1.iad.anuwcljr7rhxvoac3z2zk66mt5uen57mcievoksnj53nw6wghjzcokxtiura\nM:ExtOC1:IAD:ad1:2343XLG002>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  1.00it/s]\nSerial       State       Tracking_State   Job\n2343XLG002   ALLOCATED   NONE             NONE\nM:ExtOC1:IAD:ad1:2343XLG002>\n\nM:ExtOC1:IAD:ad1:2339XKU065>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.05s/it]\nSerial\nM:ExtOC1:IAD:ad1:2339XKU065>"
+    },
+    {
+      "id": "357786379",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:03:26Z",
+      "body": "[opc@cpv-host-iad ~]$ cpv state overview -t host -k 2343XLG002\n2026/02/10 16:03:11 Reading state file state.json\n2026/02/10 16:03:11 Object Store client initialized with host url https://objectstorage.us-ashburn-1.oraclecloud.com\nOverview for type=host, key=2343XLG002\nOverview for Hosts\nOverview for Host \"2343XLG002\"\nCurrent Time: 2026-02-10T16:03:11Z\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 RESOURCESTATE \u2502 HOST       \u2502 IP         \u2502 TESTSTATE \u2502 TEST                             \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Holding       \u2502 2343XLG002 \u2502 10.0.12.42 \u2502 Failed    \u2502 initial_setup (1)                \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 fdt_level2 (5)                   \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 gpuburn_short (10)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 fdt_ist (30)                     \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 fdt_ist_2 (40)                   \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 fdt_ist_3 (50)                   \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 gpu_bandwidth (150)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 fdt_gpufielddiag (155)           \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 hpl_benchmark (160)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Success   \u2502 tinymeg_short (165)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 nccl_allreduce_perf_single (170) \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Failed    \u2502 cable_validation (170)           \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Failed    \u2502 wait_for_wpa (180)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 health_check (190)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 tinymeg_1500_iterations (230)    \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 sunvts_burnin (240)              \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 dcgm_level_4 (250)               \u2502\n\u2502               \u2502            \u2502            \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502               \u2502            \u2502            \u2502 Waiting   \u2502 cable_stress (470)               \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n[opc@cpv-host-iad ~]$"
+    },
+    {
+      "id": "357786861",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:04:59Z",
+      "body": "[opc@bio-2343xlg002 ~]$ uptime\n 16:03:38 up 11:35,  1 user,  load average: 0.34, 0.28, 0.24\n[opc@bio-2343xlg002 ~]$ cd bio/jobs/results/\n[opc@bio-2343xlg002 results]$ ls -l\ntotal 64\n-rw-rw-r-- 1 opc opc     3 Feb 10 04:43 block.json\ndrwxrwxr-x 3 opc opc    32 Feb 10 04:43 detailed_logs\n-rw-rw-r-- 1 opc opc 25910 Feb 10 04:44 execute.sh.log\n-rw-rw-r-- 1 opc opc    30 Feb 10 04:44 failed\n-rw-rw-r-- 1 opc opc  1640 Feb 10 04:43 host.json\n-rw-rw-r-- 1 opc opc  5981 Feb 10 04:44 initial_setup_d77fcf68-bac5-4f86-9bd3-38a3e217b9e0_AllResults.tgz.gz\n-rw-rw-r-- 1 opc opc     3 Feb 10 04:43 island.json\n-rw-rw-r-- 1 opc opc    82 Feb 10 04:43 job.json\ndrwxrwxr-x 2 opc opc     6 Jan 30 18:56 logs\n-rw-rw-r-- 1 opc opc   294 Feb 10 04:44 results.json\n-rw-rw-r-- 1 opc opc     3 Feb 10 04:43 tor.json\n[opc@bio-2343xlg002 results]$"
+    },
+    {
+      "id": "357787606",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:05:52Z",
+      "body": "[opc@bio-2343xlg002 results]$ cat results.json\n{\n  \"jobId\": \"d77fcf68-bac5-4f86-9bd3-38a3e217b9e0\",\n  \"testName\": \"initial_setup\",\n  \"testState\": \"Failed\",\n  \"endTime\": \"2026-02-10T04:44:10.640111921+00:00\",\n  \"details\": {},\n  \"failureDetails\": {\n    \"errorCode\": \"\",\n    \"logs\": {},\n    \"uploadedFiles\": {},\n    \"deferredTickets\": {}\n  }\n}\n[opc@bio-2343xlg002 results]$\n\n[opc@bio-2343xlg002 results]$ cat failed\nFailed to remove iperf3 on ol\n[opc@bio-2343xlg002 results]$\n\nFrom execute.sh.log\n\n+ echo 'Removing iperf3 on ol...'\nRemoving iperf3 on ol...\n+ sudo yum remove -y iperf3\nDependencies resolved.\n================================================================================\n Package           Arch        Version            Repository               Size\n================================================================================\nRemoving:\n iperf3            x86_64      3.5-10.el8_10      @ol8_appstream          230 k\nRemoving unused dependencies:\n lksctp-tools      x86_64      1.0.18-3.el8       @ol8_baseos_latest      252 k\n\nTransaction Summary\n================================================================================\nRemove  2 Packages\n\nFreed space: 482 k\nRunning transaction check\nTransaction check succeeded.\nRunning transaction test\nTransaction test succeeded.\nRunning transaction\nRPM: error: can't create transaction lock on /var/lib/rpm/.rpm.lock (Resource temporarily unavailable)\nError: Could not run transaction.\n+ '[' 1 -ne 0 ']'\n+ echo 'Failed to remove iperf3 on ol'\n+ writeResults Failed\n+ testState=Failed"
+    },
+    {
+      "id": "357790548",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:15:23Z",
+      "body": "[opc@bio-2343xlg002 results]$ sudo yum update\nFailed to set locale, defaulting to C.UTF-8\nLast metadata expiration check: 2:17:15 ago on Tue Feb 10 13:56:31 2026.\nError:\n Problem: cannot install both openmpi-2:4.1.1-5.el8.x86_64 from ol8_appstream and openmpi-4.1.7a1-1.2401033.x86_64 from @System\n  - package mpitests_openmpi-3.2.22-8f11314.2401033.x86_64 from @System requires libmpi.so.40()(64bit), but none of the providers can be installed\n  - package mpitests_openmpi-3.2.22-8f11314.2401033.x86_64 from @System requires liboshmem.so.40()(64bit), but none of the providers can be installed\n  - cannot install the best update candidate for package openmpi-4.1.7a1-1.2401033.x86_64\n  - problem with installed package mpitests_openmpi-3.2.22-8f11314.2401033.x86_64\n(try to add '--allowerasing' to command line to replace conflicting packages or '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)\n[opc@bio-2343xlg002 results]$"
+    },
+    {
+      "id": "357795508",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:30:43Z",
+      "body": "sending to reprovision"
+    },
+    {
+      "id": "357796076",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T16:32:58Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): initial_setup\n2. What we did to address the issue (1 liner - high level): reprovision\n3. What was the Root Cause: conflicting packages from different repos\n4. Runbook was helpful - N\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

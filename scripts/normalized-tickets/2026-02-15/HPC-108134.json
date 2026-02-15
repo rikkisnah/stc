@@ -1,0 +1,130 @@
+{
+  "ticket": {
+    "id": "55659691",
+    "key": "HPC-108134",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Maple-Please follow RHS team's action and cut a DO ticket",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T06:53:10Z",
+    "resolved": "2026-02-10T08:07:31Z",
+    "updated": "2026-02-10T08:07:38Z"
+  },
+  "people": {
+    "assignee": "Sai Krishna Pedagadi",
+    "reporter": "Damiao Zhang",
+    "watchers": 5
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": null,
+    "rack_serial": null
+  },
+  "labels": [
+    "computeAdmin-audit",
+    "postDispatcher_markHostAsBrokenWithFaultDetails"
+  ],
+  "links": [
+    {
+      "key": "RHS-78810",
+      "relation": "blocks",
+      "status": "Closed",
+      "summary": "[Standard] |  [Standard] | Maple-Please help to check if H100 host got hardware issues"
+    },
+    {
+      "key": "DO-2649853",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "2415XLG042 | Maple-Please follow RHS team's action  "
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "1h 14m"
+  },
+  "description": "Hi team.\n\nFor host : 2415XLG042, please follow RHS's action plan and help to cut a DO. ticket to replace GPU8.\nThanks.\n\nhttps://jira-sd.mc1.oracleiaas.com/browse/RHS-78810",
+  "comments": [
+    {
+      "id": "357631416",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T06:53:14Z",
+      "body": "Ocean has created an incident for this issue. (P2-4A48534B59B5871EE0632B16000A2A26)"
+    },
+    {
+      "id": "357628747",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T06:54:06Z",
+      "body": "Jira failed to sync to status change (In Progress) made in Ocean.  So Ocean's status has been reset to In Progress to match Jira"
+    },
+    {
+      "id": "357632273",
+      "author": "Shrey Shubham",
+      "created": "2026-02-10T06:58:22Z",
+      "body": "First Comment\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357640257",
+      "author": "Shrey Shubham",
+      "created": "2026-02-10T07:23:45Z",
+      "body": "HMS doesn't support GPU Allocated hosts, this needs to be checked by HPC so moving the ticket to their queue"
+    },
+    {
+      "id": "357641168",
+      "author": "Shrey Shubham",
+      "created": "2026-02-10T07:26:56Z",
+      "body": "^"
+    },
+    {
+      "id": "357644388",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T07:38:15Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357644908",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T07:38:44Z",
+      "body": "No customer instance running on the host"
+    },
+    {
+      "id": "357644964",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T07:39:54Z",
+      "body": "M:ExtOC1:LHR:ad3:2415XLG042>info_all\nSerial       Model                      Arch     Owner             Pxe_Image         Hops_Hostname                Role      State       Halt_Mode   Instance_Id   Pool_Name   Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                     Mac_Addr   Boot_Mac_Addr       Boot_Ip       Host_Ip   Ilom_Ip        Ilom_Host_Info                                                Rot                                                                      Ilom_Serial   Smartnic_Serials   Smartnic_Ips                                                            Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\n2415XLG042   GPU_V4_X10-2C_32000_S.01   X10-2C   compute-lhr-ad3   ol7-uek6-x86_64   lhr7-c1-b17-t0-r6-compute3   compute   ALLOCATED   False       None          None              OC1:uk-london-1:ad3   lhr7   lhr7.4   2207   18     NONE   2416XL8062    2026-02-09T10:38:00+00:00   NONE   sk-3769377f-80b6-461c-9203-533c2a389e2a   sk-829eafd2-5eb9-4969-b6d9-a0154f96f6c2   lhr7-c1-b17-t0-r6-compute3   NONE       b8:3f:d2:cc:5e:d6   169.254.0.1   NONE      10.161.49.78   lhr7-c1-b17-t0-r6-compute3-ilom-net-mgt.net.ad3.uk-london-1   Type: Rot3 Rot3Dns: lhr7-c1-b17-t0-r6-compute3-rot.net.ad3.uk-london-1   NONE          FPD22380270        10.4.157.5(lhr7-c1-b17-t0-r6-compute3-wic-port1.net.ad3.uk-london-1)    NONE                   NONE               H:2415XLG042 T:2409XKU0A6 sled:2409XKU04A\nM:ExtOC1:LHR:ad3:2415XLG042>"
+    },
+    {
+      "id": "357645525",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T07:41:33Z",
+      "body": "As per RHS action plan"
+    },
+    {
+      "id": "357647670",
+      "author": "jirasd-gear-compute-vmi-notifier-uk-london-1",
+      "created": "2026-02-10T07:51:35Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-3769377f-80b6-461c-9203-533c2a389e2a, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-10T07:47:13.632126373Z by user spedagad"
+    },
+    {
+      "id": "357653624",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T08:07:07Z",
+      "body": "As per RHS action plan, created DO-2649853"
+    },
+    {
+      "id": "357653635",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T08:07:17Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): As per RHS action plan, created DO-2649853\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

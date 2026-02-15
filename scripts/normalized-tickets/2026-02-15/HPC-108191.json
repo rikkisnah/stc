@@ -1,0 +1,110 @@
+{
+  "ticket": {
+    "id": "55674236",
+    "key": "HPC-108191",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Automated Tracking Request for host 2552XNG15U",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T13:55:22Z",
+    "resolved": "2026-02-10T14:55:07Z",
+    "updated": "2026-02-12T01:40:42Z"
+  },
+  "people": {
+    "assignee": "Sai Krishna Pedagadi",
+    "reporter": "Sankung Sillah",
+    "watchers": 4
+  },
+  "location": {
+    "region": "DFW",
+    "availability_domain": "dfw.ad1",
+    "building": "dfw5",
+    "rack_type": null,
+    "host_serial": "2552XNG15U",
+    "rack_serial": null
+  },
+  "labels": [
+    "TRS_RMA_POLICY",
+    "TRS_RMA_TRACKING",
+    "chs_RMA_request",
+    "computeAdmin-audit",
+    "de-retrigger-feb11",
+    "postDispatcher_markHostAsBrokenWithFaultDetails"
+  ],
+  "links": [
+    {
+      "key": "DO-2650388",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "DFW5.1 | 1630 U17 | 2552XNG15U | DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | mlxlink_check"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "39m",
+    "time_to_resolve": "59m"
+  },
+  "description": "*Please initiate RMA Tray Replacement Request - RHS Verified*\n\n*RMA confirmation :* RHS-79454",
+  "comments": [
+    {
+      "id": "357749613",
+      "author": "Sankung Sillah",
+      "created": "2026-02-10T13:55:33Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357749860",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T13:55:35Z",
+      "body": "Ocean has created an incident for this issue. (P1-4A47CD7E2977AA3EE0634313000A1397)"
+    },
+    {
+      "id": "357761125",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T14:37:21Z",
+      "body": "M:ExtOC1:DFW:ad1:2552XNG15U>info_all\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                      Mac_Addr   Boot_Mac_Addr       Boot_Ip       Host_Ip   Ilom_Ip          Ilom_Host_Info                                                 Rot                                                                       Ilom_Serial   Smartnic_Serials                        Smartnic_Ips                                                                                                                                     Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\n2552XNG15U   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b12-t0-r17-compute7   compute   ALLOCATED   False       ocid1.instance.oc1.us-dallas-1.anqwyljr7rhxvoaco2hmias5oe6p6djyfpcybxhotjdr6fluxygiprhcdzrq   broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   1630   17     NONE   2541XN806R    2026-01-29T02:27:24+00:00   NONE   sk-9007587e-8d07-4599-8c1f-26cac67e6d01   sk-7a9e5d58-0101-4056-9291-79147e138f98   dfw5-c1-b12-t0-r17-compute7   NONE       90:e3:17:a9:8b:7a   169.254.0.1   NONE      10.161.244.209   dfw5-c1-b12-t0-r17-compute7-ilom-net-mgt.net.ad1.us-dallas-1   Type: Rot3 Rot3Dns: dfw5-c1-b12-t0-r17-compute7-rot.net.ad1.us-dallas-1   NONE          465774X-2540701527,465774X-2540702126   10.5.72.25(dfw5-c1-b12-t0-r17-compute7-wic1-port1.net.ad1.us-dallas-1) 10.5.72.27(dfw5-c1-b12-t0-r17-compute7-wic2-port1.net.ad1.us-dallas-1)    NONE                   NONE               NONE"
+    },
+    {
+      "id": "357762627",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T14:42:46Z",
+      "body": "Terminated the CPV instance, waiting for it to get into repair state"
+    },
+    {
+      "id": "357765357",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T14:53:18Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-9007587e-8d07-4599-8c1f-26cac67e6d01, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-10T14:52:51.675054297Z by user spedagad"
+    },
+    {
+      "id": "357765725",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T14:53:46Z",
+      "body": "Host is in Repair now\n\nM:ExtOC1:DFW:ad1:2552XNG15U>info_all\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State    Halt_Mode   Instance_Id   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                      Mac_Addr   Boot_Mac_Addr       Boot_Ip       Host_Ip   Ilom_Ip          Ilom_Host_Info                                                 Rot                                                                       Ilom_Serial   Smartnic_Serials                        Smartnic_Ips                                                                                                                                     Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\n2552XNG15U   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b12-t0-r17-compute7   compute   REPAIR   False       NONE          broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   1630   17     NONE   2541XN806R    2026-02-10T14:51:49+00:00   NONE   sk-9007587e-8d07-4599-8c1f-26cac67e6d01   sk-7a9e5d58-0101-4056-9291-79147e138f98   dfw5-c1-b12-t0-r17-compute7   NONE       90:e3:17:a9:8b:7a   169.254.0.1   NONE      10.161.244.209   dfw5-c1-b12-t0-r17-compute7-ilom-net-mgt.net.ad1.us-dallas-1   Type: Rot3 Rot3Dns: dfw5-c1-b12-t0-r17-compute7-rot.net.ad1.us-dallas-1   NONE          465774X-2540701527,465774X-2540702126   10.5.72.25(dfw5-c1-b12-t0-r17-compute7-wic1-port1.net.ad1.us-dallas-1) 10.5.72.27(dfw5-c1-b12-t0-r17-compute7-wic2-port1.net.ad1.us-dallas-1)    NONE                   NONE               NONE\nM:ExtOC1:DFW:ad1:2552XNG15U>"
+    },
+    {
+      "id": "357765753",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T14:54:20Z",
+      "body": "M:ExtOC1:DFW:ad1:2552XNG15U>sp_presence\nChecking SP presence: 100% |  1/1 [00:04<00:00,  4.59s/it]\nSerial       Sp_Is_Present   Version    Build_Number\n2552XNG15U   Yes             5.1.5.96   167204"
+    },
+    {
+      "id": "357765766",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T14:54:51Z",
+      "body": "M:ExtOC1:DFW:ad1:2552XNG15U>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:00<00:00,  2.17it/s]\nCaseid                                    Serial       Type          State      Created                            Sk_Id                                     Updated                            Is_Active   State_Sla_In_Seconds   Is_Supported_By_Trcp   Trs_Case\ntr-78de6d50-ad30-404b-b2e9-5fb465833c70   2552XNG15U   TERMINATING   TRIAGING   2026-02-10 14:45:15.588000+00:00   sk-9007587e-8d07-4599-8c1f-26cac67e6d01   2026-02-10 14:53:27.312000+00:00   True        42000                  True                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=tr-78de6d50-ad30-404b-b2e9-5fb465833c70\nM:ExtOC1:DFW:ad1:2552XNG15U>trs_update_all_cases state=TERMINATED\n[INFO 2026-02-10 20:24:29,975] Argument values {'state': 'TERMINATED'}\n[INFO 2026-02-10 20:24:31,603] Updating case: tr-78de6d50-ad30-404b-b2e9-5fb465833c70\n[INFO 2026-02-10 20:24:32,630] Updated case with case_id:tr-78de6d50-ad30-404b-b2e9-5fb465833c70\nCaseid                                    Serial       Type          State        Created                            Sk_Id                                     Updated                            Is_Active   State_Sla_In_Seconds   Is_Supported_By_Trcp   Trs_Case\ntr-78de6d50-ad30-404b-b2e9-5fb465833c70   2552XNG15U   TERMINATING   TERMINATED   2026-02-10 14:45:15.588000+00:00   sk-9007587e-8d07-4599-8c1f-26cac67e6d01   2026-02-10 14:54:32.220000+00:00   NONE        NONE                   True                   NONE\nM:ExtOC1:DFW:ad1:2552XNG15U>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:00<00:00,  2.12it/s]\nSerial   Sk_Id   Is_Supported_By_Trcp   Trs_Case\nNONE     NONE    None                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=None\nM:ExtOC1:DFW:ad1:2552XNG15U>"
+    },
+    {
+      "id": "357765795",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T14:55:52Z",
+      "body": "M:ExtOC1:DFW:ad1:2552XNG15U>trs_add_case {\"serial\":\"2552XNG15U\",\"type\":\"TERMINATING\",\"source\":\"HOPS\",\"ticket_data\":{\"summary\":\"GB200 Manually triggered RMA process\",\"description\":\"testdescription\",\"project\":\"GPUPR\",\"severity\":\"2\",\"labels\":[\"GB200_COMPUTE_TRAY_REPLACEMENT\"]}}\n[INFO 2026-02-10 20:25:40,425] Creating case with <class 'triage_repair_service.models.case_detail.CaseDetail'>\ncaseId               tr-30ce3f65-c116-4039-adb6-c1713e2bf02f\ncreated              2026-02-10 14:55:40.235000+00:00\nis_active            True\nis_supported_by_trcp True\nserial               2552XNG15U\nsk_id                sk-9007587e-8d07-4599-8c1f-26cac67e6d01\nstate                OPEN\nstate_sla_in_seconds 6000\nTypeError: unsupported format string passed to NoneType.__format__\n\nTo enable full traceback, run the following command: set debug true\n\nM:ExtOC1:DFW:ad1:2552XNG15U>"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "ticket": {
+    "id": "55658481",
+    "key": "HPC-108122",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T06:07:03Z",
+    "resolved": "2026-02-11T04:59:47Z",
+    "updated": "2026-02-15T17:58:34Z"
+  },
+  "people": {
+    "assignee": "Arunkumar Duraisamy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2551XNG3T7, 2551XNG42Y",
+    "rack_serial": null
+  },
+  "labels": [
+    "2540XN80DN",
+    "CPV-",
+    "CPV-Triage",
+    "DFW-CPV",
+    "GPU_GB200-NVL72_S.03",
+    "sk-f3627ab9-c28a-4623-93b6-42ec0b2a599e",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-100803",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-107378",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-110613",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-109352",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109384",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109718",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Timeout | BM.GPU.GB200-v3.4 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "8h",
+    "time_to_resolve": "22h 52m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : nvbandwidth_pair\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nnvbandwidth_pair -\n\n(flag) *Debugging nvbandwidth_pair*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200-v3.4 |2551XNG3T7 |10.0.110.166 |2026-02-10T05:59:10Z |2026-02-10T06:01:44Z |dfw5-qfab-2-400 |bldg5-block2-400 |dfw5-q2-b2-t0-r101, dfw5-q2-b2-t0-r102, dfw5-q2-b2-t0-r103, dfw5-q2-b2-t0-r104 |2540XN80DN |420e9981-02d2-4391-bd15-5713388de52e |\n|BM.GPU.GB200-v3.4 |2551XNG42Y |10.0.71.45 |2026-02-10T05:59:10Z |2026-02-10T06:01:44Z |dfw5-qfab-2-400 |bldg5-block2-400 |dfw5-q2-b2-t0-r101, dfw5-q2-b2-t0-r102, dfw5-q2-b2-t0-r103, dfw5-q2-b2-t0-r104 |2540XN80DN |420e9981-02d2-4391-bd15-5713388de52e |",
+  "comments": [
+    {
+      "id": "357618282",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T06:07:05Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358022587",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T04:43:24Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358023779",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T04:47:03Z",
+      "body": "Version mismatch\n\nConnectivity Table Legend:\nI - Invalid - Node wasn't reachable, no connection status available\nN - Never Connected\nR - Recovering - Connection was lost, but clean up has not yet been triggered.\nD - Disconnected - Connection was lost, and clean up has been triggreed.\nA - Authenticating - If GSSAPI enabled, client has initiated mutual authentication.\n - Version mismatch, communication disabled.\n - Node map mismatch, communication disabled.\n - Authentication error, communication disabled.\nC - Connected - Ready for operation\n\n2/11/2026 04:46:46.035\nNodes:\nNode #0   - 10.0.71.45         - READY                - Version: 580.126.09\nNode #1   * 10.0.110.166 *     - READY                - Version: 580.95.05\n\n Nodes From\\To  0   1\n       0        C\n       1         C\nDomain State: DEGRADED"
+    },
+    {
+      "id": "358027218",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T04:58:29Z",
+      "body": "Fabric is good"
+    },
+    {
+      "id": "358027224",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T04:58:44Z",
+      "body": "Performed BVR on 2551XNG42Y"
+    },
+    {
+      "id": "358027241",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-11T04:59:33Z",
+      "body": "*Closure Summary:*\n\n1. What was the issue (1 liner): Version Mismatch\n2. What we did to address the issue (1 liner - high level):  Performed BVR on 2551XNG42Y\n\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

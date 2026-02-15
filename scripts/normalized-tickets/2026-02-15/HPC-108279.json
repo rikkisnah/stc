@@ -1,0 +1,126 @@
+{
+  "ticket": {
+    "id": "55697738",
+    "key": "HPC-108279",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | 2547XK1066 | Meta CPV Validation Analysis",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T22:09:35Z",
+    "resolved": "2026-02-11T18:04:45Z",
+    "updated": "2026-02-11T18:25:56Z"
+  },
+  "people": {
+    "assignee": null,
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 1
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2547XK1066",
+    "rack_serial": null
+  },
+  "labels": [
+    "2547XK1066",
+    "2550ZA8006",
+    "AGA-CPV",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "aga4-qfab-3-400",
+    "bldg4-block30-400",
+    "meta_cpv_analysis",
+    "sk-02d71a7a-e6b6-496d-971c-c073906bb6f9",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-99782",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-100089",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-100162",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-100394",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-101950",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-103010",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-104133",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_2_host_multitest_pollara"
+    },
+    {
+      "key": "HPC-104439",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2547XK1066 | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-104655",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2547XK1066 | Meta CPV Validation Analysis"
+    },
+    {
+      "key": "HPC-109435",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "3h 55m",
+    "time_to_resolve": "19h 55m"
+  },
+  "description": "Please reach out to Patrick McDaniel with any questions.\n\nHealth Check Result JSON. Check the Uploaded Log Bundle for Downloadable Log File:\n\n{\n\t\"localhost\": {\n\t\t\"authentication\": [\n\t\t\t{\n\t\t\t\t\"device\": \"enp8s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp33s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp88s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp112s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp137s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp162s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp215s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp239s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"link\": [],\n\t\t\"eth_link\": [\n\t\t\t{\n\t\t\t\t\"device\": \"ens9np0\",\n\t\t\t\t\"eth_link_speed\": \"PASS\",\n\t\t\t\t\"eth_link_state\": \"PASS\",\n\t\t\t\t\"physical_state\": \"PASS\",\n\t\t\t\t\"eth_link_width\": \"PASS\",\n\t\t\t\t\"eth_link_status\": \"PASS\",\n\t\t\t\t\"effective_physical_errors\": \"PASS\",\n\t\t\t\t\"effective_physical_ber\": \"PASS\",\n\t\t\t\t\"raw_physical_errors_per_lane\": \"PASS\",\n\t\t\t\t\"raw_physical_ber\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"ens49np1\",\n\t\t\t\t\"eth_link_speed\": \"PASS\",\n\t\t\t\t\"eth_link_state\": \"PASS\",\n\t\t\t\t\"physical_state\": \"PASS\",\n\t\t\t\t\"eth_link_width\": \"PASS\",\n\t\t\t\t\"eth_link_status\": \"PASS\",\n\t\t\t\t\"effective_physical_errors\": \"PASS\",\n\t\t\t\t\"effective_physical_ber\": \"PASS\",\n\t\t\t\t\"raw_physical_errors_per_lane\": \"PASS\",\n\t\t\t\t\"raw_physical_ber\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"pcie\": [\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:08:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:21:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:58:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:70:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:89:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:a2:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:d7:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:ef:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"gpu\": [\n\t\t\t{\n\t\t\t\t\"retired-pages\": {\n\t\t\t\t\t\"status\": \"PASS\",\n\t\t\t\t\t\"0\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"1\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"2\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"3\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"4\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"5\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"6\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"7\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"bad-pages\": {\n\t\t\t\t\t\"status\": \"PASS\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"cdfp\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"driver_version\": \"WARN - unsupported driver\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device_count\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"max_clock_speed\": \"WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"xgmi\": \"PASS\",\n\t\t\t\t\"xgmi_error\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"pcie_config\": [],\n\t\t\"hpc_info\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"pcie_error\": [],\n\t\t\"rx_discards\": [\n\t\t\t{\n\t\t\t\t\"device\": \"enp8s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp33s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp88s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp112s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp137s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp162s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp215s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp239s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"rdma_nic_count\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\",\n\t\t\t\t\"num_rdma_nics\": 8\n\t\t\t}\n\t\t],\n\t\t\"gid_index\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"rdma_link_flap\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"oca_version\": [],\n\t\t\"rttcc\": [],\n\t\t\"gpu_xid\": [],\n\t\t\"walk_pcie\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"sram\": [\n\t\t\t{\n\t\t\t\t\"aggregated\": {\n\t\t\t\t\t\"uncorrectable\": \"PASS\",\n\t\t\t\t\t\"correctable\": \"PASS\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"diagnostics\": [\n\t\t\t{\n\t\t\t\t\"module\": \"babel\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"module\": \"gst\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"module\": \"pebb\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"module\": \"pbqt\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"port_state\": [\n\t\t\t{\n\t\t\t\t\"device\": \"enp8s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp33s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp88s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp112s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp137s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp162s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp215s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp239s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"summary\": {\n\t\t\t\"status\": \"PASS\",\n\t\t\t\"failed_tests\": [],\n\t\t\t\"warning\": [\n\t\t\t\t\"gpu\"\n\t\t\t]\n\t\t}\n\t}\n}\nTicket created after rules engine evaluated rules for test : meta_validation\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours",
+  "comments": [
+    {
+      "id": "357922331",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T22:10:03Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358231617",
+      "author": "Eli Elder",
+      "created": "2026-02-11T18:04:45Z",
+      "body": "Resolve to graduate hosts out of BIO/cpv"
+    }
+  ]
+}

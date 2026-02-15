@@ -1,0 +1,142 @@
+{
+  "ticket": {
+    "id": "55658152",
+    "key": "HPC-108119",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "NRT | ad1 | CPV Job Failure | BM.GPU.H100.8 | fdt_ist",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T05:57:16Z",
+    "resolved": "2026-02-10T16:10:05Z",
+    "updated": "2026-02-12T01:51:28Z"
+  },
+  "people": {
+    "assignee": "Daniel Copado",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-tokyo-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2426XLG0E0",
+    "rack_serial": null
+  },
+  "labels": [
+    "2427XL80BU",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "NRT-CPV",
+    "de-retrigger-feb11",
+    "sk-e7892b93-2fd8-45b3-a3dd-695b3ee1136e",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2650695",
+      "relation": "blocks",
+      "status": "In Progress",
+      "summary": "NRT | ad1 | CPV Job Failure | BM.GPU.H100.8 | open Problems TN"
+    },
+    {
+      "key": "HPC-39563",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair | d9506047-243f-419d-a29a-2450220547f5"
+    },
+    {
+      "key": "HPC-39784",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | ib_write_bw_pair | 5b7da311-183c-4487-b450-a3951da2797c"
+    },
+    {
+      "key": "HPC-56573",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | ad1 | CPV Job Failure | BM.GPU.H100.8 | gpu_bandwidth"
+    },
+    {
+      "key": "HPC-104814",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | 1911 | 2426XLG0E0 | 2418XKU0J2 | FDT level2 failure"
+    },
+    {
+      "key": "HPC-105642",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "NRT | 1911 | 2426XLG0E0 | 2418XKU0J2 | FDT level2 failure"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "10h 12m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : fdt_ist\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nfdt_ist -\n\n(flag) *Debugging fdt_ist*\n\nSee the following runbooks for more information:\nHow to Triage Nvidia FDT Failures\n\nRelevant logs\n\nOther uploaded files\n - fdt_ist_81052ed3-6b6a-41a5-8e50-1ac045889262_AllResults.tgz.gz}\n - 2426XLG0E0/2426XLG0E0-nvidia-bug-report-2026-02-10-023740.log.gz\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2426XLG0E0 |10.0.8.126 |2026-02-10T02:37:40Z |2026-02-10T05:48:02Z |nrt6-qfab-2-200 |bldg6-block12-200 |nrt6-q2-b12-t0-r10, nrt6-q2-b12-t0-r11, nrt6-q2-b12-t0-r12, nrt6-q2-b12-t0-r13, nrt6-q2-b12-t0-r14, nrt6-q2-b12-t0-r15, nrt6-q2-b12-t0-r16, nrt6-q2-b12-t0-r9 |2427XL80BU |81052ed3-6b6a-41a5-8e50-1ac045889262 |",
+  "comments": [
+    {
+      "id": "357616048",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-tokyo-1",
+      "created": "2026-02-10T05:57:18Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357772970",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:14:38Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357781520",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:46:08Z",
+      "body": "log error:\n\n++ /home/opc/bin/oci os object list --namespace hpc --bucket-name IstState --auth instance_principal\n++ jq -r --arg serial 2426XLG0E0 '.data | .[] | select(.name==$serial + \".json\") | .name'\n/home/opc/lib/oracle-cli/lib64/python3.6/site-packages/oci/_vendor/httpsig_cffi/sign.py:10: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\n  from cryptography.hazmat.backends import default_backend  # noqa: F401\nDEBUG:oci_cli.cli_util:Check if Propagation Enabled: None\nDEBUG:oci_cli.cli_util:Is Propagation Enabled: None\n+ STATE=2426XLG0E0.json\n+ '[' -z 2426XLG0E0.json ']'\n+ let n=43\n+ '[' 43 -lt 45 ']'\n+ sleep 180\n++ /home/opc/bin/oci os object list --namespace hpc --bucket-name IstState --auth instance_principal\n++ jq -r --arg serial 2426XLG0E0 '.data | .[] | select(.name==$serial + \".json\") | .name'\n/home/opc/lib/oracle-cli/lib64/python3.6/site-packages/oci/_vendor/httpsig_cffi/sign.py:10: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\n  from cryptography.hazmat.backends import default_backend  # noqa: F401\nDEBUG:oci_cli.cli_util:Check if Propagation Enabled: None\nDEBUG:oci_cli.cli_util:Is Propagation Enabled: None\n+ STATE=2426XLG0E0.json\n+ '[' -z 2426XLG0E0.json ']'\n+ let n=44\n+ '[' 44 -lt 45 ']'\n+ sleep 180\n++ /home/opc/bin/oci os object list --namespace hpc --bucket-name IstState --auth instance_principal\n++ jq -r --arg serial 2426XLG0E0 '.data | .[] | select(.name==$serial + \".json\") | .name'\n/home/opc/lib/oracle-cli/lib64/python3.6/site-packages/oci/_vendor/httpsig_cffi/sign.py:10: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\n  from cryptography.hazmat.backends import default_backend  # noqa: F401\nDEBUG:oci_cli.cli_util:Check if Propagation Enabled: None\nDEBUG:oci_cli.cli_util:Is Propagation Enabled: None\n+ STATE=2426XLG0E0.json\n+ '[' -z 2426XLG0E0.json ']'\n+ let n=45\n+ '[' 45 -lt 45 ']'\n+ echo 'IST timeout during enable'\nIST timeout during enable"
+    },
+    {
+      "id": "357781538",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T15:46:30Z",
+      "body": "rebooting host...."
+    },
+    {
+      "id": "357786167",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:03:54Z",
+      "body": "one GPU is missing:\n\n[opc@bio-2426xlg0e0 ~]$ nvidia-smi\nTue Feb 10 16:02:40 2026\n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 550.90.12              Driver Version: 550.90.12      CUDA Version: 12.4     |\n|-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA H100 80GB HBM3          On  |   00000000:0F:00.0 Off |                    0 |\n| N/A   32C    P0            114W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   1  NVIDIA H100 80GB HBM3          On  |   00000000:2D:00.0 Off |                    0 |\n| N/A   36C    P0            114W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   2  NVIDIA H100 80GB HBM3          On  |   00000000:44:00.0 Off |                    0 |\n| N/A   31C    P0            111W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   3  NVIDIA H100 80GB HBM3          On  |   00000000:5B:00.0 Off |                    0 |\n| N/A   38C    P0            116W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   4  NVIDIA H100 80GB HBM3          On  |   00000000:89:00.0 Off |                    0 |\n| N/A   33C    P0            117W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   5  NVIDIA H100 80GB HBM3          On  |   00000000:A8:00.0 Off |                    0 |\n| N/A   36C    P0            122W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   6  NVIDIA H100 80GB HBM3          On  |   00000000:D8:00.0 Off |                    0 |\n| N/A   50C    P0            125W /  700W |       1MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------++-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+"
+    },
+    {
+      "id": "357787206",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:05:19Z",
+      "body": "open problem on TN:\n\nM:ExtOC1:NRT:ad1:2418XKU0J2>open_problems\nChecking open problems: 100% |  1/1 [00:03<00:00,  3.03s/it]\nSerial       Datetime                    Location           Subsystem     Resource        Uuid                                   Serial          Part_No       Probability   Reference\n2418XKU0J2\n             2026-02-10 16:00:01+00:00   GBB/GPU8 (GPU 8)   PCI Devices   /SYS/GBB/GPU8   a9e9ab40-fdfa-4bfc-84b8-b70f47fe8630   1650324033093   2330-885-A1   100           http://support.oracle.com/msg/SPGXTAIL-8000-R0"
+    },
+    {
+      "id": "357787225",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:05:58Z",
+      "body": "system fabric test failed on TN:\n\ndiag> hwdiag system fabric test all\nHWdiag (Diag Shell) - Build Number 167106 (Nov 05 2025, 20:50:22)\n         Current Date/Time: Feb 10 2026, 16:04:50\nBase Board Type: Nvidia HGX H100\n\nPlease make sure headnode has finished training PCIe devices, or there\nmight be training error from the retimers connected to upstream devices\n\n\nSWITCH: PCIE_SW1\n    PCIE_SW1 PCIe Slot1  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW1 PCIe Slot2  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW1 GPU2        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW1 SSD1        x4  @ 16.0GT/s       : PASSED\n    PCIE_SW1 SSD2        x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW2\n    PCIE_SW2 PCIe Slot3  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW2 PCIe Slot4  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW2 GPU4        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW2 SSD5        x4  @ 16.0GT/s       : PASSED\n    PCIE_SW2 SSD6        x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW3\n    PCIE_SW3 PCIe Slot6  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW3 PCIe Slot7  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW3 GPU3        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW3 SSD9        x4  @ 16.0GT/s       : PASSED\n    PCIE_SW3 SSD10       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW4\n    PCIE_SW4 PCIe Slot8  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW4 PCIe Slot9  x16 @ 32.0GT/s       : PASSED\n    PCIE_SW4 GPU1        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW4 SSD13       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW4 SSD14       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW5\n    PCIE_SW5 PCIe Slot11 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW5 PCIe Slot12 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW5 GPU6        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW5 SSD17       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW5 SSD18       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW6\n    PCIE_SW6 PCIe Slot13 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW6 PCIe Slot14 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW6 GPU8        x8  @ 32.0GT/s       : FAILED\nERROR: PCIE_SW6 GPU8 trained at x8 @ 32.0GT/s vs. expected value of x16 @ 32.0GT/s\n    PCIE_SW6 SSD21       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW6 SSD22       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW7\n    PCIE_SW7 PCIe Slot16 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW7 PCIe Slot17 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW7 GPU7        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW7 SSD25       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW7 SSD26       x4  @ 16.0GT/s       : PASSED\n\nSWITCH: PCIE_SW8\n    PCIE_SW8 PCIe Slot18 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW8 PCIe Slot19 x16 @ 32.0GT/s       : PASSED\n    PCIE_SW8 GPU5        x16 @ 32.0GT/s       : PASSED\n    PCIE_SW8 SSD29       x4  @ 16.0GT/s       : PASSED\n    PCIE_SW8 SSD30       x4  @ 16.0GT/s       : PASSED\n\nFABRIC Test Result: FAILED"
+    },
+    {
+      "id": "357788439",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:09:42Z",
+      "body": "cut DO-2650695"
+    },
+    {
+      "id": "357788450",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:10:05Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): fdt_ist\n2. What we did to address the issue (1 liner - high level): Cut a DO-2650695\n3. What was the Root Cause: open problem on TN\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

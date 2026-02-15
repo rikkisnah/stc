@@ -1,0 +1,99 @@
+{
+  "ticket": {
+    "id": "55661027",
+    "key": "HPC-108130",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:23:46Z",
+    "resolved": "2026-02-10T11:24:51Z",
+    "updated": "2026-02-11T19:26:01Z"
+  },
+  "people": {
+    "assignee": "Imane Barakate",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2543XQ1017",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8074",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-02eda220-f6ed-4e71-98f5-af4e192a5ba9",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-108979",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109450",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "4h 1m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : agfhc_level_1_to_5\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nagfhc_level_1_to_5 -\n\n(flag) *Debugging agfhc_level_1_to_5*\n\nSee the following runbooks for more information:\nas AMD GPU test: Identifying AMD Commands\\n\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2543XQ1017 |10.0.11.88 |2026-02-10T05:18:17Z |2026-02-10T07:17:28Z |aga4-qfab-3-400 |bldg4-block52-400 |aga4-q3-b52-t0-r1, aga4-q3-b52-t0-r2, aga4-q3-b52-t0-r3, aga4-q3-b52-t0-r4, aga4-q3-b52-t0-r5, aga4-q3-b52-t0-r6, aga4-q3-b52-t0-r7, aga4-q3-b52-t0-r8 |2603ZA8074 |16c98c72-3d84-4846-9acc-77595b1de1ed |",
+  "comments": [
+    {
+      "id": "357639454",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:23:49Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357699885",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:50:47Z",
+      "body": "There are no open problems on neither the HN nor TN\n\n    \"gpu\": \"H:2543XQ1017 T:2602XQ107M sled:2602XQ107M\"\n\nM:ExtOC1:AGA:ad1:2543XQ1017>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.89s/it]\n{}\n\nM:ExtOC1:AGA:ad1:2602XQ107M>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.92s/it]\n{}"
+    },
+    {
+      "id": "357700635",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:52:14Z",
+      "body": "The gfx_maxpower-1-1 subtest failed due to an error while executing GEMM command as can be seen below\n\n    \"overall_summary\": {\n      \"total_selected_tests\": 31,\n      \"total_executed_tests\": 31,\n      \"total_passed\": 30,\n      \"total_failed\": 1,\n      \"total_skipped\": 0,\n      \"total_queued\": 0,\n      \"status_code_text\": \"PROG_FAIL_IN_TEST_EXECUTION\",\n      \"status_code_numeric\": 13,\n      \"recommended_action\": \"Check actions on specific test failures\",\n      \"time_start\": \"20260210-051846\",\n      \"time_end\": \"20260210-071553\",\n      \"time_total\": \"01:57:07\",\n      \"failed_instances\": [\n        \"gfx_maxpower-1-1\"\n      ]\n\n \"gfx_maxpower-1-1\": {\n      \"state\": \"failed\",\n      \"primary_status_name\": \"TEST_GFX_GEMM_COMMAND_FAIL\",\n      \"primary_status_value\": 15005,\n      \"primary_status_description\": \"Error while executing GEMM command\",\n      \"primary_suggested_action\": \"Contact AMD\",\n      \"primary_action_subject\": \"PROGRAM\",\n      \"primary_extended_info\": \"Not covered in Service Action Guide\",\n      \"primary_service_info\": {},\n      \"extended_results\": [\n        {\n          \"action_subject\": \"PROGRAM\",\n          \"suggested_action\": \"Contact AMD\",\n          \"extended_info\": [\n            \"Contact AMD service representative\"\n          ],\n          \"service_info\": {},\n          \"status_codes\": {\n            \"TEST_GFX_GEMM_COMMAND_FAIL\": 15005\n          },\n          \"test\": [\n            \"[RESULT] [ 15483.846919] [gpustress-maxpower] [GPU:: 23660] pass: TRUE\",\n            \"[RESULT] [ 15483.936494] [gpustress-maxpower] [GPU:: 29394] Power(W) 1399.000000\",\n            \"[RESULT] [ 15483.939523] [gpustress-maxpower] [GPU:: 29394] pass: TRUE\",\n            \"double free or corruption (fasttop)\",\n            \"Aborted (core dumped)\",\n            \"stdbuf -oL /opt/rocm/bin/rvs -c /root/agfhc/logs/agfhc_20260210-051846/tests/gfx_maxpower-1-1/rvs.conf: 134\"\n          ],\n          \"dmesg\": [],\n          \"ras\": []\n        }"
+    },
+    {
+      "id": "357702520",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T10:59:58Z",
+      "body": "Dr. hpc's health checks passed on the host\n\nHealth Check starts at: 2026-02-10 10:42:11.800694\nHealth Check finishes at: 2026-02-10 10:43:32.963722, Elapsed time: 81.16 s\n\n 'summary': {'failed_tests': [], 'status': 'PASS', 'warning': ['gpu']},"
+    },
+    {
+      "id": "357708391",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T11:24:02Z",
+      "body": "Ran the RVS power stress manually and it passed\n\nubuntu@bio-2543xq1017:~/bio/jobs/results$ sudo stdbuf -oL /opt/rocm/bin/rvs -c /root/agfhc/logs/agfhc_20260210-051846/tests/gfx_maxpower-1-1/rvs.conf\n[RESULT] [ 34574.32545 ] Action name :gpustress-maxpower\n[RESULT] [ 34574.135492] Module name :iet\n[...]\n[RESULT] [ 35175.129036] [gpustress-maxpower] [GPU:: 29394] pass: TRUE\n[RESULT] [ 35175.130746] [gpustress-maxpower] [GPU:: 24656] pass: TRUE\n[RESULT] [ 35175.139424] [gpustress-maxpower] [GPU:: 49070] Power(W) 1398.000000\n[RESULT] [ 35175.139432] [gpustress-maxpower] [GPU:: 17010] Power(W) 1398.000000\n[RESULT] [ 35175.141444] [gpustress-maxpower] [GPU:: 23660] Power(W) 1401.000000\n[RESULT] [ 35175.142759] [gpustress-maxpower] [GPU:: 49070] pass: TRUE\n[RESULT] [ 35175.145059] [gpustress-maxpower] [GPU:: 17010] pass: TRUE\n[RESULT] [ 35175.147152] [gpustress-maxpower] [GPU:: 23660] pass: TRUE\n[RESULT] [ 35175.156603] [gpustress-maxpower] [GPU:: 27852] Power(W) 1400.000000\n[RESULT] [ 35175.159429] [gpustress-maxpower] [GPU:: 27852] pass: TRUE\n[RESULT] [ 35175.161468] [gpustress-maxpower] [GPU:: 36622] Power(W) 1400.000000\n[RESULT] [ 35175.164867] [gpustress-maxpower] [GPU:: 36622] pass: TRUE\n[RESULT] [ 35175.191618] [gpustress-maxpower] [GPU:: 12657] Power(W) 1400.000000\n[RESULT] [ 35175.194920] [gpustress-maxpower] [GPU:: 12657] pass: TRUE"
+    },
+    {
+      "id": "357709119",
+      "author": "Imane Barakate",
+      "created": "2026-02-10T11:24:42Z",
+      "body": "gfx_maxpower passed on the host. Will mark the ticket as resolved\n\nubuntu@bio-2543xq1017:~/bio/jobs/results$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-agfhc -t test -n gfx_maxpower\n\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:agfhc_results.json auto_discovery_mode:True standalone_mode:True\nAGFHC starts at: 2026-02-10 11:21:30.109685\nAGFHC finishes at: 2026-02-10 11:22:36.167518, Elapsed time: 66.06 s\n{'localhost': {'overall_summary': {'failed_instances': [],\n                                   'recommended_action': 'No action needed',\n                                   'status_code_numeric': 0,\n                                   'status_code_text': 'AGFHC_SUCCESS',\n                                   'time_end': '20260210-112236',\n                                   'time_start': '20260210-112130',\n                                   'time_total': '00:01:05',\n                                   'total_executed_tests': 1,\n                                   'total_failed': 0,\n                                   'total_passed': 1,\n                                   'total_queued': 0,\n                                   'total_selected_tests': 1,\n                                   'total_skipped': 0},\n               'program_args': {'console_log_level': 'PRINT',\n                                'device_ids': ['GPU-00', 'GPU-01', 'GPU-02', 'GPU-03', 'GPU-04', 'GPU-05', 'GPU-06', 'GPU-07'],\n                                'disable_bad_pages_checks': False,\n                                'disable_cper_checks': False,\n                                'disable_dmesg_checks': False,\n                                'disable_env_update': False,\n                                'disable_hsio_gather': False,\n                                'disable_numa_control': False,\n                                'disable_ptl_control': False,\n                                'disable_ras_checks': False,\n                                'disable_sysmon': False,\n                                'disable_timeout': False,\n                                'error_json_version': '1.11',\n                                'error_to_console': False,\n                                'exit_on_failure': False,\n                                'ignore_cper': False,\n                                'ignore_dmesg': False,\n                                'ignore_performance': False,\n                                'ignore_ras': False,\n                                'inject_sw_errors': False,\n                                'journal_log_level': 'INFO',\n                                'known_dmesg_only': False,\n                                'output_dir': '/root/agfhc/logs',\n                                'prefix': 'agfhc',\n                                'recipes': [],\n                                'results_json_version': '3.15',\n                                'set_timeout_mult': -1,\n                                'simple_output': False,\n                                'skip_tests': [],\n                                'suffix': '20260210-112130',\n                                'sysmon_interval': 5,\n                                'tar_logs': False,\n                                'tests': ['gfx_maxpower'],\n                                'update_interval': 1},\n               'status': 'PASS - Check /root/agfhc/logs/agfhc_20260210-112130 folder for logs.'}}"
+    }
+  ]
+}

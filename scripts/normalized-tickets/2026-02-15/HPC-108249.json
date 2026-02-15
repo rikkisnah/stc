@@ -1,0 +1,142 @@
+{
+  "ticket": {
+    "id": "55687096",
+    "key": "HPC-108249",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T19:09:30Z",
+    "resolved": "2026-02-11T07:07:50Z",
+    "updated": "2026-02-12T01:08:22Z"
+  },
+  "people": {
+    "assignee": "Rajat Rajat",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2543XK10GT, 2540XK100F",
+    "rack_serial": null
+  },
+  "labels": [
+    "2601ZA8005",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-76646bb2-347d-49d5-afba-3f9a4aa3d5c3",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-96255",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | cable_validation"
+    },
+    {
+      "key": "HPC-100580",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-101021",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | rccl_all_reduce_perf_2_hosts"
+    },
+    {
+      "key": "HPC-102422",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | rccl_all_reduce_perf_2_hosts"
+    },
+    {
+      "key": "HPC-105080",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 2543XK10GT | Meta CPV Validation Analysis"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "5h 50m",
+    "time_to_resolve": "11h 58m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2543XK10GT |10.0.10.31 |2026-02-10T16:53:31Z |2026-02-10T18:56:25Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r1, aga4-q3-b32-t0-r2, aga4-q3-b32-t0-r3, aga4-q3-b32-t0-r4, aga4-q3-b32-t0-r5, aga4-q3-b32-t0-r6, aga4-q3-b32-t0-r7, aga4-q3-b32-t0-r8 |2601ZA8005 |95af5d44-a053-4931-a321-6cb405e4e999 |\n|BM.GPU.MI355X.8 |2540XK100F |10.0.8.248 |2026-02-10T16:53:31Z |2026-02-10T18:56:25Z |aga4-qfab-3-400 |bldg4-block55-400 |aga4-q3-b55-t0-r1, aga4-q3-b55-t0-r2, aga4-q3-b55-t0-r3, aga4-q3-b55-t0-r4, aga4-q3-b55-t0-r5, aga4-q3-b55-t0-r6, aga4-q3-b55-t0-r7, aga4-q3-b55-t0-r8 |2550ZA8003 |95af5d44-a053-4931-a321-6cb405e4e999 |",
+  "comments": [
+    {
+      "id": "357852958",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T19:09:34Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358002931",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T03:12:30Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358041875",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T06:04:41Z",
+      "body": "OP found on one of TN but this can go with DPC.\n\nM:ExtOC1:AGA:ad1:2 Hosts>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2540XK100F   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b11-t0-r26-compute7   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacw4ongtfyqv7eabd6hrb25hgwkmiy4v3skbdcol2ry5da   holding             OC1:us-saltlake-2:ad1   aga4   aga4.2   4845   33     NONE   2550ZA8003    2026-02-09T09:15:57+00:00   NONE\n2543XK10GT   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b12-t0-r3-compute6    compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoac4qthbbfzu2tjplcitqocwj3devuiaww4r26ruf6rp2aa   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   4921   29     NONE   2601ZA8005    2026-02-10T15:17:16+00:00   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2540XK100F   H:2540XK100F T:2544XK1006 sled:2544XK1006\n2543XK10GT   H:2543XK10GT T:2550XK10FG sled:2550XK10FG\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:04<00:00,  2.04s/it]\nSerial\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.38s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2544XK1006\n             2026-02-09 09:03:54+00:00   PSB/CDFP5 (Container)   System      /SYS/PSB/CDFP5   d29b7a92-9d4d-40bf-8790-879a1adf5b80   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "358044128",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T06:14:27Z",
+      "body": "Host not accessible.\n\nLast login: Wed Feb 11 06:10:02 2026 from 160.34.127.165\n[opc@cpv-host-aga ~]$ ssh 10.0.10.31\n\nssh: connect to host 10.0.10.31 port 22: Connection timed out\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "358044152",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T06:15:20Z",
+      "body": "Performing DPC.\n\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec stop -f -script system\n[INFO 2026-02-11 11:44:41,876] This will run commands: stop -f -script system\n[INFO 2026-02-11 11:44:41,877]  on 2 hosts in 1 ADs.\n[INFO 2026-02-11 11:44:41,877] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:08<00:00,  4.47s/it]\nSerial       Command                  Response                       Error\n2540XK100F\n             stop -f -script system   Stopping /System immediately   NONE\n2543XK10GT\n             stop -f -script system   Stopping /System immediately   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>\n\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec set /System/ deep_power_cycle=true\n[INFO 2026-02-11 11:44:53,184] This will run commands: set /System/ deep_power_cycle=true\n[INFO 2026-02-11 11:44:53,184]  on 2 hosts in 1 ADs.\n[INFO 2026-02-11 11:44:53,185] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:05<00:00,  2.54s/it]\nSerial       Command                              Response                                   Error\n2540XK100F\n             set /System/ deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\n2543XK10GT\n             set /System/ deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "358046335",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T06:22:51Z",
+      "body": "Started system.\n\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec start -f -script system\n[INFO 2026-02-11 11:52:07,818] This will run commands: start -f -script system\n[INFO 2026-02-11 11:52:07,818]  on 2 hosts in 1 ADs.\n[INFO 2026-02-11 11:52:07,818] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:05<00:00,  2.77s/it]\nSerial       Command                   Response           Error\n2540XK100F\n             start -f -script system   Starting /System   NONE\n2543XK10GT\n             start -f -script system   Starting /System   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "358049732",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T06:36:29Z",
+      "body": "Post DPC also host is not reachable.\n\n[opc@cpv-host-aga ~]$ ssh 10.0.10.31\nssh: connect to host 10.0.10.31 port 22: Connection timed out\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "358056750",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T07:06:13Z",
+      "body": "i am terminating the instance to let it reprovision again as it's not coming up."
+    },
+    {
+      "id": "358056768",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T07:07:08Z",
+      "body": "Terminated the instance so host can reprovision."
+    },
+    {
+      "id": "358056791",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T07:07:36Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): ib_write_bw_pair test failed\n2. What we did to address the issue (1 liner - high level):Terminated the instance so host can reprovision.\n3. What was the Root Cause: Host nor reachable\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

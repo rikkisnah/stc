@@ -1,0 +1,147 @@
+{
+  "ticket": {
+    "id": "55678864",
+    "key": "HPC-108202",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T15:24:19Z",
+    "resolved": "2026-02-10T21:41:08Z",
+    "updated": "2026-02-11T23:41:01Z"
+  },
+  "people": {
+    "assignee": "Mario Guzman",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2602XQ10PA, 2552XQ10ED",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8035",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-fadb2b9f-3989-409c-8b27-4102c1240909",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-104207",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-104381",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-104844",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-105044",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-108548",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108649",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-108980",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109557",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 21m",
+    "time_to_resolve": "6h 16m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2602XQ10PA |10.0.9.66 |2026-02-10T13:13:19Z |2026-02-10T15:16:11Z |aga4-qfab-3-400 |bldg4-block44-400 |aga4-q3-b44-t0-r1, aga4-q3-b44-t0-r2, aga4-q3-b44-t0-r3, aga4-q3-b44-t0-r4, aga4-q3-b44-t0-r5, aga4-q3-b44-t0-r6, aga4-q3-b44-t0-r7, aga4-q3-b44-t0-r8 |2603ZA8035 |7a1fcf7e-bb43-44e3-ad8a-6d9f8525be59 |\n|BM.GPU.MI355X.8 |2552XQ10ED |10.0.9.174 |2026-02-10T13:13:19Z |2026-02-10T15:16:11Z |aga4-qfab-3-400 |bldg4-block54-400 |aga4-q3-b54-t0-r1, aga4-q3-b54-t0-r2, aga4-q3-b54-t0-r3, aga4-q3-b54-t0-r4, aga4-q3-b54-t0-r5, aga4-q3-b54-t0-r6, aga4-q3-b54-t0-r7, aga4-q3-b54-t0-r8 |2604ZA8017 |7a1fcf7e-bb43-44e3-ad8a-6d9f8525be59 |",
+  "comments": [
+    {
+      "id": "357775695",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T15:24:22Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357886279",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T20:42:06Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357888728",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T20:48:10Z",
+      "body": "Cleared OP\n\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2552XQ10ED   H:2552XQ10ED T:2602XK10CY sled:2602XK10CY\n2602XQ10PA   H:2602XQ10PA T:2553XK102R sled:2553XK102R\nM:ExtOC1:AGA:ad1:2 Hosts>host 2602XQ10PA 2552XQ10ED 2553XK102R 2602XK10CY\nQuerying Storekeeper: 100% |  4/4 [00:01<00:00,  2.30it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.23s/it]\nLoading 4 Hosts from Hops: 100% |  4/4 [00:01<00:00,  2.86it/s]\nLoading extended information on 4 hosts: 100% |  4/4 [00:01<00:00,  3.74it/s]\n[INFO 2026-02-10 14:47:40,340] Successfully loaded extended information about 4 hosts\nM:ExtOC1:AGA:ad1:4 Hosts>open_problems\nChecking open problems: 100% |  4/4 [00:02<00:00,  1.47it/s]\nSerial       Datetime                    Location       Subsystem    Resource       Uuid                                   Serial                Part_No   Probability   Reference\n2552XQ10ED\n             2026-02-10 06:37:08+00:00   CPU2 (CPU 2)   Processors   /SYS/MB/CPU2   e71e7042-702d-eb94-ca9c-ac60afe0e00a   C1-02B71A994966402A   1A02      100           http://support.oracle.com/msg/SPAMD-8003-7R\nM:ExtOC1:AGA:ad1:4 Hosts>clear_open_problems\n[INFO 2026-02-10 14:47:49,962] This will run commands: clear_open_problems\n[INFO 2026-02-10 14:47:49,962]  on 4 hosts in 1 ADs.\n[INFO 2026-02-10 14:47:49,962] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nClearing Open Problems: 100% |  4/4 [00:03<00:00,  1.31it/s]\nSerial       Success\n2552XQ10ED   True\n2553XK102R   True\n2602XK10CY   True\n2602XQ10PA   True\nM:ExtOC1:AGA:ad1:4 Hosts>open_problems\nChecking open problems: 100% |  4/4 [00:02<00:00,  1.72it/s]\nSerial\nM:ExtOC1:AGA:ad1:4 Hosts>"
+    },
+    {
+      "id": "357890921",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T20:55:27Z",
+      "body": "enp33s0 (192.168.9.66) is rejecting connections\n\nubuntu@bio-2602xq10pa:~$ rping -sa 192.168.9.66\ncma event RDMA_CM_EVENT_REJECTED, error 10\nubuntu@bio-2602xq10pa:~$\n\nubuntu@bio-2552xq10ed:~$ rping -ca 192.168.9.66\ncma event RDMA_CM_EVENT_REJECTED, error 8\nubuntu@bio-2552xq10ed:~$\n\nSame for enp137s0 (192.168.33.66) and enp215s0 (192.168.49.66)\n\nubuntu@bio-2602xq10pa:~$ rping -sa 192.168.33.66\ncma event RDMA_CM_EVENT_REJECTED, error 10\nubuntu@bio-2602xq10pa:~$\n\nubuntu@bio-2602xq10pa:~$ rping -sa 192.168.49.66\nxcma event RDMA_CM_EVENT_REJECTED, error 10\nubuntu@bio-2602xq10pa:~$\nubuntu@bio-2552xq10ed:~$ rping -ca 192.168.49.66\ncma event RDMA_CM_EVENT_REJECTED, error 8\nubuntu@bio-2552xq10ed:~$\n\nFor ens49np1 (fe80::ea9e:49ff:fedf:97fd) error is different\n\nubuntu@bio-2552xq10ed:~$ rping -ca fe80::ea9e:49ff:fedf:97fd\ncma event RDMA_CM_EVENT_ADDR_ERROR, error -110\nwaiting for addr/route resolution state 1\nubuntu@bio-2552xq10ed:~$"
+    },
+    {
+      "id": "357894750",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:06:02Z",
+      "body": "enp33s0 (192.168.9.174) is not accepting connections\n\nubuntu@bio-2602xq10pa:~$ time rping -ca 192.168.9.174 -d\ncreated cm_id 0x55ef31278920\ncma_event type RDMA_CM_EVENT_ADDR_RESOLVED cma_id 0x55ef31278920 (parent)\ncma_event type RDMA_CM_EVENT_ROUTE_RESOLVED cma_id 0x55ef31278920 (parent)\nrdma_resolve_addr - rdma_resolve_route successful\ncreated pd 0x55ef312790c0\ncreated channel 0x55ef3126e630\ncreated cq 0x55ef31279100\ncreated qp 0x55ef31279410\nrping_setup_buffers called on cb 0x55ef3126e830\nallocated & registered buffers...\ncq_thread started.\n^Creal    1m57.336s\nuser    0m0.000s\nsys     0m0.006s\nubuntu@bio-2602xq10pa:~$\n\nSame for enp137s0 (192.168.33.174) and enp215s0 (192.168.49.174)\n\nubuntu@bio-2602xq10pa:~$ time rping -ca 192.168.33.174 -d\ncreated cm_id 0x55c33767d920\ncma_event type RDMA_CM_EVENT_ADDR_RESOLVED cma_id 0x55c33767d920 (parent)\ncma_event type RDMA_CM_EVENT_ROUTE_RESOLVED cma_id 0x55c33767d920 (parent)\nrdma_resolve_addr - rdma_resolve_route successful\ncreated pd 0x55c33767e0c0\ncreated channel 0x55c337673630\ncreated cq 0x55c33767e100\ncreated qp 0x55c33767e410\nrping_setup_buffers called on cb 0x55c337673830\nallocated & registered buffers...\ncq_thread started.\n^Creal    2m7.271s\nuser    0m0.000s\nsys     0m0.006s\nubuntu@bio-2602xq10pa:~$\n\nubuntu@bio-2602xq10pa:~$ time rping -ca 192.168.49.174 -d\ncreated cm_id 0x56556c30b920\ncma_event type RDMA_CM_EVENT_ADDR_RESOLVED cma_id 0x56556c30b920 (parent)\ncma_event type RDMA_CM_EVENT_ROUTE_RESOLVED cma_id 0x56556c30b920 (parent)\nrdma_resolve_addr - rdma_resolve_route successful\ncreated pd 0x56556c30c0c0\ncreated channel 0x56556c301630\ncreated cq 0x56556c30c100\ncreated qp 0x56556c30c410\nrping_setup_buffers called on cb 0x56556c301830\nallocated & registered buffers...\ncq_thread started.\n^Creal    2m5.929s\nuser    0m0.006s\nsys     0m0.000s\nubuntu@bio-2602xq10pa:~$\n\nens49np1 (fe80::ea9e:49ff:fef6:ac47) seems to be having different issues\n\nubuntu@bio-2602xq10pa:~$ rping -ca fe80::ea9e:49ff:fef6:ac47\ncma event RDMA_CM_EVENT_ADDR_ERROR, error -110\nwaiting for addr/route resolution state 1\nubuntu@bio-2602xq10pa:~$"
+    },
+    {
+      "id": "357895244",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:07:17Z",
+      "body": "DPC in progress\n\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec stop -f -script /SYS\n[INFO 2026-02-10 15:06:26,037] This will run commands: stop -f -script /SYS\n[INFO 2026-02-10 15:06:26,037]  on 2 hosts in 1 ADs.\n[INFO 2026-02-10 15:06:26,038] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:07<00:00,  3.95s/it]\nSerial       Command                Response                    Error\n2552XQ10ED\n             stop -f -script /SYS   Stopping /SYS immediately   NONE\n2602XQ10PA\n             stop -f -script /SYS   Stopping /SYS immediately   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>sp_exec set -script /system deep_power_cycle=true\n[INFO 2026-02-10 15:06:46,120] This will run commands: set -script /system deep_power_cycle=true\n[INFO 2026-02-10 15:06:46,121]  on 2 hosts in 1 ADs.\n[INFO 2026-02-10 15:06:46,121] Running commands on sp, smartnics, and rots can be destructive\nAre you sure you want to do this? Please confirm:[y/n]: y\nService  Exec 1 commands: 100% |  2/2 [00:04<00:00,  2.15s/it]\nSerial       Command                                     Response                                   Error\n2552XQ10ED\n             set -script /system deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\n2602XQ10PA\n             set -script /system deep_power_cycle=true   Set 'deep_power_cycle' to 'true' [false]   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "357909075",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:39:42Z",
+      "body": "Retest passed\n\nubuntu@bio-2602xq10pa:~$ jq . /home/ubuntu/bio/jobs/results/ib_write_bw_2nodes.out | egrep -i \"pass|fail\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\n      \"result\": \"PASS\"\nubuntu@bio-2602xq10pa:~$"
+    },
+    {
+      "id": "357909553",
+      "author": "Mario Guzman",
+      "created": "2026-02-10T21:40:53Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): job timeout\n2. What we did to address the issue (1 liner - high level): test RDMA with rping, DPC and retest\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

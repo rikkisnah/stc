@@ -1,0 +1,160 @@
+{
+  "ticket": {
+    "id": "55686795",
+    "key": "HPC-108246",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T18:54:28Z",
+    "resolved": "2026-02-10T21:19:56Z",
+    "updated": "2026-02-14T04:18:52Z"
+  },
+  "people": {
+    "assignee": "Javier Del Pino",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2553XQ103W, 2602XQ104N",
+    "rack_serial": null
+  },
+  "labels": [
+    "2602ZA8067",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-f0f7082a-1d05-4896-a7fc-ee917b8b5e6c",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "CPV-422",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair -- New HPC tickets created despite DO already open"
+    },
+    {
+      "key": "HPC-103153",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-104401",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105303",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105678",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105712",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-107864",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108142",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108180",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108232",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108347",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-109850",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-110364",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "35m",
+    "time_to_resolve": "2h 25m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : iperf_pair\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\niperf_pair -\n\n(flag) *Debugging iperf_pair*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check/29d1cddd-abc7-4ac7-825e-35774b8f4b0d/health_check_2553XQ103W.json\n - health_check_29d1cddd-abc7-4ac7-825e-35774b8f4b0d_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2553XQ103W |10.0.12.111 |2026-02-10T18:39:34Z |2026-02-10T18:41:23Z |aga4-qfab-3-400 |bldg4-block33-400 |aga4-q3-b33-t0-r1, aga4-q3-b33-t0-r2, aga4-q3-b33-t0-r3, aga4-q3-b33-t0-r4, aga4-q3-b33-t0-r5, aga4-q3-b33-t0-r6, aga4-q3-b33-t0-r7, aga4-q3-b33-t0-r8 |2602ZA8067 |06be8e6a-6c59-4b89-a920-f4ac54bc9f0e |\n|BM.GPU.MI355X.8 |2602XQ104N |10.0.9.41 |2026-02-10T18:39:34Z |2026-02-10T18:41:23Z |aga4-qfab-3-400 |bldg4-block35-400 |aga4-q3-b35-t0-r10, aga4-q3-b35-t0-r11, aga4-q3-b35-t0-r12, aga4-q3-b35-t0-r13, aga4-q3-b35-t0-r14, aga4-q3-b35-t0-r15, aga4-q3-b35-t0-r16, aga4-q3-b35-t0-r9 |2602ZA8013 |06be8e6a-6c59-4b89-a920-f4ac54bc9f0e |",
+  "comments": [
+    {
+      "id": "357847605",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T18:54:40Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357860449",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T19:30:15Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357868782",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T19:54:14Z",
+      "body": "cut CPV-422"
+    },
+    {
+      "id": "357899297",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T21:17:40Z",
+      "body": "From CPV\n\nLazaro Morales Pino added a comment - 10/Feb/2026 02:23:26PM -0600Permalink\nHi Javier Del Pino, I think what's happening for those DO tickets is that the serial is not in the summary or the description and that's why CPV is not detecting them. For example see what tickets are identified for 2553XQ103W, but we are only blocking on HPC. The DO ticket is not on the list.\n\n[opc@cpv-host-aga ~]$ cpv state read -t host -k 2553XQ103W | jq '.[] | .tickets'\n2026/02/10 20:20:46 Reading state file state.json\n2026/02/10 20:20:47 Object Store client initialized with host url https://objectstorage.us-saltlake-2.oraclecloud.com\n\n  \"CPV-422 AGA\nSince this is happening on this instance only it doesn't seem to be a widespread problem, if not all hosts would be missing their corresponding DO tickets.\n\nEdit\nDelete\n\nLazaro Morales Pino added a comment - 10/Feb/2026 02:24:14PM -0600Permalink\nI added the serial to the summary in DO-2649612. We need to wait for the NannyWorkflow to run again and see if it's included in the list of tickets."
+    },
+    {
+      "id": "357900666",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T21:19:56Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): iperf_pair\n2. What we did to address the issue (1 liner - high level): Cut  CPV-422\n3. What was the Root Cause: serial no part of the summary in DO-2649612.\n4. Runbook was helpful - N\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

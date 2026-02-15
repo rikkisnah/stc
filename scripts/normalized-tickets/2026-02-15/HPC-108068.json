@@ -1,0 +1,100 @@
+{
+  "ticket": {
+    "id": "55650575",
+    "key": "HPC-108068",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.GB200-v2.4 | dcgm_level_4",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T01:29:02Z",
+    "resolved": "2026-02-12T08:31:23Z",
+    "updated": "2026-02-12T08:31:23Z"
+  },
+  "people": {
+    "assignee": "Sagar Astikar",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "S959549X5804357",
+    "rack_serial": null
+  },
+  "labels": [
+    "CPV-",
+    "CPV-Triage",
+    "FYV-CPV",
+    "GPU_GB200-NVL72_S.02",
+    "SR010530253596",
+    "de-retrigger-feb11",
+    "sk-65442e33-d50e-4972-ad52-61aa79c410a0",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-96005",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | 8002 | S959549X5804357 | | FDT level2 failure"
+    },
+    {
+      "key": "HPC-96440",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | 8002 | S959549X5804357 | | FDT level2 failure"
+    },
+    {
+      "key": "HPC-107638",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | CPV Job Timeout | BM.GPU.GB200-v2.4 | initial_setup"
+    },
+    {
+      "key": "HPC-108952",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | CPV Job Timeout | BM.GPU.GB200-v2.4 | dcgm_level_4"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "16h",
+    "time_to_resolve": "55h 2m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : dcgm_level_4\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ndcgm_level_4 -\n\n(flag) *Debugging dcgm_level_4*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check_4415140f-f84e-4d3f-81e5-a66c4fdcd64e_AllResults.tgz.gz}\n - health_check/4415140f-f84e-4d3f-81e5-a66c4fdcd64e/health_check_S959549X5804357.json\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200-v2.4 |S959549X5804357 |10.0.65.185 |2026-02-10T00:27:10Z |2026-02-10T01:18:20Z |fyv3-ifab-1 |bldg3-block2 |fyv3-i1-su2-t0-r100, fyv3-i1-su2-t0-r97, fyv3-i1-su2-t0-r98, fyv3-i1-su2-t0-r99 |SR010530253596 |770516c6-33df-482d-8f61-fa1f4c84ff4a |",
+  "comments": [
+    {
+      "id": "357550410",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-10T01:29:05Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358450245",
+      "author": "Sagar Astikar",
+      "created": "2026-02-12T08:00:53Z",
+      "body": "this host belongs to rack SR010530253596 8002 and nvswitch MT252260180P have \"Input/output error\" and we need to reboot/triage the nvswitch to fix it.\nwe see 1 host S959549X5700276 with customer instance and we have already sent CN for it and waiting to for customer to terminate the instance.\ncurrently we are working on this rack here  HPC-99070 -> GPUPR-9674"
+    },
+    {
+      "id": "358456117",
+      "author": "Sagar Astikar",
+      "created": "2026-02-12T08:18:20Z",
+      "body": "we see few tickets are in ignored and we are working  this issue here : HPC-108957 GPUPR-9674\nclosing other tickets and HPC-108957  will be blocker\n\nSerial           IP            Shape              Host State  GMC State  Rack / Memory Fabric Id                  Block         Blocking Tickets                    Ignored Tickets          Last Test                            Test State  Leader           Start                 End\nS959549X5700703  10.0.118.51   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 DO-2656288 HPC-99070              1 HPC-96437              health_check                         Failed      S959549X5700703  2026-02-12T06:52:50Z  2026-02-12T06:56:00Z\nS959549X5700282  10.0.70.244   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 DO-2656224              0                        health_check                         Failed      S959549X5700282  2026-02-12T06:29:58Z  2026-02-12T06:31:54Z\nS959549X5700277  10.0.100.45   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 HPC-109529              0                        dcgm_level_4                         Failed      S959549X5700277  2026-02-11T20:23:37Z  2026-02-11T21:14:57Z\nS959549X5700283  10.0.108.120  BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 DO-2654460              0                        health_check                         Failed      S959549X5700283  2026-02-11T17:16:02Z  2026-02-11T17:17:59Z\nS959549X5700278  10.0.76.71    BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 DO-2654068              0                        health_check                         Failed      S959549X5700278  2026-02-11T15:25:42Z  2026-02-11T15:28:00Z\nS959549X5804357  10.0.65.185   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-108952 HPC-99070              2 HPC-96440 HPC-108068   fdt_compute_tray_gb200smc_clustered  Failed      S959549X5804357  2026-02-11T07:35:23Z  2026-02-11T12:22:15Z\nS959549X5700197  10.0.69.59    BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 HPC-109339              0                        dcgm_level_4                         Failed      S959549X5700197  2026-02-11T11:30:46Z  2026-02-11T12:22:08Z\nS959549X5700280  10.0.66.187   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  3 HPC-99070 HPC-109326 HPC-108941   2 HPC-96435 HPC-108069   sunvts_burnin                        Success     S959549X5700280  2026-02-11T05:29:00Z  2026-02-11T11:41:38Z\nS956494X5601769  10.0.100.93   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 DO-2653218              0                        health_check                         Failed      S956494X5601769  2026-02-11T07:38:37Z  2026-02-11T07:40:33Z\nS959549X5700421  10.0.103.104  BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-99070 HPC-108889              0                        dcgm_level_4                         Failed      S959549X5700421  2026-02-11T04:57:54Z  2026-02-11T05:49:30Z\nS959549X5721487  10.0.72.247   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  3 HPC-108955 HPC-108749 HPC-99070   2 HPC-96438 HPC-108030   dcgm_level_4                         Failed      S959549X5721487  2026-02-11T02:13:25Z  2026-02-11T03:05:05Z\nS959549X5700285  10.0.76.120   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  3 HPC-99070 HPC-108956 HPC-108748   2 HPC-99071 HPC-108029   dcgm_level_4                         Failed      S959549X5700285  2026-02-11T02:13:25Z  2026-02-11T03:05:01Z\nS959549X5700236  10.0.98.65    BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  3 HPC-99070 HPC-108958 HPC-108747   2 HPC-96434 HPC-108027   dcgm_level_4                         Failed      S959549X5700236  2026-02-11T02:13:24Z  2026-02-11T03:04:56Z\nS959549X5700281  10.0.88.193   BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  3 HPC-99070 HPC-108959 HPC-108752   2 HPC-96436 HPC-108026   dcgm_level_4                         Failed      S959549X5700281  2026-02-11T02:13:24Z  2026-02-11T03:04:42Z\nS959549X5700279  10.0.98.19    BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  2 HPC-108957 HPC-108754             2 HPC-99070 HPC-108028   dcgm_level_4                         Failed      S959549X5700279  2026-02-11T02:06:51Z  2026-02-11T02:58:23Z\nS959549X5803503  10.0.78.1     BM.GPU.GB200-v2.4  Holding     Pending    sk-65442e33-d50e-4972-ad52-61aa79c410a0  bldg3-block2  1 HPC-96439                         0                                                             Waiting                      0001-01-01T00:00:00Z\n[opc@cpv-host-fyv ~]$"
+    },
+    {
+      "id": "358459205",
+      "author": "Sagar Astikar",
+      "created": "2026-02-12T08:31:23Z",
+      "body": "this will be the broker for test until we fix nvswitch issue HPC-108957"
+    }
+  ]
+}

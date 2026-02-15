@@ -1,0 +1,136 @@
+{
+  "ticket": {
+    "id": "55662952",
+    "key": "HPC-108146",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T08:38:51Z",
+    "resolved": "2026-02-10T13:38:17Z",
+    "updated": "2026-02-12T01:14:47Z"
+  },
+  "people": {
+    "assignee": "Mohammed Es-sousy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2545XK106Z, 2601XQ100G",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8001",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-75db4083-0260-4649-a8be-96d9f01a31c6",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2650360",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-100175",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-100469",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-100677",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-101606",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | miniHPL"
+    },
+    {
+      "key": "HPC-102307",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | rccl_all_reduce_perf_2_hosts"
+    },
+    {
+      "key": "HPC-102717",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-103076",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "4h 59m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2545XK106Z |10.0.10.27 |2026-02-10T06:20:57Z |2026-02-10T08:23:52Z |aga4-qfab-3-400 |bldg4-block31-400 |aga4-q3-b31-t0-r10, aga4-q3-b31-t0-r11, aga4-q3-b31-t0-r12, aga4-q3-b31-t0-r13, aga4-q3-b31-t0-r14, aga4-q3-b31-t0-r15, aga4-q3-b31-t0-r16, aga4-q3-b31-t0-r9 |2552ZA8001 |690c8b3a-7927-44a7-a70f-21d0f1edfb16 |\n|BM.GPU.MI355X.8 |2601XQ100G |10.0.10.149 |2026-02-10T06:20:57Z |2026-02-10T08:23:52Z |aga4-qfab-3-400 |bldg4-block33-400 |aga4-q3-b33-t0-r10, aga4-q3-b33-t0-r11, aga4-q3-b33-t0-r12, aga4-q3-b33-t0-r13, aga4-q3-b33-t0-r14, aga4-q3-b33-t0-r15, aga4-q3-b33-t0-r16, aga4-q3-b33-t0-r9 |2603ZA8001 |690c8b3a-7927-44a7-a70f-21d0f1edfb16 |",
+  "comments": [
+    {
+      "id": "357662850",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T08:38:53Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357699806",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T10:48:21Z",
+      "body": "[opc@cpv-host-aga ~]$ cpv state overview-count | grep 2545XK106Z\n2026/02/10 10:48:08 Reading state file state.json\n2026/02/10 10:48:08 Object Store client initialized with host url https://objectstorage.us-saltlake-2.oraclecloud.com\n2601XQ100G  10.0.10.149  BM.GPU.MI355X.8     Holding     N/A        sk-577f085c-e550-4112-b987-13d99c0e1b3b  bldg4-block33-400  1 HPC-108146                         0                ib_write_bw_pair               Failed      2545XK106Z  2026-02-10T06:20:57Z  2026-02-10T08:23:52Z\n2545XK106Z  10.0.10.27   BM.GPU.MI355X.8     Holding     N/A        sk-75db4083-0260-4649-a8be-96d9f01a31c6  bldg4-block31-400  1 HPC-108146                         0                ib_write_bw_pair               Failed      2545XK106Z  2026-02-10T06:20:57Z  2026-02-10T08:23:52Z\n[opc@cpv-host-aga ~]$"
+    },
+    {
+      "id": "357700602",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T10:51:23Z",
+      "body": "OP in the Tn of the host 2601XQ100G\n\nM:ExtOC1:AGA:ad1:2553XK1017>open_problems\nChecking open problems: 100% |  1/1 [00:01<00:00,  1.94s/it]\n{\n    \"2553XK1017\": [\n        {\n            \"dateTime\": \"2026-02-09 02:18:42+00:00\",\n            \"location\": \"PSB/CDFP8 (Container)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/PSB/CDFP8\",\n            \"uuid\": \"608d1f04-9cd8-c70f-ceb8-c8ce86e5585c\",\n            \"serial\": \"N/A\",\n            \"part_no\": \"N/A\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPGXTAIL-8000-KW\"\n        }\n    ]\n}"
+    },
+    {
+      "id": "357702569",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T11:01:45Z",
+      "body": "SR both hosts"
+    },
+    {
+      "id": "357745010",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T13:36:06Z",
+      "body": "Manual test pass after softreset both hosts\n\nSummary of results:\n{'10.0.10.149': [{'bw(Gb/s)': ' 391.49 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_4',\n                  'gpu': '0',\n                  'interface': 'enp112s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_0',\n                  'gpu': '1',\n                  'interface': 'enp8s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_3',\n                  'gpu': '2',\n                  'interface': 'enp88s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_2',\n                  'gpu': '3',\n                  'interface': 'enp33s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_9',\n                  'gpu': '4',\n                  'interface': 'enp239s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_5',\n                  'gpu': '5',\n                  'interface': 'enp137s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_8',\n                  'gpu': '6',\n                  'interface': 'enp215s0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 391.50 ',\n                  'client_hostname': '10.0.10.27',\n                  'device_name': 'ionic_7',\n                  'gpu': '7',\n                  'interface': 'enp162s0',\n                  'result': 'PASS'}],\n '10.0.10.27': [{'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_4',\n                 'gpu': '0',\n                 'interface': 'enp112s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_0',\n                 'gpu': '1',\n                 'interface': 'enp8s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_3',\n                 'gpu': '2',\n                 'interface': 'enp88s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_2',\n                 'gpu': '3',\n                 'interface': 'enp33s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_9',\n                 'gpu': '4',\n                 'interface': 'enp239s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.50 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_5',\n                 'gpu': '5',\n                 'interface': 'enp137s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_8',\n                 'gpu': '6',\n                 'interface': 'enp215s0',\n                 'result': 'PASS'},\n                {'bw(Gb/s)': ' 391.49 ',\n                 'client_hostname': '10.0.10.149',\n                 'device_name': 'ionic_7',\n                 'gpu': '7',\n                 'interface': 'enp162s0',\n                 'result': 'PASS'}]}"
+    },
+    {
+      "id": "357745089",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-10T13:38:18Z",
+      "body": "Cut to DO-2650360\n\nResolve to retest once DO team are done with their actions"
+    }
+  ]
+}

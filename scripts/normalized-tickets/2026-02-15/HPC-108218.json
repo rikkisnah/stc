@@ -1,0 +1,99 @@
+{
+  "ticket": {
+    "id": "55682332",
+    "key": "HPC-108218",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T16:54:18Z",
+    "resolved": "2026-02-11T04:28:09Z",
+    "updated": "2026-02-11T17:55:45Z"
+  },
+  "people": {
+    "assignee": "Jagadabi Pradeep Varma",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2545XK102V, 2549XK10CP",
+    "rack_serial": null
+  },
+  "labels": [
+    "2552ZA8030",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-6a4a9c8b-2340-4cda-b5d8-ffddcea772d3",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2652916",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "2545XK102V, 2549XK10CP | Open Problems founnd"
+    },
+    {
+      "key": "HPC-105621",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | initial_setup"
+    },
+    {
+      "key": "HPC-108016",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109423",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "8h",
+    "time_to_resolve": "11h 33m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2545XK102V |10.0.12.123 |2026-02-10T14:38:46Z |2026-02-10T16:39:21Z |aga4-qfab-3-400 |bldg4-block31-400 |aga4-q3-b31-t0-r10, aga4-q3-b31-t0-r11, aga4-q3-b31-t0-r12, aga4-q3-b31-t0-r13, aga4-q3-b31-t0-r14, aga4-q3-b31-t0-r15, aga4-q3-b31-t0-r16, aga4-q3-b31-t0-r9 |2552ZA8030 |716856ff-3e57-4fe5-b089-c7254c38caef |\n|BM.GPU.MI355X.8 |2549XK10CP |10.0.12.240 |2026-02-10T14:38:46Z |2026-02-10T16:39:21Z |aga4-qfab-3-400 |bldg4-block32-400 |aga4-q3-b32-t0-r10, aga4-q3-b32-t0-r11, aga4-q3-b32-t0-r12, aga4-q3-b32-t0-r13, aga4-q3-b32-t0-r14, aga4-q3-b32-t0-r15, aga4-q3-b32-t0-r16, aga4-q3-b32-t0-r9 |2552ZA8018 |716856ff-3e57-4fe5-b089-c7254c38caef |",
+  "comments": [
+    {
+      "id": "357802129",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T16:54:20Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358018312",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-11T04:25:35Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358018330",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-11T04:25:59Z",
+      "body": "OP found in head node:\n\nM:ExtOC1:AGA:ad1:2 Hosts>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name     Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2545XK102V   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b11-t0-r23-compute6   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacfeoloitfac4av4vrcslp6j2skuz4joiifam7gx564yxa   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   5329   29     NONE   2552ZA8030    2026-02-05T19:55:01+00:00   NONE\n2549XK10CP   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b12-t0-r6-compute4    compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoac3k6saxgwkwsrlcsrz5w6szvsw63ydkh45nwevycnfg7q   broken_pool         OC1:us-saltlake-2:ad1   aga4   aga4.2   5227   20     NONE   2552ZA8018    2026-02-08T23:08:43+00:00   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.47s/it]\nSerial       Datetime                    Location       Subsystem    Resource       Uuid                                   Serial                Part_No   Probability   Reference\n2549XK10CP\n             2026-02-09 00:17:13+00:00   CPU2 (CPU 2)   Processors   /SYS/MB/CPU2   6e310fdb-4760-cab2-c4d9-dea9e4913e9d   C1-02B717E6A9664013   1A02      100           http://support.oracle.com/msg/SPAMD-8003-7R\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2545XK102V   H:2545XK102V T:2549XK10ZD sled:2549XK10ZD\n2549XK10CP   H:2549XK10CP T:2544XK108G sled:2544XK108G\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>host 2549XK10ZD 2544XK108G\nQuerying Storekeeper: 100% |  2/2 [00:01<00:00,  1.77it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.45s/it]\nLoading 2 Hosts from Hops: 100% |  2/2 [00:01<00:00,  1.14it/s]\nLoading extended information on 2 hosts: 100% |  2/2 [00:00<00:00,  3.62it/s]\n[INFO 2026-02-11 09:55:09,015] Successfully loaded extended information about 2 hosts\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.37s/it]\nSerial\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "358018837",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-11T04:28:09Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair\n2. What we did to address the issue (1 liner - high level): Cut a DO\n3. What was the Root Cause: OP found\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

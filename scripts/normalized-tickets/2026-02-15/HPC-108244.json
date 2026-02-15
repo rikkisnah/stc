@@ -1,0 +1,129 @@
+{
+  "ticket": {
+    "id": "55685538",
+    "key": "HPC-108244",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | initial_setup",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T18:24:24Z",
+    "resolved": "2026-02-10T22:17:56Z",
+    "updated": "2026-02-12T10:26:41Z"
+  },
+  "people": {
+    "assignee": "Daniel Copado",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2542XK10AS",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8026",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-73b08bed-4520-4e8f-95fe-4c434a60ef60",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-105691",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-105830",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-109548",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109646",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-109721",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "5m",
+    "time_to_resolve": "3h 53m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\ninitial_setup -\n\n(flag) *Debugging initial_setup*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2542XK10AS |10.0.12.146 |2026-02-10T17:47:46Z |2026-02-10T18:18:34Z |aga4-qfab-3-400 |bldg4-block54-400 |aga4-q3-b54-t0-r1, aga4-q3-b54-t0-r2, aga4-q3-b54-t0-r3, aga4-q3-b54-t0-r4, aga4-q3-b54-t0-r5, aga4-q3-b54-t0-r6, aga4-q3-b54-t0-r7, aga4-q3-b54-t0-r8 |2604ZA8026 |8ef938ac-d36e-41ac-9260-9832d62bb60b |",
+  "comments": [
+    {
+      "id": "357835764",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T18:24:27Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357837894",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T18:30:10Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357854406",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T19:12:30Z",
+      "body": "log error:\n\n+ HOST_SERIAL=2542XK10AS\n+ '[' 2542XK10AS == '' ']'\n+ JSON_OUTPUT=/home/ubuntu/bio/jobs/results/agfhc_level5_2542XK10AS.json\n+ STDOUT=/home/ubuntu/bio/jobs/results/dr_hpc_agfhc_level5.stdout\n+ cleanup_agfhc_logs_directory\n+ echo 'Cleaning agfhc logs directory...'\nCleaning agfhc logs directory...\n+ sudo bash -c 'rm -rf /root/agfhc/logs/agfhc*'\n+ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-agfhc -t recipe -n all_lvl5 -r /home/ubuntu/bio/jobs/results/agfhc_level5_2542XK10AS.json\n+ '[' 0 -ne 0 ']'\n+ '[' -f /home/ubuntu/bio/jobs/results/agfhc_level5_2542XK10AS.json ']'\n+ TXT_OUTPUT=/home/ubuntu/bio/jobs/results/agfhc_level5_2542XK10AS.json.txt\n+ cat /home/ubuntu/bio/jobs/results/agfhc_level5_2542XK10AS.json\n+ jq .\n+ NUM_TO_PASS=1\n++ cat /home/ubuntu/bio/jobs/results/agfhc_level5_2542XK10AS.json\n++ jq -r .localhost\n++ grep -c PASS\n+ '[' 0 -eq 1 ']'\n+ RESULT=Failed"
+    },
+    {
+      "id": "357854487",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T19:13:51Z",
+      "body": "agfhc level5 log:\n\nubuntu@bio-2542xk10as:~/bio/jobs/results$ cat agfhc_level5_2542XK10AS.json.txt\n{\n  \"localhost\": {\n    \"status\": \"FAIL - Check /root/agfhc/logs/agfhc_20260206-165645 folder for logs.\",\n    \"program_args\": {\n      \"output_dir\": \"/root/agfhc/logs\",\n      \"prefix\": \"agfhc\",\n      \"suffix\": \"20260206-165645\",\n      \"console_log_level\": \"PRINT\",\n      \"journal_log_level\": \"INFO\",\n      \"recipes\": [\n        \"/opt/amd/agfhc/recipes/mi355x/all_lvl5.yml\"\n      ],\n      \"device_ids\": [\n        \"GPU-00\",\n        \"GPU-01\",\n        \"GPU-02\",\n        \"GPU-03\",\n        \"GPU-04\",\n        \"GPU-05\",\n        \"GPU-06\",\n        \"GPU-07\"\n      ],\n      \"ignore_dmesg\": false,\n      \"ignore_ras\": false,\n      \"ignore_cper\": false,\n      \"ignore_performance\": false,\n      \"disable_ras_checks\": false,\n      \"disable_bad_pages_checks\": false,\n      \"disable_cper_checks\": false,\n      \"disable_dmesg_checks\": false,\n      \"disable_env_update\": false,\n      \"known_dmesg_only\": false,\n      \"disable_numa_control\": false,\n      \"disable_timeout\": false,\n      \"exit_on_failure\": false,\n      \"disable_sysmon\": false,\n      \"tar_logs\": false,\n      \"simple_output\": false,\n      \"sysmon_interval\": 5,\n      \"update_interval\": 1,\n      \"error_to_console\": false,\n      \"set_timeout_mult\": -1,\n      \"disable_hsio_gather\": false,\n      \"inject_sw_errors\": false,\n      \"results_json_version\": \"3.15\",\n      \"error_json_version\": \"1.11\",\n      \"tests\": [\n        \"gfx_bf16tf\",\n        \"dma_d2h_peak\",\n        \"roctwitch\",\n        \"minihpl\",\n        \"xgmi_a2a\",\n        \"gfx_fp16ri\",\n        \"pcie_link_status\",\n        \"gfx_bf8ri\",\n        \"gfx_bf16ri\",\n        \"pcie_h2d_peak\",\n        \"dma_bidi_peak\",\n        \"pcie_d2h_peak\",\n        \"hbm_ds\",\n        \"hbm_bw\",\n        \"hbm_ds_ntd\",\n        \"dma_h2d_peak\",\n        \"mall\",\n        \"gfx_bf8tf\",\n        \"hbm_remix2\",\n        \"sprites\",\n        \"athub\",\n        \"hbm_s16\",\n        \"gfx_maxpower\",\n        \"gfx_fp16tf\",\n        \"hbm_s16_ds\",\n        \"gfx_fp8tf\",\n        \"gfx_fp8ri\",\n        \"edp\"\n      ],\n      \"skip_tests\": [],\n      \"disable_ptl_control\": false\n    },\n    \"overall_summary\": {\n      \"total_selected_tests\": 31,\n      \"total_executed_tests\": 31,\n      \"total_passed\": 30,\n      \"total_failed\": 1,\n      \"total_skipped\": 0,\n      \"total_queued\": 0,\n      \"status_code_text\": \"PROG_FAIL_IN_TEST_EXECUTION\",\n      \"status_code_numeric\": 13,\n      \"recommended_action\": \"Check actions on specific test failures\",\n      \"time_start\": \"20260206-165645\",\n      \"time_end\": \"20260206-185331\",\n      \"time_total\": \"01:56:46\",\n      \"failed_instances\": [\n        \"gfx_maxpower-1-1\"\n      ]\n    },\n    \"gfx_maxpower-1-1\": {\n      \"state\": \"failed\",\n      \"primary_status_name\": \"TEST_GFX_GEMM_COMMAND_FAIL\",\n      \"primary_status_value\": 15005,\n      \"primary_status_description\": \"Error while executing GEMM command\",\n      \"primary_suggested_action\": \"Contact AMD\",\n      \"primary_action_subject\": \"PROGRAM\",\n      \"primary_extended_info\": \"Not covered in Service Action Guide\",\n      \"primary_service_info\": {},\n      \"extended_results\": [\n        {\n          \"action_subject\": \"PROGRAM\",\n          \"suggested_action\": \"Contact AMD\",\n          \"extended_info\": [\n            \"Contact AMD service representative\"\n          ],\n          \"service_info\": {},\n          \"status_codes\": {\n            \"TEST_GFX_GEMM_COMMAND_FAIL\": 15005\n          },\n          \"test\": [\n            \"[RESULT] [  9384.651259] [gpustress-maxpower] [GPU:: 27852] pass: TRUE\",\n            \"[RESULT] [  9384.793875] [gpustress-maxpower] [GPU:: 17010] Power(W) 1400.000000\",\n            \"[RESULT] [  9384.796905] [gpustress-maxpower] [GPU:: 17010] pass: TRUE\",\n            \"double free or corruption (!prev)\",\n            \"Aborted (core dumped)\",\n            \"stdbuf -oL /opt/rocm/bin/rvs -c /root/agfhc/logs/agfhc_20260206-165645/tests/gfx_maxpower-1-1/rvs.conf: 134\"\n          ],\n          \"dmesg\": [],\n          \"ras\": []\n        }\n      ],\n      \"time_start\": \"20260206-171629\",\n      \"time_end\": \"20260206-172632\",\n      \"time_total\": \"00:10:03\",\n      \"test\": \"gfx_maxpower\",\n      \"title_tag\": \"\",\n      \"run\": 1,\n      \"iteration\": 1,\n      \"device_ids\": [],\n      \"target_source\": \"platform\",\n      \"arguments\": {\n        \"name\": \"gpustress-maxpower\",\n        \"device\": \"all\",\n        \"module\": \"iet\",\n        \"parallel\": true,\n        \"ramp_interval\": 1000,\n        \"sample_interval\": 1000,\n        \"log_interval\": 5000,\n        \"bw_workload\": true,\n        \"cp_workload\": false,\n        \"wg_count\": 256,\n        \"nt_loads\": true\n      }\n    }\n  }\n}"
+    },
+    {
+      "id": "357863895",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T19:40:45Z",
+      "body": "health check passed:\n\nbuntu@bio-2542xk10as:~$ export LC_ALL=C.UTF-8 && export LANG=C.UTF-8 && /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-health-checks;\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...Map file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:hc_results.json auto_discovery_mode:True standalone_mode:True\nHealth Check starts at: 2026-02-10 19:38:45.495409\nHealth Check finishes at: 2026-02-10 19:40:06.203064, Elapsed time: 80.71 s\n{'localhost': {'authentication': [{'device': 'enp8s0', 'status': 'PASS'},\n                                  {'device': 'enp33s0', 'status': 'PASS'},\n                                  {'device': 'enp88s0', 'status': 'PASS'},\n                                  {'device': 'enp112s0', 'status': 'PASS'},\n                                  {'device': 'enp137s0', 'status': 'PASS'},\n                                  {'device': 'enp162s0', 'status': 'PASS'},\n                                  {'device': 'enp215s0', 'status': 'PASS'},\n                                  {'device': 'enp239s0', 'status': 'PASS'}],\n               'diagnostics': [{'module': 'babel', 'status': 'PASS'},\n                               {'module': 'gst', 'status': 'PASS'},\n                               {'module': 'pebb', 'status': 'PASS'},\n                               {'module': 'pbqt', 'status': 'PASS'}],\n               'eth_link': [{'device': 'ens9np0',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'},\n                            {'device': 'ens49np1',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'}],\n               'gid_index': [{'status': 'PASS'}],\n               'gpu': [{'retired-pages': {0: {'retired': 'PASS'},\n                                          1: {'retired': 'PASS'},\n                                          2: {'retired': 'PASS'},\n                                          3: {'retired': 'PASS'},\n                                          4: {'retired': 'PASS'},\n                                          5: {'retired': 'PASS'},\n                                          6: {'retired': 'PASS'},\n                                          7: {'retired': 'PASS'},\n                                          'status': 'PASS'}},\n                       {'bad-pages': {'status': 'PASS'}},\n                       {'device_count': 'PASS'},\n                       {'cdfp': 'PASS'},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'max_clock_speed': 'WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 '\n                                           'GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7'},\n                       {'xgmi': 'PASS', 'xgmi_error': 'PASS'}],\n               'gpu_xid': [],\n               'hpc_info': [{'status': 'PASS'}],\n               'link': [],\n               'oca_version': [],\n               'pcie': [{'pci_busid': '0000:0000:08:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:21:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:58:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:70:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:89:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:a2:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:d7:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:ef:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'}],\n               'pcie_config': [],\n               'pcie_error': [],\n               'port_state': [{'device': 'enp8s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp33s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp88s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp112s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp137s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp162s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp215s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp239s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'}],\n               'rdma_link_flap': [{'status': 'PASS'}],\n               'rdma_nic_count': [{'num_rdma_nics': 8, 'status': 'PASS'}],\n               'rttcc': [],\n               'rx_discards': [{'device': 'enp8s0', 'status': 'PASS'},\n                               {'device': 'enp33s0', 'status': 'PASS'},\n                               {'device': 'enp88s0', 'status': 'PASS'},\n                               {'device': 'enp112s0', 'status': 'PASS'},\n                               {'device': 'enp137s0', 'status': 'PASS'},\n                               {'device': 'enp162s0', 'status': 'PASS'},\n                               {'device': 'enp215s0', 'status': 'PASS'},\n                               {'device': 'enp239s0', 'status': 'PASS'}],\n               'sram': [{'aggregated': {'correctable': 'PASS', 'uncorrectable': 'PASS'}}],\n               'summary': {'failed_tests': [], 'status': 'PASS', 'warning': ['gpu']},\n               'walk_pcie': [{'status': 'PASS'}]}}"
+    },
+    {
+      "id": "357867564",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T19:51:13Z",
+      "body": "running test again...."
+    },
+    {
+      "id": "357923638",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T22:13:57Z",
+      "body": "agfhc level5 passed:\n\nubuntu@bio-2542xk10as:~/bio/jobs/results$ cat agfhc_level5_2542XK10AS.json.txt\n{\n  \"localhost\": {\n    \"status\": \"PASS - Check /root/agfhc/logs/agfhc_20260210-195129 folder for logs.\",\n    \"program_args\": {\n      \"output_dir\": \"/root/agfhc/logs\",\n      \"prefix\": \"agfhc\",\n      \"suffix\": \"20260210-195129\",\n      \"console_log_level\": \"PRINT\",\n      \"journal_log_level\": \"INFO\",\n      \"recipes\": [\n        \"/opt/amd/agfhc/recipes/mi355x/all_lvl5.yml\"\n      ],\n      \"device_ids\": [\n        \"GPU-00\",\n        \"GPU-01\",\n        \"GPU-02\",\n        \"GPU-03\",\n        \"GPU-04\",\n        \"GPU-05\",\n        \"GPU-06\",\n        \"GPU-07\"\n      ],\n      \"ignore_dmesg\": false,\n      \"ignore_ras\": false,\n      \"ignore_cper\": false,\n      \"ignore_performance\": false,\n      \"disable_ras_checks\": false,\n      \"disable_bad_pages_checks\": false,\n      \"disable_cper_checks\": false,\n      \"disable_dmesg_checks\": false,\n      \"disable_env_update\": false,\n      \"known_dmesg_only\": false,\n      \"disable_numa_control\": false,\n      \"disable_timeout\": false,\n      \"exit_on_failure\": false,\n      \"disable_sysmon\": false,\n      \"tar_logs\": false,\n      \"simple_output\": false,\n      \"sysmon_interval\": 5,\n      \"update_interval\": 1,\n      \"error_to_console\": false,\n      \"set_timeout_mult\": -1,\n      \"disable_hsio_gather\": false,\n      \"inject_sw_errors\": false,\n      \"results_json_version\": \"3.15\",\n      \"error_json_version\": \"1.11\",\n      \"tests\": [\n        \"gfx_maxpower\",\n        \"gfx_bf16ri\",\n        \"roctwitch\",\n        \"xgmi_a2a\",\n        \"hbm_ds\",\n        \"dma_d2h_peak\",\n        \"dma_bidi_peak\",\n        \"mall\",\n        \"gfx_fp16ri\",\n        \"hbm_remix2\",\n        \"gfx_fp16tf\",\n        \"pcie_d2h_peak\",\n        \"dma_h2d_peak\",\n        \"pcie_h2d_peak\",\n        \"sprites\",\n        \"gfx_bf8tf\",\n        \"minihpl\",\n        \"gfx_fp8tf\",\n        \"athub\",\n        \"gfx_bf8ri\",\n        \"hbm_s16\",\n        \"hbm_bw\",\n        \"pcie_link_status\",\n        \"edp\",\n        \"gfx_bf16tf\",\n        \"hbm_s16_ds\",\n        \"gfx_fp8ri\",\n        \"hbm_ds_ntd\"\n      ],\n      \"skip_tests\": [],\n      \"disable_ptl_control\": false\n    },\n    \"overall_summary\": {\n      \"total_selected_tests\": 31,\n      \"total_executed_tests\": 31,\n      \"total_passed\": 31,\n      \"total_failed\": 0,\n      \"total_skipped\": 0,\n      \"total_queued\": 0,\n      \"status_code_text\": \"AGFHC_SUCCESS\",\n      \"status_code_numeric\": 0,\n      \"recommended_action\": \"No action needed\",\n      \"time_start\": \"20260210-195129\",\n      \"time_end\": \"20260210-214818\",\n      \"time_total\": \"01:56:49\",\n      \"failed_instances\": []\n    }\n  }\n}"
+    },
+    {
+      "id": "357924867",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T22:17:56Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): initial_setup\n2. What we did to address the issue (1 liner - high level): just retest agfhc test\n3. What was the Root Cause: agfhc test failed\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

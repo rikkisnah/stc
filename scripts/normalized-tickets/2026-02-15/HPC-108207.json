@@ -1,0 +1,106 @@
+{
+  "ticket": {
+    "id": "55680932",
+    "key": "HPC-108207",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "ORD | ad1 | CPV Job Failure | BM.GPU.H100.8 | cable_validation",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T16:24:19Z",
+    "resolved": "2026-02-10T17:29:12Z",
+    "updated": "2026-02-12T02:02:16Z"
+  },
+  "people": {
+    "assignee": "Daniel Copado",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2337XLG02R",
+    "rack_serial": null
+  },
+  "labels": [
+    "2338XL8062",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V4_X10-2C_32000_S.01",
+    "ORD-CPV",
+    "de-retrigger-feb11",
+    "sk-db54a2c3-751f-42dd-9964-f01147f1d5ba",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-92296",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "ORD | 3639 | 2337XLG02R | 2337XKU0NE | FDT level2 failure"
+    },
+    {
+      "key": "HPC-92434",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "ORD | 3639 | 2337XLG02R | 2337XKU0NE | FDT level2 failure"
+    },
+    {
+      "key": "HPC-92648",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "ORD | 3639 | 2337XLG02R | 2337XKU0NE | FDT level2 failure"
+    },
+    {
+      "key": "HPC-93039",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "ORD | 3639 | 2337XLG02R | 2337XKU0NE | FDT level2 failure"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "1h 4m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : cable_validation\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ncable_validation -\n\n(flag) *Debugging cable_validation*\n\nSee the following runbooks for more information:\nHow to Debug Cable Validation Failures\n\nRelevant logs\n\nOther uploaded files\n - 2337XLG02R/2337XLG02R-nvidia-bug-report-2026-02-10-035744.log.gz\n - fdt_gpufielddiag/cf2f8123-1570-4619-be1a-5ea452207ea6/fieldiag.log\n - fdt_gpufielddiag_cf2f8123-1570-4619-be1a-5ea452207ea6_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.H100.8 |2337XLG02R |10.0.10.37 |2026-02-10T16:14:55Z |2026-02-10T16:17:05Z |bldg7-block47-200 |bldg7-block47-200 |ord7-q1-b47-t0-r25, ord7-q1-b47-t0-r26, ord7-q1-b47-t0-r27, ord7-q1-b47-t0-r28, ord7-q1-b47-t0-r29, ord7-q1-b47-t0-r30, ord7-q1-b47-t0-r31, ord7-q1-b47-t0-r32 |2338XL8062 |c69e6f13-c02c-4f42-98cb-faf183be4d50 |",
+  "comments": [
+    {
+      "id": "357793626",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T16:24:23Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357799477",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T16:44:27Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357813984",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T17:27:18Z",
+      "body": "log error:\n\n[opc@bio-2337xlg02r results]$ cat cable_validation_result_.txt\n{\"message\": \"Something went wrong on NCP side. NCP job id 6e09c956-101d-4e6e-b8bb-bf9136e64571\", \"ticket_queue\": \"NA\", \"job_status\": \"FAILED\"}"
+    },
+    {
+      "id": "357814724",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T17:28:03Z",
+      "body": "Terminate the CPV instance on the host and allow host to be re-provisioned:\n\n[opc@burn-in-orchestrator-ord ~]$ cpv state resource -t host -s Terminate -k 2337XLG02R\n2026/02/10 17:27:43 Reading state file state.json\n2026/02/10 17:27:43 Object Store client initialized with host url https://objectstorage.us-chicago-1.oraclecloud.com\n2026/02/10 17:27:43 Changing host 2337XLG02R resource state from HoldingResourceState to TerminateResourceState\nUpdating resource \"2337XLG02R\" state to \"TerminateResourceState\"\n2026/02/10 17:27:43 Saving state file state.json"
+    },
+    {
+      "id": "357814781",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T17:29:12Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): cable_validation\n2. What we did to address the issue (1 liner - high level): Terminate to Reprovision it\n3. What was the Root Cause: Something went wrong on NCP side\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

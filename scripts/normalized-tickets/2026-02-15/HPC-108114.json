@@ -1,0 +1,135 @@
+{
+  "ticket": {
+    "id": "55658425",
+    "key": "HPC-108114",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T05:53:46Z",
+    "resolved": "2026-02-10T06:25:32Z",
+    "updated": "2026-02-13T11:18:02Z"
+  },
+  "people": {
+    "assignee": "Sachin Janawade Janawade",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2552XQ101D",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603ZA8053",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-203bff8b-4697-4ebd-96a4-cb20eb9ed44f",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2649620",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "AGA4.2 | 8336 U12 | 2552XQ101D | AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-103809",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-104168",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | agfhc_hbm_8h"
+    },
+    {
+      "key": "HPC-105680",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-106184",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-107209",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-108032",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | health_check"
+    },
+    {
+      "key": "HPC-110170",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "31m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 1 times in past 12 hours\nReset 2 times in past 12 hours\nRepairScript invoked 1 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/5e5f4499-d90a-46bf-9982-c23a788bcd7f/health_check_2552XQ101D.json\n - health_check_5e5f4499-d90a-46bf-9982-c23a788bcd7f_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2552XQ101D |10.0.13.248 |2026-02-10T05:48:00Z |2026-02-10T05:51:10Z |aga4-qfab-3-400 |bldg4-block48-400 |aga4-q3-b48-t0-r10, aga4-q3-b48-t0-r11, aga4-q3-b48-t0-r12, aga4-q3-b48-t0-r13, aga4-q3-b48-t0-r14, aga4-q3-b48-t0-r15, aga4-q3-b48-t0-r16, aga4-q3-b48-t0-r9 |2603ZA8053 |5e5f4499-d90a-46bf-9982-c23a788bcd7f |",
+  "comments": [
+    {
+      "id": "357612276",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T05:53:49Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357617102",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:00:29Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357618655",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:08:15Z",
+      "body": "No open problems"
+    },
+    {
+      "id": "357622306",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:21:08Z",
+      "body": "ubuntu@bio-2552xq101d:~/bio/jobs/results$ cat dr_hpc_health_check.stdout\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:/home/ubuntu/bio/jobs/results/health_check_2552XQ101D.json auto_discovery_mode:True standalone_mode:True\nHealth Check starts at: 2026-02-10 05:48:12.461842\nHealth Check finishes at: 2026-02-10 05:49:33.071020, Elapsed time: 80.61 s\n{'localhost': {'authentication': [{'device': 'enp8s0', 'status': 'PASS'},\n                                  {'device': 'enp33s0', 'status': 'PASS'},\n                                  {'device': 'enp88s0', 'status': 'PASS'},\n                                  {'device': 'enp112s0', 'status': 'PASS'},\n                                  {'device': 'enp137s0', 'status': 'PASS'},\n                                  {'device': 'enp162s0', 'status': 'PASS'},\n                                  {'device': 'enp215s0', 'status': 'PASS'},\n                                  {'device': 'enp239s0', 'status': 'PASS'}],\n               'diagnostics': [{'module': 'babel', 'status': 'PASS'},\n                               {'module': 'gst', 'status': 'PASS'},\n                               {'module': 'pebb', 'status': 'PASS'},\n                               {'module': 'pbqt', 'status': 'PASS'}],\n               'eth_link': [{'device': 'ens9np0',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'},\n                            {'device': 'ens49np1',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'}],\n               'gid_index': [{'status': 'PASS'}],\n               'gpu': [{'bad-pages': {'status': 'PASS'}},\n                       {'retired-pages': {0: {'retired': 'PASS'},\n                                          1: {'retired': 'PASS'},\n                                          2: {'retired': 'PASS'},\n                                          3: {'retired': 'PASS'},\n                                          4: {'retired': 'PASS'},\n                                          5: {'retired': 'PASS'},\n                                          6: {'retired': 'PASS'},\n                                          7: {'retired': 'PASS'},\n                                          'status': 'PASS'}},\n                       {'max_clock_speed': 'WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 '\n                                           'GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, '\n                                           'GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX '\n                                           'gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7'},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'device_count': 'PASS'},\n                       {'cdfp': 'FAIL - Mismatch for PCI 0000:5d:00.0: Expected module_id 6, found 4, Mismatch for PCI 0000:a7:00.0: Expected module_id 4, '\n                                'found 6'},\n                       {'xgmi': 'PASS', 'xgmi_error': 'PASS'}],\n               'gpu_xid': [],\n               'hpc_info': [{'status': 'PASS'}],\n               'link': [],\n               'oca_version': [],\n               'pcie': [{'pci_busid': '0000:0000:08:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:21:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:58:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:70:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:89:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:a2:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:d7:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0000:ef:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'}],\n               'pcie_config': [],\n               'pcie_error': [],\n               'port_state': [{'device': 'enp8s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp33s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp88s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp112s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp137s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp162s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp215s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               PyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\n'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'},\n                              {'device': 'enp239s0',\n                               'link_fsm_state': 'PASS',\n                               'operational_state': 'PASS',\n                               'speed': 'PASS',\n                               'transceiver_state': 'PASS',\n                               'transceiver_temperature': 'PASS',\n                               'width': 'PASS'}],\n               'rdma_link_flap': [{'status': 'PASS'}],\n               'rdma_nic_count': [{'num_rdma_nics': 8, 'status': 'PASS'}],\n               'rttcc': [],\n               'rx_discards': [{'device': 'enp8s0', 'status': 'PASS'},\n                               {'device': 'enp33s0', 'status': 'PASS'},\n                               {'device': 'enp88s0', 'status': 'PASS'},\n                               {'device': 'enp112s0', 'status': 'PASS'},\n                               {'device': 'enp137s0', 'status': 'PASS'},\n                               {'device': 'enp162s0', 'status': 'PASS'},\n                               {'device': 'enp215s0', 'status': 'PASS'},\n                               {'device': 'enp239s0', 'status': 'PASS'}],\n               'sram': [{'aggregated': {'correctable': 'PASS', 'uncorrectable': 'PASS'}}],\n               'summary': {'failed_tests': ['gpu'], 'status': 'FAIL', 'warning': ['gpu']},\n               'walk_pcie': [{'status': 'PASS'}]}}\nubuntu@bio-2552xq101d:~/bio/jobs/results$"
+    },
+    {
+      "id": "357622323",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:21:52Z",
+      "body": "{'cdfp': 'FAIL - Mismatch for PCI 0000:5d:00.0: Expected module_id 6, found 4, Mismatch for PCI 0000:a7:00.0: Expected module_id 4, '\n                                'found 6'},"
+    },
+    {
+      "id": "357623251",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T06:25:32Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Cut a DO-2649620\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

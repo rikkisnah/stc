@@ -1,0 +1,142 @@
+{
+  "ticket": {
+    "id": "55661566",
+    "key": "HPC-108142",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:53:49Z",
+    "resolved": "2026-02-10T09:40:32Z",
+    "updated": "2026-02-14T04:18:52Z"
+  },
+  "people": {
+    "assignee": "Jagadabi Pradeep Varma",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2553XQ103W, 2542XK102P",
+    "rack_serial": null
+  },
+  "labels": [
+    "2602ZA8067",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "de-retrigger-feb11",
+    "sk-f0f7082a-1d05-4896-a7fc-ee917b8b5e6c",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2649984",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "2553XQ103W, 2542XK102P | Open problems found"
+    },
+    {
+      "key": "HPC-105303",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105523",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-105678",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-105712",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-107864",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108180",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108232",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108246",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-108347",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-109850",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    },
+    {
+      "key": "HPC-110364",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "1h 46m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : iperf_pair\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\niperf_pair -\n\n(flag) *Debugging iperf_pair*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - health_check/7c361a5f-4e1c-4e55-bfd5-0741f7d83c4c/health_check_2553XQ103W.json\n - health_check_7c361a5f-4e1c-4e55-bfd5-0741f7d83c4c_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2553XQ103W |10.0.12.111 |2026-02-10T07:36:01Z |2026-02-10T07:37:46Z |aga4-qfab-3-400 |bldg4-block33-400 |aga4-q3-b33-t0-r1, aga4-q3-b33-t0-r2, aga4-q3-b33-t0-r3, aga4-q3-b33-t0-r4, aga4-q3-b33-t0-r5, aga4-q3-b33-t0-r6, aga4-q3-b33-t0-r7, aga4-q3-b33-t0-r8 |2602ZA8067 |7e58cb3d-ca79-4526-99c9-bb2e56a7e2fe |\n|BM.GPU.MI355X.8 |2542XK102P |10.0.11.123 |2026-02-10T07:36:01Z |2026-02-10T07:37:46Z |aga4-qfab-3-400 |bldg4-block35-400 |aga4-q3-b35-t0-r1, aga4-q3-b35-t0-r2, aga4-q3-b35-t0-r3, aga4-q3-b35-t0-r4, aga4-q3-b35-t0-r5, aga4-q3-b35-t0-r6, aga4-q3-b35-t0-r7, aga4-q3-b35-t0-r8 |2602ZA8018 |7e58cb3d-ca79-4526-99c9-bb2e56a7e2fe |",
+  "comments": [
+    {
+      "id": "357648198",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:53:50Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357679751",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-10T09:38:36Z",
+      "body": "OP found in tail node:\n\nM:ExtOC1:AGA:ad1:2 Hosts>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2542XK102P   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b14-t0-r9-compute6    compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacasncqor4yvwrhfpzalaa2l3uc47c4fvjmfvatuewudcq   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   4812   29     NONE   2602ZA8018    2026-02-10T03:27:36+00:00   NONE\n2553XQ103W   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b12-t0-r11-compute7   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacsvegp622k3yp2finefwuytjdzihowcemb3xohkak7dfq   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   6421   33     NONE   2602ZA8067    2026-02-01T09:30:39+00:00   NONE\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.15s/it]\nSerial\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>gpu_info\nSerial       Gpu\n2542XK102P   H:2542XK102P T:2551XK10BL sled:2551XK10BL\n2553XQ103W   H:2553XQ103W T:2552XK103S sled:2552XK103S\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>host 2551XK10BL 2552XK103S\nQuerying Storekeeper: 100% |  2/2 [00:01<00:00,  1.53it/s]\nQuerying Hops: 100% |  1/1 [00:01<00:00,  1.40s/it]\nLoading 2 Hosts from Hops: 100% |  2/2 [00:01<00:00,  1.22it/s]\nLoading extended information on 2 hosts: 100% |  2/2 [00:00<00:00,  2.40it/s]\n[INFO 2026-02-10 15:06:45,234] Successfully loaded extended information about 2 hosts\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>\nM:ExtOC1:AGA:ad1:2 Hosts>open_problems\nChecking open problems: 100% |  2/2 [00:02<00:00,  1.09s/it]\nSerial       Datetime                    Location                Subsystem   Resource         Uuid                                   Serial   Part_No   Probability   Reference\n2552XK103S\n             2026-02-10 04:52:27+00:00   PSB/CDFP8 (Container)   System      /SYS/PSB/CDFP8   ce4788e6-a6d2-c53b-f43c-d0e7750e148c   N/A      N/A       100           http://support.oracle.com/msg/SPGXTAIL-8000-KW\nM:ExtOC1:AGA:ad1:2 Hosts>"
+    },
+    {
+      "id": "357680615",
+      "author": "Jagadabi Pradeep Varma",
+      "created": "2026-02-10T09:40:32Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | iperf_pair\n2. What we did to address the issue (1 liner - high level): Cut a DO\n3. What was the Root Cause: OP found\n4. Runbook was helpful - Y\n5. Is this recurring issue - N\n6. Hours logged - Y"
+    }
+  ]
+}

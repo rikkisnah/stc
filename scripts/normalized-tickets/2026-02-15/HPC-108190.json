@@ -1,0 +1,150 @@
+{
+  "ticket": {
+    "id": "55674001",
+    "key": "HPC-108190",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Automated RMA request for host  MT2517600689",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T13:32:08Z",
+    "resolved": "2026-02-12T08:17:20Z",
+    "updated": "2026-02-15T13:54:12Z"
+  },
+  "people": {
+    "assignee": "Sai Krishna Pedagadi",
+    "reporter": "Sai Krishna Pedagadi",
+    "watchers": 3
+  },
+  "location": {
+    "region": "FYV",
+    "availability_domain": null,
+    "building": "fyv3",
+    "rack_type": null,
+    "host_serial": "MT2517600689",
+    "rack_serial": null
+  },
+  "labels": [
+    "TRS_RMA_POLICY",
+    "TRS_RMA_TRACKING",
+    "computeAdmin-audit",
+    "postDispatcher_markHostAsBrokenWithFaultDetails"
+  ],
+  "links": [
+    {
+      "key": "RHS-76932",
+      "relation": "relates to",
+      "status": "Closed",
+      "summary": "[Standard] |  FYV | ad1 | CPV Job Timeout | BM.GPU.GB200-v2.4 | health_check"
+    },
+    {
+      "key": "BMP-836951",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "MT2517600689 | Please replace nvswitch (blocker)"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "42h 45m"
+  },
+  "description": "Runbook: [https://confluence.oraclecorp.com/confluence/display/CHMDP/GB200%3A+RMA+Automated+Process+Operations+Runbook#tab-ST%3A+RMA+Process+%28GPUPR%29]\n\n\n\nRMA confirmation: RHS-76932",
+  "comments": [
+    {
+      "id": "357743832",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T13:32:10Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357743736",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T13:32:12Z",
+      "body": "Ocean has created an incident for this issue. (P1-4A47B2D8C7A8F031E0634313000AFF8E)"
+    },
+    {
+      "id": "357744317",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T13:33:41Z",
+      "body": "M:ExtOC1:FYV:ad1:MT2517600689>info_all\nSerial         Model                         Arch     Owner             Pxe_Image   Hops_Hostname                   Role       State       Halt_Mode   Instance_Id   Pool_Name   Job   Location             Bldg   Room     Rack   Elev   Slot   Rack_Serial      Updated                     Test   Sk_Id                                     Rack_Sk_Id                                Hostname                        Mac_Addr   Boot_Mac_Addr   Boot_Ip   Host_Ip         Ilom_Ip   Ilom_Host_Info   Rot           Ilom_Serial   Smartnic_Serials   Smartnic_Ips   Smartnic_Bmc_Serials   Smartnic_Bmc_Ips   Gpu\nMT2517600689   GPU_GB200-NVL72_Switch_S.02   NV1-2S   compute-fyv-ad1   NONE        fyv3-c1-b9-t0-r1-u1-nvswitch8   nvswitch   ALLOCATED   False       NONE          NONE              OC1:ap-kulai-1:ad1   fyv3   fyv3.3   6501   26     NONE   SR010530252523   2025-09-02T17:51:36+00:00   NONE   sk-c3718ebe-a9f2-4a1d-906e-7a7c443c3f1f   sk-198511ae-5813-4e9f-8513-d2988b92e5a5   fyv3-c1-b9-t0-r1-u1-nvswitch8   NONE       NONE            NONE      10.160.68.186   NONE      NONE             Type: None    NONE          NONE               NONE           NONE                   NONE               NONE\nM:ExtOC1:FYV:ad1:MT2517600689>"
+    },
+    {
+      "id": "357744360",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T13:34:28Z",
+      "body": "For Rack: SR010530252523\n\nNo customer instance running on the Rack\n\nM:ExtOC1:FYV:ad1:27 Hosts>instance_info\nHost              Pool_Name     Instance_Id\nMT251760068N      NONE          NONE\nS956494X5601079   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoac63qqp5ywsypfe2cae2sdbrq2zajhtiwpr3v4btjzp2uq\nS956494X5601124   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoac6ss2y6fjcmro2nijab5iuzd5hzispqmjjhukluttdgxa\nS956494X5601118   NONE          NONE\nMT2517600689      NONE          NONE\nMT251760063P      NONE          NONE\nS956494X5601072   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoac6zui3cjlkx3vfd3bwygeumc6kjfczehjuikspkqecvja\nMT2516604H3P      NONE          NONE\nS956494X5602600   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoacygpzgl6zld53oo3usko7kbhcnbox7zupopcssw67iwgq\nS956494X5600429   broken_pool   NONE\nS956494X5600637   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoachnra4h46shd2hs7aizrc4j3b2epnsauxumc424oi7oga\nMT251660305L      NONE          NONE\nS956494X5601070   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoackjpjgdjkvgosgpi6abijgzzo3fgdsy765oe4svvn3l3q\nS956494X5601103   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoaclrzqk2z5qz6kfpvmtlzwsce4fagr56c3554qviogml3a\nS956494X5601125   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoacjdpgf4jtgbdcrb5fujbv2v6flyspk23bxtnkathjgloq\nS956494X5601083   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoacje3ky6otmqtnxwt4aqpunfc6xncmidwegc7i2sbfaxeq\nS956494X5602604   NONE          NONE\nS956494X5600431   NONE          NONE\nS956494X5601075   broken_pool   NONE\nS956494X5601080   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoacvvvgn7gvqgz7qdslb7tpmgtk6xgk43fdz4naeclp5r5a\nS956494X5600020   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoac7nnfj7ilrllq2wvmlkvh4m6ohjwfs5nihhacmzcwvgza\nMT2521601TBZ      NONE          NONE\nMT2516604H9G      NONE          NONE\nMT25176006KF      NONE          NONE\nS956494X5601081   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoac5rj2dpcqbhfgtqqk6vptxdqiftn35jq6f2hs5waud6ia\nMT2516602THG      NONE          NONE\nS956494X5602601   holding       ocid1.instance.oc1.ap-kulai-1.anrxqljr7rhxvoachbvfgrnix6q434ejzwlfqumffv2i3wcvlgspqv75roka\nM:ExtOC1:FYV:ad1:27 Hosts>"
+    },
+    {
+      "id": "357750359",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T13:58:02Z",
+      "body": "Terminated the CPV instances and waiting for the Hosts to get into Repair state"
+    },
+    {
+      "id": "357751103",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-10T13:59:27Z",
+      "body": ""
+    },
+    {
+      "id": "358047584",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-11T06:28:52Z",
+      "body": "In Previous ticket HPC-104488, There was a Customer GMC for this rack\n\nCurrently No customer GMC present on this rack"
+    },
+    {
+      "id": "358214164",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-11T17:06:43Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-0cf7e932-c425-40e2-8790-a5eb80340b6d, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-10T13:46:07.772670592Z by user spedagad"
+    },
+    {
+      "id": "358431842",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-12T06:46:20Z",
+      "body": "Created BMP-836951 for blocking provisioning"
+    },
+    {
+      "id": "358452064",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-12T08:03:54Z",
+      "body": "M:ExtOC1:FYV:ad1:27 Hosts>instance_info\nHost              Pool_Name     Instance_Id\nS956494X5600431   NONE          NONE\nS956494X5600637   broken_pool   NONE\nS956494X5601125   broken_pool   NONE\nS956494X5601124   broken_pool   NONE\nMT251760068N      NONE          NONE\nS956494X5601083   broken_pool   NONE\nMT2517600689      NONE          NONE\nS956494X5601075   broken_pool   NONE\nS956494X5601081   broken_pool   NONE\nS956494X5600429   broken_pool   NONE\nS956494X5601072   broken_pool   NONE\nMT2516604H3P      NONE          NONE\nMT2516604H9G      NONE          NONE\nS956494X5601070   broken_pool   NONE\nS959549X5624979   broken_pool   NONE\nMT251760063P      NONE          NONE\nS956494X5601118   NONE          NONE\nS956494X5602600   broken_pool   NONE\nS956494X5601103   broken_pool   NONE\nMT251660305L      NONE          NONE\nMT2516602THG      NONE          NONE\nMT2521601TBZ      NONE          NONE\nS956494X5602601   broken_pool   NONE\nMT25176006KF      NONE          NONE\nS956494X5600020   broken_pool   NONE\nS956494X5601079   broken_pool   NONE\nS956494X5601080   broken_pool   NONE"
+    },
+    {
+      "id": "358454767",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-12T08:14:51Z",
+      "body": "Nvswitch is in Repair\n\nM:ExtOC1:FYV:ad1:MT2517600689>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  3.57it/s]\nSerial         State    Tracking_State   Job\nMT2517600689   REPAIR   NONE             NONE"
+    },
+    {
+      "id": "358455530",
+      "author": "Sai Krishna Pedagadi",
+      "created": "2026-02-12T08:16:37Z",
+      "body": "M:ExtOC1:FYV:ad1:MT2517600689>trs_add_case {\"serial\":\"MT2517600689\",\"type\":\"TERMINATING\",\"source\":\"HOPS\",\"ticket_data\":{\"summary\":\"GB200 RMA process for NvSwitch\",\"description\":\"testdescription\",\"project\":\"GPUPR\",\"severity\":\"2\",\"labels\":[\"GB200_NVSWITCH_TRAY_REPLACEMENT\"]}}\n[INFO 2026-02-12 13:46:23,348] Creating case with <class 'triage_repair_service.models.case_detail.CaseDetail'>\ncaseId               tr-4403a380-960c-4393-ba22-5e9824adc651\ncreated              2026-02-12 08:16:23.397000+00:00\nis_active            True\nis_supported_by_trcp True\nserial               MT2517600689\nsk_id                sk-c3718ebe-a9f2-4a1d-906e-7a7c443c3f1f\nstate                OPEN\nstate_sla_in_seconds 6000\nTypeError: unsupported format string passed to NoneType.__format__\n\nTo enable full traceback, run the following command: set debug true\n\nM:ExtOC1:FYV:ad1:MT2517600689>"
+    },
+    {
+      "id": "359045682",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-13T20:46:31Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-6515cc65-8d61-435d-90d5-d2eadf523747, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-12T06:51:28.969572367Z by user spedagad"
+    },
+    {
+      "id": "359241320",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-14T11:49:20Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-842861dc-683f-4893-aee1-00e7d8e73247, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-10T13:46:07.558235668Z by user spedagad"
+    },
+    {
+      "id": "359523470",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-15T13:54:12Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-6515cc65-8d61-435d-90d5-d2eadf523747, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-10T13:46:07.772985891Z by user spedagad"
+    }
+  ]
+}

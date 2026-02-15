@@ -1,0 +1,89 @@
+{
+  "ticket": {
+    "id": "55675202",
+    "key": "HPC-108192",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Automated RMA request for host 2538XNG3CW",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T14:08:48Z",
+    "resolved": "2026-02-10T14:43:04Z",
+    "updated": "2026-02-12T01:45:52Z"
+  },
+  "people": {
+    "assignee": "Sachin Janawade Janawade",
+    "reporter": "Sachin Janawade Janawade",
+    "watchers": 3
+  },
+  "location": {
+    "region": "DFW",
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2538XNG3CW",
+    "rack_serial": null
+  },
+  "labels": [
+    "TRS_RMA_POLICY",
+    "TRS_RMA_TRACKING",
+    "computeAdmin-audit",
+    "de-retrigger-feb11",
+    "postDispatcher_markHostAsBrokenWithFaultDetails"
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "34m"
+  },
+  "description": "Please follow this runbook: [https://confluence.oraclecorp.com/confluence/display/CHMDP/GB200%3A+RMA+Automated+Process+Operations+Runbook#tab-CT%3A+Trigger+RMA+Automation+%28GPUPR%29]\n\nRMA confirmation - -RHS-79283-",
+  "comments": [
+    {
+      "id": "357753271",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T14:08:50Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357753272",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T14:08:52Z",
+      "body": "Ocean has created an incident for this issue. (P1-4A47B0B69CA5D3FEE0634313000A5292)"
+    },
+    {
+      "id": "357753281",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T14:09:06Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357759447",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T14:31:17Z",
+      "body": "M:ExtOC1:DFW:ad1:2538XNG3CW>info\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                 Role      State    Halt_Mode   Instance_Id   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2538XNG3CW   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b12-t0-r18-compute4   compute   REPAIR   False       NONE          broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   1630   32     NONE   2541XN806R    2026-02-10T14:23:57+00:00   NONE\n\nM:ExtOC1:DFW:ad1:2538XNG3CW>t\nGetting transitions: 100% |  1/1 [00:01<00:00,  1.31s/it]\nSerial       From_State         To_State           Status    Created               Completed\n2538XNG3CW\n             HOST_CLEAN_UP      REPAIR             SUCCESS   02-10-2026|14:23:57   NONE\n             WIPE_IN_PROGRESS   HOST_CLEAN_UP      SUCCESS   02-10-2026|14:19:11   02-10-2026|14:23:57\n             WAITING            WIPE_IN_PROGRESS   SUCCESS   02-10-2026|14:17:27   02-10-2026|14:19:11\n             ALLOCATED          WAITING            SUCCESS   02-10-2026|14:17:17   02-10-2026|14:17:27\nM:ExtOC1:DFW:ad1:2538XNG3CW>"
+    },
+    {
+      "id": "357760110",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T14:33:13Z",
+      "body": "mark host as broken with fault details through v2 hostDispatcher, hostId: sk-15bfd39c-1462-45e7-bbe4-c5f59e2e1a65, hasCustomerImpact: false, issue type is: null via compute-admin at 2026-02-10T14:28:55.910565458Z by user sjanawad"
+    },
+    {
+      "id": "357763101",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T14:42:53Z",
+      "body": "M:ExtOC1:DFW:ad1:2538XNG3CW>sp_presence\nChecking SP presence: 100% |  1/1 [00:04<00:00,  4.53s/it]\nSerial       Sp_Is_Present   Version    Build_Number\n2538XNG3CW   Yes             5.1.5.96   167204\n\nM:ExtOC1:DFW:ad1:2538XNG3CW>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:01<00:00,  1.20s/it]\nSerial   Sk_Id   Is_Supported_By_Trcp   Trs_Case\nNONE     NONE    None                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=None\nM:ExtOC1:DFW:ad1:2538XNG3CW>"
+    },
+    {
+      "id": "357763169",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-10T14:43:58Z",
+      "body": "Initiated the RMA\n\nM:ExtOC1:DFW:ad1:2538XNG3CW>trs_add_case {\"serial\":\"2538XNG3CW\",\"type\":\"TERMINATING\",\"source\":\"HOPS\",\"ticket_data\":{\"summary\":\"GB200 Manually triggered RMA process\",\"description\":\"testdescription\",\"project\":\"GPUPR\",\"severity\":\"2\",\"labels\":[\"GB200_COMPUTE_TRAY_REPLACEMENT\"]}}\n[INFO 2026-02-10 20:13:31,309] Creating case with <class 'triage_repair_service.models.case_detail.CaseDetail'>\ncaseId               tr-226cc477-e6b9-4ca6-b37f-7b4732a313b2\ncreated              2026-02-10 14:43:31.152000+00:00\nis_active            True\nis_supported_by_trcp True\nserial               2538XNG3CW\nsk_id                sk-15bfd39c-1462-45e7-bbe4-c5f59e2e1a65\nstate                OPEN\nstate_sla_in_seconds 6000\nTypeError: unsupported format string passed to NoneType.__format__To enable full traceback, run the following command: set debug trueM:ExtOC1:DFW:ad1:2538XNG3CW>"
+    }
+  ]
+}

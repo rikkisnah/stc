@@ -1,0 +1,142 @@
+{
+  "ticket": {
+    "id": "55661028",
+    "key": "HPC-108131",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T07:23:49Z",
+    "resolved": "2026-02-10T12:16:04Z",
+    "updated": "2026-02-12T01:37:29Z"
+  },
+  "people": {
+    "assignee": "Shiv Gupta",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2542XR100E",
+    "rack_serial": null
+  },
+  "labels": [
+    "2551ZA8026",
+    "AGA-CPV",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.02",
+    "de-retrigger-feb11",
+    "sk-e948fa66-0bca-4a84-b9e7-8f4aa2a15c6a",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2649873",
+      "relation": "is blocked by",
+      "status": "Pending",
+      "summary": "AGA4.1 | 2314 U29 | 2542XR100E | AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2"
+    },
+    {
+      "key": "HPC-100227",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | initial_setup"
+    },
+    {
+      "key": "HPC-100285",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X-v1.8 | initial_setup"
+    },
+    {
+      "key": "HPC-103266",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | initial_setup"
+    },
+    {
+      "key": "HPC-103774",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2"
+    },
+    {
+      "key": "HPC-103871",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2"
+    },
+    {
+      "key": "HPC-104052",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2"
+    },
+    {
+      "key": "HPC-104993",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2"
+    },
+    {
+      "key": "HPC-105305",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X-v1.8 | health_check_v2"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "4h 52m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check_v2\n\nRe-run 0 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nhealth_check_v2 -\n\n(flag) *Debugging health_check_v2*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X-v1.8 |2542XR100E |10.0.14.154 |2026-02-10T07:04:42Z |2026-02-10T07:07:58Z |aga4-qfab-2-400 |bldg4-block16-400 |aga4-q2-b16-t0-r10, aga4-q2-b16-t0-r11, aga4-q2-b16-t0-r12, aga4-q2-b16-t0-r13, aga4-q2-b16-t0-r14, aga4-q2-b16-t0-r15, aga4-q2-b16-t0-r16, aga4-q2-b16-t0-r9 |2551ZA8026 |3d78c62c-e4df-48f2-81b4-6e9ef4fa5632 |",
+  "comments": [
+    {
+      "id": "357640570",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T07:23:53Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357645592",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T07:43:39Z",
+      "body": "\"type\": \"critical\",\n      \"test_name\": \"cdfp_cable_check\",\n      \"fault_code\": [\n        \"HPCGPU-1010-01\"\n      ],\n      \"issue\": \"CDFP cable connection mismatch detected. GPU PCI addresses and module IDs do not match expected configuration\",\n      \"suggestion\": \"Verify CDFP cable connections between GPUs match the expected mapping. Check physical cable connections and GPU seating\",\n      \"action\": \"REBOOT\",\n      \"action_code\": 0"
+    },
+    {
+      "id": "357647138",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T07:47:27Z",
+      "body": "{'cdfp': 'FAIL - Mismatch for PCI 0000:5a:00.0: Expected module_id 6, found 4, Mismatch for PCI 0000:a4:00.0: Expected module_id 4, '\n                                'found 6'},"
+    },
+    {
+      "id": "357647549",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T07:50:50Z",
+      "body": "ILOM test passing. No open faults found."
+    },
+    {
+      "id": "357658454",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T08:22:56Z",
+      "body": "Raised DO-2649873 to check cfdp cabling ."
+    },
+    {
+      "id": "357722904",
+      "author": "Shiv Gupta",
+      "created": "2026-02-10T12:16:04Z",
+      "body": "DO-2649873"
+    }
+  ]
+}

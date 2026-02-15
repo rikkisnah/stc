@@ -1,0 +1,118 @@
+{
+  "ticket": {
+    "id": "55664251",
+    "key": "HPC-108155",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB300.4 | ib_write_bw_pair",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T09:22:12Z",
+    "resolved": "2026-02-11T06:12:01Z",
+    "updated": "2026-02-13T01:55:04Z"
+  },
+  "people": {
+    "assignee": "Sachin Janawade Janawade",
+    "reporter": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2546XN108A, 2546XN108D",
+    "rack_serial": null
+  },
+  "labels": [
+    "2543XN8178",
+    "CPV-",
+    "CPV-Triage",
+    "DFW-CPV",
+    "GPU_GB300-NVL72_S.01",
+    "de-retrigger-feb11",
+    "sk-7e2e9d0f-e8e3-461c-bfad-7b8787074a07",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-105478",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB300.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-107382",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB300.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-107855",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB300.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-110015",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB300.4 | ib_write_bw_pair"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "8h",
+    "time_to_resolve": "20h 49m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : ib_write_bw_pair\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 2 times in past 24 hours\nib_write_bw_pair -\n\n(flag) *Debugging ib_write_bw_pair*\n\nSee the following runbooks for more information:\n1. How to Triage Failure ib_write_bw_a100 Rack Pair\n2. How to Debug ib_write Slow Speeds\n3. How to Debug RDMA Poor Performance Issues\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB300.4 |2546XN108A |10.0.73.162 |2026-02-10T08:07:29Z |2026-02-10T09:16:29Z |dfw5-qfab-2-400 |bldg5-block16-400 |dfw5-q2-b16-t0-r45, dfw5-q2-b16-t0-r46, dfw5-q2-b16-t0-r47, dfw5-q2-b16-t0-r48 |2543XN8178 |738c72da-5c39-418e-884c-052749030ffe |\n|BM.GPU.GB300.4 |2546XN108D |10.0.84.160 |2026-02-10T08:07:29Z |2026-02-10T09:16:29Z |dfw5-qfab-2-400 |bldg5-block16-400 |dfw5-q2-b16-t0-r93, dfw5-q2-b16-t0-r94, dfw5-q2-b16-t0-r95, dfw5-q2-b16-t0-r96 |2543XN8205 |738c72da-5c39-418e-884c-052749030ffe |",
+  "comments": [
+    {
+      "id": "357675904",
+      "author": "jirasd-gear-compute-vmi-notifier-us-dallas-1",
+      "created": "2026-02-10T09:22:14Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358030558",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-11T05:12:34Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358033075",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-11T05:23:07Z",
+      "body": "No open problems present"
+    },
+    {
+      "id": "358042705",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-11T06:06:19Z",
+      "body": "ib-write-bw finishes at: 2026-02-10 09:16:29.421635\nSummary of results:\n{'10.0.73.162': [{'bw(Gb/s)': ' 387.07 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_2',\n                  'gpu': '0',\n                  'interface': 'rdma2',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.12 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_3',\n                  'gpu': '0',\n                  'interface': 'rdma3',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.17 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_1',\n                  'gpu': '1',\n                  'interface': 'rdma1',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.08 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_0',\n                  'gpu': '1',\n                  'interface': 'rdma0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.04 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_7',\n                  'gpu': '2',\n                  'interface': 'rdma6',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.02 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_8',\n                  'gpu': '2',\n                  'interface': 'rdma7',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.05 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_5',\n                  'gpu': '3',\n                  'interface': 'rdma4',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.07 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_6',\n                  'gpu': '3',\n                  'interface': 'rdma5',\n                  'result': 'PASS'}],\n '10.0.84.160': [{'bw(Gb/s)': ' 386.92 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_2',\n                  'gpu': '0',\n                  'interface': 'rdma2',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 374.96 ',\n                  'client_hostname': '10.0.73.162'PyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\n,\n                  'device_name': 'mlx5_3',\n                  'gpu': '0',\n                  'interface': 'rdma3',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 381.12 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_0',\n                  'gpu': '1',\n                  'interface': 'rdma0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 361.61 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_1',\n                  'gpu': '1',\n                  'interface': 'rdma1',\n                  'result': 'FAIL'},\n                 {'bw(Gb/s)': ' 387.02 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_8',\n                  'gpu': '2',\n                  'interface': 'rdma7',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.03 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_7',\n                  'gpu': '2',\n                  'interface': 'rdma6',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.06 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_5',\n                  'gpu': '3',\n                  'interface': 'rdma4',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.06 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_6',\n                  'gpu': '3',\n                  'interface': 'rdma5',\n                  'result': 'PASS'}]}\nubuntu@instance20260204154538:~/bio/jobs/results$"
+    },
+    {
+      "id": "358042730",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-11T06:07:00Z",
+      "body": "ubuntu@instance20260204154538:~/bio/jobs/results$ for x in $(cat host.json | jq -r .[].ipAddress); do echo $x; ssh $x rdma link; done\n10.0.73.162\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev rdma0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev rdma1\nlink mlx5_2/1 state ACTIVE physical_state LINK_UP netdev rdma2\nlink mlx5_3/1 state ACTIVE physical_state LINK_UP netdev rdma3\nlink mlx5_4/1 state ACTIVE physical_state LINK_UP netdev eth0\nlink mlx5_5/1 state ACTIVE physical_state LINK_UP netdev rdma4\nlink mlx5_6/1 state ACTIVE physical_state LINK_UP netdev rdma5\nlink mlx5_7/1 state ACTIVE physical_state LINK_UP netdev rdma6\nlink mlx5_8/1 state ACTIVE physical_state LINK_UP netdev rdma7\nlink mlx5_9/1 state ACTIVE physical_state LINK_UP netdev eth1\n10.0.84.160\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev rdma0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev rdma1\nlink mlx5_2/1 state ACTIVE physical_state LINK_UP netdev rdma2\nlink mlx5_3/1 state ACTIVE physical_state LINK_UP netdev rdma3\nlink mlx5_4/1 state ACTIVE physical_state LINK_UP netdev eth0\nlink mlx5_5/1 state ACTIVE physical_state LINK_UP netdev rdma4\nlink mlx5_6/1 state ACTIVE physical_state LINK_UP netdev rdma5\nlink mlx5_7/1 state ACTIVE physical_state LINK_UP netdev rdma6\nlink mlx5_8/1 state ACTIVE physical_state LINK_UP netdev rdma7\nlink mlx5_9/1 state ACTIVE physical_state LINK_UP netdev eth1\nubuntu@instance20260204154538:~/bio/jobs/results$"
+    },
+    {
+      "id": "358043738",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-11T06:11:32Z",
+      "body": "Manual test is passing after DPC\n\nib-write-bw finishes at: 2026-02-11 06:08:32.901620\nSummary of results:\n{'10.0.73.162': [{'bw(Gb/s)': ' 388.01 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_3',\n                  'gpu': '0',\n                  'interface': 'rdma3',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.45 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_2',\n                  'gpu': '0',\n                  'interface': 'rdma2',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.46 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_0',\n                  'gpu': '1',\n                  'interface': 'rdma0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 388.01 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_1',\n                  'gpu': '1',\n                  'interface': 'rdma1',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 388.02 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_7',\n                  'gpu': '2',\n                  'interface': 'rdma6',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.44 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_8',\n                  'gpu': '2',\n                  'interface': 'rdma7',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.43 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_6',\n                  'gpu': '3',\n                  'interface': 'rdma5',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.49 ',\n                  'client_hostname': '10.0.84.160',\n                  'device_name': 'mlx5_5',\n                  'gpu': '3',\n                  'interface': 'rdma4',\n                  'result': 'PASS'}],\n '10.0.84.160': [{'bw(Gb/s)': ' 387.44 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_2',\n                  'gpu': '0',\n                  'interface': 'rdma2',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 388.00 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_3',\n                  'gpu': '0',\n                  'interface': 'rdma3',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 388.00 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_1',\n                  'gpu': '1',\n                  'interface': 'rdma1',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.45 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_0',\n                  'gpu': '1',\n                  'interface': 'rdma0',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 388.00 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_7',\n                  'gpu': '2',\n                  'interface': 'rdma6',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.40 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_8',\n                  'gpu': '2',\n                  'interface': 'rdma7',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.72 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_6',\n                  'gpu': '3',\n                  'interface': 'rdma5',\n                  'result': 'PASS'},\n                 {'bw(Gb/s)': ' 387.33 ',\n                  'client_hostname': '10.0.73.162',\n                  'device_name': 'mlx5_5',\n                  'gpu': '3',\n                  'interface': 'rdma4',\n                  'result': 'PASS'}]}\nubuntu@instance20260204154538:~/bio/jobs/results$"
+    },
+    {
+      "id": "358043745",
+      "author": "Sachin Janawade Janawade",
+      "created": "2026-02-11T06:12:01Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner):\n2. What we did to address the issue (1 liner - high level): Manual test is passing after DPC\n3. What was the Root Cause: NA\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

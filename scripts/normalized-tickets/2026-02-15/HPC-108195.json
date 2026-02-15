@@ -1,0 +1,93 @@
+{
+  "ticket": {
+    "id": "55675257",
+    "key": "HPC-108195",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T14:14:34Z",
+    "resolved": "2026-02-11T13:39:16Z",
+    "updated": "2026-02-13T01:49:07Z"
+  },
+  "people": {
+    "assignee": "Mohammed Es-sousy",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2602XQ11GK",
+    "rack_serial": null
+  },
+  "labels": [
+    "2604ZA8041",
+    "CPV-",
+    "CPV-Triage",
+    "FYV-CPV",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "sk-71fe1717-5e57-45a8-8e91-8424216b9580",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "DO-2653839",
+      "relation": "is blocked by",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-108092",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    },
+    {
+      "key": "HPC-110013",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "FYV | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "8h",
+    "time_to_resolve": "23h 24m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : agfhc_level_1_to_5\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 1 times in past 24 hours\nagfhc_level_1_to_5 -\n\n(flag) *Debugging agfhc_level_1_to_5*\n\nSee the following runbooks for more information:\nas AMD GPU test: Identifying AMD Commands\\n\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.MI355X.8 |2602XQ11GK |10.0.127.102 |2026-02-10T12:02:37Z |2026-02-10T14:01:32Z |fyv4-qfab-2-400 |bldg4-block19-400 |fyv4-q2-b19-t0-r17, fyv4-q2-b19-t0-r18, fyv4-q2-b19-t0-r19, fyv4-q2-b19-t0-r20, fyv4-q2-b19-t0-r21, fyv4-q2-b19-t0-r22, fyv4-q2-b19-t0-r23, fyv4-q2-b19-t0-r24 |2604ZA8041 |ae7397ef-61da-4aa1-8e3a-9b1aa0b2b023 |",
+  "comments": [
+    {
+      "id": "357755323",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-10T14:14:36Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358155422",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:36:36Z",
+      "body": "[opc@cpv-host-fyv ~]$ cpv state overview-count | grep 2602XQ11GK\n2026/02/11 13:36:24 Reading state file state.json\n2026/02/11 13:36:25 Object Store client initialized with host url https://objectstorage.ap-kulai-1.oraclecloud.com\n2602XQ11GK       10.0.127.102  BM.GPU.MI355X.8    Holding                   N/A        sk-71fe1717-5e57-45a8-8e91-8424216b9580  bldg4-block19-400  1 HPC-108195               0                        agfhc_level_1_to_5                   Failed      2602XQ11GK       2026-02-10T12:02:37Z  2026-02-10T14:01:32Z\n[opc@cpv-host-fyv ~]$"
+    },
+    {
+      "id": "358155452",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:37:29Z",
+      "body": "OP in the TN of the host\n\nM:ExtOC1:FYV:ad1:2602XK10BE>open_problems\nChecking open problems: 100% |  1/1 [00:03<00:00,  3.46s/it]\n{\n    \"2602XK10BE\": [\n        {\n            \"dateTime\": \"2026-02-10 06:42:07+00:00\",\n            \"location\": \"PSB/CDFP4 (Container)\",\n            \"subsystem\": \"System\",\n            \"resource\": \"/SYS/PSB/CDFP4\",\n            \"uuid\": \"d93be304-a8b8-e638-b268-c18cb489d856\",\n            \"serial\": \"N/A\",\n            \"part_no\": \"N/A\",\n            \"probability\": 100,\n            \"reference\": \"http://support.oracle.com/msg/SPGXTAIL-8000-KW\"\n        }\n    ]\n}"
+    },
+    {
+      "id": "358156027",
+      "author": "Mohammed Es-sousy",
+      "created": "2026-02-11T13:39:16Z",
+      "body": "Cut to DO-2653839\n\nResolve to retest once DO team are done with their actions"
+    }
+  ]
+}

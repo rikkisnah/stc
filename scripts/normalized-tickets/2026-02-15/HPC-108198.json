@@ -1,0 +1,116 @@
+{
+  "ticket": {
+    "id": "55677288",
+    "key": "HPC-108198",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "Automated RMA request for host 2551XNG42C",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T14:58:44Z",
+    "resolved": "2026-02-10T15:58:42Z",
+    "updated": "2026-02-10T15:58:42Z"
+  },
+  "people": {
+    "assignee": "Javier Del Pino",
+    "reporter": "Krish Vashishth",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "RHS-79461",
+    "rack_serial": null
+  },
+  "labels": [
+    "2540XN811H",
+    "CPV-",
+    "DFW-CPV",
+    "GPU_GB200-NVL72_S.03",
+    "sk-1ac8b8e2-004e-4ae1-bd38-73f50113c567",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-104855",
+      "relation": "blocks",
+      "status": "Resolved",
+      "summary": "DFW | ad1 | CPV Job Failure | BM.GPU.GB200-v3.4 | health_check_v1_v2_compare"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "28m",
+    "time_to_resolve": "59m"
+  },
+  "description": "Need to  initiate RMA for host\n\nPlease follow this runbook: [https://confluence.oraclecorp.com/confluence/display/CHMDP/GB200%3A+RMA+Automated+Process+Operations+Runbook#tab-CT%3A+Trigger+RMA+Automation+%28GPUPR%29]\n\n2551XNG42C\n\nRHS-79461",
+  "comments": [
+    {
+      "id": "357766917",
+      "author": "Krish Vashishth",
+      "created": "2026-02-10T14:58:46Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357768034",
+      "author": "Jira Event Publisher Notifications",
+      "created": "2026-02-10T15:02:07Z",
+      "body": "Ocean has created an incident for this issue. (P3-4A4EB9801D36AC32E0635018000AB7AB)"
+    },
+    {
+      "id": "357776828",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:28:10Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357777548",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:31:10Z",
+      "body": "The host is under \"broken_pool\" and currently reporting a CPV Instance already running, is required to terminate it and send the host to REPAIR state.\n\nM:ExtOC1:DFW:ad1:2551XNG42C>info\nSerial       Model                  Arch    Owner             Pxe_Image   Hops_Hostname                Role      State       Halt_Mode   Instance_Id                                                                                   Pool_Name     Job   Location              Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2551XNG42C   GPU_GB200-NVL72_S.03   GB200   compute-dfw-ad1   NONE        dfw5-c1-b3-t0-r18-compute1   compute   ALLOCATED   False       ocid1.instance.oc1.us-dallas-1.anqwyljr7rhxvoackvvywi2tobeqzo7lxdmfumgaqbtmziqt2lkgsxryhhoq   broken_pool         OC1:us-dallas-1:ad1   dfw5   dfw5.1   0803   29     NONE   2540XN811H    2026-02-04T00:56:14+00:00   NONE"
+    },
+    {
+      "id": "357777585",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:32:20Z",
+      "body": "CPV Instance has been terminated, waiting for REPAIR status.\n\n[opc@cpv-host-dfw ~]$ until cpv state resource -t host -s Terminate -k 2551XNG42C ; do sleep 10 ; done\n2026/02/10 15:31:56 Reading state file state.json\n2026/02/10 15:31:57 Object Store client initialized with host url https://objectstorage.us-dallas-1.oraclecloud.com\n2026/02/10 15:31:57 Changing host 2551XNG42C resource state from WaitingResourceState to TerminateResourceState\nUpdating resource \"2551XNG42C\" state to \"TerminateResourceState\"\n2026/02/10 15:31:57 Saving state file state.json\n[opc@cpv-host-dfw ~]$"
+    },
+    {
+      "id": "357780784",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:43:21Z",
+      "body": "state is \"REPAIR\"\n\nM:ExtOC1:DFW:ad1:2551XNG42C>state\nGet Tracking Instance(s): 100% |  1/1 [00:00<00:00,  1.12it/s]\nSerial       State    Tracking_State   Job\n2551XNG42C   REPAIR   NONE             NONE"
+    },
+    {
+      "id": "357781018",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:44:06Z",
+      "body": "sp_presence=YES\n\nM:ExtOC1:DFW:ad1:2551XNG42C>sp_presence\nChecking SP presence: 100% |  1/1 [00:06<00:00,  6.97s/it]\nSerial       Sp_Is_Present   Version    Build_Number\n2551XNG42C   Yes             5.1.5.96   167204\nM:ExtOC1:DFW:ad1:2551XNG42C>"
+    },
+    {
+      "id": "357781709",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:46:46Z",
+      "body": "Creating the TRS Case:\n\nM:ExtOC1:DFW:ad1:2551XNG42C>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:00<00:00,  1.28it/s]\nCaseid                                    Serial       Type          State      Created                            Sk_Id                                     Updated                            Is_Active   State_Sla_In_Seconds   Is_Supported_By_Trcp   Trs_Case\ntr-26e5d1f9-1661-4c53-af88-9a4780df6b70   2551XNG42C   TERMINATING   TRIAGING   2026-02-10 15:37:50.905000+00:00   sk-eed51488-fa1f-42ac-a560-ddd6bd0f3f00   2026-02-10 15:43:09.155000+00:00   True        42000                  True                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=tr-26e5d1f9-1661-4c53-af88-9a4780df6b70\nM:ExtOC1:DFW:ad1:2551XNG42C>\nM:ExtOC1:DFW:ad1:2551XNG42C>trs_update_case case_id=tr-26e5d1f9-1661-4c53-af88-9a4780df6b70 state=TERMINATED\n[INFO 2026-02-10 09:45:16,707] Argument values {'case_id': 'tr-26e5d1f9-1661-4c53-af88-9a4780df6b70', 'state': 'TERMINATED', 'tracking_id': None, 'triage_result': None}\n[INFO 2026-02-10 09:45:17,790] Updated case with case_id:tr-26e5d1f9-1661-4c53-af88-9a4780df6b70\ncaseId               tr-26e5d1f9-1661-4c53-af88-9a4780df6b70\ncreated              2026-02-10 15:37:50.905000+00:00\nis_active            NONE\nis_supported_by_trcp True\nserial               2551XNG42C\nsk_id                sk-eed51488-fa1f-42ac-a560-ddd6bd0f3f00\nstate                TERMINATED\nstate_sla_in_seconds 0\nTypeError: unsupported format string passed to NoneType.__format__\n\nTo enable full traceback, run the following command: set debug true\n\nM:ExtOC1:DFW:ad1:2551XNG42C>\nM:ExtOC1:DFW:ad1:2551XNG42C>trs_add_case {\"serial\":\"2551XNG42C\",\"type\":\"TERMINATING\",\"source\":\"HOPS\",\"ticket_data\":{\"summary\":\"GB200 Manually triggered RMA process\",\"description\":\"testdescription\",\"project\":\"GPUPR\",\"severity\":\"2\",\"labels\":[\"GB200_COMPUTE_TRAY_REPLACEMENT\"]}}\n[INFO 2026-02-10 09:46:08,862] Creating case with <class 'triage_repair_service.models.case_detail.CaseDetail'>\ncaseId               tr-61b84f3e-6304-4b81-a3d5-b9a8b1d1dd8f\ncreated              2026-02-10 15:46:08.810000+00:00\nis_active            True\nis_supported_by_trcp True\nserial               2551XNG42C\nsk_id                sk-eed51488-fa1f-42ac-a560-ddd6bd0f3f00\nstate                OPEN\nstate_sla_in_seconds 6000\nTypeError: unsupported format string passed to NoneType.__format__\n\nTo enable full traceback, run the following command: set debug true\n\nM:ExtOC1:DFW:ad1:2551XNG42C>trs_get_active_cases\nGetting Active case: 100% |  1/1 [00:00<00:00,  1.30it/s]\nCaseid                                    Serial       Type          State              Created                            Sk_Id                                     Updated                            Is_Active   State_Sla_In_Seconds   Is_Supported_By_Trcp   Trs_Case\ntr-61b84f3e-6304-4b81-a3d5-b9a8b1d1dd8f   2551XNG42C   TERMINATING   READY_FOR_TRIAGE   2026-02-10 15:46:08.810000+00:00   sk-eed51488-fa1f-42ac-a560-ddd6bd0f3f00   2026-02-10 15:46:16.762000+00:00   True        3900                   True                   https://hops.svc.ad1.us-dallas-1/ui/trs-case-details?caseId=tr-61b84f3e-6304-4b81-a3d5-b9a8b1d1dd8f\nM:ExtOC1:DFW:ad1:2551XNG42C>"
+    },
+    {
+      "id": "357781714",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:47:03Z",
+      "body": "Closing the ticket as required."
+    },
+    {
+      "id": "357784754",
+      "author": "Javier Del Pino",
+      "created": "2026-02-10T15:58:42Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): Automated RMA request\n2. What we did to address the issue (1 liner - high level): Triggered RMA\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

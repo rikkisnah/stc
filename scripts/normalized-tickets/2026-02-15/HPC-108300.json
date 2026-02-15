@@ -1,0 +1,237 @@
+{
+  "ticket": {
+    "id": "55700072",
+    "key": "HPC-108300",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T23:10:23Z",
+    "resolved": "2026-02-12T19:28:21Z",
+    "updated": "2026-02-13T05:26:08Z"
+  },
+  "people": {
+    "assignee": "Federico Ramirez",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+    "watchers": 3
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2515XNG0A5",
+    "rack_serial": null
+  },
+  "labels": [
+    "2515XN800P",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_GB200-NVL72_S.01",
+    "HSG-CPV",
+    "sk-3e37635f-07ac-49e7-8eb4-b9b8e08021e9",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79899",
+      "relation": "relates to",
+      "status": "Closed",
+      "summary": "[Standard] |  HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "RHS-79943",
+      "relation": "relates to",
+      "status": "Closed",
+      "summary": "[Standard] |  HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    },
+    {
+      "key": "HPC-109855",
+      "relation": "relates to",
+      "status": "In Progress",
+      "summary": "Automated RMA request for host 2515XNG0A5"
+    },
+    {
+      "key": "HPC-89063",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89079",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89325",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89360",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89441",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89527",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89596",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89707",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-89731",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-92693",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-110077",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | health_check"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 8m",
+    "time_to_resolve": "44h 17m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : health_check\n\nRe-run 2 times in past 12 hours\nReset 1 times in past 12 hours\nRepairScript invoked 3 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\nhealth_check -\n\n(flag) *Debugging health_check*\n\nSee the following runbooks for more information:\n1. How to Debug Down Link Errors\n2. How to Debug Clock Speed Errors\n3. How to Debug NvLink Issues\n4. How to Debug PCIe Issues\n\nRelevant logs\n\nOther uploaded files\n - health_check/bcfa2748-35cd-424e-bd81-69b8adc22a99/health_check_2515XNG0A5.json\n - health_check_bcfa2748-35cd-424e-bd81-69b8adc22a99_AllResults.tgz.gz}\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200.4 |2515XNG0A5 |10.0.14.204 |2026-02-10T23:04:30Z |2026-02-10T23:05:35Z |hsg3-ifab-1 |bldg3-block2 |hsg3-i1-su2-t0-r25, hsg3-i1-su2-t0-r26, hsg3-i1-su2-t0-r27, hsg3-i1-su2-t0-r28 |2515XN800P |bcfa2748-35cd-424e-bd81-69b8adc22a99 |",
+  "comments": [
+    {
+      "id": "357942632",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+      "created": "2026-02-10T23:10:26Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358220256",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T17:25:48Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358223519",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T17:37:12Z",
+      "body": "Host is in holding pool. No open problems reported for HN\n\nM:ExtOC1:HSG:ad1:2515XNG0A5>instance_info\nHost         Pool_Name   Instance_Id\n2515XNG0A5   holding     ocid1.instance.oc1.ap-batam-1.anrguljr7rhxvoacpng5mhge6kp7j3aoxigfvlx6ggkuys5ge3w67yciu5tq\nM:ExtOC1:HSG:ad1:2515XNG0A5>gpu_info\nSerial       Gpu\n2515XNG0A5   NONE\nM:ExtOC1:HSG:ad1:2515XNG0A5>open_problems\nChecking open problems: 100% |  1/1 [00:07<00:00,  7.57s/it]\nSerial\nM:ExtOC1:HSG:ad1:2515XNG0A5>"
+    },
+    {
+      "id": "358226324",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T17:46:25Z",
+      "body": "Test output\n\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:/home/ubuntu/bio/jobs/results/health_check_2515XNG0A5.json auto_discovery_mode:True standalone_mode:True\nHealth Check starts at: 2026-02-10 23:04:50.596632\nHealth Check finishes at: 2026-02-10 23:04:59.601249, Elapsed time: 9.00 s\n{'localhost': {'authentication': [],\n               'c2c_check': [{'device': '0008:01:00.0', 'status': 'PASS'},\n                             {'device': '0009:01:00.0', 'status': 'PASS'},\n                             {'device': '0018:01:00.0', 'status': 'PASS'},\n                             {'device': '0019:01:00.0', 'status': 'PASS'}],\n               'eth_link': [{'device': 'eth0',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'},\n                            {'device': 'eth1',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'}],\n               'gid_index': [{'status': 'PASS'}],\n               'gpu': [{'nvidia_peermem': 'PASS'},\n                       {'MIG Mode': 'PASS'},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'device_count': 'PASS'},\n                       {'max_clock_speed': 'PASS'},\n                       {'nvlink': 'PASS'},\n                       {'bar1_util_check': 'PASS'},\n                       {'cdfp': 'PASS'},\n                       {'nvlink_err_check': {'crc_err': 'PASS',\n                                             'effective_ber': \"FAIL - Effective BER on some GPUs exceeds threshold 1E-9. Check 'nvidia-smi nvlink -e' output.\",\n                                             'recovery_err': 'PASS',\n                                             'replay_err': 'PASS',\n                                             'symbol_ber': 'PASS'}}],\n               'gpu_xid': [],\n               'hpc_info': [],\n               'ipmi': [{'status': 'PASS'}],\n               'link': [{'device': 'rdma0',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma1',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma2',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma3',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'}],\n               'oca_version': [],\n               'pcie': [{'pci_busid': '0000:0000:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0002:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0010:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0012:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'}],\n               'pcie_config': [{'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0000:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0002:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0010:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0012:03:00.0'}],\n               'pcie_error': [{'status': 'PASS'}],\n               'rdma_link_flap': [{'status': 'PASS'}],\n               'rdma_nic_count': [{'num_rdma_nics': 4, 'status': 'PASS'}],\n               'rttcc': [],\n               'rx_discards': [{'device': 'rdma0', 'status': 'PASS'},\n                               {'device': 'rdma1', 'status': 'PASS'},\n                               {'device': 'rdma2', 'status': 'PASS'},\n                               {'device': 'rdma3', 'status': 'PASS'}],\n               'sram': [{'aggregated': {'correctable': 'PASS', 'threshold_exceeded': 'PASS', 'uncorrectable': 'PASS'},\n                         'ecc_mode': {'current': 'PASS', 'pending': 'PASS'},\n                         'volatile': {'correctable': 'PASS', 'uncorrectable': 'PASS'}}],\n               'summary': {'failed_tests': ['gpu'], 'status': 'FAIL', 'warning': ['gpu']},\n               'walk_pcie': []}}"
+    },
+    {
+      "id": "358229208",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T17:56:58Z",
+      "body": "Effective BERs per link per GPU\n\nubuntu@instance20260209183418-221766:~$ nvidia-smi nvlink -e | grep -E '^GPU | Effective BER'\nGPU 0: NVIDIA GB200 (UUID: GPU-c0a43786-d006-2c73-a425-e5bfb10c6d72)\n         Link 0: Effective BER: 15e-255\n         Link 1: Effective BER: 15e-255\n         Link 2: Effective BER: 15e-255\n         Link 3: Effective BER: 15e-255\n         Link 4: Effective BER: 15e-255\n         Link 5: Effective BER: 15e-255\n         Link 6: Effective BER: 15e-255\n         Link 7: Effective BER: 15e-255\n         Link 8: Effective BER: 15e-255\n         Link 9: Effective BER: 15e-255\n         Link 10: Effective BER: 15e-255\n         Link 11: Effective BER: 15e-255\n         Link 12: Effective BER: 15e-255\n         Link 13: Effective BER: 15e-255\n         Link 14: Effective BER: 15e-255\n         Link 15: Effective BER: 15e-255\n         Link 16: Effective BER: 15e-255\n         Link 17: Effective BER: 15e-255\nGPU 1: NVIDIA GB200 (UUID: GPU-c8c1ce29-dc36-2853-5bc7-9bb13561a369)\n         Link 0: Effective BER: 15e-255\n         Link 1: Effective BER: 15e-255\n         Link 2: Effective BER: 15e-255\n         Link 3: Effective BER: 15e-255\n         Link 4: Effective BER: 15e-255\n         Link 5: Effective BER: 15e-255\n         Link 6: Effective BER: 15e-255\n         Link 7: Effective BER: 15e-255\n         Link 8: Effective BER: 15e-255\n         Link 9: Effective BER: 15e-255\n         Link 10: Effective BER: 15e-255\n         Link 11: Effective BER: 15e-255\n         Link 12: Effective BER: 15e-255\n         Link 13: Effective BER: 15e-255\n         Link 14: Effective BER: 15e-255\n         Link 15: Effective BER: 15e-255\n         Link 16: Effective BER: 15e-255\n         Link 17: Effective BER: 15e-255\nGPU 2: NVIDIA GB200 (UUID: GPU-0d24265c-64c9-dc17-60de-5229763626fc)\n         Link 0: Effective BER: 15e-255\n         Link 1: Effective BER: 15e-255\n         Link 2: Effective BER: 15e-255\n         Link 3: Effective BER: 15e-255\n         Link 4: Effective BER: 15e-255\n         Link 5: Effective BER: 15e-255\n         Link 6: Effective BER: 15e-255\n         Link 7: Effective BER: 15e-255\n         Link 8: Effective BER: 15e-255\n         Link 9: Effective BER: 15e-255\n         Link 10: Effective BER: 15e-255\n         Link 11: Effective BER: 15e-255\n         Link 12: Effective BER: 15e-255\n         Link 13: Effective BER: 15e-255\n         Link 14: Effective BER: 15e-255\n         Link 15: Effective BER: 15e-255\n         Link 16: Effective BER: 15e-255\n         Link 17: Effective BER: 15e-255\nGPU 3: NVIDIA GB200 (UUID: GPU-707f9efc-7799-c575-e2f3-5ad985364485)\n         Link 0: Effective BER: 15e-255\n         Link 1: Effective BER: 15e-255\n         Link 2: Effective BER: 15e-255\n         Link 3: Effective BER: 15e-255\n         Link 4: Effective BER: 15e-255\n         Link 5: Effective BER: 15e-255\n         Link 6: Effective BER: 15e-255\n         Link 7: Effective BER: 15e-255\n         Link 8: Effective BER: 15e-255\n         Link 9: Effective BER: 15e-255\n         Link 10: Effective BER: 1e-5\n         Link 11: Effective BER: 15e-255\n         Link 12: Effective BER: 15e-255\n         Link 13: Effective BER: 1e-7\n         Link 14: Effective BER: 15e-255\n         Link 15: Effective BER: 15e-255\n         Link 16: Effective BER: 15e-255\n         Link 17: Effective BER: 15e-255"
+    },
+    {
+      "id": "358231032",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T18:03:24Z",
+      "body": "All nvlinks active with good speed\n\nubuntu@instance20260209183418-221766:~$ nvidia-smi nvlink -s\nGPU 0: NVIDIA GB200 (UUID: GPU-c0a43786-d006-2c73-a425-e5bfb10c6d72)\n         Link 0: 53.125 GB/s\n         Link 1: 53.125 GB/s\n         Link 2: 53.125 GB/s\n         Link 3: 53.125 GB/s\n         Link 4: 53.125 GB/s\n         Link 5: 53.125 GB/s\n         Link 6: 53.125 GB/s\n         Link 7: 53.125 GB/s\n         Link 8: 53.125 GB/s\n         Link 9: 53.125 GB/s\n         Link 10: 53.125 GB/s\n         Link 11: 53.125 GB/s\n         Link 12: 53.125 GB/s\n         Link 13: 53.125 GB/s\n         Link 14: 53.125 GB/s\n         Link 15: 53.125 GB/s\n         Link 16: 53.125 GB/s\n         Link 17: 53.125 GB/s\nGPU 1: NVIDIA GB200 (UUID: GPU-c8c1ce29-dc36-2853-5bc7-9bb13561a369)\n         Link 0: 53.125 GB/s\n         Link 1: 53.125 GB/s\n         Link 2: 53.125 GB/s\n         Link 3: 53.125 GB/s\n         Link 4: 53.125 GB/s\n         Link 5: 53.125 GB/s\n         Link 6: 53.125 GB/s\n         Link 7: 53.125 GB/s\n         Link 8: 53.125 GB/s\n         Link 9: 53.125 GB/s\n         Link 10: 53.125 GB/s\n         Link 11: 53.125 GB/s\n         Link 12: 53.125 GB/s\n         Link 13: 53.125 GB/s\n         Link 14: 53.125 GB/s\n         Link 15: 53.125 GB/s\n         Link 16: 53.125 GB/s\n         Link 17: 53.125 GB/s\nGPU 2: NVIDIA GB200 (UUID: GPU-0d24265c-64c9-dc17-60de-5229763626fc)\n         Link 0: 53.125 GB/s\n         Link 1: 53.125 GB/s\n         Link 2: 53.125 GB/s\n         Link 3: 53.125 GB/s\n         Link 4: 53.125 GB/s\n         Link 5: 53.125 GB/s\n         Link 6: 53.125 GB/s\n         Link 7: 53.125 GB/s\n         Link 8: 53.125 GB/s\n         Link 9: 53.125 GB/s\n         Link 10: 53.125 GB/s\n         Link 11: 53.125 GB/s\n         Link 12: 53.125 GB/s\n         Link 13: 53.125 GB/s\n         Link 14: 53.125 GB/s\n         Link 15: 53.125 GB/s\n         Link 16: 53.125 GB/s\n         Link 17: 53.125 GB/s\nGPU 3: NVIDIA GB200 (UUID: GPU-707f9efc-7799-c575-e2f3-5ad985364485)\n         Link 0: 53.125 GB/s\n         Link 1: 53.125 GB/s\n         Link 2: 53.125 GB/s\n         Link 3: 53.125 GB/s\n         Link 4: 53.125 GB/s\n         Link 5: 53.125 GB/s\n         Link 6: 53.125 GB/s\n         Link 7: 53.125 GB/s\n         Link 8: 53.125 GB/s\n         Link 9: 53.125 GB/s\n         Link 10: 53.125 GB/s\n         Link 11: 53.125 GB/s\n         Link 12: 53.125 GB/s\n         Link 13: 53.125 GB/s\n         Link 14: 53.125 GB/s\n         Link 15: 53.125 GB/s\n         Link 16: 53.125 GB/s\n         Link 17: 53.125 GB/s"
+    },
+    {
+      "id": "358231087",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T18:04:26Z",
+      "body": "No ECC errors\n\nubuntu@instance20260209183418-221766:~$ nvidia-smi -q -d ECC\n\n==============NVSMI LOG==============\n\nTimestamp                                              : Wed Feb 11 18:03:44 2026\nDriver Version                                         : 580.126.09\nCUDA Version                                           : 13.0\n\nAttached GPUs                                          : 4\nGPU 00000008:01:00.0\n    ECC Mode\n        Current                                        : Enabled\n        Pending                                        : Enabled\n    ECC Errors\n        Volatile\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n        Aggregate\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n            SRAM Threshold Exceeded                    : No\n        Aggregate Uncorrectable SRAM Sources\n            SRAM L2                                    : 0\n            SRAM SM                                    : 0\n            SRAM Microcontroller                       : 0\n            SRAM PCIE                                  : 0\n            SRAM Other                                 : 0\n        Channel Repair Pending                         : No\n        TPC Repair Pending                             : No\n\nGPU 00000009:01:00.0\n    ECC Mode\n        Current                                        : Enabled\n        Pending                                        : Enabled\n    ECC Errors\n        Volatile\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n        Aggregate\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n            SRAM Threshold Exceeded                    : No\n        Aggregate Uncorrectable SRAM Sources\n            SRAM L2                                    : 0\n            SRAM SM                                    : 0\n            SRAM Microcontroller                       : 0\n            SRAM PCIE                                  : 0\n            SRAM Other                                 : 0\n        Channel Repair Pending                         : No\n        TPC Repair Pending                             : No\n\nGPU 00000018:01:00.0\n    ECC Mode\n        Current                                        : Enabled\n        Pending                                        : Enabled\n    ECC Errors\n        Volatile\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n        Aggregate\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n            SRAM Threshold Exceeded                    : No\n        Aggregate Uncorrectable SRAM Sources\n            SRAM L2                                    : 0\n            SRAM SM                                    : 0\n            SRAM Microcontroller                       : 0\n            SRAM PCIE                                  : 0\n            SRAM Other                                 : 0\n        Channel Repair Pending                         : No\n        TPC Repair Pending                             : No\n\nGPU 00000019:01:00.0\n    ECC Mode\n        Current                                        : Enabled\n        Pending                                        : Enabled\n    ECC Errors\n        Volatile\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n        Aggregate\n            SRAM Correctable                           : 0\n            SRAM Uncorrectable Parity                  : 0\n            SRAM Uncorrectable SEC-DED                 : 0\n            DRAM Correctable                           : 0\n            DRAM Uncorrectable                         : 0\n            SRAM Threshold Exceeded                    : No\n        Aggregate Uncorrectable SRAM Sources\n            SRAM L2                                    : 0\n            SRAM SM                                    : 0\n            SRAM Microcontroller                       : 0\n            SRAM PCIE                                  : 0\n            SRAM Other                                 : 0\n        Channel Repair Pending                         : No\n        TPC Repair Pending                             : No"
+    },
+    {
+      "id": "358231664",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T18:05:18Z",
+      "body": "Rebooting host"
+    },
+    {
+      "id": "358252158",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T19:15:16Z",
+      "body": "Manual health check still failing\n\nubuntu@instance20260209183418-221766:~$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-health-checks\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:hc_results.json auto_discovery_mode:True standalone_mode:True\nHealth Check starts at: 2026-02-11 19:00:22.363864\nHealth Check finishes at: 2026-02-11 19:00:32.062591, Elapsed time: 9.70 s\n{'localhost': {'authentication': [],\n               'c2c_check': [{'device': '0008:01:00.0', 'status': 'PASS'},\n                             {'device': '0009:01:00.0', 'status': 'PASS'},\n                             {'device': '0018:01:00.0', 'status': 'PASS'},\n                             {'device': '0019:01:00.0', 'status': 'PASS'}],\n               'eth_link': [{'device': 'eth0',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'},\n                            {'device': 'eth1',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'}],\n               'gid_index': [{'status': 'PASS'}],\n               'gpu': [{'nvidia_peermem': 'PASS'},\n                       {'device_count': 'PASS'},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'MIG Mode': 'PASS'},\n                       {'max_clock_speed': 'PASS'},\n                       {'nvlink': 'PASS'},\n                       {'bar1_util_check': 'PASS'},\n                       {'cdfp': 'PASS'},\n                       {'nvlink_err_check': {'crc_err': 'PASS',\n                                             'effective_ber': \"FAIL - Effective BER on some GPUs exceeds threshold 1E-9. Check 'nvidia-smi nvlink -e' output.\",\n                                             'recovery_err': 'PASS',\n                                             'replay_err': 'PASS',\n                                             'symbol_ber': 'PASS'}}],\n               'gpu_xid': [],\n               'hpc_info': [],\n               'ipmi': [{'status': 'PASS'}],\n               'link': [{'device': 'rdma0',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma1',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma2',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma3',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'}],\n               'oca_version': [],\n               'pcie': [{'pci_busid': '0000:0000:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0002:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0010:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0012:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'}],\n               'pcie_config': [{'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0000:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0002:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0010:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0012:03:00.0'}],\n               'pcie_error': [{'status': 'PASS'}],\n               'rdma_link_flap': [{'status': 'PASS'}],\n               'rdma_nic_count': [{'num_rdma_nics': 4, 'status': 'PASS'}],\n               'rttcc': [],\n               'rx_discards': [{'device': 'rdma0', 'status': 'PASS'},\n                               {'device': 'rdma1', 'status': 'PASS'},\n                               {'device': 'rdma2', 'status': 'PASS'},\n                               {'device': 'rdma3', 'status': 'PASS'}],\n               'sram': [{'aggregated': {'correctable': 'PASS', 'threshold_exceeded': 'PASS', 'uncorrectable': 'PASS'},\n                         'ecc_mode': {'current': 'PASS', 'pending': 'PASS'},\n                         'volatile': {'correctable': 'PASS', 'uncorrectable': 'PASS'}}],\n               'summary': {'failed_tests': ['gpu'], 'status': 'FAIL', 'warning': ['gpu']},\n               'walk_pcie': []}}"
+    },
+    {
+      "id": "358253683",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T19:20:31Z",
+      "body": "Cut RHS-79899 to ask for an action plan"
+    },
+    {
+      "id": "358262725",
+      "author": "Sergio Pinto Borges",
+      "created": "2026-02-11T19:51:22Z",
+      "body": "* Perform a deep power cycle via ILOM, if not done yet, then repeat the test\n* If symptom persists, considering re-seating CTs should be avoided, engage CHS for replacing CT 2515XNG0A5"
+    },
+    {
+      "id": "358281916",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T20:53:21Z",
+      "body": "Deep power cycling host as per RHS advise\n\nHostname: ORACLESP-2515XNG0A5-> show /System/ power_state /System\n    Properties:\n        power_state = On\n-> stop -f /SYS\nAre you sure you want to immediately stop /SYS (y/n)? y\nStopping /SYS immediately-> set /System/ deep_power_cycle=true\nSet 'deep_power_cycle' to 'true' [false]"
+    },
+    {
+      "id": "358284409",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T21:01:37Z",
+      "body": "Host is back up\n\nHostname: ORACLESP-2515XNG0A5\n\n-> show /System/ power_state\n\n /System\n    Properties:\n        power_state = Off\n\n-> start /System/\nAre you sure you want to start /System (y/n)? y\nStarting /System\n\n-> show /System/ power_state\n\n /System\n    Properties:\n        power_state = On\n\n->"
+    },
+    {
+      "id": "358325342",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T23:18:12Z",
+      "body": "Health check still failing after DPC\n\nubuntu@instance20260209183418-221766:~$ /opt/oci-hpc/oci-dr-hpc/oci-dr-hpc run-health-checks\nPyInstaller/loader/pyimod03_importers.py:495: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\nEnvironment variable OCI_DR_HPC_ENV_FILE is not set\n[info] Running Auto discovery mode, be patient...\nMap file generated and saved to:  /opt/oci-hpc/oci-dr-hpc/cache/map_cluster.json\nConfig file: /opt/oci-hpc/oci-dr-hpc/cache/config.json Results file:hc_results.json auto_discovery_mode:True standalone_mode:True\nHealth Check starts at: 2026-02-11 23:16:36.026954\nHealth Check finishes at: 2026-02-11 23:16:45.396360, Elapsed time: 9.37 s\n{'localhost': {'authentication': [],\n               'c2c_check': [{'device': '0008:01:00.0', 'status': 'PASS'},\n                             {'device': '0009:01:00.0', 'status': 'PASS'},\n                             {'device': '0018:01:00.0', 'status': 'PASS'},\n                             {'device': '0019:01:00.0', 'status': 'PASS'}],\n               'eth_link': [{'device': 'eth0',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'},\n                            {'device': 'eth1',\n                             'effective_physical_ber': 'PASS',\n                             'effective_physical_errors': 'PASS',\n                             'eth_link_speed': 'PASS',\n                             'eth_link_state': 'PASS',\n                             'eth_link_status': 'PASS',\n                             'eth_link_width': 'PASS',\n                             'physical_state': 'PASS',\n                             'raw_physical_ber': 'PASS',\n                             'raw_physical_errors_per_lane': 'PASS'}],\n               'gid_index': [{'status': 'PASS'}],\n               'gpu': [{'nvidia_peermem': 'PASS'},\n                       {'driver_version': 'WARN - unsupported driver'},\n                       {'MIG Mode': 'PASS'},\n                       {'device_count': 'PASS'},\n                       {'max_clock_speed': 'PASS'},\n                       {'nvlink': 'PASS'},\n                       {'bar1_util_check': 'PASS'},\n                       {'cdfp': 'PASS'},\n                       {'nvlink_err_check': {'crc_err': 'PASS',\n                                             'effective_ber': \"FAIL - Effective BER on some GPUs exceeds threshold 1E-9. Check 'nvidia-smi nvlink -e' output.\",\n                                             'recovery_err': 'PASS',\n                                             'replay_err': 'PASS',\n                                             'symbol_ber': 'PASS'}}],\n               'gpu_xid': [],\n               'hpc_info': [],\n               'ipmi': [{'status': 'PASS'}],\n               'link': [{'device': 'rdma0',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma1',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma2',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'},\n                        {'device': 'rdma3',\n                         'effective_physical_ber': 'PASS',\n                         'effective_physical_errors': 'PASS',\n                         'link_speed': 'PASS',\n                         'link_state': 'PASS',\n                         'link_status': 'PASS',\n                         'link_width': 'PASS',\n                         'physical_state': 'PASS',\n                         'raw_physical_ber': 'PASS',\n                         'raw_physical_errors_per_lane': 'PASS',\n                         'symbol_ber': 'PASS',\n                         'symbol_errors': 'PASS'}],\n               'oca_version': [],\n               'pcie': [{'pci_busid': '0000:0000:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0002:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0010:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'},\n                        {'pci_busid': '0000:0012:03:00.0', 'pcie_speed': 'PASS', 'pcie_width': 'PASS'}],\n               'pcie_config': [{'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0000:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0002:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0010:03:00.0'},\n                               {'advanced_pci_settings': 'PASS', 'max_acc_out': 'PASS', 'pci_busid': '0012:03:00.0'}],\n               'pcie_error': [{'status': 'PASS'}],\n               'rdma_link_flap': [{'status': 'PASS'}],\n               'rdma_nic_count': [{'num_rdma_nics': 4, 'status': 'PASS'}],\n               'rttcc': [],\n               'rx_discards': [{'device': 'rdma0', 'status': 'PASS'},\n                               {'device': 'rdma1', 'status': 'PASS'},\n                               {'device': 'rdma2', 'status': 'PASS'},\n                               {'device': 'rdma3', 'status': 'PASS'}],\n               'sram': [{'aggregated': {'correctable': 'PASS', 'threshold_exceeded': 'PASS', 'uncorrectable': 'PASS'},\n                         'ecc_mode': {'current': 'PASS', 'pending': 'PASS'},\n                         'volatile': {'correctable': 'PASS', 'uncorrectable': 'PASS'}}],\n               'summary': {'failed_tests': ['gpu'], 'status': 'FAIL', 'warning': ['gpu']},\n               'walk_pcie': []}}"
+    },
+    {
+      "id": "358326855",
+      "author": "Federico Ramirez",
+      "created": "2026-02-11T23:23:45Z",
+      "body": "Cut RHS-79943 to get a new action plan / confirm CT replacement"
+    },
+    {
+      "id": "358571880",
+      "author": "Federico Ramirez",
+      "created": "2026-02-12T16:11:03Z",
+      "body": "RHS confirmed CT should be RMA'd\n{quote} - Please RMA the CT\n|When:|TBD|\n|Why:|FAIL - Effective BER on some GPUs exceeds threshold 1E-9|\n{quote}"
+    },
+    {
+      "id": "358630882",
+      "author": "Federico Ramirez",
+      "created": "2026-02-12T19:28:21Z",
+      "body": "Triggered RMA process in HPC-109855"
+    }
+  ]
+}

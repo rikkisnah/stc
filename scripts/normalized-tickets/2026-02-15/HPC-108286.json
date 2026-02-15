@@ -1,0 +1,185 @@
+{
+  "ticket": {
+    "id": "55699041",
+    "key": "HPC-108286",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T22:39:37Z",
+    "resolved": "2026-02-12T04:46:43Z",
+    "updated": "2026-02-13T03:02:36Z"
+  },
+  "people": {
+    "assignee": "Mathew Nobel Mammen",
+    "reporter": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+    "watchers": 5
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2603XQ101K",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603XQ101K",
+    "2604ZA8007",
+    "AGA-CPV",
+    "CPV-Triage",
+    "GPU_V6_E6-IS_MI355X_S.01",
+    "aga4-qfab-3-400",
+    "bldg4-block51-400",
+    "sk-0a81792f-cb9d-429a-acf0-b4a728f4d679",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "RHS-79798",
+      "relation": "relates to",
+      "status": "Closed",
+      "summary": "[Standard] |  AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-103920",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-104672",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-106098",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | sunvts_burnin"
+    },
+    {
+      "key": "HPC-106402",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-107872",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-109755",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | 8216 | 2603XQ101K | 2602XK10L2 | SUNVTS test failure"
+    },
+    {
+      "key": "HPC-110037",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | agfhc_level_1_to_5"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "2h 20m",
+    "time_to_resolve": "30h 7m"
+  },
+  "description": "SUNVTS test failure.\nVerify the SUNVTS test failure in the job log.\nReview the SunVTS log and dmesg logs of the host.\nCreate a RHS ticket with SunVTS and FDT logs to request an action plan to address the failures if you think there are underlying hardware issues.\nIf necessary, open a DO ticket with the RHS action plan for repair. Then soft-reset the instance before resolving this ticket to re-test.\n\nSUNVTS test log files:\nhttps://objectstorage.us-saltlake-2.oraclecloud.com/p/vB2qWz7UoHl-dCXjR7n1WlYzUGTPb7GeNdfrVtKCzPJZ0Yum6O3PE7tdFzCKcDCc/n/hpc/b/Debug/o/sunvts_burnin/062f2883-7062-449c-b25f-2a605b1a53cd/sunvts_run_logs_2603XQ101K.tar.gz\nhttps://hpc.objectstorage.us-saltlake-2.oci.customer-oci.com/p/TZa8QHbxcqwV4ltVY22kmMcIzFBx3T0M1d1D3v85qTlZoJbV_fnZM7BY0i2cAgb5/n/hpc/b/JobResults/o/raw/sunvts_burnin_062f2883-7062-449c-b25f-2a605b1a53cd_AllResults.tgz.gz\n\nHealth Check Result JSON. Check the Uploaded Log Bundle for Downloadable Log File:\n\n{\n\t\"localhost\": {\n\t\t\"authentication\": [\n\t\t\t{\n\t\t\t\t\"device\": \"enp8s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp33s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp88s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp112s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp137s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp162s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp215s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp239s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"link\": [],\n\t\t\"eth_link\": [\n\t\t\t{\n\t\t\t\t\"device\": \"ens9np0\",\n\t\t\t\t\"eth_link_speed\": \"PASS\",\n\t\t\t\t\"eth_link_state\": \"PASS\",\n\t\t\t\t\"physical_state\": \"PASS\",\n\t\t\t\t\"eth_link_width\": \"PASS\",\n\t\t\t\t\"eth_link_status\": \"PASS\",\n\t\t\t\t\"effective_physical_errors\": \"PASS\",\n\t\t\t\t\"effective_physical_ber\": \"PASS\",\n\t\t\t\t\"raw_physical_errors_per_lane\": \"PASS\",\n\t\t\t\t\"raw_physical_ber\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"ens49np1\",\n\t\t\t\t\"eth_link_speed\": \"PASS\",\n\t\t\t\t\"eth_link_state\": \"PASS\",\n\t\t\t\t\"physical_state\": \"PASS\",\n\t\t\t\t\"eth_link_width\": \"PASS\",\n\t\t\t\t\"eth_link_status\": \"PASS\",\n\t\t\t\t\"effective_physical_errors\": \"PASS\",\n\t\t\t\t\"effective_physical_ber\": \"PASS\",\n\t\t\t\t\"raw_physical_errors_per_lane\": \"PASS\",\n\t\t\t\t\"raw_physical_ber\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"pcie\": [\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:08:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:21:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:58:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:70:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:89:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:a2:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:d7:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"pci_busid\": \"0000:0000:ef:00.0\",\n\t\t\t\t\"pcie_speed\": \"PASS\",\n\t\t\t\t\"pcie_width\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"gpu\": [\n\t\t\t{\n\t\t\t\t\"retired-pages\": {\n\t\t\t\t\t\"status\": \"PASS\",\n\t\t\t\t\t\"0\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"1\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"2\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"3\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"4\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"5\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"6\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t},\n\t\t\t\t\t\"7\": {\n\t\t\t\t\t\t\"retired\": \"PASS\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"bad-pages\": {\n\t\t\t\t\t\"status\": \"PASS\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"max_clock_speed\": \"WARN - Clock speed is lower than max clock speed. Check GPU 0 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 1 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 2 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 3 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 4 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 5 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 6 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7, GPU 7 GFX gfx_0,gfx_1,gfx_2,gfx_3,gfx_4,gfx_5,gfx_6,gfx_7\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"driver_version\": \"WARN - unsupported driver\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"cdfp\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device_count\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"xgmi\": \"PASS\",\n\t\t\t\t\"xgmi_error\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"pcie_config\": [],\n\t\t\"hpc_info\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"pcie_error\": [],\n\t\t\"rx_discards\": [\n\t\t\t{\n\t\t\t\t\"device\": \"enp8s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp33s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp88s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp112s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp137s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp162s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp215s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp239s0\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"rdma_nic_count\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\",\n\t\t\t\t\"num_rdma_nics\": 8\n\t\t\t}\n\t\t],\n\t\t\"gid_index\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"rdma_link_flap\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"oca_version\": [],\n\t\t\"rttcc\": [],\n\t\t\"gpu_xid\": [],\n\t\t\"walk_pcie\": [\n\t\t\t{\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"sram\": [\n\t\t\t{\n\t\t\t\t\"aggregated\": {\n\t\t\t\t\t\"uncorrectable\": \"PASS\",\n\t\t\t\t\t\"correctable\": \"PASS\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"diagnostics\": [\n\t\t\t{\n\t\t\t\t\"module\": \"babel\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"module\": \"gst\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"module\": \"pebb\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"module\": \"pbqt\",\n\t\t\t\t\"status\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"port_state\": [\n\t\t\t{\n\t\t\t\t\"device\": \"enp8s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp33s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp88s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp112s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp137s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp162s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp215s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"device\": \"enp239s0\",\n\t\t\t\t\"speed\": \"PASS\",\n\t\t\t\t\"operational_state\": \"PASS\",\n\t\t\t\t\"link_fsm_state\": \"PASS\",\n\t\t\t\t\"width\": \"PASS\",\n\t\t\t\t\"transceiver_state\": \"PASS\",\n\t\t\t\t\"transceiver_temperature\": \"PASS\"\n\t\t\t}\n\t\t],\n\t\t\"summary\": {\n\t\t\t\"status\": \"PASS\",\n\t\t\t\"failed_tests\": [],\n\t\t\t\"warning\": [\n\t\t\t\t\"gpu\"\n\t\t\t]\n\t\t}\n\t}\n}\nTicket created after rules engine evaluated rules for test : sunvts_burnin\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours",
+  "comments": [
+    {
+      "id": "357932316",
+      "author": "jirasd-gear-compute-vmi-notifier-ca-montreal-1",
+      "created": "2026-02-10T22:39:38Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358003531",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T03:14:34Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "358018457",
+      "author": "Parmod Aggarwal",
+      "created": "2026-02-11T04:28:01Z",
+      "body": "Similar to case HPC-107872, we see a GPU data integrity issue in this case, with GPU0 being suspect. If this issue does not reproduce with AMD AGFHC tests, we should report the issue to AMD. I can cut a ticket. However, I will need rocmtechsupport output as well as SMC logs from this system.\n\n02/10/26 17:50:10 bio-2603xq101k SunVTS8.5.31build7: VTSID 6005 GPU.amdgputest.9003401.3.SL4.PL3.ERROR : \"Data miscompare in Lapack for matrix size 416(DP). All the GPUs do not have identical results for the same input values.\n\n\n\nGPU-0\n\n   7.5916584423097833e+00 0x401e5ddbb5f07dc5\n\n   7.0123788011677845e-13 0x3d68ac3076b2a00c\n\n   2.2204460492503131e-16 0x3cb0000000000000\n\n   -4.8339110492179316e-13 0xbd61020000000000\n\n   5.3756998852350080e-13 0x3d62ea0000000000\n\n\n\nGPU-1 GPU-2 GPU-3 GPU-4 GPU-5 GPU-6 GPU-7\n\n   7.1219382497029864e+00 0x401c7cdd616a6c59\n\n   6.5785004930023610e-13 0x3d672562eff239fd\n\n   2.2204460492503131e-16 0x3cb0000000000000\n\n   -5.8419935555775737e-13 0xbd648e0000000000\n\n   5.4267701443677652e-13 0x3d63180000000000"
+    },
+    {
+      "id": "358119475",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T11:15:01Z",
+      "body": "NO OP found.\n\nM:ExtOC1:AGA:ad1:2603XQ101K>info\nSerial       Model                      Arch    Owner             Pxe_Image   Hops_Hostname                Role      State       Halt_Mode   Instance_Id                                                                                     Pool_Name   Job   Location                Bldg   Room     Rack   Elev   Slot   Rack_Serial   Updated                     Test\n2603XQ101K   GPU_V6_E6-IS_MI355X_S.01   E6-IS   compute-aga-ad1   NONE        aga4-c1-b19-t0-r5-compute1   compute   ALLOCATED   False       ocid1.instance.oc1.us-saltlake-2.anqwiljr7rhxvoacduljkid6r3yg5ayx6s6i7bvrdbfevakdpm7hw334waea   holding           OC1:us-saltlake-2:ad1   aga4   aga4.2   8216   8      NONE   2604ZA8007    2026-02-01T09:53:00+00:00   NONE\nM:ExtOC1:AGA:ad1:2603XQ101K>\n\nM:ExtOC1:AGA:ad1:2603XQ101K>gpu_info\nSerial       Gpu\n2603XQ101K   H:2603XQ101K T:2602XK10L2 sled:2602XK10L2\nM:ExtOC1:AGA:ad1:2603XQ101K>\n\nM:ExtOC1:AGA:ad1:2603XQ101K>open_problems\nChecking open problems: 100% |  1/1 [00:03<00:00,  3.58s/it]\nSerial\nM:ExtOC1:AGA:ad1:2603XQ101K>\n\nM:ExtOC1:AGA:ad1:2602XK10L2>open_problems\nChecking open problems: 100% |  1/1 [00:02<00:00,  2.23s/it]\nSerial\nM:ExtOC1:AGA:ad1:2602XK10L2>"
+    },
+    {
+      "id": "358119908",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T11:15:40Z",
+      "body": "ubuntu@bio-2603xq101k:~$ rdma link\nlink ionic_4/1 state ACTIVE physical_state LINK_UP netdev enp112s0\nlink ionic_0/1 state ACTIVE physical_state LINK_UP netdev enp8s0\nlink ionic_3/1 state ACTIVE physical_state LINK_UP netdev enp88s0\nlink ionic_2/1 state ACTIVE physical_state LINK_UP netdev enp33s0\nlink ionic_9/1 state ACTIVE physical_state LINK_UP netdev enp239s0\nlink ionic_5/1 state ACTIVE physical_state LINK_UP netdev enp137s0\nlink ionic_8/1 state ACTIVE physical_state LINK_UP netdev enp215s0\nlink ionic_7/1 state ACTIVE physical_state LINK_UP netdev enp162s0\nlink mlx5_0/1 state ACTIVE physical_state LINK_UP netdev ens9np0\nlink mlx5_1/1 state ACTIVE physical_state LINK_UP netdev ens49np1\nubuntu@bio-2603xq101k:~$"
+    },
+    {
+      "id": "358119940",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T11:16:13Z",
+      "body": "ubuntu@bio-2603xq101k:~/bio/jobs/results$ cat sunvts_run_output_2603XQ101K.out\n2026-02-10 16:33:07 Testing started: Default - SE mode\n\n                             TEST SUMMARY\n                            ==============\n\nTest Start Time: 02/10/26 16:33:07\nTest Stop Time: 02/10/26 18:33:40\nHost Name: bio-2603xq101k\nTest Mode: System Exerciser\nVTS Version: SunVTS8.5.31build7\nStress Level: High\n\nTest Results\n==================================================\n         LTname             Pass     Error\n==================================================\n          Disk               2         0\n\n           GPU               2         1\n\n         Memory              1         0\n\n   System_Interconnect       1         0\n\n        Processor            3         0\n\n==================================================\nComponents tested: Processor-Yes, Memory-Yes, GPU-Yes, Disk-Yes, Network-No, SmartNIC-No\n\nError Report:\n================\n02/10/26 17:50:10 bio-2603xq101k SunVTS8.5.31build7: VTSID 6005 GPU.amdgputest.9003401.3.SL4.PL3.ERROR : \"Data miscompare in Lapack for matrix size 416(DP). All the GPUs do not have identical results for the same input values.\n02/10/26 17:50:10 bio-2603xq101k SunVTS8.5.31build7: VTSID 8014 GPU.amdgputest.9003401.3.SL4.PL3.FATAL :    \"Lapack subtest failed with matrix size 416(DP)\"\nThere are no dmesg error to report.\nNo FMA error messages were recorded during VTS run.\nVTS summary report and VTS cumulative report are logged at /var/sunvts/logs/\n\n2026-02-10 18:34:01 Testing started: Default - CS mode\n\n                             TEST SUMMARY\n                            ==============\n\nTest Start Time: 02/10/26 18:34:01\nTest Stop Time: 02/10/26 22:22:48\nHost Name: bio-2603xq101k\nTest Mode: Component Stress\nVTS Version: SunVTS8.5.31build7\nStress Level: High\n\nTest Results\n==================================================\n         LTname             Pass     Error\n==================================================\n   System_Interconnect       1         0\n\n        Processor            1         0\n\n           GPU               1         0\n\n         Memory              1         0\n\n        SysSanity            1         0\n\n         Ocitest             1         0\n\n        SysBurnin            1         0\n\n          Power              1         0\n\n       Performance           1         0\n\n==================================================\nComponents tested: Processor-Yes, Memory-Yes, GPU-Yes, Disk-Yes, Network-No, SmartNIC-No\n\nError Report:\n================\nNo test errors to report.\nThere are no dmesg error to report.\nNo FMA error messages were recorded during VTS run.\nVTS summary report and VTS cumulative report are logged at /var/sunvts/logs/\n\nubuntu@bio-2603xq101k:~/bio/jobs/results$"
+    },
+    {
+      "id": "358121487",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T11:23:44Z",
+      "body": "[^bio-2603xq101k_26-02-11-11-19-30_rocm_techsupport.log.gz]"
+    },
+    {
+      "id": "358122114",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T11:24:19Z",
+      "body": "Created RHS-79798"
+    },
+    {
+      "id": "358122128",
+      "author": "Rajat Rajat",
+      "created": "2026-02-11T11:24:37Z",
+      "body": "^"
+    },
+    {
+      "id": "358134810",
+      "author": "Sergiu Tanasescu",
+      "created": "2026-02-11T12:16:44Z",
+      "body": "Hello [~rajat.rajat@oracle.com] ,\n\nThere are no issues found from the ILOM level.\n\nI have collected an ilom snapshot with the obmc logs collected and attached it to the RHS ticket in case they are needed..\n\nIf the AGFH test is passed then perhaps [~parmod.aggarwal@oracle.com] can help with reporting the issue to AMD?"
+    },
+    {
+      "id": "358201605",
+      "author": "Parmod Aggarwal",
+      "created": "2026-02-11T16:25:31Z",
+      "body": "Are the SMC logs in the RHS-79798  ticket from the tail node? That would have relevant information for AMD.\n\nHas AGFHC been run on the system? Are these logs available.?"
+    },
+    {
+      "id": "358405536",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-12T04:45:57Z",
+      "body": "Manual test passed\n\n2026-02-12 04:03:50 Testing started: GPU\n\n                             TEST SUMMARY\n                            ==============\n\nTest Start Time: 02/12/26 04:03:50\nTest Stop Time: 02/12/26 04:44:12\nHost Name: bio-2603xq101k\nTest Mode: Component Stress\nVTS Version: SunVTS8.5.31build7\nStress Level: High\n\nTest Results\n==================================================\n         LTname             Pass     Error\n==================================================\n           GPU               1         0\n\n==================================================\nComponents tested: Processor-No, Memory-No, GPU-Yes, Disk-No, Network-No, SmartNIC-No\n\nError Report:\n================\nNo test errors to report.\nThere are no dmesg error to report.\nNo FMA error messages were recorded during VTS run.\nVTS summary report and VTS cumulative report are logged at /var/sunvts/logs/"
+    },
+    {
+      "id": "358405546",
+      "author": "Arunkumar Duraisamy",
+      "created": "2026-02-12T04:46:35Z",
+      "body": "*Closure Summary:*\n\n1. What was the issue (1 liner): Sunvts failure\n2. What we did to address the issue (1 liner - high level): Manual test passed\n3. What was the Root Cause:\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    },
+    {
+      "id": "358420806",
+      "author": "Sergiu Tanasescu",
+      "created": "2026-02-12T05:55:19Z",
+      "body": "Hello [~parmod.aggarwal@oracle.com],\n\nYes, the SMC logs are in the RHS-79798 and can be found within the ilom snapshot that is attached."
+    }
+  ]
+}

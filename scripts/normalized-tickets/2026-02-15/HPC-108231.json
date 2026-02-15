@@ -1,0 +1,99 @@
+{
+  "ticket": {
+    "id": "55683744",
+    "key": "HPC-108231",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "LHR | ad3 | CPV Job Failure | BM.GPU.B200.8 | cable_validation",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T17:34:32Z",
+    "resolved": "2026-02-10T18:07:43Z",
+    "updated": "2026-02-13T19:23:22Z"
+  },
+  "people": {
+    "assignee": "Daniel Copado",
+    "reporter": "jirasd-gear-compute-vmi-notifier-uk-london-1",
+    "watchers": 2
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2603XL12L0",
+    "rack_serial": null
+  },
+  "labels": [
+    "2603XL809V",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_V5_X11-2C_32000_S.01",
+    "LHR-CPV",
+    "sk-9d6b9011-cf8c-4ce9-a5de-69fb7a5c6913",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-105594",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "LHR | ad3 | CPV Job Failure | BM.GPU.B200.8 | nccl_alltoall_perf_2_hosts"
+    },
+    {
+      "key": "HPC-108768",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "LHR | ad3 | CPV Job Failure | BM.GPU.B200.8 | nccl_alltoall_perf_2_hosts"
+    },
+    {
+      "key": "HPC-110281",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "LHR | ad3 | CPV Job Failure | BM.GPU.B200.8 | nccl_all_reduce_perf_2_hosts"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "28m",
+    "time_to_resolve": "33m"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\nTicket created after rules engine evaluated rules for test : cable_validation\n\nRe-run 0 times in past 12 hours\nReset 0 times in past 12 hours\nRepairScript invoked 0 times in past 24 hours\nCreateHpcTicket invoked 0 times in past 24 hours\ncable_validation -\n\n(flag) *Debugging cable_validation*\n\nSee the following runbooks for more information:\nHow to Debug Cable Validation Failures\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.B200.8 |2603XL12L0 |10.0.13.100 |2026-02-10T17:23:06Z |2026-02-10T17:24:46Z |bldg18-block7-400 |bldg18-block7-400 |lhr18-q1-b7-t0-r33, lhr18-q1-b7-t0-r34, lhr18-q1-b7-t0-r35, lhr18-q1-b7-t0-r36, lhr18-q1-b7-t0-r37, lhr18-q1-b7-t0-r38, lhr18-q1-b7-t0-r39, lhr18-q1-b7-t0-r40 |2603XL809V |c24a1fec-59b7-4500-97bc-b90e8d56f12f |",
+  "comments": [
+    {
+      "id": "357817045",
+      "author": "jirasd-gear-compute-vmi-notifier-uk-london-1",
+      "created": "2026-02-10T17:34:36Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357827188",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T18:02:54Z",
+      "body": "First Comment:\n\nThis ticket is acknowledged and will be updated with the details shortly."
+    },
+    {
+      "id": "357828168",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T18:05:38Z",
+      "body": "log error:\n\nubuntu@bio-2603xl12l0:~/bio/jobs/results$ cat cable_validation_result_.txt\n{\"message\": \"Something went wrong on NCP side. NCP job id 519720ff-8392-416c-a329-0084f92daf10\", \"ticket_queue\": \"NA\", \"job_status\": \"FAILED\"}"
+    },
+    {
+      "id": "357828657",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T18:06:47Z",
+      "body": "Terminate the CPV instance on the host and allow host to be re-provisioned:\n\n[opc@cpv-host-lhr ~]$ cpv state resource -t host -s Terminate -k 2603XL12L0\n2026/02/10 18:06:26 Reading state file state.json\n2026/02/10 18:06:26 Object Store client initialized with host url https://objectstorage.uk-london-1.oraclecloud.com\n2026/02/10 18:06:26 Changing host 2603XL12L0 resource state from HoldingResourceState to TerminateResourceState\nUpdating resource \"2603XL12L0\" state to \"TerminateResourceState\"\n2026/02/10 18:06:26 Saving state file state.json"
+    },
+    {
+      "id": "357829235",
+      "author": "Daniel Copado",
+      "created": "2026-02-10T18:07:43Z",
+      "body": "Closure Summary:\n\n1. What was the issue (1 liner): cable_validation\n2. What we did to address the issue (1 liner - high level): Terminate to Reprovision it\n3. What was the Root Cause: Something went wrong on NCP side\n4. Runbook was helpful - Y\n5. Is this recurring issue - Y\n6. Hours logged - Y"
+    }
+  ]
+}

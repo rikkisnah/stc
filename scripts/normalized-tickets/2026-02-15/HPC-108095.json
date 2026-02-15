@@ -1,0 +1,87 @@
+{
+  "ticket": {
+    "id": "55654573",
+    "key": "HPC-108095",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "HSG | ad1 | CPV Job Timeout | BM.GPU.GB200.4 | dcgm_level_4",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T04:09:29Z",
+    "resolved": "2026-02-11T19:09:58Z",
+    "updated": "2026-02-13T09:11:19Z"
+  },
+  "people": {
+    "assignee": null,
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+    "watchers": 1
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "2513XNG009",
+    "rack_serial": null
+  },
+  "labels": [
+    "2520XN80BX",
+    "CPV-",
+    "CPV-Triage",
+    "GPU_GB200-NVL72_S.01",
+    "HSG-CPV",
+    "sk-8bf9fe6b-6db4-4ddb-88d7-84604bce0aa5",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-56737",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | ib_write_bw_pair"
+    },
+    {
+      "key": "HPC-56906",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Timeout | BM.GPU.GB200.4 | nvbandwidth_pair"
+    },
+    {
+      "key": "HPC-109748",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | fdt_compute_tray_gb200"
+    },
+    {
+      "key": "HPC-110125",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "HSG | ad1 | CPV Job Failure | BM.GPU.GB200.4 | fdt_compute_tray_gb200"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "10h 9m",
+    "time_to_resolve": "39h"
+  },
+  "description": "_Please follow CPV Triage Process to unblock host which failed test during CPV validation._\ndcgm_level_4 -\n\n(flag) *Debugging dcgm_level_4*\n\nSee the following runbooks for more information:\n\nRelevant logs\n\nOther uploaded files\n - Log Bundle: The log bundle may not have been uploaded due to a test timeout. Please check the `~/bio/jobs/results` directory on the host to retrieve the logs.\n\nHardware Details\n | Shape | Host Serial | IP | Start Time | End Time | Island | Block | ToRs | Rack Serial | Job Id |\n|BM.GPU.GB200.4 |2513XNG009 |10.0.9.7 |2026-02-09T19:52:40Z |2026-02-10T03:54:43Z |hsg3-ifab-1 |bldg3-block5 |hsg3-i1-su5-t0-r5, hsg3-i1-su5-t0-r6, hsg3-i1-su5-t0-r7, hsg3-i1-su5-t0-r8 |2520XN80BX |e643c0ad-ba06-4008-b5c9-a2c767ba64fc |",
+  "comments": [
+    {
+      "id": "357586859",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-batam-1",
+      "created": "2026-02-10T04:09:32Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "358250588",
+      "author": "Gregory Siekas",
+      "created": "2026-02-11T19:09:58Z",
+      "body": "Escalation on host, re-testing after recovering host state.\n\nPCIE errors present in console history."
+    }
+  ]
+}

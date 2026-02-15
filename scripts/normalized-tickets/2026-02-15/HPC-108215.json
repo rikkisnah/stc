@@ -1,0 +1,123 @@
+{
+  "ticket": {
+    "id": "55681947",
+    "key": "HPC-108215",
+    "project": {
+      "key": "HPC",
+      "name": "High Performance Computing"
+    },
+    "type": "Incident",
+    "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471",
+    "priority": "Medium"
+  },
+  "status": {
+    "current": "Resolved",
+    "resolution": "Resolved",
+    "created": "2026-02-10T16:44:46Z",
+    "resolved": "2026-02-10T16:48:57Z",
+    "updated": "2026-02-13T02:28:06Z"
+  },
+  "people": {
+    "assignee": null,
+    "reporter": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+    "watchers": 1
+  },
+  "location": {
+    "region": null,
+    "availability_domain": null,
+    "building": null,
+    "rack_type": null,
+    "host_serial": "S959549X5721471",
+    "rack_serial": null
+  },
+  "labels": [
+    "CPV-Triage",
+    "FYV-CPV",
+    "GPU_GB200-NVL72_S.02",
+    "SR010530254005",
+    "de-retrigger-feb11",
+    "sk-52dbeec5-b727-4eec-a718-9f33f92f02e7",
+    "triage-rules-engine"
+  ],
+  "links": [
+    {
+      "key": "HPC-72529",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | 9303 | S959549X5721471 | | FDT level2 failure"
+    },
+    {
+      "key": "HPC-72994",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | 9303 | S959549X5721471 | | FDT level2 failure"
+    },
+    {
+      "key": "HPC-73046",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | 9303 | S959549X5721471 | | FDT level2 failure"
+    },
+    {
+      "key": "HPC-106008",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471"
+    },
+    {
+      "key": "HPC-108188",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471"
+    },
+    {
+      "key": "HPC-108189",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471"
+    },
+    {
+      "key": "HPC-108214",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471"
+    },
+    {
+      "key": "HPC-110022",
+      "relation": "relates to",
+      "status": "Open",
+      "summary": "FYV | ad1 | CPV Job Timeout | BM.GPU.GB200-v2.4 | fdt_compute_tray_gb200smc_clustered"
+    },
+    {
+      "key": "HPC-108214",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471"
+    },
+    {
+      "key": "HPC-108233",
+      "relation": "relates to",
+      "status": "Resolved",
+      "summary": "FYV | ad1 | 0903 |  | Time out - Deep power cycle timed out on host:S959549X5721471"
+    }
+  ],
+  "sla": {
+    "time_to_first_response": "0m",
+    "time_to_resolve": "4m"
+  },
+  "description": "Time out - Deep power cycle timed out on host:S959549X5721471",
+  "comments": [
+    {
+      "id": "357799826",
+      "author": "jirasd-gear-compute-vmi-notifier-ap-kulai-1",
+      "created": "2026-02-10T16:44:49Z",
+      "body": "_This is comment added by a Jira Automation Workflow (NOT a human being)_\n\nRules of Engagement for Compute HPC/GPU Support\n\n**Rule 1: Create an incident and choose the right component**\nPlease create an incident(not service request) for any support request and ensure that you select the appropriate component for accurate assistance.\n\n**Rule 2: No Compute support for GitHub stacks**\nWe do not provide support for issues related to the GitHub test stacks. Tickets related to those will be closed without further action.\nGitHub test stacks repository: [https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks](https://github.com/oracle-quickstart/oci-hpc/tree/master/playbooks). Reach out to the Solutions Architects in #oci-hpc-int\n\n**Rule 3: Support for Compute HPC Images only**\nWe offer support exclusively for Compute HPC Images. Please refer to the following link to access the supported Compute HPC Images: [Compute HPC Images](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/_601lOOXFu5ordAFijwzLPduQ_3To16jFrej0JmxEdz1iKkr2BzqBudhqQ9uikLg/n/hpc/b/exported-compute-hpc-images/o/)\n\n**Rule 4: Provide OCIDs for every issue**\nWhen reporting an issue, please provide the relevant OCIDs (Instance OCIDs, Cluster Network OCIDs) associated with the problem. This information will help us investigate and resolve the issue more effectively.\n\n**Rule 5: Include SOSReports and NVIDIA debug logs for GPU issues**\nFor GPU-related issues, please include the SOSReports logs and NVIDIA debug logs. These logs are valuable for troubleshooting. Please follow the instructions below to obtain them:\n- To collect SOSReports logs, run the command `sudo sosreport`.\n- To collect NVIDIA debug logs, execute the command `sudo nvidia-bug-report.sh`.\n\n**Rule 6: Stay positive! We are committed to solving all your problems**\nWe are here to provide comprehensive support and solve all the challenges you encounter. Stay positive, and we will assist you every step of the way."
+    },
+    {
+      "id": "357800868",
+      "author": "Vaidyanathan Krishnamurthy",
+      "created": "2026-02-10T16:48:57Z",
+      "body": "deep power cycle test"
+    }
+  ]
+}
