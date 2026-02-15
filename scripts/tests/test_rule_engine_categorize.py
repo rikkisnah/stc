@@ -7,7 +7,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -138,6 +138,22 @@ class TestParseArgs:
         monkeypatch.setattr("sys.argv", ["rule_engine_categorize.py", "--project", "INVALID"])
         with pytest.raises(SystemExit):
             parse_args()
+
+    def test_ml_model_args(self, tmp_path, monkeypatch):
+        monkeypatch.setattr("sys.argv", [
+            "rule_engine_categorize.py",
+            "--ml-model", str(tmp_path / "model.joblib"),
+            "--ml-category-map", str(tmp_path / "map.json"),
+        ])
+        args = parse_args()
+        assert args.ml_model == tmp_path / "model.joblib"
+        assert args.ml_category_map == tmp_path / "map.json"
+
+    def test_ml_model_defaults_none(self, monkeypatch):
+        monkeypatch.setattr("sys.argv", ["rule_engine_categorize.py"])
+        args = parse_args()
+        assert args.ml_model is None
+        assert args.ml_category_map is None
 
 
 # ---------------------------------------------------------------------------
@@ -449,6 +465,57 @@ class TestCategorizeTicket:
         row = categorize_ticket(ticket, rules, project_key="DO")
         assert row["Categorization Source"] == "none"
 
+    def test_ml_fallback_when_no_rule_match(self):
+        ticket = _make_ticket(summary="gpu memory error")
+        rules = [_make_rule(pattern="zzz_no_match")]
+        with patch("ml_classifier.predict",
+                   return_value=("GPU Failure", "GPU", 0.85)):
+            row = categorize_ticket(ticket, rules,
+                                    ml_model="mock", ml_category_map="mock")
+        assert row["Categorization Source"] == "ml"
+        assert row["Category of Issue"] == "GPU Failure"
+        assert row["Category"] == "GPU"
+        assert row["LLM Confidence"] == 0.85
+        assert row["Human Audit for Accuracy"] == "pending-review"
+
+    def test_ml_fallback_skipped_when_model_is_none(self):
+        ticket = _make_ticket(summary="gpu error")
+        rules = [_make_rule(pattern="zzz")]
+        row = categorize_ticket(ticket, rules, ml_model=None)
+        assert row["Categorization Source"] == "none"
+        assert row["LLM Confidence"] == ""
+
+    def test_ml_low_confidence_stays_uncategorized(self):
+        ticket = _make_ticket(summary="ambiguous text")
+        rules = [_make_rule(pattern="zzz")]
+        with patch("ml_classifier.predict",
+                   return_value=("GPU Failure", "GPU", 0.2)):
+            row = categorize_ticket(ticket, rules,
+                                    ml_model="mock", ml_category_map="mock")
+        assert row["Categorization Source"] == "none"
+        assert row["Category of Issue"] == "uncategorized"
+        assert row["LLM Confidence"] == 0.2
+        assert row["Human Audit for Accuracy"] == "needs-review"
+
+    def test_ml_medium_confidence_needs_review(self):
+        ticket = _make_ticket(summary="maybe gpu")
+        rules = [_make_rule(pattern="zzz")]
+        with patch("ml_classifier.predict",
+                   return_value=("GPU Failure", "GPU", 0.45)):
+            row = categorize_ticket(ticket, rules,
+                                    ml_model="mock", ml_category_map="mock")
+        assert row["Categorization Source"] == "ml"
+        assert row["Human Audit for Accuracy"] == "needs-review"
+
+    def test_ml_not_used_when_rule_matches(self):
+        ticket = _make_ticket(summary="foo match")
+        rules = [_make_rule(pattern="foo")]
+        with patch("ml_classifier.predict") as mock_predict:
+            row = categorize_ticket(ticket, rules,
+                                    ml_model="mock", ml_category_map="mock")
+        mock_predict.assert_not_called()
+        assert row["Categorization Source"] == "rule"
+
     def test_empty_created_date(self):
         ticket = _make_ticket(created="")
         ticket["status"]["created"] = ""
@@ -710,3 +777,77 @@ class TestMain:
 
         output = capsys.readouterr().out
         assert "Overwriting existing output:" in output
+
+    def test_ml_model_not_found_exits(self, tmp_path):
+        argv, output_dir = self._setup_env(tmp_path)
+        argv.extend(["--ml-model", str(tmp_path / "nonexistent.joblib"),
+                      "--ml-category-map", str(tmp_path / "map.json")])
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            with pytest.raises(SystemExit, match="ML model not found"):
+                main()
+
+    def test_ml_category_map_not_found_exits(self, tmp_path):
+        # Create a dummy model file
+        model_path = tmp_path / "model.joblib"
+        model_path.write_text("dummy")
+        argv, output_dir = self._setup_env(tmp_path)
+        argv.extend(["--ml-model", str(model_path),
+                      "--ml-category-map", str(tmp_path / "nonexistent.json")])
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            with pytest.raises(SystemExit, match="ML category map not found"):
+                main()
+
+    def test_ml_category_map_not_specified_exits(self, tmp_path):
+        model_path = tmp_path / "model.joblib"
+        model_path.write_text("dummy")
+        argv, output_dir = self._setup_env(tmp_path)
+        argv.extend(["--ml-model", str(model_path)])
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            with pytest.raises(SystemExit, match="ML category map not found"):
+                main()
+
+    def test_run_with_ml_model(self, tmp_path, capsys):
+        """Integration test: ML fallback classifies unmatched tickets."""
+        argv, output_dir = self._setup_env(tmp_path)
+
+        # Create a mock ML model via patching load_model
+        mock_pipeline = MagicMock()
+        mock_map = {"ML Category": "MLCAT"}
+
+        def fake_predict(pipeline, cat_map, ticket_data):
+            return "ML Category", "MLCAT", 0.75
+
+        # We need real joblib/json files for the file-existence checks
+        model_path = tmp_path / "model.joblib"
+        map_path = tmp_path / "map.json"
+        model_path.write_text("dummy")
+        map_path.write_text("{}")
+
+        argv.extend(["--ml-model", str(model_path),
+                      "--ml-category-map", str(map_path)])
+
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv), \
+             patch("ml_classifier.load_model",
+                   return_value=(mock_pipeline, mock_map)), \
+             patch("ml_classifier.predict", side_effect=fake_predict):
+            main()
+
+        csv_path = output_dir / "tickets-categorized.csv"
+        with open(csv_path, encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+
+        ml_rows = [r for r in rows if r["Categorization Source"] == "ml"]
+        assert len(ml_rows) > 0  # Some unmatched tickets got ML predictions
+        assert ml_rows[0]["Category of Issue"] == "ML Category"
+
+        output = capsys.readouterr().out
+        assert "ML fallback : enabled" in output
+        assert "ML matched" in output
+
+    def test_ml_stats_not_printed_when_zero(self, tmp_path, capsys):
+        """When no ML model is used, ML matched line should not appear."""
+        argv, output_dir = self._setup_env(tmp_path)
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv):
+            main()
+        output = capsys.readouterr().out
+        assert "ML matched" not in output

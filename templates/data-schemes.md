@@ -28,8 +28,18 @@
 | `Category of Issue` | string | Failure category assigned to the ticket. |
 | `Category` | string | Higher-level bucket associated with the chosen rule; mirrors the rule-engine `Category`. |
 | `Rules Used` | string | Comma-separated list of matching `RuleID` values (if any). |
-| `Categorization Source` | string | Origin of the label (`rule` or `llm`). |
-| `LLM Confidence` | float | For rule rows, this is the highest matching rule confidence; for `llm` rows, it is the model-reported confidence. |
+| `Categorization Source` | string | Origin of the label: `rule` (regex match), `ml` (local ML classifier fallback), or `none` (uncategorized). |
+| `LLM Confidence` | float | For `rule` rows, the highest matching rule confidence; for `ml` rows, the local classifier's predicted probability; empty for `none`. |
 | `Human Audit for Accuracy` | string | Review state: `pending-review` (rule matched, confidence >= 0.5), `needs-review` (no match or confidence < 0.5), `correct` (human confirmed), `incorrect` (human rejected). |
 | `Human Audit Guidance` | string | Inline reminder for auditors: `Before audit use pending-review or needs-review. After audit set correct or incorrect.` |
 | `Human Comments` | string | Supplemental notes captured during audit. |
+
+### ML Training Data (`ml-training-data.csv`)
+| Field | Type | Description |
+| --- | --- | --- |
+| `Ticket` | string | Jira ticket key (e.g. `DO-1234567`). |
+| `Category of Issue` | string | Correct failure category label assigned by a human. |
+| `Category` | string | Higher-level bucket (e.g. GPU, CDFP, SmartNIC). |
+| `Label Source` | string | Who provided the label: `human` or `rule-verified`. |
+| `Label Date` | date | ISO date when the label was assigned. |
+| `Notes` | string | Optional notes from the labeler. |

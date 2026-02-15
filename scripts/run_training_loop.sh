@@ -12,6 +12,10 @@ PROMPT_FILE="prompts/training.md"
 CODEX_TIMEOUT="120"
 CODEX_BATCH_SIZE="2"
 MAX_REVIEW_ROWS="200"
+ENGINE="codex"
+ML_MODEL="scripts/trained-data/ml-model/classifier.joblib"
+ML_CATEGORY_MAP="scripts/trained-data/ml-model/category_map.json"
+AUTO_RULES="false"
 ASSUME_YES="false"
 
 usage() {
@@ -25,10 +29,14 @@ Options:
   --jql-file PATH          JQL file path (default: scripts/jql/hpc_default.jql).
   --rule-engine PATH       Rule engine CSV path (default: scripts/trained-data/rule-engine.local.csv).
   --output-dir PATH        Output analysis dir (default: scripts/analysis).
+  --engine ENGINE          Rule generation engine: codex, ml, or codex+ml (default: codex).
   --prompt-file PATH       Prompt file for run_training.py (default: prompts/training.md).
   --codex-timeout SEC      Codex timeout for run_training.py (default: 120).
   --codex-batch-size N     Codex batch size for run_training.py (default: 2).
   --max-review-rows N      Max review rows for run_training.py (default: 200).
+  --ml-model PATH          ML model path (default: scripts/trained-data/ml-model/classifier.joblib).
+  --ml-category-map PATH   ML category map (default: scripts/trained-data/ml-model/category_map.json).
+  --auto-rules             Auto-generate rules from all non-rule-matched tickets (no human audit needed).
   -y, --yes                Skip interactive confirmations in Python scripts.
   -h, --help               Show this help.
 EOF
@@ -67,6 +75,22 @@ while [[ $# -gt 0 ]]; do
     --codex-batch-size)
       CODEX_BATCH_SIZE="${2:-}"
       shift 2
+      ;;
+    --engine)
+      ENGINE="${2:-}"
+      shift 2
+      ;;
+    --ml-model)
+      ML_MODEL="${2:-}"
+      shift 2
+      ;;
+    --ml-category-map)
+      ML_CATEGORY_MAP="${2:-}"
+      shift 2
+      ;;
+    --auto-rules)
+      AUTO_RULES="true"
+      shift
       ;;
     --max-review-rows)
       MAX_REVIEW_ROWS="${2:-}"
@@ -110,9 +134,14 @@ echo "[2/3] Normalizing tickets..."
 uv run python3 scripts/normalize_tickets.py --input-dir scripts/tickets-json/ "${YES_ARGS[@]}"
 
 echo "[3/3] Categorizing with rule engine..."
+ML_ARGS=()
+if [[ "$ENGINE" == "ml" || "$ENGINE" == "codex+ml" ]]; then
+  ML_ARGS=(--ml-model "$ML_MODEL" --ml-category-map "$ML_CATEGORY_MAP")
+fi
 uv run python3 scripts/rule_engine_categorize.py \
   --rule-engine "$RULE_ENGINE" \
   --output-dir "$OUTPUT_DIR" \
+  "${ML_ARGS[@]}" \
   "${YES_ARGS[@]}"
 
 echo "Done. Next:"
@@ -121,9 +150,19 @@ echo "2) Run training with:"
 echo "uv run python3 scripts/run_training.py \\"
 echo "  --tickets-categorized $OUTPUT_DIR/tickets-categorized.csv \\"
 echo "  --rules-engine-file $RULE_ENGINE \\"
-echo "  --prompt-file $PROMPT_FILE \\"
-echo "  --codex-timeout $CODEX_TIMEOUT \\"
-echo "  --codex-batch-size $CODEX_BATCH_SIZE \\"
+echo "  --engine $ENGINE \\"
+if [[ "$ENGINE" == "codex" || "$ENGINE" == "codex+ml" ]]; then
+  echo "  --prompt-file $PROMPT_FILE \\"
+  echo "  --codex-timeout $CODEX_TIMEOUT \\"
+  echo "  --codex-batch-size $CODEX_BATCH_SIZE \\"
+fi
+if [[ "$ENGINE" == "ml" || "$ENGINE" == "codex+ml" ]]; then
+  echo "  --ml-model $ML_MODEL \\"
+  echo "  --ml-category-map $ML_CATEGORY_MAP \\"
+fi
+if [[ "$AUTO_RULES" == "true" ]]; then
+  echo "  --auto-rules \\"
+fi
 echo "  --max-review-rows $MAX_REVIEW_ROWS \\"
 if [[ "$ASSUME_YES" == "true" ]]; then
   echo "  --yes"
