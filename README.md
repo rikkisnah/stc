@@ -1,6 +1,10 @@
 # Purpose
 
-STC - (S)mart (T)riager (C)lassifier is a software that applies LLM with Reinforced Learning to find patterns for DC Ops tickets.
+STC - (S)mart (T)riager (C)lassifier predicts ticket category for HPC and DO tickets:
+- `Category of Issue`
+- `Category`
+
+The system uses rule-based matching plus LLM-assisted rule generation, then improves accuracy through repeated audit-and-retrain loops.
 
 Every categorized ticket carries a confidence score, even when matched purely by deterministic rules. When multiple rules fire, we record the highest rule confidence and surface it in `LLM Confidence`. Rows automatically default to `pending-review`, but fall back to `needs-review` if the computed confidence is below 0.5 so auditors can focus on low-signal items first.
 
@@ -21,14 +25,14 @@ uv add --dev pytest
 ```
 Step 1 get tickets
 Step 2 normalize tickets
-Step 3 run ./run-engine-categorize.py
-Step 4 Audit tickets-consolidate.py
-Step 4.1 Go through tickets-consolidated.csv (what to look for)
-Step 4.2 Add new rules via ./scripts/run-update-rules.sh
+Step 3 run scripts/rule_engine_categorize.py
+Step 4 audit scripts/analysis/tickets-categorized.csv
+Step 4.1 Go through tickets-categorized.csv (what to look for)
+Step 4.2 Add new rules via scripts/run_training.py
 Step 5 Run Step 3 again to make sure rules were effect and it worked
 ```
 
-### Step 4.1 — What to look for in `tickets-consolidated.csv`
+### Step 4.1 — What to look for in `tickets-categorized.csv`
 
 - Rows with `LLM Confidence < 0.5` or `Human Audit for Accuracy = needs-review`
 - `uncategorized` (or clearly wrong) categories
@@ -41,8 +45,7 @@ Step 5 Run Step 3 again to make sure rules were effect and it worked
 |---|---|---|
 | Fetch tickets from Jira | `scripts/get_tickets.py` | n/a |
 | Normalize tickets | `scripts/normalize_tickets.py` | n/a |
-| Train / categorize (batch) | `scripts/run-training.sh` | `prompts/train-to-categorize-tickets-prompt.md` |
-| Update rules from feedback | `scripts/run-update-rules.sh` | `prompts/update-rule-engine-prompt.md` |
+| Train / update rules from feedback | `scripts/run_training.py` | `prompts/training.md` |
 | Categorize using rules only | `scripts/rule_engine_categorize.py` | n/a |
 
 ## Training Phase
@@ -91,11 +94,13 @@ Output: `scripts/normalized-tickets/<date>/`
 
 ### Step 3 — Train (LLM categorization)
 
-Run the training prompt to categorize 5 tickets per batch against the rule engine, with LLM fallback for unmatched tickets.
+Run training to review audited rows, propose rule updates, and append accepted rules to a local rule-engine copy.
 
 ```bash
-./scripts/run-training.sh
-# or use the prompt directly: prompts/train-to-categorize-tickets-prompt.md
+uv run python scripts/run_training.py \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
+  --prompt-file prompts/training.md
 ```
 
 Working directory: `scripts/trained-data/`
@@ -105,8 +110,10 @@ Working directory: `scripts/trained-data/`
 After a human audits a training pass (marking tickets correct/incorrect, adjusting rules), re-run categorization and compare field-by-field to the audited snapshot.
 
 ```bash
-./scripts/run-update-rules.sh
-# or use the prompt directly: prompts/update-rule-engine-prompt.md
+uv run python scripts/run_training.py \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
+  --prompt-file prompts/training.md
 ```
 
 If results match, the rule engine is regression-stable and eligible for golden promotion.
@@ -145,8 +152,10 @@ Output: `scripts/analysis/tickets-categorized.csv`
 After reviewing `scripts/analysis/tickets-categorized.csv` and filling in `Human Audit for Accuracy` + `Human Comments`:
 
 ```bash
-./scripts/run-update-rules.sh
-# or use the prompt directly: prompts/update-rule-engine-prompt.md
+uv run python scripts/run_training.py \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
+  --prompt-file prompts/training.md
 ```
 
 This reads the human feedback and updates `scripts/analysis/rule-engine.csv` — confirming correct rules, fixing incorrect ones, and proposing new rules for uncategorized tickets.
@@ -184,8 +193,7 @@ These are retained for reference but may not reflect the current pipeline.
 
 | Prompt | Purpose | Runner Script |
 |---|---|---|
-| `prompts/train-to-categorize-tickets-prompt.md` | Few-shot training: rule-match + LLM fallback, 5 tickets/batch | `scripts/run-training.sh` |
-| `prompts/update-rule-engine-prompt.md` | Update/extend the rule engine from feedback | `scripts/run-update-rules.sh` |
+| `prompts/training.md` | Review miscategorized/needs-review tickets and propose rule updates | `scripts/run_training.py` |
 
 # Running Tests
 

@@ -26,6 +26,7 @@ normalize_json = normalize_tickets.normalize_json
 process_file = normalize_tickets.process_file
 trim_date = normalize_tickets.trim_date
 load_tickets_file = normalize_tickets.load_tickets_file
+collect_ticket_keys = normalize_tickets.collect_ticket_keys
 
 
 # --- trim_date ---
@@ -951,6 +952,35 @@ class TestProcessFileEdgeCases:
         result = json.loads(f.read_text())
         assert "ticket" in result
 
+    def test_paginated_split_respects_allowed_ticket_keys(self, tmp_path):
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        data = {"issues": [MINIMAL_ISSUE, issue2], "total": 2}
+        f = tmp_path / "page_0.json"
+        f.write_text(json.dumps(data))
+
+        dst = tmp_path / "dst"
+        results = process_file(
+            str(f),
+            output_dir=str(dst),
+            allowed_ticket_keys={"DO-2"},
+        )
+        assert len(results) == 1
+        assert (dst / "DO-2.json").exists()
+        assert not (dst / "DO-1.json").exists()
+
+    def test_single_ticket_respects_allowed_ticket_keys(self, tmp_path):
+        f = tmp_path / "DO-1.json"
+        f.write_text(json.dumps({**MINIMAL_ISSUE, "key": "DO-1"}))
+
+        dst = tmp_path / "dst"
+        results = process_file(
+            str(f),
+            output_dir=str(dst),
+            allowed_ticket_keys={"DO-2"},
+        )
+        assert results == []
+        assert not (dst / "DO-1.json").exists()
+
 
 # --- main() ---
 
@@ -1183,3 +1213,119 @@ class TestMainTicketsFile:
         normalize_tickets.main(["--tickets-file", str(tickets_file)])
         out = capsys.readouterr().out
         assert "Filtered to 1 file(s)" in out
+
+
+class TestMainInputDir:
+    def _write_ticket(self, path, key="DO-1"):
+        data = {
+            "key": key, "id": "1",
+            "fields": {
+                "project": {"key": "DO", "name": "DC Ops"},
+                "issuetype": {"name": "Incident"},
+                "summary": "Test", "priority": {"name": "High"},
+                "status": {"name": "Open"}, "labels": [],
+                "comment": {"comments": []},
+            },
+        }
+        path.write_text(json.dumps(data))
+
+    def test_input_dir_is_used_when_no_explicit_files(self, tmp_path):
+        input_dir = tmp_path / "custom-input"
+        input_dir.mkdir()
+        self._write_ticket(input_dir / "DO-1.json", "DO-1")
+
+        output_dir = tmp_path / "output"
+        normalize_tickets.main([
+            "--input-dir", str(input_dir),
+            "-o", str(output_dir),
+            "--date", "2026-01-01",
+        ])
+
+        out_dir = output_dir / "2026-01-01"
+        output_files = list(out_dir.glob("*.json"))
+        assert len(output_files) == 1
+        assert output_files[0].stem == "DO-1"
+
+    def test_input_dir_missing_json_exits(self, tmp_path):
+        empty_input_dir = tmp_path / "empty-input"
+        empty_input_dir.mkdir()
+
+        with pytest.raises(SystemExit) as exc_info:
+            normalize_tickets.main(["--input-dir", str(empty_input_dir)])
+        assert exc_info.value.code == 1
+
+
+class TestMainRandomSample:
+    def _write_ticket(self, path, key):
+        data = {
+            "key": key, "id": "1",
+            "fields": {
+                "project": {"key": "DO", "name": "DC Ops"},
+                "issuetype": {"name": "Incident"},
+                "summary": "Test", "priority": {"name": "High"},
+                "status": {"name": "Open"}, "labels": [],
+                "comment": {"comments": []},
+            },
+        }
+        path.write_text(json.dumps(data))
+
+    def test_random_sample_selects_n_tickets_from_paginated_file(self, tmp_path, monkeypatch):
+        input_dir = tmp_path / "tickets-json"
+        input_dir.mkdir()
+        issue1 = {**MINIMAL_ISSUE, "key": "DO-1", "id": "1"}
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        issue3 = {**MINIMAL_ISSUE, "key": "DO-3", "id": "3"}
+        paginated = {"issues": [issue1, issue2, issue3], "total": 3}
+        (input_dir / "limited-tickets.json").write_text(json.dumps(paginated))
+
+        output_dir = tmp_path / "output"
+
+        def fake_sample(seq, n):
+            assert n == 2
+            return ["DO-3", "DO-1"]
+
+        monkeypatch.setattr(normalize_tickets.random, "sample", fake_sample)
+        normalize_tickets.main([
+            "--input-dir", str(input_dir),
+            "--random-sample", "2",
+            "-o", str(output_dir),
+            "--date", "2026-01-01",
+        ])
+
+        out_dir = output_dir / "2026-01-01"
+        output_stems = {f.stem for f in out_dir.glob("*.json")}
+        assert output_stems == {"DO-1", "DO-3"}
+
+    def test_random_sample_rejects_non_positive(self, tmp_path):
+        f = tmp_path / "ticket.json"
+        self._write_ticket(f, "DO-1")
+        with pytest.raises(SystemExit):
+            normalize_tickets.main([str(f), "--random-sample", "0"])
+
+    def test_random_sample_rejects_larger_than_available(self, tmp_path):
+        input_dir = tmp_path / "tickets-json"
+        input_dir.mkdir()
+        issue1 = {**MINIMAL_ISSUE, "key": "DO-1", "id": "1"}
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        paginated = {"issues": [issue1, issue2], "total": 2}
+        (input_dir / "limited-tickets.json").write_text(json.dumps(paginated))
+
+        with pytest.raises(SystemExit):
+            normalize_tickets.main([
+                "--input-dir", str(input_dir),
+                "--random-sample", "3",
+            ])
+
+
+class TestCollectTicketKeys:
+    def test_collects_from_single_and_paginated_files(self, tmp_path):
+        single = tmp_path / "DO-1.json"
+        single.write_text(json.dumps({**MINIMAL_ISSUE, "key": "DO-1"}))
+
+        issue2 = {**MINIMAL_ISSUE, "key": "DO-2", "id": "2"}
+        issue3 = {**MINIMAL_ISSUE, "key": "DO-3", "id": "3"}
+        paginated = tmp_path / "page_0.json"
+        paginated.write_text(json.dumps({"issues": [issue2, issue3], "total": 2}))
+
+        keys = collect_ticket_keys([str(single), str(paginated)])
+        assert keys == {"DO-1", "DO-2", "DO-3"}

@@ -7,7 +7,7 @@ Usage:
     python3 scripts/run_training.py \
         --tickets-categorized scripts/trained-data/tickets-categorized.csv \
         --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
-        --prompt-file prompts/update-rule-engine-prompt.md
+        --prompt-file prompts/training.md
 """
 
 from __future__ import annotations
@@ -23,6 +23,7 @@ import sys
 import threading
 import time
 from datetime import datetime, timezone
+from io import TextIOBase
 from pathlib import Path
 from typing import Any, Dict
 
@@ -59,13 +60,14 @@ CODEX_BIN = "codex"
 DEFAULT_CODEX_TIMEOUT_SEC = 180
 HEARTBEAT_INTERVAL_SEC = 10
 JSON_ERROR_PREVIEW_CHARS = 1000
+AUDIT_VERDICTS_TO_REVIEW = {"incorrect", "needs-review"}
 
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description=(
             "Generate local rule-engine updates from audited tickets. "
-            "Only rows marked incorrect with comments are used."
+            "Rows marked incorrect/needs-review with comments are used."
         )
     )
     parser.add_argument("--tickets-categorized", required=True, type=Path,
@@ -93,6 +95,14 @@ def parse_args(argv=None):
         ),
     )
     parser.add_argument(
+        "--log-file",
+        type=Path,
+        help=(
+            "Path to run log file. If omitted, writes to "
+            "scripts/logs/run_training_<UTC timestamp>.log"
+        ),
+    )
+    parser.add_argument(
         "--codex-timeout",
         type=int,
         default=DEFAULT_CODEX_TIMEOUT_SEC,
@@ -101,15 +111,91 @@ def parse_args(argv=None):
             "Default: 180. Use 0 to wait indefinitely."
         ),
     )
+    parser.add_argument(
+        "--codex-batch-size",
+        type=int,
+        default=5,
+        help="Number of review rows to send per Codex call. Default: 5.",
+    )
+    parser.add_argument(
+        "--max-review-rows",
+        "--max-incorrect-rows",
+        dest="max_review_rows",
+        type=int,
+        default=1,
+        help=(
+            "Maximum number of review rows (incorrect/needs-review) to send to Codex per run. "
+            "Default: 1."
+        ),
+    )
     args = parser.parse_args(argv)
     if not args.prompt and not args.prompt_file:
         parser.error("one of the arguments --prompt --prompt-file is required")
+    if args.max_review_rows <= 0:
+        parser.error("--max-review-rows must be a positive integer")
+    if args.codex_batch_size <= 0:
+        parser.error("--codex-batch-size must be a positive integer")
     return args
 
 
 def validate_file(path: Path, label: str):
     if not path.is_file():
         sys.exit(f"Error: {label} file not found: {path}")
+
+
+class _TeeStream(TextIOBase):
+    def __init__(self, original, log_handle):
+        self._original = original
+        self._log_handle = log_handle
+
+    def write(self, s):
+        self._original.write(s)
+        self._log_handle.write(s)
+        return len(s)
+
+    def flush(self):
+        self._original.flush()
+        self._log_handle.flush()
+
+
+def resolve_log_file_path(log_file: Path | None, started_at: datetime):
+    if log_file is not None:
+        return log_file
+    stamp = started_at.strftime("%Y%m%dT%H%M%SZ")
+    return REPO_ROOT / "scripts" / "logs" / f"run_training_{stamp}.log"
+
+
+def enable_run_logging(log_file: Path | None, started_at: datetime):
+    log_path = resolve_log_file_path(log_file, started_at)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_handle = open(log_path, "w", encoding="utf-8")
+    original_stdout = sys.stdout
+    original_stderr = sys.stderr
+    sys.stdout = _TeeStream(original_stdout, log_handle)
+    sys.stderr = _TeeStream(original_stderr, log_handle)
+    return log_path, log_handle, original_stdout, original_stderr
+
+
+def disable_run_logging(log_handle, original_stdout, original_stderr):
+    sys.stdout = original_stdout
+    sys.stderr = original_stderr
+    log_handle.close()
+
+
+def _format_duration(seconds: int):
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    secs = seconds % 60
+    return f"{hours:d}h {minutes:02d}m {secs:02d}s"
+
+
+def estimate_runtime_seconds(review_count: int, batch_size: int, timeout_sec: int):
+    if review_count <= 0:
+        return 0, 0
+    batches = (review_count + batch_size - 1) // batch_size
+    worst_case = batches * timeout_sec if timeout_sec > 0 else 0
+    estimated = batches * min(45, timeout_sec) if timeout_sec > 0 else batches * 45
+    return estimated, worst_case
 
 
 def load_prompt_text(prompt: str | None, prompt_file: Path | None):
@@ -141,19 +227,18 @@ def load_feedback_rows(path: Path):
 
         rows = list(reader)
 
-    incorrect = []
-    skipped_missing_comment = 0
+    review_rows = []
+    missing_comments_total = 0
     for row in rows:
         verdict = (row.get("Human Audit for Accuracy") or "").strip().lower()
         comments = (row.get("Human Comments") or "").strip()
-        if verdict != "incorrect":
+        if verdict not in AUDIT_VERDICTS_TO_REVIEW:
             continue
-        if comments:
-            incorrect.append(row)
-        else:
-            skipped_missing_comment += 1
+        if not comments:
+            missing_comments_total += 1
+        review_rows.append(row)
 
-    return rows, incorrect, skipped_missing_comment
+    return rows, review_rows, missing_comments_total
 
 
 def copy_rules_engine(source: Path, target: Path):
@@ -177,7 +262,42 @@ def _read_rule_rows(path: Path):
         return list(reader)
 
 
-def normalize_proposal(proposal: Dict[str, Any], project_key: str, rule_id: str):
+def build_failure_to_category_map(rule_rows):
+    mapping = {}
+    for row in rule_rows:
+        project = (row.get("Project Key") or "").strip()
+        failure = (row.get("Failure Category") or "").strip()
+        category = (row.get("Category") or "").strip()
+        if not failure or not category or category.lower() == "unknown":
+            continue
+        key = (project.lower(), failure.lower())
+        if key not in mapping:
+            mapping[key] = category
+    return mapping
+
+
+def infer_category_from_failure(
+    project_key: str,
+    failure_category: str,
+    failure_to_category: Dict[tuple[str, str], str],
+):
+    project = (project_key or "").strip().lower()
+    failure = (failure_category or "").strip().lower()
+    if not failure:
+        return None
+
+    project_match = failure_to_category.get((project, failure))
+    if project_match:
+        return project_match
+    return failure_to_category.get(("", failure))
+
+
+def normalize_proposal(
+    proposal: Dict[str, Any],
+    project_key: str,
+    rule_id: str,
+    failure_to_category: Dict[tuple[str, str], str] | None = None,
+):
     rule_pattern = (
         proposal.get("Rule Pattern")
         or proposal.get("rule_pattern")
@@ -201,6 +321,22 @@ def normalize_proposal(proposal: Dict[str, Any], project_key: str, rule_id: str)
         or proposal.get("category")
         or "unknown"
     )
+    if (
+        isinstance(category, str)
+        and category.strip().lower() == "unknown"
+        and failure_to_category is not None
+    ):
+        inferred_category = infer_category_from_failure(
+            project_key=project_key,
+            failure_category=str(failure_category),
+            failure_to_category=failure_to_category,
+        )
+        if inferred_category:
+            print(
+                "Inferred category from existing rules: "
+                f"failure='{failure_category}' -> category='{inferred_category}'"
+            )
+            category = inferred_category
     priority_raw = (
         proposal.get("Priority")
         or proposal.get("priority")
@@ -335,9 +471,9 @@ def _parse_codex_json_output(stdout_text: str):
     return None
 
 
-def call_codex(prompt_text: str, rows, timeout_sec: int):
+def _call_codex_with_reason(prompt_text: str, rows, timeout_sec: int):
     if not rows:
-        return []
+        return [], "no_review_rows"
     payload = build_codex_input(prompt_text, rows)
     command = [
         CODEX_BIN,
@@ -386,7 +522,7 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
             f"Increase --codex-timeout from {timeout_sec}s.",
             file=sys.stderr,
         )
-        return []
+        return [], "timeout"
     finally:
         stop_event.set()
         heartbeat_thread.join(timeout=0.2)
@@ -399,7 +535,7 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
         print("Codex execution failed:")
         if result.stderr:
             print(result.stderr, file=sys.stderr)
-        return []
+        return [], "execution_failed"
 
     parsed = _parse_codex_json_output(result.stdout or "")
     if parsed is None:
@@ -418,13 +554,20 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
                 f"{stderr_preview}",
                 file=sys.stderr,
             )
-        return []
+        return [], "invalid_json"
 
     proposals = parsed.get("proposals") if isinstance(parsed, dict) else None
     if not isinstance(proposals, list):
         print("Error: Codex JSON must contain a proposals list.", file=sys.stderr)
-        return []
+        return [], "invalid_proposals_shape"
 
+    if not proposals:
+        return [], "no_proposals"
+    return proposals, "ok"
+
+
+def call_codex(prompt_text: str, rows, timeout_sec: int):
+    proposals, _reason = _call_codex_with_reason(prompt_text, rows, timeout_sec)
     return proposals
 
 
@@ -441,104 +584,165 @@ def append_rules(output_rule_engine: Path, new_rules):
 
 
 def main(argv=None):
-    script_started_at = datetime.now(timezone.utc)
-    print(f"Run started at: {script_started_at.isoformat()}")
-    run_start_monotonic = time.monotonic()
     args = parse_args(argv)
-
-    validate_file(args.tickets_categorized, "Tickets CSV")
-    validate_file(args.rules_engine_file, "Rules engine")
-
-    prompt_text = load_prompt_text(args.prompt, args.prompt_file)
-    prompt_source = str(args.prompt_file) if args.prompt_file else "inline --prompt"
-    prompt_preview = prompt_text.replace("\n", "\\n")
-    if len(prompt_preview) > 200:
-        prompt_preview = prompt_preview[:200] + "..."
-    print(f"Prompt source: {prompt_source}")
-    print(f"Prompt chars: {len(prompt_text)}")
-    print(f"Prompt preview: {prompt_preview}")
-
-    all_rows, incorrect_rows, skipped_missing_comments = load_feedback_rows(
-        args.tickets_categorized
+    script_started_at = datetime.now(timezone.utc)
+    run_start_monotonic = time.monotonic()
+    log_path, log_handle, original_stdout, original_stderr = enable_run_logging(
+        args.log_file, script_started_at
     )
-    rows_scanned = len(all_rows)
-    incorrect_count = len(incorrect_rows)
 
-    copy_rules_engine(args.rules_engine_file, args.output_rule_engine)
-    existing_rules = _read_rule_rows(args.output_rule_engine)
-    next_id = next_rule_id(existing_rules)
+    try:
+        print(f"Log file: {log_path}")
+        print(f"Run started at: {script_started_at.isoformat()}")
 
-    proposals = call_codex(prompt_text, incorrect_rows, args.codex_timeout)
-    if not proposals:
+        validate_file(args.tickets_categorized, "Tickets CSV")
+        validate_file(args.rules_engine_file, "Rules engine")
+
+        prompt_text = load_prompt_text(args.prompt, args.prompt_file)
+        prompt_source = str(args.prompt_file) if args.prompt_file else "inline --prompt"
+        prompt_preview = prompt_text.replace("\n", "\\n")
+        if len(prompt_preview) > 200:
+            prompt_preview = prompt_preview[:200] + "..."
+        print(f"Prompt source: {prompt_source}")
+        print(f"Prompt chars: {len(prompt_text)}")
+        print(f"Prompt preview: {prompt_preview}")
+        print(f"Max review rows per run: {args.max_review_rows}")
+        print(f"Codex batch size: {args.codex_batch_size}")
+
+        all_rows, review_rows, missing_comments_total = load_feedback_rows(
+            args.tickets_categorized
+        )
+        rows_scanned = len(all_rows)
+        review_rows = review_rows[:args.max_review_rows]
+        review_count = len(review_rows)
+        missing_comments_considered = sum(
+            1 for row in review_rows if not (row.get("Human Comments") or "").strip()
+        )
+
+        copy_rules_engine(args.rules_engine_file, args.output_rule_engine)
+        existing_rules = _read_rule_rows(args.output_rule_engine)
+        failure_to_category = build_failure_to_category_map(existing_rules)
+        next_id = next_rule_id(existing_rules)
+
+        est_sec, worst_sec = estimate_runtime_seconds(
+            review_count, args.codex_batch_size, args.codex_timeout
+        )
+        print(
+            "Estimated total runtime: {0} (worst-case: {1})".format(
+                _format_duration(est_sec),
+                _format_duration(worst_sec) if worst_sec else "unbounded",
+            )
+        )
+
+        all_proposals = []
+        reason_counts: Dict[str, int] = {}
+        if review_rows:
+            total_batches = (review_count + args.codex_batch_size - 1) // args.codex_batch_size
+            for batch_idx, start in enumerate(range(0, review_count, args.codex_batch_size), start=1):
+                batch_rows = review_rows[start:start + args.codex_batch_size]
+                print(f"Codex batch {batch_idx}/{total_batches}: rows={len(batch_rows)}")
+                proposals, codex_reason = _call_codex_with_reason(
+                    prompt_text, batch_rows, args.codex_timeout
+                )
+                if proposals:
+                    all_proposals.extend(proposals)
+                else:
+                    reason_counts[codex_reason] = reason_counts.get(codex_reason, 0) + 1
+        else:
+            reason_counts["no_review_rows"] = 1
+
+        proposals = all_proposals
+        if not proposals:
+            no_proposals_reason = ", ".join(
+                f"{reason}={count}" for reason, count in sorted(reason_counts.items())
+            ) or "unknown"
+            print("Rows scanned: {0}".format(rows_scanned))
+            print("Review rows considered: {0}".format(review_count))
+            print(
+                "Review rows with missing comments (considered/total): "
+                "{0}/{1}".format(missing_comments_considered, missing_comments_total)
+            )
+            print(f"No proposals reason: {no_proposals_reason}")
+            print("Rules added: 0")
+            print(f"Output rule-engine file: {args.output_rule_engine}")
+            script_ended_at = datetime.now(timezone.utc)
+            print(f"Run ended at: {script_ended_at.isoformat()}")
+            print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
+            return {
+                "rows_scanned": rows_scanned,
+                "incorrect_rows": review_count,
+                "skipped": missing_comments_total,
+                "rules_added": 0,
+                "output_rule_engine": str(args.output_rule_engine),
+                "log_file": str(log_path),
+            }
+
+        project_by_ticket = {
+            row.get("Ticket", ""): row.get("Project Key", "")
+            for row in review_rows
+        }
+
+        normalized = []
+        current_id = next_id
+        for proposal in proposals:
+            if not isinstance(proposal, dict):
+                continue
+            project_key = determine_project_key(proposal, project_by_ticket)
+            normalized_rule = normalize_proposal(
+                proposal=proposal,
+                project_key=project_key,
+                rule_id=f"R{current_id:03d}",
+                failure_to_category=failure_to_category,
+            )
+            if normalized_rule is not None:
+                normalized.append(normalized_rule)
+                current_id += 1
+
+        append_rules(args.output_rule_engine, normalized)
+
+        if normalized:
+            print("Rules appended:")
+            for rule in normalized:
+                print(
+                    "  - {rule_id} | project={project} | field={field} | "
+                    "failure='{failure}' | category='{category}' | pattern='{pattern}'".format(
+                        rule_id=rule.get("RuleID", ""),
+                        project=rule.get("Project Key", ""),
+                        field=rule.get("Match Field", ""),
+                        failure=rule.get("Failure Category", ""),
+                        category=rule.get("Category", ""),
+                        pattern=rule.get("Rule Pattern", ""),
+                    )
+                )
+
+        no_proposals_reason = ""
+        if proposals and not normalized:
+            no_proposals_reason = "all_proposals_rejected"
+
         print("Rows scanned: {0}".format(rows_scanned))
-        print("Incorrect rows considered: {0}".format(incorrect_count))
-        print("Rows skipped (missing comments): {0}".format(skipped_missing_comments))
-        print("Rules added: 0")
+        print("Review rows considered: {0}".format(review_count))
+        print(
+            "Review rows with missing comments (considered/total): "
+            "{0}/{1}".format(missing_comments_considered, missing_comments_total)
+        )
+        if no_proposals_reason:
+            print(f"No proposals reason: {no_proposals_reason}")
+        print("Rules added: {0}".format(len(normalized)))
         print(f"Output rule-engine file: {args.output_rule_engine}")
         script_ended_at = datetime.now(timezone.utc)
         print(f"Run ended at: {script_ended_at.isoformat()}")
         print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
+
         return {
             "rows_scanned": rows_scanned,
-            "incorrect_rows": incorrect_count,
-            "skipped": skipped_missing_comments,
-            "rules_added": 0,
+            "incorrect_rows": review_count,
+            "skipped": missing_comments_total,
+            "rules_added": len(normalized),
             "output_rule_engine": str(args.output_rule_engine),
+            "log_file": str(log_path),
         }
-
-    project_by_ticket = {
-        row.get("Ticket", ""): row.get("Project Key", "")
-        for row in incorrect_rows
-    }
-
-    normalized = []
-    current_id = next_id
-    for proposal in proposals:
-        if not isinstance(proposal, dict):
-            continue
-        project_key = determine_project_key(proposal, project_by_ticket)
-        normalized_rule = normalize_proposal(
-            proposal=proposal,
-            project_key=project_key,
-            rule_id=f"R{current_id:03d}",
-        )
-        if normalized_rule is not None:
-            normalized.append(normalized_rule)
-            current_id += 1
-
-    append_rules(args.output_rule_engine, normalized)
-
-    if normalized:
-        print("Rules appended:")
-        for rule in normalized:
-            print(
-                "  - {rule_id} | project={project} | field={field} | "
-                "failure='{failure}' | category='{category}' | pattern='{pattern}'".format(
-                    rule_id=rule.get("RuleID", ""),
-                    project=rule.get("Project Key", ""),
-                    field=rule.get("Match Field", ""),
-                    failure=rule.get("Failure Category", ""),
-                    category=rule.get("Category", ""),
-                    pattern=rule.get("Rule Pattern", ""),
-                )
-            )
-
-    print("Rows scanned: {0}".format(rows_scanned))
-    print("Incorrect rows considered: {0}".format(incorrect_count))
-    print("Rows skipped (missing comments): {0}".format(skipped_missing_comments))
-    print("Rules added: {0}".format(len(normalized)))
-    print(f"Output rule-engine file: {args.output_rule_engine}")
-    script_ended_at = datetime.now(timezone.utc)
-    print(f"Run ended at: {script_ended_at.isoformat()}")
-    print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
-
-    return {
-        "rows_scanned": rows_scanned,
-        "incorrect_rows": incorrect_count,
-        "skipped": skipped_missing_comments,
-        "rules_added": len(normalized),
-        "output_rule_engine": str(args.output_rule_engine),
-    }
+    finally:
+        disable_run_logging(log_handle, original_stdout, original_stderr)
 
 
 if __name__ == "__main__":

@@ -55,19 +55,19 @@ This STC repository applies a strict TDD workflow across the DC Ops Ticket Categ
 
 ### Project Overview
 
-DC Ops Ticket Categorization (STC) — an LLM-assisted pipeline that classifies DC Ops incident tickets into structured failure categories using rule-based matching plus LLM reasoning.
+DC Ops Ticket Categorization (STC) — primary goal: based on HPC/DO ticket data, predict the correct `Category of Issue` and `Category`. The pipeline combines rule-based matching with LLM-assisted rule generation and improves over repeated human-audit feedback cycles.
 
 ### Directory Layout
 
-- `scripts/` — Python runners for ticket ingestion (`get-tickets.py`) and normalization (`normalize-tickets.py`). Each script starts with a brief usage comment. Retired runners live under `scripts/archives/`.
+- `scripts/` — Python runners for ticket ingestion (`get_tickets.py`) and normalization (`normalize_tickets.py`). Each script starts with a brief usage comment. Retired runners live under `scripts/archives/`.
 - `templates/` — Header-only CSV templates (`rule-engine.csv`, `tickets-categorized.csv`) and schema docs (`data-schemes.md`). Never write working data here.
 - `scripts/trained-data/` — Working directory for live training passes (`rule-engine.csv`, `tickets-categorized.csv`, plus numbered snapshots). `scripts/trained-data/golden-rules-engine/` is read-only and holds the audited production rules plus `category-of-issues.md`.
-- `prompts/` — LLM prompts for training (`train-to-categorize-tickets-prompt.md`) and rule updates (`update-rule-engine-prompt.md`). Archives reside in `prompts/archives/`.
+- `prompts/` — LLM prompts for training and rule updates (`training.md`). Archives reside in `prompts/archives/`.
 
 ### Training Pipeline
 
-1. `scripts/get-tickets.py` → raw Jira JSON → `scripts/tickets-json/`.
-2. `scripts/normalize-tickets.py` → normalized per-ticket JSON → `scripts/normalized-tickets/<date>/`.
+1. `scripts/get_tickets.py` → raw Jira JSON → `scripts/tickets-json/`.
+2. `scripts/normalize_tickets.py` → normalized per-ticket JSON → `scripts/normalized-tickets/<date>/`.
 3. LLM categorization + rule updates → `scripts/trained-data/tickets-categorized.csv` & `scripts/trained-data/rule-engine.csv`.
 4. Human audit → snapshot copies (`tickets-categorized-N.csv`, `rule-engine-N.csv`).
 5. Golden promotion → manual copy into `scripts/trained-data/golden-rules-engine/rule-engine.csv`.
@@ -108,6 +108,10 @@ All generated code MUST include:
 ```
 - Apply to: all new source files, test files, and scripts
 - Format: use the comment syntax appropriate to the language (# for Python/bash, // for JS/TS, /* */ for CSS, etc.)
+
+### Python Coverage Requirement
+
+- For any newly added or modified Python code, accompanying tests must keep coverage at `100%` for the affected Python module(s) under `scripts/`.
 
 ## Coverage & Test Completeness Policy
 

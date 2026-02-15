@@ -133,6 +133,10 @@ class TestParseArgs:
         with pytest.raises(SystemExit):
             parse_args(["-a", "--include-resolved-only", "--unresolved-only"])
 
+    def test_include_unresolved_conflicts_with_unresolved_only(self):
+        with pytest.raises(SystemExit):
+            parse_args(["-a", "--include-unresolved", "--unresolved-only"])
+
     def test_number_of_tickets_sets_value_and_default_output_path(self):
         args = parse_args(["-a", "--number-of-tickets", "5"])
         assert args.number_of_tickets == 5

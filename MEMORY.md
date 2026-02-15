@@ -1,14 +1,14 @@
 # MEMORY.md
 
 ## Project Context
-- **Purpose:** DC Ops Ticket Categorization (STC) — classify incident tickets into canonical failure categories via rule-based checks plus LLM reasoning.
+- **Purpose:** DC Ops Ticket Categorization (STC) — predict `Category of Issue` and `Category` for HPC/DO tickets, then improve prediction quality via rules, LLM assistance, and human-audit feedback.
 - **Stack:** Python scripts (`scripts/`), CSV artifacts, prompt-driven LLM workflows, conventional commits.
 - **Test runner:** pytest for scripts, csv-diff tooling for regression comparisons.
 
 ## Architectural Decisions
 - All ticket ingestion+normalization scripts emit to directories under `scripts/` to avoid polluting repo root.
 - Training outputs (`rule-engine.csv`, `tickets-categorized.csv`) live in `scripts/trained-data/`; golden artifacts in `scripts/trained-data/golden-rules-engine/` are read-only until human promotion.
-- Prompts (`prompts/train-to-categorize-tickets-prompt.md`, `prompts/update-rule-engine-prompt.md`) are the single source of truth for LLM-run instructions; archives retained for context only.
+- Prompt (`prompts/training.md`) is the single source of truth for LLM-run instructions; archives retained for context only.
 - Generated code or scripts include the `#ai-assisted` disclaimer block to preserve auditability.
 - Rule engine rows carry a `Project Key` column so project-specific classifiers can filter applicable rules without duplicating files.
 - The golden directory (`scripts/trained-data/golden-rules-engine/`) is immutable for automated workflows; updates happen only via audited, manual promotion.

@@ -698,3 +698,15 @@ class TestMain:
             rows = list(csv.DictReader(f))
         assert len(rows) == 3
         assert rows[0]["Ticket"].startswith("DO-")
+
+    def test_existing_output_overwrites_with_yes_flag(self, tmp_path, capsys):
+        argv, output_dir = self._setup_env(tmp_path)
+        csv_path = output_dir / "tickets-categorized.csv"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        csv_path.write_text("sentinel\n", encoding="utf-8")
+
+        with patch("sys.argv", ["rule_engine_categorize.py"] + argv + ["--yes"]):
+            main()
+
+        output = capsys.readouterr().out
+        assert "Overwriting existing output:" in output

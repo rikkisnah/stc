@@ -56,7 +56,10 @@ Exception:
 
 1. Run rule update from feedback:
 ```bash
-./scripts/run-update-rules.sh
+uv run python scripts/run_training.py \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
+  --prompt-file prompts/training.md
 ```
 2. Re-run categorization:
 ```bash

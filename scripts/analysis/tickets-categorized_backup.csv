@@ -1,0 +1,11 @@
+Project Key,Ticket,Ticket URL,Ticket Description,Status,Created,Age,Runbook Present,Category of Issue,Category,Rules Used,Categorization Source,LLM Confidence,Human Audit for Accuracy,Human Audit Guidance,Human Comments
+HPC,HPC-104728,https://jira-sd.mc1.oracleiaas.com/browse/HPC-104728,AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair,Resolved,2026-02-03,11,FALSE,uncategorized,unknown,,none,,incorrect,Before audit use pending-review or needs-review. After audit set correct or incorrect.,"Category: CDFPhttp://support.oracle.com/msg/SPGXTAIL-8000-KW 
+Comments: Open problems has this /SYS/PSB/CDFP1 "
+HPC,HPC-104729,https://jira-sd.mc1.oracleiaas.com/browse/HPC-104729,AGA | ad1 | CPV Job Failure | BM.GPU.MI355X.8 | miniHPL,Resolved,2026-02-03,11,FALSE,uncategorized,unknown,,none,,incorrect,Before audit use pending-review or needs-review. After audit set correct or incorrect.,"Category: Unknown
+Comments: Retest passed without any known issue. Potential test issue"
+HPC,HPC-104733,https://jira-sd.mc1.oracleiaas.com/browse/HPC-104733,AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | meta_validation,Resolved,2026-02-03,11,FALSE,uncategorized,unknown,,none,,incorrect,Before audit use pending-review or needs-review. After audit set correct or incorrect.,"Category: Bad Test
+Comments:Tester ask Patrick in Slack – which confirmed it was software bug"
+HPC,HPC-104734,https://jira-sd.mc1.oracleiaas.com/browse/HPC-104734,AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | meta_validation,Resolved,2026-02-03,11,FALSE,uncategorized,unknown,,none,,incorrect,Before audit use pending-review or needs-review. After audit set correct or incorrect.,"Category:  Unknown
+Ticket lacks any details"
+HPC,HPC-104735,https://jira-sd.mc1.oracleiaas.com/browse/HPC-104735,AGA | ad1 | CPV Job Timeout | BM.GPU.MI355X.8 | ib_write_bw_pair,Resolved,2026-02-03,11,FALSE,uncategorized,unknown,,none,,incorrect,Before audit use pending-review or needs-review. After audit set correct or incorrect.,"Category: HW – Unknown
+Comments: DPC – Deep Power Cycle resolves the issue"

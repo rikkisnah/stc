@@ -9,6 +9,7 @@ Filters out noise labels, automated bot comments, and API metadata.
 
 import argparse
 import json
+import random
 import re
 import shutil
 import sys
@@ -333,7 +334,7 @@ def normalize_json(data):
     return data
 
 
-def process_file(path, in_place=False, output_dir=None):
+def process_file(path, in_place=False, output_dir=None, allowed_ticket_keys=None):
     """Process a single JSON file.
 
     For paginated search results (containing multiple issues), each ticket is
@@ -350,6 +351,8 @@ def process_file(path, in_place=False, output_dir=None):
     if "issues" in data and not in_place:
         # Paginated search result — split into individual ticket files
         for issue in data["issues"]:
+            if allowed_ticket_keys is not None and issue.get("key") not in allowed_ticket_keys:
+                continue
             normalized = normalize_issue(issue)
             output = json.dumps(normalized, indent=2)
             ticket_key = normalized.get("ticket", {}).get("key", "unknown")
@@ -365,6 +368,9 @@ def process_file(path, in_place=False, output_dir=None):
         for i in range(1, len(results)):
             results[i] = (results[i][0], 0, results[i][2])
     else:
+        if allowed_ticket_keys is not None and "key" in data:
+            if data.get("key") not in allowed_ticket_keys:
+                return results
         normalized = normalize_json(data)
         output = json.dumps(normalized, indent=2)
         normalized_size = len(output)
@@ -381,6 +387,23 @@ def process_file(path, in_place=False, output_dir=None):
         results.append((str(out_path), original_size, normalized_size))
 
     return results
+
+
+def collect_ticket_keys(files):
+    """Collect unique ticket keys across input files."""
+    keys = set()
+    for filepath in files:
+        data = json.loads(Path(filepath).read_text())
+        if isinstance(data, dict) and "issues" in data:
+            for issue in data.get("issues", []):
+                key = issue.get("key")
+                if key:
+                    keys.add(key)
+        elif isinstance(data, dict):
+            key = data.get("key")
+            if key:
+                keys.add(key)
+    return keys
 
 
 def archive_existing(output_dir, force=False):
@@ -462,6 +485,8 @@ def main(argv=None):
         epilog="""\
 examples:
   %(prog)s                                         Normalize tickets-json/*.json -> normalized-tickets/
+  %(prog)s --input-dir scripts/tickets-json-alt    Read tickets from a custom input directory
+  %(prog)s --random-sample 5                        Normalize 5 random tickets from selected input
   %(prog)s -o output/                              Custom output directory
   %(prog)s tickets-json/DO-2639750.json            Normalize specific file(s)
   %(prog)s --in-place tickets-json/*.json          Normalize files in place
@@ -471,6 +496,10 @@ examples:
     parser.add_argument(
         "files", nargs="*", metavar="FILE",
         help="JSON files to normalize (default: tickets-json/*.json)",
+    )
+    parser.add_argument(
+        "--input-dir",
+        help=f"Input directory for JSON files when FILE is not provided (default: {DEFAULT_INPUT_DIR})",
     )
     parser.add_argument(
         "-o", "--output-dir",
@@ -493,17 +522,25 @@ examples:
         help="Path to a text file with ticket keys; only matching "
              "tickets will be normalized (one key per line, '#' comments allowed)",
     )
+    parser.add_argument(
+        "--random-sample",
+        type=int,
+        help="Randomly select N ticket keys from the resolved input set before normalization",
+    )
 
     args = parser.parse_args(argv)
+    if args.random_sample is not None and args.random_sample <= 0:
+        parser.error("--random-sample must be a positive integer")
 
-    # Default input: tickets-json/*.json
+    # Default input: <input-dir>/*.json
     files = args.files
     if not files:
-        files = sorted(str(f) for f in DEFAULT_INPUT_DIR.glob("*.json"))
+        input_dir = Path(args.input_dir) if args.input_dir else DEFAULT_INPUT_DIR
+        files = sorted(str(f) for f in input_dir.glob("*.json"))
         if not files:
-            print(f"No JSON files found in {DEFAULT_INPUT_DIR}/", file=sys.stderr)
+            print(f"No JSON files found in {input_dir}/", file=sys.stderr)
             sys.exit(1)
-        print(f"Input: {DEFAULT_INPUT_DIR}/ ({len(files)} file(s))")
+        print(f"Input: {input_dir}/ ({len(files)} file(s))")
 
     # Filter to specific tickets when --tickets-file is provided
     if args.tickets_file:
@@ -515,6 +552,17 @@ examples:
             sys.exit(1)
         print(f"Filtered to {len(files)} file(s) matching "
               f"{len(ticket_keys)} ticket key(s)")
+
+    selected_ticket_keys = None
+    if args.random_sample is not None:
+        available_ticket_keys = sorted(collect_ticket_keys(files))
+        if args.random_sample > len(available_ticket_keys):
+            parser.error(
+                "--random-sample "
+                f"({args.random_sample}) cannot exceed available tickets ({len(available_ticket_keys)})"
+            )
+        selected_ticket_keys = set(random.sample(available_ticket_keys, args.random_sample))
+        print(f"Random sample: selected {len(selected_ticket_keys)} ticket(s)")
 
     # Determine output mode
     if args.in_place:
@@ -545,6 +593,7 @@ examples:
             filepath,
             in_place=args.in_place,
             output_dir=str(output_dir) if output_dir else None,
+            allowed_ticket_keys=selected_ticket_keys,
         )
         for out_path, orig, norm in file_results:
             total_original += orig
