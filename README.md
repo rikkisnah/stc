@@ -1,344 +1,250 @@
 # Purpose
 
-STC - (S)mart (T)riager (C)lassifier predicts ticket category for HPC and DO tickets:
+STC ((S)mart (T)riager (C)lassifier) predicts two ticket outputs for HPC and DO workloads:
 - `Category of Issue`
 - `Category`
 
-The system uses rule-based matching plus LLM-assisted rule generation, then improves accuracy through repeated audit-and-retrain loops.
+The default workflow is rule-based categorization plus Codex-assisted rule updates from audited results.
 
-Every categorized ticket carries a confidence score, even when matched purely by deterministic rules. When multiple rules fire, we record the highest rule confidence and surface it in `LLM Confidence`. Rows automatically default to `pending-review`, but fall back to `needs-review` if the computed confidence is below 0.5 so auditors can focus on low-signal items first.
+## Core Principles
+
+- Keep all runtime artifacts under `scripts/`.
+- Treat `scripts/trained-data/golden-rules-engine/rule-engine.csv` as production/audited data.
+- Human audit is required before promoting new rules to golden.
+- Backward-compatible mode is fully supported: rules + Codex only (no ML flags required).
+
+# Repository Layout
+
+| Path | Purpose |
+|---|---|
+| `scripts/get_tickets.py` | Pull Jira tickets into JSON files |
+| `scripts/normalize_tickets.py` | Normalize raw Jira JSON |
+| `scripts/rule_engine_categorize.py` | Categorize tickets using rules (optional ML fallback) |
+| `scripts/run_training.py` | Generate/update rules from audited rows (Codex by default) |
+| `scripts/create_summary.py` | Produce category summary CSV + JQL |
+| `scripts/tickets-json/` | Raw ticket JSON output |
+| `scripts/normalized-tickets/<date>/` | Normalized ticket JSON output |
+| `scripts/analysis/` | Categorization and analysis outputs |
+| `scripts/trained-data/` | Working rule-engine and model/training artifacts |
+| `scripts/trained-data/golden-rules-engine/` | Audited production rules |
+| `templates/` | Header/template CSVs (do not write live outputs here) |
+| `wireframe-ui/` | Local Next.js wireframe UI |
+
+# Prerequisites
+
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/)
+- Node.js 20+ (for `wireframe-ui`)
+- Jira token in repo-root `env.json`
+
+Example `env.json`:
+
+```json
+{
+  "jira_token": "YOUR_JIRA_TOKEN"
+}
+```
 
 # Setup
 
-Requires [uv](https://docs.astral.sh/uv/).
+From repo root:
 
 ```bash
-uv init
-uv add requests
-uv add --dev pytest
+uv sync
 ```
 
-# Pipeline
+# Backward-Compatible Backend Runbook (Rules + Codex Only)
 
-## The process to use STC
+This is the default non-ML flow.
 
-```
-Step 1 get tickets
-Step 2 normalize tickets
-Step 3 run scripts/rule_engine_categorize.py
-Step 4 audit scripts/analysis/tickets-categorized.csv
-Step 4.1 Go through tickets-categorized.csv (what to look for)
-Step 4.2 Add new rules via scripts/run_training.py
-Step 5 Run Step 3 again to make sure rules were effect and it worked
-```
+## Step 1: Fetch Tickets
 
-## Practical Runbook (Recommended)
+From repo root, choose one:
 
-Canonical runbook: `docs/training-runbook.md`
-
-One-command helper for steps 1-3 (fetch -> normalize -> categorize):
-```bash
-scripts/run_training_loop.sh \
-  --start-date 2026-02-10 \
-  --end-date 2026-02-12 \
-  --jql-file scripts/jql/mi355x_default.jql \
-  --rule-engine scripts/trained-data/rule-engine.local.csv \
-  --yes
-```
-
-Expected checkpoints in output:
-1. `[1/3] Fetching tickets...`
-2. `[2/3] Normalizing tickets...`
-3. `[3/3] Categorizing with rule engine...`
-4. Summary lines like `Rule matched`, `No match`, and `Runbook=TRUE`
-5. Printed `run_training.py` command for the next step
-
-After that:
-1. Audit `scripts/analysis/tickets-categorized.csv`
-2. Run `scripts/run_training.py` to append new rules
-3. Re-run `scripts/rule_engine_categorize.py`
-4. Repeat until stable
-
-### Step 4.1 — What to look for in `tickets-categorized.csv`
-
-- Rows with `LLM Confidence < 0.5` or `Human Audit for Accuracy = needs-review`
-- `uncategorized` (or clearly wrong) categories
-- Cases where a rule should have matched but `RuleID` is missing/incorrect
-- Repeated patterns that should become rules
-
-## Current entrypoints
-
-| Task | Script | Prompt |
-|---|---|---|
-| Fetch tickets from Jira | `scripts/get_tickets.py` | n/a |
-| Normalize tickets | `scripts/normalize_tickets.py` | n/a |
-| Train / update rules from feedback | `scripts/run_training.py` | `prompts/training.md` |
-| Categorize using rules only | `scripts/rule_engine_categorize.py` | n/a |
-| Summarize categorized output | `scripts/create_summary.py` | n/a |
-
-## Training Phase
-
-```
-Step 1  get tickets         ──►  scripts/tickets-json/
-Step 2  normalize           ──►  scripts/normalized-tickets/<date>/
-Step 3  train (LLM)         ──►  scripts/trained-data/ (rules + categorized CSV)
-Step 4  audit (LLM)         ──►  regression-verified snapshots
-Step 5  promote golden      ──►  scripts/trained-data/golden-rules-engine/rule-engine.csv
-Step 6  categorize all      ──►  scripts/analysis/tickets-categorized.csv
-```
-
-### Step 1 — Fetch Tickets
-
-Pull raw JSON from Jira.
+JQL file mode:
 
 ```bash
-uv run python scripts/get_tickets.py                       # Fetch all tickets
-uv run python scripts/get_tickets.py -2d                    # Last 2 days
-uv run python scripts/get_tickets.py 2025-01-01             # From start date to now
-uv run python scripts/get_tickets.py 2025-01-01 2025-01-31  # Date range
-uv run python scripts/get_tickets.py -t DO-2639750          # Single ticket by key
-uv run python scripts/get_tickets.py -a --number-of-tickets 5  \
-  --output-file scripts/tickets-json/limited-tickets.json      # First 5 tickets to a single file
-uv run python scripts/get_tickets.py -a --number-of-tickets 5  \
-  --include-unresolved --output-file /tmp/tickets.json         # Override filters + output path
-uv run python scripts/get_tickets.py -h                     # Show help
+uv run python scripts/get_tickets.py -a \
+  --jql-file scripts/jql/hpc_default.jql \
+  --include-unresolved \
+  -y
+```
+
+Date range mode:
+
+```bash
+uv run python scripts/get_tickets.py -a 2026-02-14 2026-02-15 -y
+```
+
+Single ticket mode:
+
+```bash
+uv run python scripts/get_tickets.py -t DO-2639750
 ```
 
 Output: `scripts/tickets-json/`
 
-### Step 2 — Normalize Tickets
-
-Transform raw Jira JSON into a compact per-ticket schema for LLM efficiency.
+## Step 2: Normalize
 
 ```bash
-uv run python scripts/normalize_tickets.py
-# Add -y to auto-archive existing outputs, --date to pin directory, or --in-place to overwrite JSONs
 uv run python scripts/normalize_tickets.py -y
-uv run python scripts/normalize_tickets.py --date 2026-02-11
-uv run python scripts/normalize_tickets.py --in-place scripts/tickets-json/DO-*.json
 ```
 
 Output: `scripts/normalized-tickets/<date>/`
 
-### Step 3 — Train (LLM categorization)
-
-Run training to review audited rows, propose rule updates, and append accepted rules to a local rule-engine copy.
+## Step 3: Categorize with Rules Only
 
 ```bash
-uv run python scripts/run_training.py \
-  --tickets-categorized scripts/analysis/tickets-categorized.csv \
-  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
-  --prompt-file prompts/training.md
-```
-
-Working directory: `scripts/trained-data/`
-
-### Step 4 — Audit Regression
-
-After a human audits a training pass (marking tickets correct/incorrect, adjusting rules), re-run categorization and compare field-by-field to the audited snapshot.
-
-```bash
-uv run python scripts/run_training.py \
-  --tickets-categorized scripts/analysis/tickets-categorized.csv \
-  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
-  --prompt-file prompts/training.md
-```
-
-If results match, the rule engine is regression-stable and eligible for golden promotion.
-
-### Step 5 — Promote to Golden
-
-Manually copy the regression-stable `rule-engine.csv` to the golden directory:
-
-```bash
-cp scripts/trained-data/rule-engine.csv scripts/trained-data/golden-rules-engine/rule-engine.csv
-```
-
-This is a **manual human step** — never automated.
-
-### Step 6 — Categorize All Tickets
-
-Apply the golden rule engine to every normalized ticket. Two options:
-
-**Option A — Rule engine only (fast, no LLM)**
-```bash
-uv run python scripts/rule_engine_categorize.py
-uv run python scripts/rule_engine_categorize.py --tickets-dir scripts/normalized-tickets/2026-02-08
-uv run python scripts/rule_engine_categorize.py --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv
-uv run python scripts/rule_engine_categorize.py --resume  # skip already-categorized tickets
-```
-
-**Option B — LLM-assisted (slower, handles uncategorized tickets with LLM reasoning)**
-```bash
-# (retired) see scripts/archives/ for older LLM batch runners
+LATEST=$(ls -1 scripts/normalized-tickets | sort | tail -1)
+uv run python scripts/rule_engine_categorize.py \
+  --tickets-dir "scripts/normalized-tickets/$LATEST" \
+  --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv \
+  --output-dir scripts/analysis \
+  -y
 ```
 
 Output: `scripts/analysis/tickets-categorized.csv`
 
-### Step 7 — Create Category Summary
+## Step 4: Human Audit
 
-Use `create_summary.py` to generate a compact category-level report from categorized tickets.
+Review `scripts/analysis/tickets-categorized.csv`.
 
-Intent:
-- group tickets by `Category`
-- compute `% of total tickets` and `count`
-- produce a ready-to-use JQL query per category
+Edit only:
+- `Human Audit for Accuracy`
+- `Human Comments`
 
-Default behavior:
-- input: `scripts/analysis/tickets-categorized.csv`
-- output: `scripts/analysis/tickets-summary.csv`
+Audit values:
+- pre-audit pipeline values: `pending-review`, `needs-review`
+- post-audit human values: `correct`, `incorrect`
 
-```bash
-uv run python scripts/create_summary.py
-uv run python scripts/create_summary.py --tickets scripts/analysis/tickets-categorized.csv
-uv run python scripts/create_summary.py --output scripts/analysis/tickets-summary-custom.csv
-```
-
-## Human Feedback Loop (post-Step 6)
-
-After reviewing `scripts/analysis/tickets-categorized.csv` and filling in `Human Audit for Accuracy` + `Human Comments`:
+## Step 5: Run Training (Codex Only)
 
 ```bash
 uv run python scripts/run_training.py \
   --tickets-categorized scripts/analysis/tickets-categorized.csv \
-  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
-  --prompt-file prompts/training.md
+  --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
+  --prompt-file prompts/training.md \
+  --engine codex \
+  --codex-timeout 180 \
+  --codex-batch-size 2 \
+  -y
 ```
 
-This reads the human feedback and updates `scripts/analysis/rule-engine.csv` — confirming correct rules, fixing incorrect ones, and proposing new rules for uncategorized tickets.
+This writes updates to `scripts/trained-data/rule-engine.local.csv`.
 
-## Overnight Automation
-
-Run training + audit in a loop with optional time limit:
+## Step 6: Re-Categorize with Updated Local Rules
 
 ```bash
-# (retired) see scripts/archives/ for older overnight runners
+uv run python scripts/rule_engine_categorize.py \
+  --tickets-dir "scripts/normalized-tickets/$LATEST" \
+  --rule-engine scripts/trained-data/rule-engine.local.csv \
+  --output-dir scripts/analysis \
+  -y
 ```
 
-# Archives
+## Step 7: Repeat Audit + Training Until Stable
 
-This repo keeps older/retired runners and prompts under:
-
-- `scripts/archives/`
-- `prompts/archives/`
-
-These are retained for reference but may not reflect the current pipeline.
-
-# Directory Layout
-
-| Path | Purpose |
-|---|---|
-| `scripts/tickets-json/` | Raw Jira JSON (Step 1 output) |
-| `scripts/normalized-tickets/<date>/` | Normalized per-ticket JSON (Step 2 output) |
-| `scripts/trained-data/` | Working directory for training sessions (Steps 3-4) |
-| `scripts/trained-data/golden-rules-engine/` | **Read-only.** Production rule engine (Step 5) |
-| `scripts/analysis/` | Output from full categorization runs (Step 6) |
-| `templates/` | CSV header-only skeletons. **Never write working data here.** |
-| `prompts/` | LLM prompt files |
-
-# LLM Prompts
-
-| Prompt | Purpose | Runner Script |
-|---|---|---|
-| `prompts/training.md` | Review miscategorized/needs-review tickets and propose rule updates | `scripts/run_training.py` |
-
-# Running Tests
+For subsequent training passes, use:
 
 ```bash
-uv run pytest scripts/test_get_tickets.py -v
+--rules-engine-file scripts/trained-data/rule-engine.local.csv
 ```
 
-## UX (wireframe-ui)
+## Step 8: Promote to Golden (Manual)
 
-Frontend wireframe app lives in `wireframe-ui/` and supports a local JQL pipeline trigger for visual review.
+Only after human-audited regression stability:
+
+```bash
+cp scripts/trained-data/rule-engine.local.csv \
+  scripts/trained-data/golden-rules-engine/rule-engine.csv
+```
+
+This promotion is intentionally manual.
+
+# One-Command Helper
+
+`scripts/run_training_loop.sh` runs fetch -> normalize -> categorize, then prints the follow-up `run_training.py` command.
+
+Codex-only example:
+
+```bash
+scripts/run_training_loop.sh \
+  --start-date 2026-02-10 \
+  --end-date 2026-02-12 \
+  --jql-file scripts/jql/hpc_default.jql \
+  --rule-engine scripts/trained-data/rule-engine.local.csv \
+  --engine codex \
+  --yes
+```
+
+# Optional ML Features (Not Required for Backward-Compatible Flow)
+
+ML support exists, but the backward-compatible/default path does not require it.
+
+- `scripts/ml_train.py`
+- `scripts/ml_classifier.py`
+- `run_training.py --engine ml|codex+ml`
+- `rule_engine_categorize.py --ml-model ... --ml-category-map ...`
+
+If you want legacy behavior, do not pass ML flags and keep `--engine codex`.
+
+# Wireframe UI
 
 Run locally:
 
 ```bash
 cd wireframe-ui
-npm install
-npm run dev
+npm ci
+PATH="../.venv/bin:$PATH" npm run dev
 ```
 
-Unit tests (Jest):
+Open `http://localhost:3000`.
+
+UI pipeline API executes local scripts in this order:
+- `get_tickets.py`
+- `normalize_tickets.py`
+- `rule_engine_categorize.py`
+- `create_summary.py`
+
+Outputs are written under `scripts/analysis/ui-runs/<run-id>/`.
+
+# Tests
+
+Backend:
+
+```bash
+uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests
+```
+
+Wireframe unit tests:
 
 ```bash
 cd wireframe-ui
 npm test
 ```
 
-E2E hydration test (Playwright):
+Wireframe E2E:
 
 ```bash
 make ui-e2e
 ```
 
-Or step-by-step:
+# Make Targets
+
+Show available commands:
 
 ```bash
-make ui-e2e-setup
-cd wireframe-ui && npm run test:e2e
+make help
 ```
 
-Notes:
-- The UI can execute local scripts in sequence: `get_tickets.py` → `normalize_tickets.py` → `rule_engine_categorize.py` → `create_summary.py`.
-- During active runs, the UI shows live command/log streaming, heartbeat, cancel, and run timing (start/finish/elapsed).
-- Cancel attempts to terminate active process and clean run artifacts under `scripts/analysis/ui-runs/<run-id>/`.
+Notable targets:
+- `test`
+- `run-training`
+- `run-training-inline`
+- `ui-e2e-setup`
+- `ui-e2e`
+- `test-ml_classifier`
+- `test-ml_train`
+- `ml-train`
+- `ml-categorize`
 
-# Glossary
-
-## LLM Confidence
-
-A 0.0–1.0 score indicating how reliable a ticket's categorization is. The value depends on `Categorization Source`:
-
-| Source | How LLM Confidence is set |
-|---|---|
-| `rule` | The highest `Confidence` value among all matching rules. A rule with `Confidence = 1.0` means a human has confirmed it (`Created By = human-confirmed`); `0.7` is a typical LLM-suggested rule. |
-| `llm` | The model's self-reported confidence in its reasoning when no rule matched. |
-
-Tickets with `LLM Confidence < 0.5` are automatically flagged as `needs-review` so auditors can prioritize low-signal items. All other tickets default to `pending-review`.
-
-## Human Audit for Accuracy
-
-Tracks the review state of each categorized ticket. Set automatically by the pipeline and updated manually by a human auditor.
-
-| Value | Set by | Meaning |
-|---|---|---|
-| `pending-review` | Pipeline | A rule matched with confidence >= 0.5. Categorization is likely correct but has not been verified by a human yet. |
-| `needs-review` | Pipeline | Either no rules matched (category = `uncategorized`) or confidence was below 0.5. These tickets need priority human attention because the system is uncertain. |
-| `correct` | Human | Auditor confirmed the categorization is accurate. |
-| `incorrect` | Human | Auditor determined the categorization is wrong. Should include details in `Human Comments`. |
-
-## Human Audit Guidance
-
-The CSV now includes a `Human Audit Guidance` column with this reminder:
-
-`Before audit use pending-review or needs-review. After audit set correct or incorrect.`
-
-Expected human audit action:
-- Review each row (prioritize `needs-review` first).
-- Set `Human Audit for Accuracy` to `correct` or `incorrect`.
-- Add details in `Human Comments` when marked `incorrect`.
-
-### Step 1 Clarification (What To Edit)
-
-For each row in `tickets-categorized.csv`, humans should edit only:
-- `Human Audit for Accuracy`
-- `Human Comments`
-
-Do not edit:
-- `Human Audit Guidance` (this is a system reminder)
-
-Common case (`needs-review`, `Category of Issue = uncategorized`, `Categorization Source = none`):
-- If you can determine the expected category, set `Human Audit for Accuracy = incorrect` and add an actionable note in `Human Comments` (expected category, why, and pattern hint).
-- If it is truly a new/unknown pattern after review, set `Human Audit for Accuracy = correct` and note that in `Human Comments`.
-
-Detailed runbook: `docs/human-audit-playbook.md`
-
-# FAQ
-
-## What is the Jira Query used to query the tickets?
-
-```
-(labels = GPU_V6_E6-IS_MI355X_S.01 OR "Rack Type" = GPU_MI355X_E6_R.01) AND status != "Pending Part(s)" AND (("Region / Domain" IN (aga.ad1, "AGA5 (AD)") OR "Region Affected" = AGA OR "Canonical AD" = aga.ad1 OR Building = aga5) AND ("Rack Type" IN (GPU_MI355X_E6_R.02, GPU_MI355X_E6_R.01) OR labels IN (GPU_V6_E6-IS_MI355X_S.02, GPU_V6_E6-IS_MI355X_S.01, AGA-CPV)) AND resolution = Unresolved AND summary !~ "Master") AND project = "DC Ops" AND "Component / Item" NOT IN cascadeOption(10046, 10064)
-```

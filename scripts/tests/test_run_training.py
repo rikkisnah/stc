@@ -5,6 +5,7 @@
 import csv
 import importlib
 import json
+import sys
 import time
 from pathlib import Path
 from types import SimpleNamespace
@@ -146,6 +147,36 @@ def test_parse_args_rejects_non_positive_codex_batch_size():
             "--prompt", "inline prompt",
             "--codex-batch-size", "0",
         ])
+
+
+def test_parse_args_ml_requires_model_and_category_map():
+    with pytest.raises(SystemExit):
+        parse_args([
+            "--tickets-categorized", "tickets.csv",
+            "--rules-engine-file", "rules.csv",
+            "--engine", "ml",
+        ])
+
+    with pytest.raises(SystemExit):
+        parse_args([
+            "--tickets-categorized", "tickets.csv",
+            "--rules-engine-file", "rules.csv",
+            "--engine", "ml",
+            "--ml-model", "model.joblib",
+        ])
+
+
+def test_parse_args_ml_accepts_model_and_category_map():
+    args = parse_args([
+        "--tickets-categorized", "tickets.csv",
+        "--rules-engine-file", "rules.csv",
+        "--engine", "ml",
+        "--ml-model", "model.joblib",
+        "--ml-category-map", "category_map.json",
+    ])
+    assert args.engine == "ml"
+    assert str(args.ml_model) == "model.joblib"
+    assert str(args.ml_category_map) == "category_map.json"
 
 
 def test_missing_required_inputs_fail_with_error(tmp_path):
@@ -1080,29 +1111,253 @@ def test_invalid_json_and_invalid_regex_do_not_corrupt_output(tmp_path, monkeypa
         rows = list(csv.DictReader(f))
     assert len(rows) == 1
     assert rows[0]["RuleID"] == "R001"
-    assert call["count"] == 1
+
+
+def test_find_latest_tickets_dir_returns_none_when_missing(monkeypatch, tmp_path):
+    monkeypatch.setattr(run_training, "REPO_ROOT", tmp_path)
+    assert run_training.find_latest_tickets_dir() is None
+
+
+def test_find_latest_tickets_dir_returns_latest_date(monkeypatch, tmp_path):
+    root = tmp_path / "scripts" / "normalized-tickets"
+    (root / "2026-02-14").mkdir(parents=True)
+    (root / "2026-02-15").mkdir(parents=True)
+    monkeypatch.setattr(run_training, "REPO_ROOT", tmp_path)
+    assert run_training.find_latest_tickets_dir() == (root / "2026-02-15")
+
+
+def test_load_ticket_jsons_returns_empty_for_invalid_dir(tmp_path):
+    loaded = run_training._load_ticket_jsons(tmp_path / "missing", {"HPC-1"})  # pylint: disable=protected-access
+    assert loaded == {}
+
+
+def test_load_ticket_jsons_filters_by_ticket_key(tmp_path):
+    tickets_dir = tmp_path / "normalized"
+    tickets_dir.mkdir()
+    (tickets_dir / "HPC-1.json").write_text('{"ticket":{"summary":"one"}}', encoding="utf-8")
+    (tickets_dir / "HPC-2.json").write_text('{"ticket":{"summary":"two"}}', encoding="utf-8")
+    loaded = run_training._load_ticket_jsons(tickets_dir, {"HPC-2"})  # pylint: disable=protected-access
+    assert list(loaded.keys()) == ["HPC-2"]
+
+
+class _ProbVector(list):
+    def argmax(self):
+        return max(range(len(self)), key=lambda idx: self[idx])
+
+
+class _FakePipeline:
+    classes_ = ["COI_A", "COI_B"]
+
+    def __init__(self, probabilities):
+        self._probabilities = probabilities
+
+    def predict_proba(self, texts):
+        text = texts[0]
+        return [_ProbVector(self._probabilities[text])]
+
+
+class _TruthyEmptyTerms:
+    def __bool__(self):
+        return True
+
+    def __iter__(self):
+        return iter(())
+
+    def __getitem__(self, _item):
+        return []
+
+
+def test_generate_ml_proposals_returns_empty_without_ticket_jsons(monkeypatch, tmp_path):
+    fake_ml_module = SimpleNamespace(
+        build_feature_text=lambda ticket: ticket.get("feature", ""),
+        extract_top_terms=lambda _pipeline, _text, n=5: [("term", 1.0)][:n],
+        ML_CONFIDENCE_THRESHOLD=0.5,
+    )
+    monkeypatch.setitem(sys.modules, "ml_classifier", fake_ml_module)
+
+    pipeline = _FakePipeline({"x": [0.9, 0.1]})
+    proposals = run_training.generate_ml_proposals(
+        [{"Ticket": "HPC-1", "Project Key": "HPC"}],
+        pipeline,
+        {"COI_A": "CategoryA"},
+        tmp_path / "missing",
+    )
+    assert proposals == []
+
+
+def test_generate_ml_proposals_covers_skip_and_success_paths(monkeypatch, tmp_path):
+    def fake_extract_top_terms(_pipeline, text, n=5):
+        if text == "no_terms":
+            return []
+        if text == "pattern_empty":
+            return _TruthyEmptyTerms()
+        if text == "two_terms":
+            return [("cable", 1.0), ("i2c", 0.9), ("extra", 0.1)][:n]
+        if text == "one_term":
+            return [("network", 0.8)][:n]
+        return [("other", 1.0)][:n]
+
+    fake_ml_module = SimpleNamespace(
+        build_feature_text=lambda ticket: ticket.get("feature", ""),
+        extract_top_terms=fake_extract_top_terms,
+        ML_CONFIDENCE_THRESHOLD=0.5,
+    )
+    monkeypatch.setitem(sys.modules, "ml_classifier", fake_ml_module)
+
+    tickets_dir = tmp_path / "normalized"
+    tickets_dir.mkdir()
+    ticket_payloads = {
+        "HPC-EMPTY": {"feature": "", "ticket": {"summary": "empty"}},
+        "HPC-LOW": {"feature": "low_conf", "ticket": {"summary": "low conf"}},
+        "HPC-NO-TERMS": {"feature": "no_terms", "ticket": {"summary": "term miss"}},
+        "HPC-PATTERN-EMPTY": {"feature": "pattern_empty", "ticket": {"summary": "term miss"}},
+        "HPC-TWO": {"feature": "two_terms", "ticket": {"summary": "cable i2c timeout"}},
+        "HPC-ONE": {"feature": "one_term", "ticket": {"summary": "packet loss"}},
+        "HPC-OTHER": {"feature": "other_case", "ticket": {"summary": "misc issue"}},
+    }
+    for key, payload in ticket_payloads.items():
+        (tickets_dir / f"{key}.json").write_text(json.dumps(payload), encoding="utf-8")
+
+    pipeline = _FakePipeline(
+        {
+            "low_conf": [0.3, 0.2],
+            "no_terms": [0.9, 0.1],
+            "pattern_empty": [0.9, 0.1],
+            "two_terms": [0.9, 0.1],
+            "one_term": [0.9, 0.1],
+            "other_case": [0.9, 0.1],
+        }
+    )
+    review_rows = [
+        {"Ticket": "HPC-MISSING", "Project Key": "HPC"},
+        {"Ticket": "HPC-EMPTY", "Project Key": "HPC"},
+        {"Ticket": "HPC-LOW", "Project Key": "HPC"},
+        {"Ticket": "HPC-NO-TERMS", "Project Key": "HPC"},
+        {"Ticket": "HPC-PATTERN-EMPTY", "Project Key": "HPC"},
+        {"Ticket": "HPC-TWO", "Project Key": "HPC"},
+        {"Ticket": "HPC-ONE", "Project Key": "HPC"},
+        {"Ticket": "HPC-OTHER", "Project Key": "HPC"},
+    ]
+
+    proposals = run_training.generate_ml_proposals(
+        review_rows,
+        pipeline,
+        {"COI_A": "CategoryA"},
+        tickets_dir,
+    )
+
+    assert len(proposals) == 3
+    assert proposals[0]["Ticket"] == "HPC-TWO"
+    assert proposals[0]["Rule Pattern"] == "cable.*i2c"
+    assert proposals[1]["Ticket"] == "HPC-ONE"
+    assert proposals[1]["Rule Pattern"] == "network"
+    assert proposals[2]["Ticket"] == "HPC-OTHER"
+    assert proposals[2]["Rule Pattern"] == "other"
+
+
+def test_main_ml_engine_auto_rules_no_tickets_dir(monkeypatch, tmp_path):
+    rules = tmp_path / "source-rule-engine.csv"
+    _write_csv(rules, RULE_HEADER, [])
+
+    tickets = tmp_path / "tickets-categorized.csv"
+    _write_csv(tickets, TICKET_HEADER, [
+        {
+            "Project Key": "HPC",
+            "Ticket": "HPC-200",
+            "Ticket Description": "review me",
+            "Category of Issue": "uncategorized",
+            "Category": "unknown",
+            "Human Audit for Accuracy": "needs-review",
+            "Human Comments": "",
+        }
+    ])
+
+    model_path = tmp_path / "classifier.joblib"
+    map_path = tmp_path / "category_map.json"
+    model_path.write_text("model", encoding="utf-8")
+    map_path.write_text("{}", encoding="utf-8")
+
+    fake_ml_module = SimpleNamespace(
+        load_model=lambda _m, _c: (object(), {"X": "Y"})
+    )
+    monkeypatch.setitem(sys.modules, "ml_classifier", fake_ml_module)
+    monkeypatch.setattr(run_training, "find_latest_tickets_dir", lambda: None)
+    monkeypatch.setattr(run_training, "generate_ml_proposals", lambda *_args, **_kwargs: [])
+
+    result = _run_main(
+        "--tickets-categorized",
+        str(tickets),
+        "--rules-engine-file",
+        str(rules),
+        "--engine",
+        "ml",
+        "--ml-model",
+        str(model_path),
+        "--ml-category-map",
+        str(map_path),
+        "--auto-rules",
+        "--output-rule-engine",
+        str(tmp_path / "rule-engine.local.csv"),
+    )
+    assert result["rules_added"] == 0
+
+
+def test_invalid_regex_proposals_are_skipped(tmp_path, monkeypatch):
+    rules = tmp_path / "source-rule-engine.csv"
+    _write_csv(rules, RULE_HEADER, [
+        {
+            "Project Key": "DO",
+            "RuleID": "R001",
+            "Rule Pattern": "abc",
+            "Match Field": "summary",
+            "Failure Category": "CPU/Processor Fault",
+            "Category": "CPU/Processor",
+            "Priority": "80",
+            "Confidence": "1",
+            "Created By": "human",
+            "Hit Count": "0",
+        },
+    ])
+
+    tickets = tmp_path / "tickets-categorized.csv"
+    _write_csv(tickets, TICKET_HEADER, [
+        {
+            "Project Key": "DO",
+            "Ticket": "DO-100",
+            "Ticket Description": "bad row",
+            "Category of Issue": "CPU",
+            "Category": "CPU/Processor",
+            "Human Audit for Accuracy": "incorrect",
+            "Human Comments": "needs correction",
+        },
+    ])
+    prompt = tmp_path / "prompt.md"
+    prompt.write_text("prompt")
+    output = tmp_path / "rule-engine.local.csv"
 
     def fake_run_invalid_regex(cmd, input, text, capture_output, **kwargs):
         return SimpleNamespace(
             returncode=0,
-            stdout=json.dumps({
-                "proposals": [
-                    {
-                        "Ticket": "DO-100",
-                        "Rule Pattern": "[",
-                        "Match Field": "summary",
-                        "Failure Category": "Bad regex",
-                        "Category": "CPU/Processor",
-                    },
-                    {
-                        "Ticket": "DO-100",
-                        "Rule Pattern": "good",
-                        "Match Field": "summary",
-                        "Failure Category": "Good regex",
-                        "Category": "CPU/Processor",
-                    },
-                ],
-            }),
+            stdout=json.dumps(
+                {
+                    "proposals": [
+                        {
+                            "Ticket": "DO-100",
+                            "Rule Pattern": "[",
+                            "Match Field": "summary",
+                            "Failure Category": "Bad regex",
+                            "Category": "CPU/Processor",
+                        },
+                        {
+                            "Ticket": "DO-100",
+                            "Rule Pattern": "good",
+                            "Match Field": "summary",
+                            "Failure Category": "Good regex",
+                            "Category": "CPU/Processor",
+                        },
+                    ],
+                }
+            ),
             stderr="",
         )
 

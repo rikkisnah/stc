@@ -52,3 +52,203 @@ HPC,R050,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Faul
 HPC,R051,(?i)as per the slack thread[\s\S]*(power outage|planned power event),comments,Potential Test Issue - Power Outage,Potential Test Issue,83,1,human-feedback,0
 HPC,R052,(?i)\b(power\s*event|powerevent|planned power event|power outage)\b,comments,Potential Test Issue - Power Outage,Potential Test Issue,83,1,human-feedback,0
 DO,R053,"\[Prescriptive Action\]\s*Serial:\s*[^,]*,\s*SmartNIC experiencing connectivity issues",summary,SmartNIC DHCP Timeout,SmartNIC,80,1.0,human-feedback,0
+HPC,R054,health_check,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R055,repo.*amd\ ainic,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R056,200.*50z,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R057,2540xk1015.*bio\ 2540xk1015,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R058,repo.*ainic,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R059,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R060,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R061,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R062,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R063,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R064,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R065,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R066,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R067,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R068,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R069,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R070,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R071,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R072,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R073,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R074,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R075,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R076,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R077,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R078,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R079,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R080,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R081,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R082,b11\ t0.*b11,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R083,q2.*local,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R084,q3\ b51.*b51,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R085,bw,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R086,enabled.*ok,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R087,b42\ t0.*q3\ b42,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R088,pending.*65,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R089,bandwidth.*status\ pass,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,0.56,ml-generated,0
+HPC,R090,pass\ link_fsm_state.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R091,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R092,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R093,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R094,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R095,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R096,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R097,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R098,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R099,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R100,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R101,pass\ device.*link_status,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R102,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R103,hpc.*support,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R104,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R105,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R106,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R107,b11\ t0.*b11,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R108,b11\ t0.*b11,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R109,b11\ t0.*b11,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R110,pass.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R111,fyv,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R112,b15.*b15\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R113,b9\ t0.*b9,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R114,console.*testing,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R115,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R116,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R117,cable.*i2c,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R118,cable_validation,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R119,cable_validation,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R120,cable_validation,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R121,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R122,rw.*q1,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R123,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R124,bw,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R125,b54\ t0.*b54,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R126,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R127,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R128,2542xk102s.*q3\ b32,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R129,link_status.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R130,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R131,pass\ device.*pass,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R132,00\ 0000.*line,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,0.63,ml-generated,0
+HPC,R133,group\ pid.*rank\ group,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R134,ac.*cycle,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R135,0gt.*0gt\ passed,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R136,tests,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R137,b2,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R138,b2,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R139,cable_validation,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R140,pass.*pass\ device,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,0.67,ml-generated,0
+HPC,R141,health_check,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R142,total.*ad,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R143,maxpower.*gpustress\ maxpower,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R144,aga4\ q2.*b16,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R145,sunvts_burnin.*00,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R146,160.*client_hostname\ 10,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R147,ad3.*london,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R148,compute,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R149,q1.*switch,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R150,2026\ 01.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R151,6000\ mt.*mt,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R152,pass\ link_fsm_state.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R153,gb.*00\ 0000,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R154,net\ ad1.*net,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,0.51,ml-generated,0
+HPC,R155,q3\ b50.*b50\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R156,b38\ t0.*b38,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R157,waiting.*repair,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R158,231.*client_hostname,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R159,q3\ b44.*b44,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R160,ff.*ff\ ff,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R161,160.*162,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R162,amdgpu\ 0000.*00\ amdgpu,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R163,2540xk1015.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R164,b12\ t0.*net\ ad1,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,0.83,ml-generated,0
+HPC,R165,pass\ link_fsm_state.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R166,q3\ b36.*b36,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R167,waiting.*2026\ 01,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R168,2552xk108k.*2551xk108t,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R169,mhz.*memory,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R170,vts,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R171,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R172,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R173,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R174,0gt.*0gt\ passed,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R175,i2c.*cable,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R176,rhs.*p1,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,0.99,ml-generated,0
+HPC,R177,apt.*kitware,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R178,agfhc_hbm_8h,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R179,expected.*fail\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R180,b31\ t0.*q3\ b31,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R181,repo.*deb,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R182,repo.*deb,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R183,q3\ b38.*2602xq11ct,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R184,bw\ gb.*b43,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R185,pass\ device.*link_status,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R186,sram.*uncorrectable,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R187,power\ cycle.*deep,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R188,deep.*deep\ power,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R189,oc1\ ap.*ap\ kulai,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R190,net\ ad1.*net,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R191,10\ 2026.*confluence,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R192,plan.*action\ plan,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R193,b49.*b49\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R194,repair.*10\ 15,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R195,pass\ device.*link_status,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R196,193.*64,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R197,b44.*q3\ b44,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R198,fault,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R199,fault,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R200,fault,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,0.79,ml-generated,0
+HPC,R201,cable_validation,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R202,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R203,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R204,pass\ device.*link_status,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R205,deep\ power.*deep,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R206,cycle.*deep\ power,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R207,needed,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R208,b31.*b31\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R209,manually.*process,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,0.67,ml-generated,0
+HPC,R210,q1.*b2,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R211,b11\ t0.*b11,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R212,waiting.*96\ 00,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R213,96.*yes,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R214,bw,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R215,00000000.*default,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R216,fault.*03,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R217,b7\ t0.*q1,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R218,b35.*b35\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R219,power\ cycle.*deep,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R220,action\ needed.*needed,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R221,bw,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R222,bw,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R223,b32\ t0.*b32,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R224,lhr,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R225,ad3.*lhr,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R226,q1.*lhr18,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R227,b35\ t0.*b35,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R228,bw,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R229,pass\ device.*link_status,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R230,nvlink.*ok,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R231,waiting.*11\ 19,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R232,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R233,cd.*cd\ bio,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R234,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R235,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R236,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R237,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R238,q2.*deep,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R239,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R240,pass\ device.*link_status,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R241,gpuburn_short,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R242,gpuburn_short,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R243,gpuburn_short,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R244,q1.*b40\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R245,status,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R246,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R247,149.*switch,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R248,fyv,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R249,q2.*200,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R250,pass\ link_fsm_state.*pass\ device,summary+description,Potential Test Issue - Retest Passed,Potential Test Issue,70,1.0,ml-generated,0
+HPC,R251,line.*q3\ b43,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R252,b54.*b54\ t0,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0
+HPC,R253,initial_setup,summary+description,CPV CDFP Fault - Auto Resolved (TRS),CDFP,70,1.0,ml-generated,0

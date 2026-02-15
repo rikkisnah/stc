@@ -3,6 +3,7 @@
 PROMPT ?= prompts/update-rule-engine-prompt.md
 CODEX_TIMEOUT ?= 180
 PROMPT_TEXT ?=
+COV_FAIL_UNDER ?= 100
 
 help:
 	@echo "Targets:"
@@ -22,7 +23,7 @@ help:
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
 
 test:
-	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/
+	uv run pytest --cov=scripts --cov-report=term-missing --cov-fail-under=$(COV_FAIL_UNDER) -q scripts/tests/
 
 test-get_tickets:
 	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_get_tickets.py

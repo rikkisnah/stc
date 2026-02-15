@@ -251,6 +251,29 @@ class TestPredict:
 
 
 # ---------------------------------------------------------------------------
+# extract_top_terms
+# ---------------------------------------------------------------------------
+
+class TestExtractTopTerms:
+    @pytest.fixture()
+    def trained_pipeline(self):
+        texts, labels = _make_training_data(n_per_class=10)
+        pipeline, _ = mc.train_model(texts, labels)
+        return pipeline
+
+    def test_extracts_ranked_terms(self, trained_pipeline):
+        terms = mc.extract_top_terms(
+            trained_pipeline, "gpu hardware fault memory error", n=3)
+        assert 1 <= len(terms) <= 3
+        assert all(score > 0 for _term, score in terms)
+
+    def test_returns_empty_for_unknown_vocab(self, trained_pipeline):
+        terms = mc.extract_top_terms(
+            trained_pipeline, "zzzxxyy qqqwww vvvnnn", n=5)
+        assert terms == []
+
+
+# ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
