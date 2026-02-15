@@ -43,3 +43,12 @@ DO,R041,SPENV-\d{4}-\w+|DCT-\d{4}-\d{2},labels+description+comments,Hardware Env
 DO,R042,HPCGPU-\d{4}|HPCRDMA-\d{4}|HT0-\d{4}|ILOM-8000|ISTOR-8000|JBOD-\w+-\w+|NVL-\d{4}|SDN-INTERFACE|SMARTNIC-8000|SP\w+-\d{4}|SPNVDA-XID|DCT-\d{4},labels+description+comments,Runbook Present = TRUE,HW- General,50,1,human,0
 DO,R043,vops\.oci\.oraclecorp\.com/runbooks/OHDHO,description+comments,Runbook Present = TRUE,ROT,50,1,human,0
 DO,R044,RoT.*unreachable.*network|RoT is unreachable on the network,summary,RoT Network Unreachable,ROT,80,1,human,0
+HPC,R045,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,95,1,human,0
+HPC,R046,miniHPL[\s\S]*(re-?test|first time offender|no clear issues)|(re-?test|first time offender|no clear issues)[\s\S]*miniHPL,summary+comments,Potential Test Issue - Retest Passed,Potential Test Issue,82,1,human,0
+HPC,R047,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,95,1,human,0
+HPC,R048,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,95,1,human-feedback,0
+HPC,R049,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,95,1,human-feedback,0
+HPC,R050,SPGXTAIL-8000-KW|/SYS/PSB/CDFP[0-9]+,description+comments,CPV CDFP Fault - Auto Resolved (TRS),CDFP,95,1,human-feedback,0
+HPC,R051,(?i)as per the slack thread[\s\S]*(power outage|planned power event),comments,Potential Test Issue - Power Outage,Potential Test Issue,83,1,human-feedback,0
+HPC,R052,(?i)\b(power\s*event|powerevent|planned power event|power outage)\b,comments,Potential Test Issue - Power Outage,Potential Test Issue,83,1,human-feedback,0
+DO,R053,"\[Prescriptive Action\]\s*Serial:\s*[^,]*,\s*SmartNIC experiencing connectivity issues",summary,SmartNIC DHCP Timeout,SmartNIC,80,1.0,human-feedback,0
