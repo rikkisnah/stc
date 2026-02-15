@@ -140,6 +140,16 @@ def parse_args(argv=None):
         ),
     )
     parser.add_argument(
+        "--auto-rules",
+        action="store_true",
+        help=(
+            "Auto-generate rules from all non-rule-matched tickets without "
+            "waiting for human audit. When set with --engine ml or codex+ml, "
+            "the ML processes all ML-categorized and uncategorized tickets "
+            "instead of only human-reviewed rows."
+        ),
+    )
+    parser.add_argument(
         "--output-rule-engine", type=Path,
         default=DEFAULT_OUTPUT_RULE_ENGINE,
         help=(
@@ -843,6 +853,20 @@ def main(argv=None):
             1 for row in review_rows if not (row.get("Human Comments") or "").strip()
         )
 
+        # Auto-rules: ML processes all non-rule-matched tickets
+        # (ML-categorized + uncategorized) without waiting for human audit
+        if args.auto_rules and uses_ml:
+            ml_input_rows = [
+                row for row in all_rows
+                if (row.get("Categorization Source") or "").strip() != "rule"
+            ][:args.max_review_rows]
+            print(
+                f"Auto-rules: {len(ml_input_rows)} non-rule-matched tickets "
+                f"(skipped {rows_scanned - len(ml_input_rows)} rule-matched)"
+            )
+        else:
+            ml_input_rows = review_rows
+
         copy_rules_engine(args.rules_engine_file, args.output_rule_engine)
         existing_rules = _read_rule_rows(args.output_rule_engine)
         failure_to_category = build_failure_to_category_map(existing_rules)
@@ -878,10 +902,10 @@ def main(argv=None):
         reason_counts: Dict[str, int] = {}
 
         # --- ML-based rule generation ---
-        if uses_ml and review_rows:
+        if uses_ml and ml_input_rows:
             print("\n--- ML Rule Generation ---")
             ml_proposals = generate_ml_proposals(
-                review_rows, ml_pipeline, ml_category_map, tickets_dir
+                ml_input_rows, ml_pipeline, ml_category_map, tickets_dir
             )
             all_proposals.extend(ml_proposals)
             print(f"ML proposals generated: {len(ml_proposals)}")
@@ -934,7 +958,7 @@ def main(argv=None):
 
         project_by_ticket = {
             row.get("Ticket", ""): row.get("Project Key", "")
-            for row in review_rows
+            for row in all_rows
         }
 
         normalized = []
