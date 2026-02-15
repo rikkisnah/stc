@@ -177,6 +177,24 @@ def load_model(model_path, map_path):
     return pipeline, category_map
 
 
+def extract_top_terms(pipeline, text, n=5):
+    """Extract the top-N TF-IDF terms from text using the fitted pipeline.
+
+    Returns list of (term, score) tuples sorted by score descending.
+    Only terms with a non-zero TF-IDF score are included.
+    """
+    tfidf = pipeline.named_steps["tfidf"]
+    feature_names = tfidf.get_feature_names_out()
+    vector = tfidf.transform([text])
+    scores = vector.toarray()[0]
+    top_indices = scores.argsort()[-n:][::-1]
+    return [
+        (feature_names[i], float(scores[i]))
+        for i in top_indices
+        if scores[i] > 0
+    ]
+
+
 def predict(pipeline, category_map, ticket_data):
     """Predict category for a single ticket.
 

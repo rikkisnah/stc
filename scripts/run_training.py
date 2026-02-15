@@ -3,11 +3,34 @@
 # Tag: #ai-assisted
 """Generate local rule-engine proposals from audited ticket feedback.
 
+Supports multiple rule-generation engines via --engine:
+  codex    — use Codex AI to propose rules (default, requires --prompt/--prompt-file)
+  ml       — use the trained ML classifier to propose rules (fast, no Codex needed)
+  codex+ml — run both engines and merge proposals
+
 Usage:
+    # Codex only (existing behavior)
     python3 scripts/run_training.py \
-        --tickets-categorized scripts/trained-data/tickets-categorized.csv \
+        --tickets-categorized scripts/analysis/tickets-categorized.csv \
         --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
         --prompt-file prompts/training.md
+
+    # ML only (fast, no Codex dependency)
+    python3 scripts/run_training.py \
+        --tickets-categorized scripts/analysis/tickets-categorized.csv \
+        --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
+        --engine ml \
+        --ml-model scripts/trained-data/ml-model/classifier.joblib \
+        --ml-category-map scripts/trained-data/ml-model/category_map.json
+
+    # Both engines
+    python3 scripts/run_training.py \
+        --tickets-categorized scripts/analysis/tickets-categorized.csv \
+        --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
+        --engine codex+ml \
+        --prompt-file prompts/training.md \
+        --ml-model scripts/trained-data/ml-model/classifier.joblib \
+        --ml-category-map scripts/trained-data/ml-model/category_map.json
 """
 
 from __future__ import annotations
@@ -61,6 +84,10 @@ DEFAULT_CODEX_TIMEOUT_SEC = 120
 HEARTBEAT_INTERVAL_SEC = 10
 JSON_ERROR_PREVIEW_CHARS = 1000
 AUDIT_VERDICTS_TO_REVIEW = {"incorrect", "needs-review"}
+ENGINE_CODEX = "codex"
+ENGINE_ML = "ml"
+ENGINE_CODEX_ML = "codex+ml"
+ENGINE_CHOICES = (ENGINE_CODEX, ENGINE_ML, ENGINE_CODEX_ML)
 
 
 def parse_args(argv=None):
@@ -75,16 +102,42 @@ def parse_args(argv=None):
     parser.add_argument("--rules-engine-file", required=True, type=Path,
                         help="Source rule-engine CSV")
     parser.add_argument(
+        "--engine",
+        choices=ENGINE_CHOICES,
+        default=ENGINE_CODEX,
+        help=(
+            "Rule generation engine: codex (default), ml, or codex+ml. "
+            "Use 'ml' for fast ML-only rule generation without Codex. "
+            "Use 'codex+ml' to run both engines and merge proposals."
+        ),
+    )
+    parser.add_argument(
         "--prompt",
         help=(
             "Inline prompt text to send to Codex. "
-            "If this value is a path to an existing file, it will be read as markdown input."
+            "If this value is a path to an existing file, it will be read as markdown input. "
+            "Only required when --engine includes codex."
         ),
     )
     parser.add_argument(
         "--prompt-file",
         type=Path,
-        help="Path to a prompt markdown file.",
+        help="Path to a prompt markdown file. Only required when --engine includes codex.",
+    )
+    parser.add_argument(
+        "--ml-model", type=Path, default=None,
+        help="Path to trained ML classifier (.joblib). Required when --engine includes ml.",
+    )
+    parser.add_argument(
+        "--ml-category-map", type=Path, default=None,
+        help="Path to category_map.json for ML classifier. Required when --engine includes ml.",
+    )
+    parser.add_argument(
+        "--tickets-dir", type=Path, default=None,
+        help=(
+            "Directory with normalized ticket JSONs for ML rule generation. "
+            "Auto-detects the most recent date folder if omitted."
+        ),
     )
     parser.add_argument(
         "--output-rule-engine", type=Path,
@@ -130,13 +183,20 @@ def parse_args(argv=None):
         type=int,
         default=200,
         help=(
-            "Maximum number of review rows (incorrect/needs-review) to send to Codex per run. "
+            "Maximum number of review rows (incorrect/needs-review) to process per run. "
             "Default: 200."
         ),
     )
     args = parser.parse_args(argv)
-    if not args.prompt and not args.prompt_file:
-        parser.error("one of the arguments --prompt --prompt-file is required")
+    uses_codex = args.engine in (ENGINE_CODEX, ENGINE_CODEX_ML)
+    uses_ml = args.engine in (ENGINE_ML, ENGINE_CODEX_ML)
+    if uses_codex and not args.prompt and not args.prompt_file:
+        parser.error("--prompt or --prompt-file is required when --engine includes codex")
+    if uses_ml:
+        if not args.ml_model:
+            parser.error("--ml-model is required when --engine includes ml")
+        if not args.ml_category_map:
+            parser.error("--ml-category-map is required when --engine includes ml")
     if args.max_review_rows <= 0:
         parser.error("--max-review-rows must be a positive integer")
     if args.codex_batch_size <= 0:
@@ -588,6 +648,124 @@ def call_codex(prompt_text: str, rows, timeout_sec: int):
     return proposals
 
 
+def find_latest_tickets_dir():
+    """Pick the most recent date folder under scripts/normalized-tickets/."""
+    base = REPO_ROOT / "scripts" / "normalized-tickets"
+    if not base.is_dir():
+        return None
+    date_dirs = sorted(d for d in base.iterdir() if d.is_dir())
+    return date_dirs[-1] if date_dirs else None
+
+
+def _load_ticket_jsons(tickets_dir, ticket_keys):
+    """Load normalized ticket JSONs for the given ticket keys.
+
+    Returns dict mapping ticket key → parsed JSON dict.
+    """
+    if not tickets_dir or not tickets_dir.is_dir():
+        return {}
+    result = {}
+    for json_file in tickets_dir.glob("*.json"):
+        if json_file.stem in ticket_keys:
+            with open(json_file, encoding="utf-8") as f:
+                result[json_file.stem] = json.load(f)
+    return result
+
+
+def generate_ml_proposals(review_rows, ml_pipeline, ml_category_map, tickets_dir):
+    """Generate rule proposals using the ML classifier.
+
+    For each review row:
+    1. Load ticket JSON
+    2. Predict category with ML
+    3. Extract distinctive TF-IDF terms from ticket text
+    4. Build regex pattern from those terms
+    5. Create a rule proposal
+
+    Returns a list of proposal dicts (same shape as Codex proposals).
+    """
+    from ml_classifier import (
+        build_feature_text,
+        extract_top_terms,
+        ML_CONFIDENCE_THRESHOLD,
+    )
+
+    ticket_keys = {row.get("Ticket", "").strip() for row in review_rows}
+    ticket_data_map = _load_ticket_jsons(tickets_dir, ticket_keys)
+
+    if not ticket_data_map:
+        print("  ML: no ticket JSONs found — cannot generate proposals")
+        return []
+
+    proposals = []
+    for row in review_rows:
+        ticket_key = row.get("Ticket", "").strip()
+        project_key = row.get("Project Key", "").strip()
+
+        ticket_data = ticket_data_map.get(ticket_key)
+        if ticket_data is None:
+            print(f"  ML: skipping {ticket_key} — no ticket JSON found")
+            continue
+
+        text = build_feature_text(ticket_data)
+        if not text.strip():
+            print(f"  ML: skipping {ticket_key} — empty feature text")
+            continue
+
+        # Predict category
+        proba = ml_pipeline.predict_proba([text])[0]
+        classes = ml_pipeline.classes_
+        best_idx = proba.argmax()
+        predicted_coi = classes[best_idx]
+        confidence = float(proba[best_idx])
+        predicted_category = ml_category_map.get(predicted_coi, "unknown")
+
+        if confidence < ML_CONFIDENCE_THRESHOLD:
+            print(f"  ML: skipping {ticket_key} — low confidence ({confidence:.2f})")
+            continue
+
+        # Extract top TF-IDF terms for pattern building
+        top_terms = extract_top_terms(ml_pipeline, text, n=5)
+        if not top_terms:
+            print(f"  ML: skipping {ticket_key} — no distinctive terms found")
+            continue
+
+        # Prefer terms that appear in the summary (more targeted patterns)
+        summary = ticket_data.get("ticket", {}).get("summary", "")
+        summary_lower = summary.lower()
+        summary_terms = [t for t, _s in top_terms if t.lower() in summary_lower]
+        pattern_terms = summary_terms[:3] if summary_terms else [t for t, _s in top_terms[:3]]
+
+        if not pattern_terms:
+            continue
+
+        # Build regex: escape terms and join for ordered matching
+        escaped = [re.escape(term) for term in pattern_terms]
+        if len(escaped) >= 2:
+            pattern = ".*".join(escaped[:2])
+        else:
+            pattern = escaped[0]
+
+        proposals.append({
+            "Rule Pattern": pattern,
+            "Match Field": "summary+description",
+            "Failure Category": predicted_coi,
+            "Category": predicted_category,
+            "Priority": 70,
+            "Confidence": round(confidence, 2),
+            "Created By": "ml-generated",
+            "Project Key": project_key,
+            "Ticket": ticket_key,
+        })
+
+        print(
+            f"  ML: {ticket_key} -> {predicted_coi} ({predicted_category}) "
+            f"conf={confidence:.2f} pattern='{pattern}'"
+        )
+
+    return proposals
+
+
 def append_rules(output_rule_engine: Path, new_rules):
     if not new_rules:
         return
@@ -612,19 +790,48 @@ def main(argv=None):
         print(f"Log file: {log_path}")
         print(f"Run started at: {script_started_at.isoformat()}")
 
+        uses_codex = args.engine in (ENGINE_CODEX, ENGINE_CODEX_ML)
+        uses_ml = args.engine in (ENGINE_ML, ENGINE_CODEX_ML)
+        print(f"Engine: {args.engine}")
+
         validate_file(args.tickets_categorized, "Tickets CSV")
         validate_file(args.rules_engine_file, "Rules engine")
 
-        prompt_text = load_prompt_text(args.prompt, args.prompt_file)
-        prompt_source = str(args.prompt_file) if args.prompt_file else "inline --prompt"
-        prompt_preview = prompt_text.replace("\n", "\\n")
-        if len(prompt_preview) > 200:
-            prompt_preview = prompt_preview[:200] + "..."
-        print(f"Prompt source: {prompt_source}")
-        print(f"Prompt chars: {len(prompt_text)}")
-        print(f"Prompt preview: {prompt_preview}")
+        prompt_text = None
+        if uses_codex:
+            prompt_text = load_prompt_text(args.prompt, args.prompt_file)
+            prompt_source = str(args.prompt_file) if args.prompt_file else "inline --prompt"
+            prompt_preview = prompt_text.replace("\n", "\\n")
+            if len(prompt_preview) > 200:
+                prompt_preview = prompt_preview[:200] + "..."
+            print(f"Prompt source: {prompt_source}")
+            print(f"Prompt chars: {len(prompt_text)}")
+            print(f"Prompt preview: {prompt_preview}")
+
+        ml_pipeline = None
+        ml_category_map = None
+        tickets_dir = None
+        if uses_ml:
+            from ml_classifier import load_model as ml_load_model
+            validate_file(args.ml_model, "ML model")
+            validate_file(args.ml_category_map, "ML category map")
+            ml_pipeline, ml_category_map = ml_load_model(
+                args.ml_model, args.ml_category_map
+            )
+            tickets_dir = args.tickets_dir or find_latest_tickets_dir()
+            print(f"ML model: {args.ml_model}")
+            print(f"ML category map: {args.ml_category_map}")
+            print(f"Tickets dir: {tickets_dir}")
+            if not tickets_dir or not tickets_dir.is_dir():
+                print(
+                    "WARNING: No tickets directory found. "
+                    "ML rule generation requires normalized ticket JSONs.",
+                    file=sys.stderr,
+                )
+
         print(f"Max review rows per run: {args.max_review_rows}")
-        print(f"Codex batch size: {args.codex_batch_size}")
+        if uses_codex:
+            print(f"Codex batch size: {args.codex_batch_size}")
 
         all_rows, review_rows, missing_comments_total = load_feedback_rows(
             args.tickets_categorized
@@ -641,34 +848,49 @@ def main(argv=None):
         failure_to_category = build_failure_to_category_map(existing_rules)
         next_id = next_rule_id(existing_rules)
 
-        est_sec, worst_sec, estimated_batches = estimate_runtime_seconds(
-            review_count, args.codex_batch_size, args.codex_timeout
-        )
-        print(
-            "Estimated total runtime: {0} (worst-case: {1})".format(
-                _format_duration(est_sec),
-                _format_duration(worst_sec) if worst_sec is not None else "unbounded",
+        if uses_codex:
+            est_sec, worst_sec, estimated_batches = estimate_runtime_seconds(
+                review_count, args.codex_batch_size, args.codex_timeout
             )
-        )
-        print(f"Estimated batches: {estimated_batches}")
-        if review_count > 0 and not args.yes:
-            if not confirm_ready_to_run(est_sec, worst_sec, estimated_batches):
-                print("Run cancelled by user.")
-                script_ended_at = datetime.now(timezone.utc)
-                print(f"Run ended at: {script_ended_at.isoformat()}")
-                print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
-                return {
-                    "rows_scanned": rows_scanned,
-                    "incorrect_rows": review_count,
-                    "skipped": missing_comments_total,
-                    "rules_added": 0,
-                    "output_rule_engine": str(args.output_rule_engine),
-                    "log_file": str(log_path),
-                }
+            print(
+                "Estimated total runtime: {0} (worst-case: {1})".format(
+                    _format_duration(est_sec),
+                    _format_duration(worst_sec) if worst_sec is not None else "unbounded",
+                )
+            )
+            print(f"Estimated batches: {estimated_batches}")
+            if review_count > 0 and not args.yes:
+                if not confirm_ready_to_run(est_sec, worst_sec, estimated_batches):
+                    print("Run cancelled by user.")
+                    script_ended_at = datetime.now(timezone.utc)
+                    print(f"Run ended at: {script_ended_at.isoformat()}")
+                    print(f"Elapsed: {time.monotonic() - run_start_monotonic:.2f}s")
+                    return {
+                        "rows_scanned": rows_scanned,
+                        "incorrect_rows": review_count,
+                        "skipped": missing_comments_total,
+                        "rules_added": 0,
+                        "output_rule_engine": str(args.output_rule_engine),
+                        "log_file": str(log_path),
+                    }
 
         all_proposals = []
         reason_counts: Dict[str, int] = {}
-        if review_rows:
+
+        # --- ML-based rule generation ---
+        if uses_ml and review_rows:
+            print("\n--- ML Rule Generation ---")
+            ml_proposals = generate_ml_proposals(
+                review_rows, ml_pipeline, ml_category_map, tickets_dir
+            )
+            all_proposals.extend(ml_proposals)
+            print(f"ML proposals generated: {len(ml_proposals)}")
+            if not ml_proposals:
+                reason_counts["ml_no_proposals"] = 1
+
+        # --- Codex-based rule generation ---
+        if uses_codex and review_rows:
+            print("\n--- Codex Rule Generation ---")
             total_batches = (review_count + args.codex_batch_size - 1) // args.codex_batch_size
             for batch_idx, start in enumerate(range(0, review_count, args.codex_batch_size), start=1):
                 batch_rows = review_rows[start:start + args.codex_batch_size]
@@ -680,7 +902,8 @@ def main(argv=None):
                     all_proposals.extend(proposals)
                 else:
                     reason_counts[codex_reason] = reason_counts.get(codex_reason, 0) + 1
-        else:
+
+        if not review_rows:
             reason_counts["no_review_rows"] = 1
 
         proposals = all_proposals
