@@ -47,6 +47,12 @@ def parse_args():
                    help="Skip tickets already present in the output CSV")
     p.add_argument("-y", "--yes", action="store_true",
                    help="Skip overwrite confirmation when replacing output CSV")
+    p.add_argument("--ml-model", type=Path, default=None,
+                   help="Path to trained ML classifier (.joblib). "
+                        "When provided, ML fallback is used for "
+                        "tickets that no rule matches.")
+    p.add_argument("--ml-category-map", type=Path, default=None,
+                   help="Path to category_map.json for ML classifier")
     return p.parse_args()
 
 
@@ -152,11 +158,15 @@ def compute_age(created_str):
         return ""
 
 
-def categorize_ticket(ticket_data, rules, project_key=None):
+def categorize_ticket(ticket_data, rules, project_key=None,
+                      ml_model=None, ml_category_map=None):
     """Produce one output row dict for a ticket.
 
     *project_key* is passed through to ``evaluate_ticket`` so that only
     rules matching the ticket's project are considered.
+
+    When *ml_model* and *ml_category_map* are provided and no category
+    rule matches, the ML classifier is used as a fallback.
     """
     ticket_info = ticket_data.get("ticket", {})
     status_info = ticket_data.get("status", {})
@@ -208,12 +218,34 @@ def categorize_ticket(ticket_data, rules, project_key=None):
         confidence = max(r["Confidence"] for r in category_rules)
         audit = "needs-review" if confidence < 0.5 else "pending-review"
     else:
-        category_of_issue = "uncategorized"
-        category = "unknown"
-        rules_used = ""
-        source = "none"
-        confidence = ""
-        audit = "needs-review"
+        # ML fallback: attempt classification if model is loaded
+        if ml_model is not None and ml_category_map is not None:
+            from ml_classifier import predict as ml_predict
+            from ml_classifier import ML_CONFIDENCE_THRESHOLD
+            cat_of_issue, cat, ml_conf = ml_predict(
+                ml_model, ml_category_map, ticket_data)
+            if ml_conf >= ML_CONFIDENCE_THRESHOLD:
+                category_of_issue = cat_of_issue
+                category = cat
+                rules_used = ""
+                source = "ml"
+                confidence = ml_conf
+                audit = ("needs-review" if ml_conf < 0.5
+                         else "pending-review")
+            else:
+                category_of_issue = "uncategorized"
+                category = "unknown"
+                rules_used = ""
+                source = "none"
+                confidence = ml_conf
+                audit = "needs-review"
+        else:
+            category_of_issue = "uncategorized"
+            category = "unknown"
+            rules_used = ""
+            source = "none"
+            confidence = ""
+            audit = "needs-review"
 
     return {
         "Project Key": ticket_project,
@@ -267,6 +299,19 @@ def main():
     print(f"Loaded {len(rules)} rules"
           + (f" (project={project_filter})" if project_filter else " (all projects)"))
 
+    # Optionally load ML model for fallback classification
+    ml_model = None
+    ml_category_map = None
+    if args.ml_model:
+        from ml_classifier import load_model as ml_load_model
+        if not args.ml_model.is_file():
+            sys.exit(f"ML model not found: {args.ml_model}")
+        if not args.ml_category_map or not args.ml_category_map.is_file():
+            sys.exit(f"ML category map not found: {args.ml_category_map}")
+        ml_model, ml_category_map = ml_load_model(
+            args.ml_model, args.ml_category_map)
+        print(f"ML fallback : enabled (model={args.ml_model})")
+
     # Collect all ticket JSONs
     ticket_files = sorted(tickets_dir.glob("*.json"))
     print(f"Found {len(ticket_files)} ticket files")
@@ -298,7 +343,7 @@ def main():
 
     # Process
     results = []
-    stats = {"rule": 0, "none": 0, "runbook": 0, "skipped": 0}
+    stats = {"rule": 0, "ml": 0, "none": 0, "runbook": 0, "skipped": 0}
 
     for tf in ticket_files:
         ticket_id = tf.stem
@@ -312,11 +357,17 @@ def main():
         # When --project is set, rules are already filtered at load time
         # so no per-ticket filtering needed.  Otherwise auto-detect from ticket.
         per_ticket_project = None if project_filter else get_ticket_project(ticket_data)
-        row = categorize_ticket(ticket_data, rules, project_key=per_ticket_project)
+        row = categorize_ticket(ticket_data, rules,
+                                project_key=per_ticket_project,
+                                ml_model=ml_model,
+                                ml_category_map=ml_category_map)
         results.append(row)
 
-        if row["Categorization Source"] == "rule":
+        source = row["Categorization Source"]
+        if source == "rule":
             stats["rule"] += 1
+        elif source == "ml":
+            stats["ml"] += 1
         else:
             stats["none"] += 1
         if row["Runbook Present"] == "TRUE":
@@ -335,6 +386,8 @@ def main():
     total = len(results)
     print(f"\nDone. {total} tickets categorized → {output_csv}")
     print(f"  Rule matched : {stats['rule']}")
+    if stats["ml"]:
+        print(f"  ML matched   : {stats['ml']}")
     print(f"  No match     : {stats['none']}")
     print(f"  Runbook=TRUE : {stats['runbook']}")
     if stats["skipped"]:

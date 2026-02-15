@@ -1,4 +1,4 @@
-.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform clean fmt lint
+.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform test-ml_classifier test-ml_train ml-train ml-categorize clean fmt lint
 
 PROMPT ?= prompts/update-rule-engine-prompt.md
 CODEX_TIMEOUT ?= 180
@@ -13,6 +13,10 @@ help:
 	@echo "  test-run_training       Run run_training.py unit tests"
 	@echo "  run-training            Run run_training.py Step 1"
 	@echo "  run-training-inline     Run run_training.py with inline --prompt"
+	@echo "  test-ml_classifier      Run ml_classifier unit tests"
+	@echo "  test-ml_train           Run ml_train unit tests"
+	@echo "  ml-train                Train local ML classifier"
+	@echo "  ml-categorize           Categorize tickets with ML fallback"
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
 
 test:
@@ -53,6 +57,23 @@ run-training-inline:
 
 test-csv_jql_transform:
 	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_csv_jql_transform.py
+
+test-ml_classifier:
+	uv run pytest --cov=ml_classifier --cov-report=term-missing -q scripts/tests/test_ml_classifier.py
+
+test-ml_train:
+	uv run pytest --cov=ml_train --cov-report=term-missing -q scripts/tests/test_ml_train.py
+
+ml-train:
+	uv run python scripts/ml_train.py \
+		--training-data scripts/trained-data/ml-training-data.csv \
+		--tickets-categorized scripts/analysis/tickets-categorized.csv \
+		--tickets-dir scripts/normalized-tickets/$$(ls scripts/normalized-tickets/ | sort | tail -1)
+
+ml-categorize:
+	uv run python scripts/rule_engine_categorize.py \
+		--ml-model scripts/trained-data/ml-model/classifier.joblib \
+		--ml-category-map scripts/trained-data/ml-model/category_map.json
 
 clean:
 	rm -f scripts/*.zip
