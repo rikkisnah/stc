@@ -36,17 +36,16 @@ From this point on, **only** read or write the working copies inside `scripts/tr
 3. If no rule matches, use LLM reasoning to assign the best category, set `Categorization Source = llm`, provide a confidence score, and capture a short rationale.
 4. When LLM reasoning discovers a reusable pattern, append a new rule to the working rule engine with the next sequential `RuleID`, an appropriate confidence, and `Created By = llm`.
 5. Always set `Runbook Present = TRUE` whenever runbook indicators such as rules `R011`, `R012`, `R015`, "Prescriptive Action" titles, or explicit runbook phrases appear.
-6. Append every processed ticket to `scripts/trained-data/tickets-categorized.csv`, auto-setting `Human Audit for Accuracy = needs-review` when the computed confidence is below 0.5 and `pending-review` otherwise. Leave `Human Comments` empty for the reviewer.
+6. Append every processed ticket to `scripts/trained-data/tickets-categorized.csv`, auto-setting `Human Audit for Accuracy = needs-review` when the computed confidence is below 0.5 and `pending-review` otherwise. Set `Human Audit Guidance` to `Before audit use pending-review or needs-review. After audit set correct or incorrect.` Leave `Human Comments` empty for the reviewer.
 
 ### Snapshots and Re-runs
 1. After each **ten**-ticket batch, snapshot the live files within `scripts/trained-data/` as `tickets-categorized-<pass>.csv` and `rule-engine-<pass>.csv` to preserve history.
 2. To rerun a batch, remove the affected rows from the live `tickets-categorized.csv`, keep the current rule engine, and repeat the categorization steps on the same normalized inputs.
 
 ## Human Audit Feedback Loop
-1. Auditor reviews the **live** `tickets-categorized.csv`, fills `Human Audit for Accuracy` (`Accurate`, `Unknown`, `Incorrect`), and adds `Human Comments`.
+1. Auditor reviews the **live** `tickets-categorized.csv`, sets `Human Audit for Accuracy` to `correct` or `incorrect`, and adds `Human Comments`.
 2. Based on the audit, update the live `rule-engine.csv`:
-   - Increase confidence and set `Created By = human-confirmed` for accurate rules.
-   - Leave values unchanged for unknown verdicts.
+   - Increase confidence and set `Created By = human-confirmed` for correct rules.
    - Adjust, downgrade, or remove rules with incorrect verdicts.
    - Encode any new human-supplied heuristics as new rules.
 3. Snapshot the audited state (`tickets-categorized-<n>.csv`, `rule-engine-<n>.csv`) before starting the next batch.

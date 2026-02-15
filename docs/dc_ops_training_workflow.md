@@ -20,13 +20,12 @@ This document captures the step-by-step workflow from the training prompt so aud
   - If no rule matches, apply LLM reasoning, set `Categorization Source = llm`, include a confidence score, and describe the rationale.
 - When LLM reasoning reveals a reusable pattern, append a new rule to the working `rule-engine.csv` with the next sequential `RuleID`, an appropriate confidence, and `Created By = llm`.
 - Always flag `Runbook Present = TRUE` when rules `R011`, `R012`, `R015`, or other runbook cues fire (e.g., “Prescriptive Action” titles or runbook phrases in comments).
-- Write every processed ticket to `scripts/trained-data/tickets-categorized.csv`. Auto-set `Human Audit for Accuracy = needs-review` when the computed confidence is below 0.5; otherwise default to `pending-review` until a human reviewer updates it.
+- Write every processed ticket to `scripts/trained-data/tickets-categorized.csv`. Auto-set `Human Audit for Accuracy = needs-review` when the computed confidence is below 0.5; otherwise default to `pending-review` until a human reviewer updates it. Populate `Human Audit Guidance` with: `Before audit use pending-review or needs-review. After audit set correct or incorrect.`
 
 ## 4. Human Audit Loop
-- Auditor reviews the live `tickets-categorized.csv`, updates `Human Audit for Accuracy` (`Accurate`, `Unknown`, or `Incorrect`), and adds `Human Comments` as needed.
+- Auditor reviews the live `tickets-categorized.csv`, updates `Human Audit for Accuracy` (`correct` or `incorrect`), and adds `Human Comments` as needed.
 - Based on audit outcomes, adjust `rule-engine.csv`:
-  - Increase confidence and set `Created By = human-confirmed` for accurate rules.
-  - Leave confidence unchanged for unknown verdicts.
+  - Increase confidence and set `Created By = human-confirmed` for correct rules.
   - Refine or remove rules that were marked incorrect.
   - Encode any new human-provided heuristics as fresh rules.
 

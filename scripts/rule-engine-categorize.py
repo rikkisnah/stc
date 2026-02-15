@@ -21,6 +21,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_RULE_ENGINE = REPO_ROOT / "scripts" / "trained-data" / "golden-rules-engine" / "rule-engine.csv"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "scripts" / "analysis"
+JIRA_BROWSE_BASE = "https://jira-sd.mc1.oracleiaas.com/browse"
+HUMAN_AUDIT_GUIDANCE = (
+    "Before audit use pending-review or needs-review. "
+    "After audit set correct or incorrect."
+)
 
 # Meta-rules only set Runbook Present; they don't count as categorization rules
 META_RULE_FAILURE = "Runbook Present = TRUE"
@@ -154,7 +159,12 @@ def categorize_ticket(ticket_data, rules, project_key=None):
     ticket_info = ticket_data.get("ticket", {})
     status_info = ticket_data.get("status", {})
 
-    ticket_id = ticket_info.get("key", "UNKNOWN")
+    ticket_key = ticket_info.get("key")
+    ticket_id = ticket_key or "UNKNOWN"
+    ticket_url = f"{JIRA_BROWSE_BASE}/{ticket_key}" if ticket_key else ""
+    # Keep this field concise for spreadsheet readability: use Jira summary,
+    # not full normalized description body.
+    ticket_description = ticket_info.get("summary", "") or ticket_data.get("description", "")
     ticket_project = get_ticket_project(ticket_data)
     status = status_info.get("current", "")
     created = status_info.get("created", "")
@@ -206,6 +216,8 @@ def categorize_ticket(ticket_data, rules, project_key=None):
     return {
         "Project Key": ticket_project,
         "Ticket": ticket_id,
+        "Ticket URL": ticket_url,
+        "Ticket Description": ticket_description,
         "Status": status,
         "Created": created_date,
         "Age": age,
@@ -216,15 +228,17 @@ def categorize_ticket(ticket_data, rules, project_key=None):
         "Categorization Source": source,
         "LLM Confidence": confidence,
         "Human Audit for Accuracy": audit,
+        "Human Audit Guidance": HUMAN_AUDIT_GUIDANCE,
         "Human Comments": "",
     }
 
 
 OUTPUT_FIELDS = [
-    "Project Key", "Ticket", "Status", "Created", "Age", "Runbook Present",
+    "Project Key", "Ticket", "Ticket URL", "Ticket Description",
+    "Status", "Created", "Age", "Runbook Present",
     "Category of Issue", "Category", "Rules Used",
     "Categorization Source", "LLM Confidence",
-    "Human Audit for Accuracy", "Human Comments",
+    "Human Audit for Accuracy", "Human Audit Guidance", "Human Comments",
 ]
 
 

@@ -1,7 +1,8 @@
-.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training test-csv_jql_transform clean fmt lint
+.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform clean fmt lint
 
 PROMPT ?= prompts/update-rule-engine-prompt.md
 CODEX_TIMEOUT ?= 180
+PROMPT_TEXT ?=
 
 help:
 	@echo "Targets:"
@@ -11,6 +12,7 @@ help:
 	@echo "  test-get_tickets_cli    Run get_tickets CLI integration tests"
 	@echo "  test-run_training       Run run-training.py unit tests"
 	@echo "  run-training            Run run-training.py Step 1"
+	@echo "  run-training-inline     Run run-training.py with inline --prompt"
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
 
 test:
@@ -36,6 +38,17 @@ run-training:
 		--tickets-categorized scripts/analysis/tickets-categorized.csv \
 		--rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
 		--prompt-file $(PROMPT) \
+		--codex-timeout $(CODEX_TIMEOUT)
+
+run-training-inline:
+	@if [ -z "$(PROMPT_TEXT)" ]; then \
+		echo "Usage: make run-training-inline PROMPT_TEXT='your prompt text' [CODEX_TIMEOUT=SECONDS]"; \
+		exit 1; \
+	fi
+	uv run python scripts/run-training.py \
+		--tickets-categorized scripts/analysis/tickets-categorized.csv \
+		--rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
+		--prompt "$(PROMPT_TEXT)" \
 		--codex-timeout $(CODEX_TIMEOUT)
 
 test-csv_jql_transform:

@@ -78,6 +78,10 @@ DC Ops Ticket Categorization (STC) — an LLM-assisted pipeline that classifies 
 - Never modify files in `scripts/trained-data/golden-rules-engine/` without an audited promotion.
 - Training batches operate on 5 tickets per pass; record all `RuleID`s that fire and propagate the maximum rule confidence to `LLM Confidence`.
 - Assign `Human Audit for Accuracy = needs-review` when confidence < 0.5; otherwise default to `pending-review` until audit.
+- During human audit, edit only `Human Audit for Accuracy` and `Human Comments`; do not edit `Human Audit Guidance`.
+- Human audit final values are `correct` or `incorrect` (pipeline pre-audit values are `pending-review` and `needs-review`).
+- For `needs-review` rows with `uncategorized`, auditors should usually set `incorrect` with a concrete correction note unless the issue is truly unknown.
+- Use `docs/human-audit-playbook.md` for row-level audit instructions and examples.
 
 ### Audit Regression Workflow
 
@@ -104,3 +108,13 @@ All generated code MUST include:
 ```
 - Apply to: all new source files, test files, and scripts
 - Format: use the comment syntax appropriate to the language (# for Python/bash, // for JS/TS, /* */ for CSS, etc.)
+
+## Coverage & Test Completeness Policy
+
+- Every task must ship with tests in the same change set.
+- For modified Python modules, the corresponding test suite must drive changed-module coverage to 100% (line coverage), or the PR must include an explicit exception in the task notes explaining why full coverage is not feasible.
+- Required workflow:
+  1. Add or update tests before/alongside implementation (TDD order).
+  2. Run the smallest affected test set first.
+  3. Run coverage for affected modules and confirm no untested lines remain.
+- Any branch left untested without a justified exception is considered incomplete.

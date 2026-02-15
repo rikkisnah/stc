@@ -217,6 +217,32 @@ Tracks the review state of each categorized ticket. Set automatically by the pip
 | `correct` | Human | Auditor confirmed the categorization is accurate. |
 | `incorrect` | Human | Auditor determined the categorization is wrong. Should include details in `Human Comments`. |
 
+## Human Audit Guidance
+
+The CSV now includes a `Human Audit Guidance` column with this reminder:
+
+`Before audit use pending-review or needs-review. After audit set correct or incorrect.`
+
+Expected human audit action:
+- Review each row (prioritize `needs-review` first).
+- Set `Human Audit for Accuracy` to `correct` or `incorrect`.
+- Add details in `Human Comments` when marked `incorrect`.
+
+### Step 1 Clarification (What To Edit)
+
+For each row in `tickets-categorized.csv`, humans should edit only:
+- `Human Audit for Accuracy`
+- `Human Comments`
+
+Do not edit:
+- `Human Audit Guidance` (this is a system reminder)
+
+Common case (`needs-review`, `Category of Issue = uncategorized`, `Categorization Source = none`):
+- If you can determine the expected category, set `Human Audit for Accuracy = incorrect` and add an actionable note in `Human Comments` (expected category, why, and pattern hint).
+- If it is truly a new/unknown pattern after review, set `Human Audit for Accuracy = correct` and note that in `Human Comments`.
+
+Detailed runbook: `docs/human-audit-playbook.md`
+
 # FAQ
 
 ## What is the Jira Query used to query the tickets?
