@@ -60,6 +60,7 @@ DC Ops Ticket Categorization (STC) — primary goal: based on HPC/DO ticket data
 ### Directory Layout
 
 - `scripts/` — Python runners for ticket ingestion (`get_tickets.py`) and normalization (`normalize_tickets.py`). Each script starts with a brief usage comment. Retired runners live under `scripts/archives/`.
+- `wireframe-ui/` — Next.js UX surface for local pipeline execution previews (JQL-driven) and run telemetry (live logs, commands, heartbeat, cancel, timestamps).
 - `templates/` — Header-only CSV templates (`rule-engine.csv`, `tickets-categorized.csv`) and schema docs (`data-schemes.md`). Never write working data here.
 - `scripts/trained-data/` — Working directory for live training passes (`rule-engine.csv`, `tickets-categorized.csv`, plus numbered snapshots). `scripts/trained-data/golden-rules-engine/` is read-only and holds the audited production rules plus `category-of-issues.md`.
 - `prompts/` — LLM prompts for training and rule updates (`training.md`). Archives reside in `prompts/archives/`.
@@ -122,3 +123,11 @@ All generated code MUST include:
   2. Run the smallest affected test set first.
   3. Run coverage for affected modules and confirm no untested lines remain.
 - Any branch left untested without a justified exception is considered incomplete.
+
+## UX Workflow Rules
+
+- UX code in `wireframe-ui/` must remain frontend-first; do not block visual review on backend service integration.
+- For JQL-triggered UX runs, keep script artifacts confined under `scripts/analysis/ui-runs/`.
+- Preserve cancel semantics: cancel must stop active script execution and attempt artifact cleanup for that run.
+- Any UX behavior changes must include tests in `wireframe-ui/__tests__/` and keep `npm test` green.
+- Hydration-sensitive changes (timestamps/random data/locale formatting) require running Playwright E2E (`make ui-e2e`).

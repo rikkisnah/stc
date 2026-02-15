@@ -248,6 +248,43 @@ These are retained for reference but may not reflect the current pipeline.
 uv run pytest scripts/test_get_tickets.py -v
 ```
 
+## UX (wireframe-ui)
+
+Frontend wireframe app lives in `wireframe-ui/` and supports a local JQL pipeline trigger for visual review.
+
+Run locally:
+
+```bash
+cd wireframe-ui
+npm install
+npm run dev
+```
+
+Unit tests (Jest):
+
+```bash
+cd wireframe-ui
+npm test
+```
+
+E2E hydration test (Playwright):
+
+```bash
+make ui-e2e
+```
+
+Or step-by-step:
+
+```bash
+make ui-e2e-setup
+cd wireframe-ui && npm run test:e2e
+```
+
+Notes:
+- The UI can execute local scripts in sequence: `get_tickets.py` → `normalize_tickets.py` → `rule_engine_categorize.py` → `create_summary.py`.
+- During active runs, the UI shows live command/log streaming, heartbeat, cancel, and run timing (start/finish/elapsed).
+- Cancel attempts to terminate active process and clean run artifacts under `scripts/analysis/ui-runs/<run-id>/`.
+
 # Glossary
 
 ## LLM Confidence

@@ -1,4 +1,4 @@
-.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform clean fmt lint
+.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform ui-e2e-setup ui-e2e clean fmt lint
 
 PROMPT ?= prompts/update-rule-engine-prompt.md
 CODEX_TIMEOUT ?= 180
@@ -11,6 +11,8 @@ help:
 	@echo "  test-normalize_tickets  Run normalize_tickets unit tests"
 	@echo "  test-get_tickets_cli    Run get_tickets CLI integration tests"
 	@echo "  test-run_training       Run run_training.py unit tests"
+	@echo "  ui-e2e-setup            Install wireframe-ui deps and Playwright Chromium"
+	@echo "  ui-e2e                  Run wireframe-ui Playwright hydration E2E test"
 	@echo "  run-training            Run run_training.py Step 1"
 	@echo "  run-training-inline     Run run_training.py with inline --prompt"
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
@@ -53,6 +55,14 @@ run-training-inline:
 
 test-csv_jql_transform:
 	uv run pytest --cov=scripts --cov-report=term-missing -q scripts/tests/test_csv_jql_transform.py
+
+ui-e2e-setup:
+	cd wireframe-ui && npm install
+	cd wireframe-ui && npm install -D @playwright/test
+	cd wireframe-ui && npx playwright install chromium
+
+ui-e2e: ui-e2e-setup
+	cd wireframe-ui && npm run test:e2e
 
 clean:
 	rm -f scripts/*.zip
