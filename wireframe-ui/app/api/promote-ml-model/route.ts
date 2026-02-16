@@ -7,12 +7,8 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const MODEL_FILES = ["classifier.joblib", "category_map.json", "training_report.txt"];
-
-type CompareResult = {
-  working: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string };
-  golden: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string };
-  identical: boolean;
-};
+const DEFAULT_SOURCE = "scripts/trained-data/ml-model";
+const DEFAULT_TARGET = "scripts/trained-data/golden-ml-model";
 
 async function readDirInfo(dirPath: string) {
   const info: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string } = {
@@ -37,48 +33,75 @@ async function readDirInfo(dirPath: string) {
   return info;
 }
 
-export async function GET() {
+function resolveDirs(source?: string | null, target?: string | null) {
   const repoRoot = path.resolve(process.cwd(), "..");
-  const scriptsDir = path.join(repoRoot, "scripts");
-  const workingDir = path.join(scriptsDir, "trained-data", "ml-model");
-  const goldenDir = path.join(scriptsDir, "trained-data", "golden-ml-model");
+  const allowedRoot = path.resolve(repoRoot, "scripts");
 
-  const [working, golden] = await Promise.all([readDirInfo(workingDir), readDirInfo(goldenDir)]);
+  const sourceDir = path.resolve(repoRoot, source?.trim() || DEFAULT_SOURCE);
+  const targetDir = path.resolve(repoRoot, target?.trim() || DEFAULT_TARGET);
+
+  // Security: both paths must be under scripts/
+  if (!sourceDir.startsWith(allowedRoot + path.sep) && sourceDir !== allowedRoot) {
+    throw new Error("Source directory must be under scripts/.");
+  }
+  if (!targetDir.startsWith(allowedRoot + path.sep) && targetDir !== allowedRoot) {
+    throw new Error("Target directory must be under scripts/.");
+  }
+
+  return { repoRoot, sourceDir, targetDir };
+}
+
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const source = url.searchParams.get("source");
+  const target = url.searchParams.get("target");
+
+  let sourceDir: string, targetDir: string;
+  try {
+    ({ sourceDir, targetDir } = resolveDirs(source, target));
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Invalid paths" }, { status: 400 });
+  }
+
+  const [working, golden] = await Promise.all([readDirInfo(sourceDir), readDirInfo(targetDir)]);
 
   let identical = false;
   if (working.exists && golden.exists && working.sizeBytes === golden.sizeBytes) {
     try {
-      const wBuf = await fs.readFile(path.join(workingDir, "classifier.joblib"));
-      const gBuf = await fs.readFile(path.join(goldenDir, "classifier.joblib"));
+      const wBuf = await fs.readFile(path.join(sourceDir, "classifier.joblib"));
+      const gBuf = await fs.readFile(path.join(targetDir, "classifier.joblib"));
       identical = wBuf.equals(gBuf);
     } catch {
       identical = false;
     }
   }
 
-  const result: CompareResult = { working, golden, identical };
-  return NextResponse.json(result);
+  return NextResponse.json({ working, golden, identical });
 }
 
-export async function POST() {
-  const repoRoot = path.resolve(process.cwd(), "..");
-  const scriptsDir = path.join(repoRoot, "scripts");
-  const workingDir = path.join(scriptsDir, "trained-data", "ml-model");
-  const goldenDir = path.join(scriptsDir, "trained-data", "golden-ml-model");
+export async function POST(req: Request) {
+  const body = (await req.json()) as { source?: string; target?: string };
 
-  // Verify working model exists
+  let sourceDir: string, targetDir: string;
   try {
-    await fs.stat(path.join(workingDir, "classifier.joblib"));
-    await fs.stat(path.join(workingDir, "category_map.json"));
-  } catch {
-    return NextResponse.json({ error: "No working ML model found to promote." }, { status: 400 });
+    ({ sourceDir, targetDir } = resolveDirs(body.source, body.target));
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Invalid paths" }, { status: 400 });
   }
 
-  await fs.mkdir(goldenDir, { recursive: true });
+  // Verify source model exists
+  try {
+    await fs.stat(path.join(sourceDir, "classifier.joblib"));
+    await fs.stat(path.join(sourceDir, "category_map.json"));
+  } catch {
+    return NextResponse.json({ error: "No ML model found in source directory." }, { status: 400 });
+  }
+
+  await fs.mkdir(targetDir, { recursive: true });
 
   for (const file of MODEL_FILES) {
-    const src = path.join(workingDir, file);
-    const dst = path.join(goldenDir, file);
+    const src = path.join(sourceDir, file);
+    const dst = path.join(targetDir, file);
     try {
       await fs.copyFile(src, dst);
     } catch {

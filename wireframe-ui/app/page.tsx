@@ -284,6 +284,8 @@ export default function HomePage() {
   const [promoteShowUnchanged, setPromoteShowUnchanged] = useState(false);
 
   // --- Promote ML Model state ---
+  const [mlSourceDir, setMlSourceDir] = useState("scripts/trained-data/ml-model");
+  const [mlTargetDir, setMlTargetDir] = useState("scripts/trained-data/golden-ml-model");
   const [mlPromoteLoading, setMlPromoteLoading] = useState(false);
   const [mlPromoteError, setMlPromoteError] = useState("");
   const [mlPromoteResult, setMlPromoteResult] = useState("");
@@ -1029,7 +1031,8 @@ export default function HomePage() {
     setMlPromoteResult("");
     setMlPromoteConfirming(false);
     try {
-      const resp = await fetch("/api/promote-ml-model");
+      const params = new URLSearchParams({ source: mlSourceDir, target: mlTargetDir });
+      const resp = await fetch(`/api/promote-ml-model?${params}`);
       if (!resp.ok) throw new Error(`Failed to load ML model info: ${resp.statusText}`);
       setMlCompare(await resp.json());
     } catch (err) {
@@ -1043,7 +1046,11 @@ export default function HomePage() {
     setMlPromoteSaving(true);
     setMlPromoteResult("");
     try {
-      const resp = await fetch("/api/promote-ml-model", { method: "POST" });
+      const resp = await fetch("/api/promote-ml-model", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ source: mlSourceDir, target: mlTargetDir }),
+      });
       const data = (await resp.json()) as { error?: string; message?: string };
       if (!resp.ok) throw new Error(data.error || "Failed to promote.");
       setMlPromoteResult(data.message || "ML model promoted to golden successfully.");
@@ -3620,11 +3627,29 @@ export default function HomePage() {
               {/* --- ML Model Promotion --- */}
               <hr style={{ margin: "1.5rem 0", border: "none", borderTop: "1px solid #ddd" }} />
               <h2>ML Model</h2>
+              <div className="field">
+                <label htmlFor="ml-source">Source (working ML model directory)</label>
+                <input
+                  id="ml-source"
+                  value={mlSourceDir}
+                  onChange={(e) => setMlSourceDir(e.target.value)}
+                  disabled={mlPromoteLoading || mlPromoteSaving}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="ml-target">Target (golden ML model directory)</label>
+                <input
+                  id="ml-target"
+                  value={mlTargetDir}
+                  onChange={(e) => setMlTargetDir(e.target.value)}
+                  disabled={mlPromoteLoading || mlPromoteSaving}
+                />
+              </div>
               <div>
                 <button
                   className="primary"
                   onClick={loadMlCompare}
-                  disabled={mlPromoteLoading || mlPromoteSaving}
+                  disabled={mlPromoteLoading || mlPromoteSaving || !mlSourceDir.trim() || !mlTargetDir.trim()}
                 >
                   {mlPromoteLoading ? "Loading..." : "Compare ML Models"}
                 </button>
