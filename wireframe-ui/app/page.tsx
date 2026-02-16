@@ -10,6 +10,7 @@ type Stage = "landing" | "input" | "results";
 type Workflow =
   | "categorize"
   | "add-rule"
+  | "get-normalize"
   | "browse-tickets"
   | "browse-categorized"
   | "browse-rules"
@@ -71,6 +72,8 @@ const PIPELINE_STEPS = [
   "create_summary.py"
 ] as const;
 
+const GET_NORMALIZE_STEPS = ["get_tickets.py", "normalize_tickets.py"] as const;
+
 const ADD_RULE_DEFAULTS = {
   ticketJsonDir: "scripts/tickets-json",
   normalizedRoot: "scripts/normalized-tickets",
@@ -117,7 +120,7 @@ const ML_MODEL_SOURCE_DIRS: Record<MlModelSource, string> = {
 };
 
 const VALID_WORKFLOWS = new Set<Workflow>([
-  "categorize", "add-rule", "browse-tickets", "browse-categorized",
+  "categorize", "add-rule", "get-normalize", "browse-tickets", "browse-categorized",
   "browse-rules", "browse-ml-model", "train-stc", "promote-to-golden"
 ]);
 
@@ -164,6 +167,7 @@ export default function HomePage() {
     ticketsCsv?: string;
     summaryCsv?: string;
     normalizedDir?: string;
+    ingestDir?: string;
   }>({});
   const [startedAt, setStartedAt] = useState<string>("");
   const [finishedAt, setFinishedAt] = useState<string>("");
@@ -178,6 +182,19 @@ export default function HomePage() {
   const [pipelineStatus, setPipelineStatus] = useState<PipelineStepStatus[]>(
     PIPELINE_STEPS.map(() => "pending")
   );
+  const [getNormPipelineStatus, setGetNormPipelineStatus] = useState<PipelineStepStatus[]>(
+    GET_NORMALIZE_STEPS.map(() => "pending")
+  );
+  const [gnBrowseSource, setGnBrowseSource] = useState<"ingest" | "normalized">("normalized");
+  const [gnTicketList, setGnTicketList] = useState<TicketListItem[]>([]);
+  const [gnTicketListLoading, setGnTicketListLoading] = useState(false);
+  const [gnTicketListError, setGnTicketListError] = useState("");
+  const [gnTicketFilter, setGnTicketFilter] = useState("");
+  const [gnTicketListExpanded, setGnTicketListExpanded] = useState(false);
+  const [gnTicketDetail, setGnTicketDetail] = useState<TicketDetailResponse | null>(null);
+  const [gnTicketDetailLoading, setGnTicketDetailLoading] = useState(false);
+  const [gnTicketDetailError, setGnTicketDetailError] = useState("");
+  const [gnTicketDetailCopyStatus, setGnTicketDetailCopyStatus] = useState("");
   const [ticketKey, setTicketKey] = useState("");
   const [reason, setReason] = useState("");
   const [failureCategory, setFailureCategory] = useState("");
@@ -472,21 +489,10 @@ export default function HomePage() {
     setRenderedAt(new Date().toLocaleString());
   }, []);
 
-  // --- Session restore on mount ---
-  useEffect(() => {
-    const saved = loadSessionState();
-    if (!saved || isSessionStale(saved)) {
-      if (saved) clearSessionState();
-      return;
-    }
-    if (!saved.isRunning && !saved.trainRunId) return;
-    const shouldRestore = window.confirm(
-      `An interrupted training session was found (run: ${saved.trainRunId}, phase ${saved.trainPhase}). Restore the session state?`
-    );
-    if (!shouldRestore) {
-      clearSessionState();
-      return;
-    }
+  // --- Stale session banner state ---
+  const [staleSession, setStaleSession] = useState<SessionState | null>(null);
+
+  function restoreSession(saved: SessionState) {
     setWorkflowState("train-stc");
     setStage("results");
     setTrainRunId(saved.trainRunId);
@@ -503,6 +509,17 @@ export default function HomePage() {
     }
     if (saved.enableMlTraining !== undefined) setEnableMlTraining(saved.enableMlTraining);
     if (saved.enableMlRuleGen !== undefined) setEnableMlRuleGen(saved.enableMlRuleGen);
+  }
+
+  // --- Session restore on mount ---
+  useEffect(() => {
+    const saved = loadSessionState();
+    if (!saved || isSessionStale(saved)) {
+      if (saved) clearSessionState();
+      return;
+    }
+    if (!saved.isRunning && !saved.trainRunId) return;
+    setStaleSession(saved);
   }, []);
 
   // --- Auto-save session state for train-stc ---
@@ -560,6 +577,16 @@ export default function HomePage() {
       el.scrollTop = el.scrollHeight;
     }
   }, [commandLogs]);
+
+  // Auto-load ticket list when a get-normalize run finishes
+  useEffect(() => {
+    if (workflow !== "get-normalize" || isRunning || stage !== "results") return;
+    const dir = gnBrowseSource === "ingest" ? resultPaths.ingestDir : resultPaths.normalizedDir;
+    if (dir && gnTicketList.length === 0 && !gnTicketListLoading && !gnTicketListError) {
+      void loadGnTicketList(dir);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [workflow, isRunning, stage, resultPaths, gnBrowseSource]);
 
   async function loadTicketList(dirOverride?: string) {
     const directory = (dirOverride || normalizedRoot).trim();
@@ -632,6 +659,63 @@ export default function HomePage() {
       setTicketDetailError(message);
     } finally {
       setTicketDetailLoading(false);
+    }
+  }
+
+  async function loadGnTicketList(dir: string) {
+    if (!dir.trim()) {
+      setGnTicketList([]);
+      setGnTicketDetail(null);
+      setGnTicketListError("Directory path is required.");
+      return;
+    }
+    setGnTicketListLoading(true);
+    setGnTicketListError("");
+    setGnTicketDetailError("");
+    setGnTicketDetailCopyStatus("");
+    try {
+      const response = await fetch(`/api/tickets-json?dir=${encodeURIComponent(dir)}`);
+      const data = (await response.json()) as { dir: string; count: number; tickets: TicketListItem[] } & { error?: string };
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to load ticket list.");
+      }
+      setGnTicketList(data.tickets || []);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to load ticket list.";
+      setGnTicketList([]);
+      setGnTicketDetail(null);
+      setGnTicketListError(message);
+    } finally {
+      setGnTicketListLoading(false);
+    }
+  }
+
+  async function loadGnTicketDetail(ticket: string, dir: string) {
+    const key = ticket.trim().toUpperCase();
+    if (!/^[A-Z]+-\d+$/.test(key) || !dir.trim()) {
+      setGnTicketDetail(null);
+      setGnTicketDetailError("");
+      setGnTicketDetailCopyStatus("");
+      return;
+    }
+    setGnTicketDetailLoading(true);
+    setGnTicketDetailError("");
+    setGnTicketDetailCopyStatus("");
+    try {
+      const response = await fetch(
+        `/api/tickets-json?dir=${encodeURIComponent(dir)}&ticketKey=${encodeURIComponent(key)}`
+      );
+      const data = (await response.json()) as TicketDetailResponse & { error?: string };
+      if (!response.ok) {
+        throw new Error(data.error || `Ticket ${key} not found.`);
+      }
+      setGnTicketDetail(data);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to load ticket details.";
+      setGnTicketDetail(null);
+      setGnTicketDetailError(message);
+    } finally {
+      setGnTicketDetailLoading(false);
     }
   }
 
@@ -1151,6 +1235,23 @@ export default function HomePage() {
         setStage("input");
         return;
       }
+    } else if (workflow === "get-normalize") {
+      if (inputMode === "jql") {
+        const jqlError = validateJql(jql);
+        if (jqlError) {
+          setError(jqlError);
+          setStage("input");
+          return;
+        }
+      } else if (inputMode === "files" && !ticketsFile.trim()) {
+        setError("Ticket list file path is required.");
+        setStage("input");
+        return;
+      } else if (inputMode === "tickets" && !ticketsText.trim()) {
+        setError("Ticket list is required.");
+        setStage("input");
+        return;
+      }
     } else if (workflow === "add-rule") {
       const normalizedTicketKey = ticketKey.trim().toUpperCase();
       if (!normalizedTicketKey) {
@@ -1256,6 +1357,14 @@ export default function HomePage() {
     setTrainAuditSaving(false);
     setTrainAuditSaveStatus("");
     setResultPaths({});
+    setGnBrowseSource("normalized");
+    setGnTicketList([]);
+    setGnTicketListError("");
+    setGnTicketFilter("");
+    setGnTicketListExpanded(false);
+    setGnTicketDetail(null);
+    setGnTicketDetailError("");
+    setGnTicketDetailCopyStatus("");
     setExecutedCommands([]);
     setCommandLogs([]);
     const runStartedAt = new Date().toISOString();
@@ -1269,6 +1378,9 @@ export default function HomePage() {
     setStage("results");
     setPipelineStatus(
       workflow === "categorize" ? PIPELINE_STEPS.map(() => "pending") : []
+    );
+    setGetNormPipelineStatus(
+      workflow === "get-normalize" ? GET_NORMALIZE_STEPS.map(() => "pending") : []
     );
     setTrainStcPipelineStatus(
       workflow === "train-stc"
@@ -1284,13 +1396,17 @@ export default function HomePage() {
       const endpoint =
         workflow === "categorize"
           ? "/api/run-jql"
-          : workflow === "train-stc"
-            ? "/api/train-stc"
-            : "/api/add-rule-from-ticket";
+          : workflow === "get-normalize"
+            ? "/api/get-normalize"
+            : workflow === "train-stc"
+              ? "/api/train-stc"
+              : "/api/add-rule-from-ticket";
       const body =
         workflow === "categorize"
           ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText, rulesEngine: categorizeRulesEngine.trim(), mlModel: categorizeMlModel.trim(), mlCategoryMap: categorizeMlCategoryMap.trim() }
-          : workflow === "train-stc"
+          : workflow === "get-normalize"
+            ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText }
+            : workflow === "train-stc"
             ? {
                 phase: 1 as const,
                 inputMode: trainInputMode,
@@ -1330,9 +1446,11 @@ export default function HomePage() {
           fallback.error ||
             (workflow === "categorize"
               ? "Failed to run pipeline."
-              : workflow === "train-stc"
-                ? "Failed to run training workflow."
-                : "Failed to run add-rule workflow.")
+              : workflow === "get-normalize"
+                ? "Failed to run get & normalize pipeline."
+                : workflow === "train-stc"
+                  ? "Failed to run training workflow."
+                  : "Failed to run add-rule workflow.")
         );
       }
 
@@ -1379,7 +1497,7 @@ export default function HomePage() {
               line?: string;
               error?: string;
               summaryRows?: SummaryRow[];
-              paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string };
+              paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string; ingestDir?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string };
               phase?: number;
               runId?: string;
               partialResult?: { trainingSamples?: number; cvAccuracy?: string };
@@ -1418,6 +1536,18 @@ export default function HomePage() {
                   );
                 }
               }
+              if (workflow === "get-normalize") {
+                const gnIdx = GET_NORMALIZE_STEPS.findIndex((step) => event.command?.includes(step));
+                if (gnIdx >= 0) {
+                  setGetNormPipelineStatus((prev) =>
+                    prev.map((status, idx) => {
+                      if (idx < gnIdx && status !== "done") return "done";
+                      if (idx === gnIdx) return "running";
+                      return status;
+                    })
+                  );
+                }
+              }
               if (workflow === "train-stc") {
                 setTrainStcPipelineStatus((prev) => {
                   const nextIdx = prev.findIndex((s) => s === "pending");
@@ -1440,6 +1570,14 @@ export default function HomePage() {
                 if (endIdx >= 0) {
                   setPipelineStatus((prev) =>
                     prev.map((status, idx) => (idx === endIdx ? "done" : status))
+                  );
+                }
+              }
+              if (workflow === "get-normalize") {
+                const gnEndIdx = GET_NORMALIZE_STEPS.findIndex((step) => event.command?.includes(step));
+                if (gnEndIdx >= 0) {
+                  setGetNormPipelineStatus((prev) =>
+                    prev.map((status, idx) => (idx === gnEndIdx ? "done" : status))
                   );
                 }
               }
@@ -1500,6 +1638,9 @@ export default function HomePage() {
               if (workflow === "categorize") {
                 setPipelineStatus(PIPELINE_STEPS.map(() => "done"));
               }
+              if (workflow === "get-normalize") {
+                setGetNormPipelineStatus(GET_NORMALIZE_STEPS.map(() => "done"));
+              }
               if (workflow === "train-stc") {
                 setTrainStcPipelineStatus(TRAIN_PIPELINE_STEPS.map(() => "done"));
                 setTrainStcResult((prev) => ({ ...prev, ...event.result }));
@@ -1537,6 +1678,13 @@ export default function HomePage() {
                   if (runningIdx === -1) {
                     return prev;
                   }
+                  return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
+                });
+              }
+              if (workflow === "get-normalize") {
+                setGetNormPipelineStatus((prev) => {
+                  const runningIdx = prev.findIndex((status) => status === "running");
+                  if (runningIdx === -1) return prev;
                   return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
                 });
               }
@@ -2103,6 +2251,15 @@ export default function HomePage() {
     );
   }, [ticketFilter, ticketList]);
   const visibleTickets = filteredTicketList.slice(0, ticketListExpanded ? 200 : 1);
+  const filteredGnTicketList = useMemo(() => {
+    const filter = gnTicketFilter.trim().toUpperCase();
+    if (!filter) return gnTicketList;
+    return gnTicketList.filter(
+      (ticket) =>
+        ticket.key.includes(filter) || ticket.summary.toUpperCase().includes(filter)
+    );
+  }, [gnTicketFilter, gnTicketList]);
+  const visibleGnTickets = filteredGnTicketList.slice(0, gnTicketListExpanded ? 200 : 1);
   const filteredCategorizedFiles = useMemo(() => {
     const filter = categorizedFilter.trim().toUpperCase();
     if (!filter) {
@@ -2234,6 +2391,47 @@ export default function HomePage() {
 
   return (
     <main>
+      {staleSession && (
+        <div
+          data-testid="stale-session-banner"
+          style={{
+            padding: "0.75rem 1rem",
+            margin: "0.5rem 1rem",
+            background: "#fef3cd",
+            border: "1px solid #ffc107",
+            borderRadius: 6,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontFamily: "monospace",
+            fontSize: "0.85rem",
+          }}
+        >
+          <span>
+            An interrupted training session was found (run: {staleSession.trainRunId}, phase {staleSession.trainPhase}).
+          </span>
+          <span style={{ display: "flex", gap: "0.5rem" }}>
+            <button
+              onClick={() => {
+                restoreSession(staleSession);
+                setStaleSession(null);
+              }}
+              style={{ background: "#3b82f6", color: "#fff", border: "none", borderRadius: 4, padding: "4px 12px", cursor: "pointer" }}
+            >
+              Restore
+            </button>
+            <button
+              onClick={() => {
+                clearSessionState();
+                setStaleSession(null);
+              }}
+              style={{ background: "#6b7280", color: "#fff", border: "none", borderRadius: 4, padding: "4px 12px", cursor: "pointer" }}
+            >
+              Dismiss
+            </button>
+          </span>
+        </div>
+      )}
       <section className="panel">
         <header className="header">
           <h1 className="title">
@@ -2264,6 +2462,7 @@ export default function HomePage() {
           <div className="mode-menu" role="group" aria-label="Workflow menu">
             {([
               ["categorize", "Categorize tickets"],
+              ["get-normalize", "Get Tickets & Normalize"],
               ["add-rule", "Add Rule for a Ticket"],
               ["browse-tickets", "Tickets in Normalized root"],
               ["browse-categorized", "View Categorized Tickets"],
@@ -2308,7 +2507,8 @@ export default function HomePage() {
           {stage === "landing" && (
             <>
               <p className="small">
-                Click <strong>Categorize tickets</strong>, <strong>Add Rule for a Ticket</strong>,{" "}
+                Click <strong>Categorize tickets</strong>, <strong>Get Tickets &amp; Normalize</strong>,{" "}
+                <strong>Add Rule for a Ticket</strong>,{" "}
                 <strong>Tickets in Normalized root</strong>, <strong>View Categorized Tickets</strong>,{" "}
                 <strong>View Rules Engines</strong>, <strong>Promote to Golden</strong>,{" "}
                 or <strong>Train STC model</strong> to preview the next wireframe step.
@@ -2440,6 +2640,112 @@ export default function HomePage() {
                   disabled={isRunning}
                   placeholder="e.g. scripts/trained-data/golden-ml-model/category_map.json"
                 />
+              </div>
+              <div>
+                <button className="primary" onClick={handleOk} disabled={isRunning}>
+                  {isRunning ? "Running..." : "OK"}
+                </button>
+              </div>
+              {error && (
+                <p className="small" role="alert">
+                  {error}
+                </p>
+              )}
+            </div>
+          )}
+
+          {stage === "input" && workflow === "get-normalize" && (
+            <div className="grid" aria-label="Input section">
+              <fieldset className="field">
+                <legend>Input source (either-or)</legend>
+                <label>
+                  <input
+                    type="radio"
+                    name="gn-input-mode"
+                    value="jql"
+                    checked={inputMode === "jql"}
+                    onChange={() => setInputMode("jql")}
+                    disabled={isRunning}
+                  />{" "}
+                  JQL
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="gn-input-mode"
+                    value="files"
+                    checked={inputMode === "files"}
+                    onChange={() => setInputMode("files")}
+                    disabled={isRunning}
+                  />{" "}
+                  Ticket list files
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="gn-input-mode"
+                    value="tickets"
+                    checked={inputMode === "tickets"}
+                    onChange={() => setInputMode("tickets")}
+                    disabled={isRunning}
+                  />{" "}
+                  Ticket IDs
+                </label>
+              </fieldset>
+              <div className="field">
+                <label htmlFor="gn-jql">Enter JQL</label>
+                <input
+                  id="gn-jql"
+                  placeholder='project="High Performance Computing"'
+                  value={jql}
+                  onChange={(e) => setJql(e.target.value)}
+                  disabled={inputMode !== "jql"}
+                />
+                <p className="small">
+                  Example: project=&quot;High Performance Computing&quot; and createdDate &gt;= &quot;2026-02-10&quot;
+                  and createdDate &lt;= &quot;2026-02-11&quot;
+                </p>
+              </div>
+              <div className="field">
+                <label htmlFor="gn-resolution-mode">Ticket resolution filter</label>
+                <select
+                  id="gn-resolution-mode"
+                  value={resolutionMode}
+                  onChange={(e) => setResolutionMode(e.target.value as ResolutionMode)}
+                  disabled={inputMode !== "jql"}
+                >
+                  <option value="all">All (resolved + unresolved)</option>
+                  <option value="unresolved-only">Unresolved only</option>
+                  <option value="resolved-only">Resolved only</option>
+                </select>
+              </div>
+              <div className="field">
+                <label htmlFor="gn-ticket-files">Enter ticket list files</label>
+                <input
+                  id="gn-ticket-files"
+                  placeholder="scripts/analysis/ui-runs/templates/tickets-template.txt"
+                  value={ticketsFile}
+                  onChange={(e) => setTicketsFile(e.target.value)}
+                  disabled={inputMode !== "files"}
+                />
+                <p className="small">
+                  Template directory: <code>scripts/analysis/ui-runs/templates/</code>. One ticket
+                  per line in file (example: <code>HPC-101</code> or <code>DO-202</code>).
+                </p>
+              </div>
+              <div className="field">
+                <label htmlFor="gn-ticket-list">Enter list of ticket IDs</label>
+                <textarea
+                  id="gn-ticket-list"
+                  rows={4}
+                  placeholder="HPC-110621,HPC-110615"
+                  value={ticketsText}
+                  onChange={(e) => setTicketsText(e.target.value)}
+                  disabled={inputMode !== "tickets"}
+                />
+                <p className="small">
+                  You can paste comma-separated tickets, e.g. <code>HPC-110621,HPC-110615</code>.
+                </p>
               </div>
               <div>
                 <button className="primary" onClick={handleOk} disabled={isRunning}>
@@ -4143,14 +4449,18 @@ export default function HomePage() {
                 {isRunning
                   ? workflow === "categorize"
                     ? "Live local pipeline run (in progress)"
-                    : workflow === "train-stc"
-                      ? "Live training pipeline run (in progress)"
-                      : "Live local add-rule run (in progress)"
+                    : workflow === "get-normalize"
+                      ? "Live get & normalize pipeline run (in progress)"
+                      : workflow === "train-stc"
+                        ? "Live training pipeline run (in progress)"
+                        : "Live local add-rule run (in progress)"
                   : workflow === "categorize"
                     ? "Live local pipeline run"
-                    : workflow === "train-stc"
-                      ? "Live training pipeline run"
-                      : "Live local add-rule run"}
+                    : workflow === "get-normalize"
+                      ? "Live get & normalize pipeline run"
+                      : workflow === "train-stc"
+                        ? "Live training pipeline run"
+                        : "Live local add-rule run"}
               </span>
               {isRunning && (
                 <p className={`small heartbeat-row run-state-${runState}`}>
@@ -4167,7 +4477,15 @@ export default function HomePage() {
                   `rule_engine_categorize.py` → `create_summary.py`
                 </p>
               )}
+              {workflow === "get-normalize" && (
+                <p className="small">
+                  Pipeline: `get_tickets.py` → `normalize_tickets.py`
+                </p>
+              )}
               {workflow === "categorize" && inputMode === "jql" && (
+                <p className="small">Resolution filter used: {resolutionMode}</p>
+              )}
+              {workflow === "get-normalize" && inputMode === "jql" && (
                 <p className="small">Resolution filter used: {resolutionMode}</p>
               )}
               {workflow === "categorize" && (
@@ -4179,6 +4497,21 @@ export default function HomePage() {
                         <div key={step} className={`pipeline-step step-${pipelineStatus[idx]}`}>
                           <p className="pipeline-name">{step}</p>
                           <p className="pipeline-state">{pipelineStatus[idx]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              )}
+              {workflow === "get-normalize" && (
+                <article className="card">
+                  <h2>Pipeline Stages</h2>
+                  <div className="pipeline-scroll">
+                    <div className="pipeline-grid">
+                      {GET_NORMALIZE_STEPS.map((step, idx) => (
+                        <div key={step} className={`pipeline-step step-${getNormPipelineStatus[idx]}`}>
+                          <p className="pipeline-name">{step}</p>
+                          <p className="pipeline-state">{getNormPipelineStatus[idx]}</p>
                         </div>
                       ))}
                     </div>
@@ -4268,6 +4601,193 @@ export default function HomePage() {
                         "tickets-summary.csv"
                       )}
                     </p>
+                  </article>
+                </div>
+              ) : workflow === "get-normalize" ? (
+                <div className="cards">
+                  <article className="card">
+                    <h2>Output</h2>
+                    {resultPaths.ingestDir && (
+                      <p className="small">
+                        Tickets JSON: <code>{resultPaths.ingestDir}</code>{" "}
+                        <button
+                          className="small"
+                          onClick={() => copyText("Ingest path", resultPaths.ingestDir || "")}
+                        >
+                          Copy
+                        </button>
+                      </p>
+                    )}
+                    {resultPaths.normalizedDir && (
+                      <p className="small">
+                        Normalized: <code>{resultPaths.normalizedDir}</code>{" "}
+                        <button
+                          className="small"
+                          onClick={() => copyText("Normalized path", resultPaths.normalizedDir || "")}
+                        >
+                          Copy
+                        </button>
+                      </p>
+                    )}
+                    {!resultPaths.ingestDir && !resultPaths.normalizedDir && (
+                      <p className="small">No output paths returned.</p>
+                    )}
+                    {copyStatus && <p className="small">{copyStatus}</p>}
+                  </article>
+                  <article className="card ticket-browser-card">
+                    <div className="ticket-browser-header">
+                      <h2>Browse Tickets</h2>
+                      <div className="ticket-browser-controls">
+                        <select
+                          value={gnBrowseSource}
+                          onChange={(e) => {
+                            const src = e.target.value as "ingest" | "normalized";
+                            setGnBrowseSource(src);
+                            setGnTicketDetail(null);
+                            setGnTicketDetailError("");
+                            const dir = src === "ingest" ? resultPaths.ingestDir : resultPaths.normalizedDir;
+                            if (dir) void loadGnTicketList(dir);
+                          }}
+                          aria-label="Ticket source"
+                        >
+                          <option value="ingest">Ingest (raw JSON)</option>
+                          <option value="normalized">Normalized</option>
+                        </select>
+                        <button
+                          type="button"
+                          onClick={() => setGnTicketListExpanded((prev) => !prev)}
+                          disabled={gnTicketList.length === 0}
+                        >
+                          {gnTicketListExpanded ? "Compact list" : "Expand list"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const dir = gnBrowseSource === "ingest" ? resultPaths.ingestDir : resultPaths.normalizedDir;
+                            if (dir) void loadGnTicketList(dir);
+                          }}
+                          disabled={gnTicketListLoading}
+                        >
+                          {gnTicketListLoading ? "Refreshing..." : "Refresh list"}
+                        </button>
+                      </div>
+                    </div>
+                    <p className="small">
+                      Browse tickets from the {gnBrowseSource === "ingest" ? "ingest" : "normalized"} output directory.
+                    </p>
+                    <div className="field">
+                      <label htmlFor="gn-ticket-filter">Filter loaded tickets</label>
+                      <input
+                        id="gn-ticket-filter"
+                        placeholder="HPC-123 or summary text"
+                        value={gnTicketFilter}
+                        onChange={(e) => setGnTicketFilter(e.target.value)}
+                        disabled={gnTicketList.length === 0}
+                      />
+                    </div>
+                    {gnTicketListError && (
+                      <p className="small" role="alert">{gnTicketListError}</p>
+                    )}
+                    {!gnTicketListError && (
+                      <p className="small">
+                        {gnTicketListLoading
+                          ? "Loading tickets..."
+                          : `${filteredGnTicketList.length} ticket(s) loaded.`}
+                      </p>
+                    )}
+                    {filteredGnTicketList.length === 0 && !gnTicketListLoading ? (
+                      <p className="small">
+                        {gnTicketList.length === 0
+                          ? "No tickets found."
+                          : "No tickets match the current filter."}
+                      </p>
+                    ) : (
+                      <ul
+                        className={`ticket-picker-list ${gnTicketListExpanded ? "is-expanded" : ""}`}
+                        aria-label="Get-normalize ticket list"
+                      >
+                        {visibleGnTickets.map((ticket) => (
+                          <li
+                            key={`${ticket.key}-${ticket.sourcePath}`}
+                            className={`ticket-picker-item ${
+                              gnTicketDetail?.ticketKey === ticket.key ? "is-selected" : ""
+                            }`}
+                          >
+                            <button
+                              type="button"
+                              className="ticket-pick-btn"
+                              onClick={() => {
+                                const dir = gnBrowseSource === "ingest" ? resultPaths.ingestDir : resultPaths.normalizedDir;
+                                if (dir) void loadGnTicketDetail(ticket.key, dir);
+                              }}
+                            >
+                              {ticket.key}
+                            </button>
+                            <p className="ticket-summary">{ticket.summary || "(no summary)"}</p>
+                            <p className="small ticket-meta">
+                              Status: {ticket.status || "n/a"} | Resolution: {ticket.resolution || "n/a"}
+                            </p>
+                            <a
+                              className="link small"
+                              href={`/api/open-file?path=${encodeURIComponent(ticket.detailPath)}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Open JSON
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {filteredGnTicketList.length > visibleGnTickets.length && (
+                      <p className="small">
+                        {gnTicketListExpanded
+                          ? `Showing first ${visibleGnTickets.length} results. Keep filtering to narrow the list.`
+                          : "Showing 1 ticket (compact view). Click Expand list to see more."}
+                      </p>
+                    )}
+                    <div className="ticket-detail-view">
+                      <h3>Selected Ticket Details (Read-only)</h3>
+                      {gnTicketDetailLoading ? (
+                        <p className="small">Loading ticket details...</p>
+                      ) : gnTicketDetailError ? (
+                        <p className="small" role="alert">{gnTicketDetailError}</p>
+                      ) : gnTicketDetail ? (
+                        <>
+                          <div className="inline-actions">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                copyText(
+                                  "Ticket details",
+                                  JSON.stringify(gnTicketDetail.payload, null, 2),
+                                  setGnTicketDetailCopyStatus
+                                )
+                              }
+                            >
+                              Copy details
+                            </button>
+                          </div>
+                          {gnTicketDetailCopyStatus && <p className="small">{gnTicketDetailCopyStatus}</p>}
+                          <p className="small">
+                            Source:{" "}
+                            <a
+                              className="link"
+                              href={`/api/open-file?path=${encodeURIComponent(gnTicketDetail.detailPath)}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {gnTicketDetail.detailPath}
+                            </a>
+                          </p>
+                          <pre className="ticket-detail-json">
+                            {JSON.stringify(gnTicketDetail.payload, null, 2)}
+                          </pre>
+                        </>
+                      ) : (
+                        <p className="small">Pick a ticket from the list to inspect details here.</p>
+                      )}
+                    </div>
                   </article>
                 </div>
               ) : workflow === "train-stc" ? (

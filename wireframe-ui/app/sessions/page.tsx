@@ -75,6 +75,28 @@ export default function SessionsPage() {
     }
   }, []);
 
+  const deleteSession = useCallback(async (runId: string) => {
+    try {
+      const res = await fetch("/api/sessions/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ runId }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({ error: "Delete failed" }));
+        setError(data.error || `Delete failed: ${res.status}`);
+        return;
+      }
+      setSessions((prev) => prev.filter((s) => s.runId !== runId));
+      if (selectedRunId === runId) {
+        setSelectedRunId(null);
+        setDetail(null);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Delete failed");
+    }
+  }, [selectedRunId]);
+
   function openFile(filePath: string) {
     window.open(`/api/open-file?path=${encodeURIComponent(filePath)}`, "_blank");
   }
@@ -129,8 +151,26 @@ export default function SessionsPage() {
                 <div style={{ fontSize: "0.8rem", color: "#666", marginTop: 4 }}>
                   Phase {s.phase} &middot; {s.ticketCount} tickets &middot; {s.rulesCount} rules
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#999", marginTop: 2 }}>
-                  {new Date(s.createdAt).toLocaleString()}
+                <div style={{ fontSize: "0.75rem", color: "#999", marginTop: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>{new Date(s.createdAt).toLocaleString()}</span>
+                  <button
+                    data-testid="delete-session-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteSession(s.runId);
+                    }}
+                    style={{
+                      background: "#ef4444",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: 4,
+                      padding: "2px 8px",
+                      fontSize: "0.7rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}

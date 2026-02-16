@@ -1442,3 +1442,251 @@ describe("View ML Models workflow", () => {
     expect(screen.getByRole("button", { name: /continue pipeline/i })).toBeInTheDocument();
   });
 });
+
+describe("Stale session banner", () => {
+  const STORAGE_KEY = "stc-session-state";
+
+  const validSession = {
+    schemaVersion: 2,
+    workflow: "train-stc",
+    trainRunId: "train-2026-02-16T04-00-00-000Z",
+    trainPhase: 2,
+    isRunning: false,
+    startedAt: "",
+    elapsedMs: 0,
+    pipelineStatus: [],
+    resultPaths: {},
+    trainStcResult: {},
+    error: "",
+    wasCanceled: false,
+    executedCommandsCount: 0,
+    lastCommandSnippet: "",
+    savedAt: Date.now(),
+  };
+
+  beforeEach(() => {
+    window.history.replaceState(null, "", window.location.pathname);
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ tickets: [] }),
+    }) as unknown as typeof fetch;
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    global.fetch = originalFetch;
+    localStorage.removeItem(STORAGE_KEY);
+    window.history.replaceState(null, "", window.location.pathname);
+  });
+
+  it("renders warning banner when stale session exists in localStorage", async () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...validSession, trainRunId: "train-2026-02-16T04-00-00-000Z" }));
+
+    render(<HomePage />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("stale-session-banner")).toBeInTheDocument();
+    });
+    expect(screen.getByText(/interrupted training session was found/)).toBeInTheDocument();
+    expect(screen.getByText(/train-2026-02-16T04-00-00-000Z/)).toBeInTheDocument();
+  });
+
+  it("clicking Dismiss clears the banner and localStorage", async () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(validSession));
+
+    render(<HomePage />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("stale-session-banner")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /dismiss/i }));
+
+    expect(screen.queryByTestId("stale-session-banner")).not.toBeInTheDocument();
+    expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
+  });
+
+  it("clicking Restore restores session state and clears banner", async () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(validSession));
+
+    render(<HomePage />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("stale-session-banner")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /restore/i }));
+
+    expect(screen.queryByTestId("stale-session-banner")).not.toBeInTheDocument();
+  });
+
+  it("does not show banner when no session in localStorage", () => {
+    localStorage.removeItem(STORAGE_KEY);
+
+    render(<HomePage />);
+
+    expect(screen.queryByTestId("stale-session-banner")).not.toBeInTheDocument();
+  });
+});
+
+describe("Get Tickets & Normalize workflow", () => {
+  beforeEach(() => {
+    window.history.replaceState(null, "", window.location.pathname);
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ tickets: [] })
+    }) as unknown as typeof fetch;
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    global.fetch = originalFetch;
+    window.history.replaceState(null, "", window.location.pathname);
+  });
+
+  it("shows Get Tickets & Normalize in workflow menu and displays input fields", () => {
+    render(<HomePage />);
+
+    const gnLink = screen.getByRole("link", { name: /get tickets & normalize/i });
+    expect(gnLink).toBeInTheDocument();
+
+    fireEvent.click(gnLink);
+    expect(gnLink).toHaveAttribute("aria-current", "page");
+
+    expect(screen.getByLabelText(/enter jql/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/enter ticket list files/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/enter list of ticket ids/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/ticket resolution filter/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^ok$/i })).toBeInTheDocument();
+  });
+
+  it("does NOT show rules engine or ML model fields", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("link", { name: /get tickets & normalize/i }));
+
+    expect(screen.queryByLabelText(/rules engine csv/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/ml model \(optional/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/ml category map/i)).not.toBeInTheDocument();
+  });
+
+  it("posts correct payload to /api/get-normalize", async () => {
+    const mockFetch = jest.fn().mockResolvedValue(
+      mockNdjsonResponse([
+        JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+        JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+        JSON.stringify({ type: "command-start", command: "uv run python3 scripts/normalize_tickets.py" }),
+        JSON.stringify({ type: "command-end", command: "uv run python3 scripts/normalize_tickets.py" }),
+        JSON.stringify({
+          type: "done",
+          runId: "test-run",
+          paths: {
+            ingestDir: "scripts/analysis/ui-runs/test-run/ingest",
+            normalizedDir: "scripts/analysis/ui-runs/test-run/normalized/2026-02-16"
+          }
+        })
+      ])
+    );
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("link", { name: /get tickets & normalize/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "/api/get-normalize",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          inputMode: "jql",
+          jql: 'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"',
+          resolutionMode: "all",
+          ticketsFile: "scripts/analysis/ui-runs/templates/tickets-template.txt",
+          ticketsText: "HPC-110621,HPC-110615"
+        })
+      })
+    );
+
+    expect(await screen.findByText(/live get & normalize pipeline run/i)).toBeInTheDocument();
+  });
+
+  it("shows 2-step pipeline stages in results", async () => {
+    const mockFetch = jest.fn().mockResolvedValue(
+      mockNdjsonResponse([
+        JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+        JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+        JSON.stringify({ type: "command-start", command: "uv run python3 scripts/normalize_tickets.py" }),
+        JSON.stringify({ type: "command-end", command: "uv run python3 scripts/normalize_tickets.py" }),
+        JSON.stringify({
+          type: "done",
+          runId: "test-run",
+          paths: {
+            ingestDir: "scripts/analysis/ui-runs/test-run/ingest",
+            normalizedDir: "scripts/analysis/ui-runs/test-run/normalized/2026-02-16"
+          }
+        })
+      ])
+    );
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("link", { name: /get tickets & normalize/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(await screen.findByRole("heading", { name: /pipeline stages/i })).toBeInTheDocument();
+
+    const pipelineNames = screen.getAllByText(/^get_tickets\.py$|^normalize_tickets\.py$/);
+    expect(pipelineNames).toHaveLength(2);
+
+    expect(await screen.findByRole("heading", { name: /output/i })).toBeInTheDocument();
+  });
+
+  it("shows Browse Tickets card with source dropdown after run completes", async () => {
+    const mockFetch = jest.fn((input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url === "/api/get-normalize") {
+        return Promise.resolve(
+          mockNdjsonResponse([
+            JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+            JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+            JSON.stringify({ type: "command-start", command: "uv run python3 scripts/normalize_tickets.py" }),
+            JSON.stringify({ type: "command-end", command: "uv run python3 scripts/normalize_tickets.py" }),
+            JSON.stringify({
+              type: "done",
+              runId: "test-run",
+              paths: {
+                ingestDir: "scripts/analysis/ui-runs/test-run/ingest",
+                normalizedDir: "scripts/analysis/ui-runs/test-run/normalized/2026-02-16"
+              }
+            })
+          ])
+        );
+      }
+      if (url.startsWith("/api/tickets-json?dir=")) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({ dir: "test", count: 0, tickets: [] })
+        });
+      }
+      return Promise.reject(new Error(`Unexpected fetch: ${url}`));
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("link", { name: /get tickets & normalize/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(await screen.findByRole("heading", { name: /browse tickets/i })).toBeInTheDocument();
+
+    const sourceDropdown = screen.getByLabelText(/ticket source/i);
+    expect(sourceDropdown).toBeInTheDocument();
+
+    const options = sourceDropdown.querySelectorAll("option");
+    expect(options).toHaveLength(2);
+    expect(options[0].textContent).toMatch(/ingest/i);
+    expect(options[1].textContent).toMatch(/normalized/i);
+  });
+});

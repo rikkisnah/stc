@@ -118,4 +118,81 @@ describe("SessionsPage", () => {
       expect(screen.getByText("Network down")).toBeInTheDocument();
     });
   });
+
+  it("shows delete button for each session", async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        sessions: [
+          {
+            runId: "train-2026-02-16T04-08-00-167Z",
+            createdAt: "2026-02-16T04:08:00.167Z",
+            status: "completed",
+            phase: 3,
+            ticketCount: 10,
+            rulesCount: 25,
+            outputDir: "/some/path",
+          },
+          {
+            runId: "train-2026-02-16T05-00-00-000Z",
+            createdAt: "2026-02-16T05:00:00.000Z",
+            status: "paused",
+            phase: 1,
+            ticketCount: 5,
+            rulesCount: 12,
+            outputDir: "/other/path",
+          },
+        ],
+      }),
+    });
+
+    render(<SessionsPage />);
+    await waitFor(() => {
+      expect(screen.getAllByTestId("delete-session-btn")).toHaveLength(2);
+    });
+  });
+
+  it("clicking delete calls API and removes the session row", async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        sessions: [
+          {
+            runId: "train-2026-02-16T04-08-00-167Z",
+            createdAt: "2026-02-16T04:08:00.167Z",
+            status: "completed",
+            phase: 3,
+            ticketCount: 10,
+            rulesCount: 25,
+            outputDir: "/some/path",
+          },
+        ],
+      }),
+    });
+
+    render(<SessionsPage />);
+    await waitFor(() => {
+      expect(screen.getAllByTestId("session-item")).toHaveLength(1);
+    });
+
+    // Mock the delete API response
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ deleted: true, runId: "train-2026-02-16T04-08-00-167Z" }),
+    });
+
+    fireEvent.click(screen.getByTestId("delete-session-btn"));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("session-item")).not.toBeInTheDocument();
+    });
+
+    // Verify the delete API was called
+    const calls = (global.fetch as jest.Mock).mock.calls;
+    const deleteCall = calls.find(
+      (c: unknown[]) => typeof c[0] === "string" && c[0].includes("/api/sessions/delete")
+    );
+    expect(deleteCall).toBeDefined();
+    expect(JSON.parse(deleteCall[1].body)).toEqual({ runId: "train-2026-02-16T04-08-00-167Z" });
+  });
 });
