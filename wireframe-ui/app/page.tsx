@@ -3,6 +3,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { loadSessionState, clearSessionState, isSessionStale, type SessionState } from "../lib/session-persistence";
+import { useSessionPersistence } from "../lib/hooks/useSessionPersistence";
 
 type Stage = "landing" | "input" | "results";
 type Workflow =
@@ -399,6 +401,14 @@ export default function HomePage() {
     setWorkflowState(initial);
     if (window.location.hash) setStage("input");
     const onHashChange = () => {
+      if (abortRef.current) {
+        const leave = window.confirm("A training run is in progress. Leaving will cancel it. Continue?");
+        if (!leave) {
+          window.history.replaceState(null, "", `#train-stc`);
+          return;
+        }
+        abortRef.current.abort();
+      }
       setWorkflowState(workflowFromHash());
       setStage("input");
     };
@@ -409,6 +419,68 @@ export default function HomePage() {
   useEffect(() => {
     setRenderedAt(new Date().toLocaleString());
   }, []);
+
+  // --- Session restore on mount ---
+  useEffect(() => {
+    const saved = loadSessionState();
+    if (!saved || isSessionStale(saved)) {
+      if (saved) clearSessionState();
+      return;
+    }
+    if (!saved.isRunning && !saved.trainRunId) return;
+    const shouldRestore = window.confirm(
+      `An interrupted training session was found (run: ${saved.trainRunId}, phase ${saved.trainPhase}). Restore the session state?`
+    );
+    if (!shouldRestore) {
+      clearSessionState();
+      return;
+    }
+    setWorkflowState("train-stc");
+    setStage("results");
+    setTrainRunId(saved.trainRunId);
+    setTrainPhase(saved.trainPhase);
+    setStartedAt(saved.startedAt);
+    setElapsedMs(saved.elapsedMs);
+    setTrainStcPipelineStatus(saved.pipelineStatus as PipelineStepStatus[]);
+    setResultPaths(saved.resultPaths);
+    setTrainStcResult(saved.trainStcResult);
+    setError(saved.error);
+    setWasCanceled(saved.wasCanceled);
+    if (saved.executedCommandsCount > 0 && saved.lastCommandSnippet) {
+      setExecutedCommands([`... ${saved.executedCommandsCount} commands (restored). Last: ${saved.lastCommandSnippet}`]);
+    }
+  }, []);
+
+  // --- Auto-save session state for train-stc ---
+  useSessionPersistence(useCallback((): SessionState | null => {
+    if (workflow !== "train-stc" || (!isRunning && !trainRunId)) return null;
+    return {
+      schemaVersion: 1,
+      workflow: "train-stc",
+      trainRunId,
+      trainPhase,
+      isRunning,
+      startedAt,
+      elapsedMs,
+      pipelineStatus: trainStcPipelineStatus,
+      resultPaths,
+      trainStcResult,
+      error,
+      wasCanceled,
+      executedCommandsCount: executedCommands.length,
+      lastCommandSnippet: executedCommands.length > 0 ? executedCommands[executedCommands.length - 1].slice(0, 200) : "",
+      savedAt: Date.now(),
+    };
+  }, [workflow, isRunning, trainRunId, trainPhase, startedAt, elapsedMs, trainStcPipelineStatus, resultPaths, trainStcResult, error, wasCanceled, executedCommands]));
+
+  // --- Warn before leaving during active training ---
+  const isTrainingActive = isRunning && workflow === "train-stc";
+  useEffect(() => {
+    if (!isTrainingActive) return;
+    const handler = (e: BeforeUnloadEvent) => { e.preventDefault(); };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [isTrainingActive]);
 
   useEffect(() => {
     if (!isRunning || !startedAt) {
@@ -1308,6 +1380,7 @@ export default function HomePage() {
               if (workflow === "train-stc") {
                 setTrainStcPipelineStatus(TRAIN_PIPELINE_STEPS.map(() => "done"));
                 setTrainStcResult((prev) => ({ ...prev, ...event.result }));
+                clearSessionState();
               }
               setSummaryRows(event.summaryRows || []);
               setResultPaths(event.paths || {});
@@ -1579,6 +1652,7 @@ export default function HomePage() {
             } else if (event.type === "done") {
               setTrainStcPipelineStatus(TRAIN_PIPELINE_STEPS.map(() => "done"));
               setTrainStcResult((prev) => ({ ...prev, ...event.result }));
+              clearSessionState();
             } else if (event.type === "canceled") {
               setWasCanceled(true);
               setError("Run canceled.");
@@ -2010,7 +2084,14 @@ export default function HomePage() {
           <h1 className="title">
             <button
               className="home-link"
-              onClick={() => setStage("landing")}
+              onClick={() => {
+                if (isRunning && workflow === "train-stc") {
+                  const leave = window.confirm("A training run is in progress. Leaving will cancel it. Continue?");
+                  if (!leave) return;
+                  abortRef.current?.abort();
+                }
+                setStage("landing");
+              }}
               aria-label="Go to home"
             >
               Smart Tickets&apos; Classifier (STC)
@@ -2037,8 +2118,16 @@ export default function HomePage() {
                 aria-label={label}
                 aria-current={workflow === wf ? "page" : undefined}
                 onClick={(e) => {
-                  if (isRunning) { e.preventDefault(); return; }
                   e.preventDefault();
+                  if (isRunning) {
+                    if (workflow === "train-stc") {
+                      const leave = window.confirm("A training run is in progress. Leaving will cancel it. Continue?");
+                      if (!leave) return;
+                      abortRef.current?.abort();
+                    } else {
+                      return;
+                    }
+                  }
                   setWorkflow(wf);
                   setStage("input");
                 }}
@@ -2056,12 +2145,17 @@ export default function HomePage() {
 
         <div className="content">
           {stage === "landing" && (
-            <p className="small">
-              Click <strong>Categorize tickets</strong>, <strong>Add Rule for a Ticket</strong>,{" "}
-              <strong>Tickets in Normalized root</strong>, <strong>View Categorized Tickets</strong>,{" "}
-              <strong>View Rules Engines</strong>, <strong>Promote to Golden</strong>,{" "}
-              or <strong>Train STC model</strong> to preview the next wireframe step.
-            </p>
+            <>
+              <p className="small">
+                Click <strong>Categorize tickets</strong>, <strong>Add Rule for a Ticket</strong>,{" "}
+                <strong>Tickets in Normalized root</strong>, <strong>View Categorized Tickets</strong>,{" "}
+                <strong>View Rules Engines</strong>, <strong>Promote to Golden</strong>,{" "}
+                or <strong>Train STC model</strong> to preview the next wireframe step.
+              </p>
+              <p style={{ marginTop: "1rem" }}>
+                <a href="/sessions" style={{ color: "#3b82f6" }}>View Past Training Sessions &rarr;</a>
+              </p>
+            </>
           )}
 
           {stage === "input" && workflow === "categorize" && (

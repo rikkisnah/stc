@@ -75,7 +75,7 @@ ui-e2e-setup:
 	cd wireframe-ui && npx playwright install chromium
 
 ui-quick:
-	cd wireframe-ui && npm test -- --runTestsByPath __tests__/page.test.tsx
+	cd wireframe-ui && npm test -- --runTestsByPath __tests__/page.test.tsx __tests__/session-persistence.test.tsx __tests__/sessions-page.test.tsx
 	cd wireframe-ui && npx tsc --noEmit
 
 ui-e2e: ui-e2e-setup

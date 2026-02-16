@@ -4,9 +4,10 @@ import importlib
 import json
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 
 # Import hyphenated module
 get_tickets = importlib.import_module("get_tickets")
@@ -20,6 +21,7 @@ parse_ticket_key = get_tickets.parse_ticket_key
 load_jira_token = get_tickets.load_jira_token
 load_tickets_file = get_tickets.load_tickets_file
 fetch_tickets_from_file = get_tickets.fetch_tickets_from_file
+_request_json = get_tickets._request_json
 
 
 
@@ -810,3 +812,80 @@ class TestMainTicketsFile:
 
         get_tickets.main(["-f", str(tickets_file), "-y"])
         assert captured["force"] is True
+
+
+# --- _request_json retry logic ---
+
+class TestRequestJsonRetry:
+    def test_timeout_on_all_attempts_exits(self, monkeypatch, capsys):
+        """Verify that repeated timeouts cause sys.exit(1)"""
+        def mock_get_timeout(*args, **kwargs):
+            raise requests.Timeout("Connection timeout")
+
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get_timeout)
+
+        with pytest.raises(SystemExit) as exc_info:
+            _request_json("http://example.com", context="Test timeout")
+
+        assert exc_info.value.code == 1
+        out = capsys.readouterr().err
+        assert "timed out" in out
+        assert "failed after" in out
+
+    def test_request_exception_on_all_attempts_exits(self, monkeypatch, capsys):
+        """Verify that repeated request exceptions cause sys.exit(1)"""
+        def mock_get_failure(*args, **kwargs):
+            raise requests.ConnectionError("Network error")
+
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get_failure)
+
+        with pytest.raises(SystemExit) as exc_info:
+            _request_json("http://example.com", context="Test failure")
+
+        assert exc_info.value.code == 1
+        out = capsys.readouterr().err
+        assert "failed" in out
+        assert "Network error" in out
+
+    def test_succeeds_after_timeout(self, monkeypatch, capsys):
+        """Verify retry logic: first timeout, then success"""
+        responses = [
+            requests.Timeout("Connection timeout"),
+            MagicMock(json=MagicMock(return_value={"success": True}))
+        ]
+
+        call_count = [0]
+        def mock_get(*args, **kwargs):
+            resp = responses[call_count[0]]
+            call_count[0] += 1
+            if isinstance(resp, Exception):
+                raise resp
+            resp.raise_for_status = MagicMock()
+            return resp
+
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get)
+
+        result = _request_json("http://example.com", context="Test retry success")
+
+        assert result == {"success": True}
+        out = capsys.readouterr().err
+        assert "timed out" in out
+        assert "attempt 1/3" in out  # REQUEST_RETRY_COUNT is 3
+
+    def test_http_error_treated_as_request_exception(self, monkeypatch, capsys):
+        """Verify that HTTP errors (raise_for_status) are caught"""
+        mock_resp = MagicMock()
+        mock_resp.raise_for_status.side_effect = requests.HTTPError("400 Bad Request")
+
+        def mock_get(*args, **kwargs):
+            return mock_resp
+
+        monkeypatch.setattr(get_tickets.requests, "get", mock_get)
+
+        with pytest.raises(SystemExit) as exc_info:
+            _request_json("http://example.com", context="Test HTTP error")
+
+        assert exc_info.value.code == 1
+        out = capsys.readouterr().err
+        assert "failed" in out
+        assert "400 Bad Request" in out

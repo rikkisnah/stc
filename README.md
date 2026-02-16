@@ -4,14 +4,14 @@ STC ((S)mart (T)riager (C)lassifier) predicts two ticket outputs for HPC and DO 
 - `Category of Issue`
 - `Category`
 
-The default workflow is rule-based categorization plus Codex-assisted rule updates from audited results.
+The default workflow is rule-based categorization plus LLM-assisted rule updates from audited results.
 
 ## Core Principles
 
 - Keep all runtime artifacts under `scripts/`.
 - Treat `scripts/trained-data/golden-rules-engine/rule-engine.csv` as production/audited data.
 - Human audit is required before promoting new rules to golden.
-- Backward-compatible mode is fully supported: rules + Codex only (no ML flags required).
+- Backward-compatible mode is fully supported: rules + LLM updates only (no ML flags required).
 
 # Repository Layout
 
@@ -20,7 +20,7 @@ The default workflow is rule-based categorization plus Codex-assisted rule updat
 | `scripts/get_tickets.py` | Pull Jira tickets into JSON files |
 | `scripts/normalize_tickets.py` | Normalize raw Jira JSON |
 | `scripts/rule_engine_categorize.py` | Categorize tickets using rules (optional ML fallback) |
-| `scripts/run_training.py` | Generate/update rules from audited rows (Codex by default) |
+| `scripts/run_training.py` | Generate/update rules from audited rows (LLM-assisted) |
 | `scripts/create_summary.py` | Produce category summary CSV + JQL |
 | `scripts/tickets-json/` | Raw ticket JSON output |
 | `scripts/normalized-tickets/<date>/` | Normalized ticket JSON output |
@@ -36,7 +36,7 @@ The default workflow is rule-based categorization plus Codex-assisted rule updat
 | `scripts/trained-data/ml-model/` | Trained ML classifier artifacts |
 | `wireframe-ui/` | Local Next.js wireframe UI |
 | `docs/` | Design docs, runbooks, and reference materials |
-| `docs/AI-Assisted-Ticket-Classification-DDD.md` | Detailed design document |
+| `docs/AI-Assisted-Ticket-Classification-design-doc.md` | Detailed design document |
 | `docs/archives/` | Archived/historical documentation |
 | `SKILLS/` | TDD role definitions (architect, tester, coder, reviewer) |
 
@@ -51,7 +51,10 @@ Example `env.json`:
 
 ```json
 {
-  "jira_token": "YOUR_JIRA_TOKEN"
+  "JIRA_URL": "https://your-jira-instance.example.com",
+  "JIRA_USER": "your-user",
+  "JIRA_TOKEN": "YOUR_JIRA_TOKEN",
+  "JIRA_DEFAULT_PROJECT": "PROJECT_KEY"
 }
 ```
 
@@ -63,7 +66,7 @@ From repo root:
 uv sync
 ```
 
-# Backward-Compatible Backend Runbook (Rules + Codex Only)
+# Backward-Compatible Backend Runbook (Rules + LLM Only)
 
 This is the default non-ML flow.
 
@@ -127,14 +130,14 @@ Audit values:
 - pre-audit pipeline values: `pending-review`, `needs-review`
 - post-audit human values: `correct`, `incorrect`
 
-## Step 5: Run Training (Codex Only)
+## Step 5: Run Training (LLM-Assisted)
 
 ```bash
 uv run python scripts/run_training.py \
   --tickets-categorized scripts/analysis/tickets-categorized.csv \
   --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
   --prompt-file prompts/training.md \
-  --engine codex \
+  --engine <provider> \
   --codex-timeout 180 \
   --codex-batch-size 2 \
   -y
@@ -175,7 +178,7 @@ This promotion is intentionally manual.
 
 `scripts/run_training_loop.sh` runs fetch -> normalize -> categorize, then prints the follow-up `run_training.py` command.
 
-Codex-only example:
+Provider example:
 
 ```bash
 scripts/run_training_loop.sh \
@@ -183,7 +186,7 @@ scripts/run_training_loop.sh \
   --end-date 2026-02-12 \
   --jql-file scripts/jql/hpc_default.jql \
   --rule-engine scripts/trained-data/rule-engine.local.csv \
-  --engine codex \
+  --engine <provider> \
   --yes
 ```
 
@@ -217,20 +220,20 @@ uv run python scripts/rule_engine_categorize.py \
   -y
 ```
 
-## Hybrid Training (Codex + ML)
+## Hybrid Training (LLM + ML)
 
 ```bash
 uv run python scripts/run_training.py \
   --tickets-categorized scripts/analysis/tickets-categorized.csv \
   --rules-engine-file scripts/trained-data/rule-engine.local.csv \
   --prompt-file prompts/training.md \
-  --engine codex+ml \
+  --engine <provider>+ml \
   --ml-model scripts/trained-data/ml-model/classifier.joblib \
   --ml-category-map scripts/trained-data/ml-model/category_map.json \
   -y
 ```
 
-If you want legacy behavior, do not pass ML flags and keep `--engine codex`.
+If you want legacy behavior, do not pass ML flags and keep `--engine <provider>`.
 
 # Wireframe UI
 
@@ -347,9 +350,10 @@ Notable targets:
 
 | Document | Description |
 |----------|-------------|
-| [Detailed Design (DDD)](docs/AI-Assisted-Ticket-Classification-DDD.md) | Comprehensive detailed design document |
+| [Installation Guide (Mac-first)](docs/AI-Assisted-Ticket-Classification-Installation-Guide.md) | Pedantic install and first-UX-run guide |
+| [Detailed Design](docs/AI-Assisted-Ticket-Classification-design-doc.md) | Comprehensive detailed design document |
 | [HLD (prior art)](docs/pdfs_docs/AI-Assisted-Ticket-Classification-HLD.docx) | Original high-level design |
 | [Training Runbook](docs/training-runbook.md) | Step-by-step training workflow |
 | [Human Audit Playbook](docs/human-audit-playbook.md) | Row-level audit procedures |
 | [Data Schemas](templates/data-schemes.md) | CSV schema definitions |
-| [Installing Codex](docs/installing-codex.md) | Codex CLI setup (Oracle internal) |
+| [Optional LLM CLI setup](docs/installing-codex.md) | Optional LLM CLI setup (Codex/Oracle internal context) |

@@ -18,7 +18,7 @@
 | **Date** | February 16, 2026 |
 | **System** | Smart Triager Classifier (STC) |
 | **Classification** | Internal |
-| **References** | `docs/pdfs_docs/AI-Assisted-Ticket-Classification-HLD.docx`, `docs/training-runbook.md`, `docs/human-audit-playbook.md` |
+| **References** | `docs/AI-Assisted-Ticket-Classification-Installation-Guide.md`, `docs/pdfs_docs/AI-Assisted-Ticket-Classification-HLD.docx`, `docs/training-runbook.md`, `docs/human-audit-playbook.md` |
 
 ---
 
