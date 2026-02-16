@@ -846,6 +846,8 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
     fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    // Uncheck skipAudit1 so the audit UI stays visible (default is checked/auto-skip)
+    fireEvent.click(screen.getByLabelText(/skip human audit #1/i));
     // Use act to flush async state updates from the streaming NDJSON handler
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
@@ -854,7 +856,7 @@ describe("STC wireframe flow", () => {
     });
 
     expect(screen.getByText(/review and optionally edit/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /continue pipeline/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /complete training/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /cancel training/i })).toBeInTheDocument();
   });
 
@@ -899,6 +901,10 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
     fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    // Enable ML training so "Continue Pipeline" appears instead of "Complete Training"
+    fireEvent.click(screen.getByLabelText(/enable ml training/i));
+    // Uncheck skipAudit1 so the audit UI stays visible
+    fireEvent.click(screen.getByLabelText(/skip human audit #1/i));
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
       await new Promise((r) => setTimeout(r, 100));
@@ -946,6 +952,8 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
     fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    // Uncheck skipAudit1 so the audit UI stays visible
+    fireEvent.click(screen.getByLabelText(/skip human audit #1/i));
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
       await new Promise((r) => setTimeout(r, 100));
@@ -990,6 +998,8 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
     fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    // Uncheck skipAudit1 so the audit UI stays visible
+    fireEvent.click(screen.getByLabelText(/skip human audit #1/i));
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
       await new Promise((r) => setTimeout(r, 100));
@@ -1299,5 +1309,136 @@ describe("View ML Models workflow", () => {
     await waitFor(() => {
       expect(mockFetch.mock.calls.length).toBeGreaterThan(callsAfterLoad);
     });
+  });
+
+  // --- ML opt-in tests ---
+
+  it("ML training and rule generation checkboxes default to unchecked", () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    const mlTraining = screen.getByLabelText(/enable ml training/i) as HTMLInputElement;
+    const mlRuleGen = screen.getByLabelText(/enable ml rule generation/i) as HTMLInputElement;
+    expect(mlTraining.checked).toBe(false);
+    expect(mlRuleGen.checked).toBe(false);
+  });
+
+  it("Phase 3 checkbox is disabled when Phase 2 is unchecked", () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    const mlRuleGen = screen.getByLabelText(/enable ml rule generation/i) as HTMLInputElement;
+    expect(mlRuleGen.disabled).toBe(true);
+  });
+
+  it("Enabling Phase 2 enables Phase 3 checkbox", () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    fireEvent.click(screen.getByLabelText(/enable ml training/i));
+    const mlRuleGen = screen.getByLabelText(/enable ml rule generation/i) as HTMLInputElement;
+    expect(mlRuleGen.disabled).toBe(false);
+  });
+
+  it("Unchecking Phase 2 cascades to uncheck Phase 3", () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    // Enable both
+    fireEvent.click(screen.getByLabelText(/enable ml training/i));
+    fireEvent.click(screen.getByLabelText(/enable ml rule generation/i));
+    const mlRuleGen = screen.getByLabelText(/enable ml rule generation/i) as HTMLInputElement;
+    expect(mlRuleGen.checked).toBe(true);
+    // Uncheck Phase 2 — Phase 3 should cascade off
+    fireEvent.click(screen.getByLabelText(/enable ml training/i));
+    expect(mlRuleGen.checked).toBe(false);
+    expect(mlRuleGen.disabled).toBe(true);
+  });
+
+  it("Skip Audit #2 only visible when ML training is enabled", () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    expect(screen.queryByLabelText(/skip human audit #2/i)).toBeNull();
+    fireEvent.click(screen.getByLabelText(/enable ml training/i));
+    expect(screen.getByLabelText(/skip human audit #2/i)).toBeInTheDocument();
+  });
+
+  it("rules-only pipeline: does not POST phase 2 when ML is disabled", async () => {
+    const phase1Lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 1,
+        runId: "train-rules-only",
+        paths: { ticketsCsv: "/tmp/tickets-categorized.csv" }
+      })
+    ];
+
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url === "/api/train-stc") {
+        return Promise.resolve(mockNdjsonResponse(phase1Lines));
+      }
+      if (typeof url === "string" && url.includes("/api/open-file")) {
+        return Promise.resolve({ ok: true, text: async () => "H1,H2\nA,B" });
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    // Uncheck skipAudit1 so the audit UI stays visible
+    fireEvent.click(screen.getByLabelText(/skip human audit #1/i));
+    // ML is off by default — run the pipeline
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    // Click "Complete Training" (not "Continue Pipeline")
+    expect(screen.getByRole("button", { name: /complete training/i })).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /complete training/i }));
+      await new Promise((r) => setTimeout(r, 50));
+    });
+
+    // Verify only 1 POST to /api/train-stc (phase 1 only, no phase 2)
+    const trainStcCalls = mockFetch.mock.calls.filter(
+      ([url]: [string]) => url === "/api/train-stc"
+    );
+    expect(trainStcCalls).toHaveLength(1);
+  });
+
+  it("shows Continue Pipeline when ML is enabled at phase 1 audit", async () => {
+    const phase1Lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 1,
+        runId: "train-ml-enabled",
+        paths: { ticketsCsv: "/tmp/tickets-categorized.csv" }
+      })
+    ];
+
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url === "/api/train-stc") {
+        return Promise.resolve(mockNdjsonResponse(phase1Lines));
+      }
+      if (typeof url === "string" && url.includes("/api/open-file")) {
+        return Promise.resolve({ ok: true, text: async () => "H1,H2\nA,B" });
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    fireEvent.click(screen.getByLabelText(/enable ml training/i));
+    // Uncheck skipAudit1 so the audit UI stays visible
+    fireEvent.click(screen.getByLabelText(/skip human audit #1/i));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(screen.getByRole("button", { name: /continue pipeline/i })).toBeInTheDocument();
   });
 });

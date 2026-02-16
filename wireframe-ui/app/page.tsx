@@ -282,6 +282,8 @@ export default function HomePage() {
   const [trainPaused, setTrainPaused] = useState(false);
   const [skipAudit1, setSkipAudit1] = useState(true);
   const [skipAudit2, setSkipAudit2] = useState(true);
+  const [enableMlTraining, setEnableMlTraining] = useState(false);
+  const [enableMlRuleGen, setEnableMlRuleGen] = useState(false);
   const [trainAuditCsvPath, setTrainAuditCsvPath] = useState("");
   const [trainAuditRows, setTrainAuditRows] = useState<string[][]>([]);
   const [trainAuditOriginal, setTrainAuditOriginal] = useState("");
@@ -499,13 +501,15 @@ export default function HomePage() {
     if (saved.executedCommandsCount > 0 && saved.lastCommandSnippet) {
       setExecutedCommands([`... ${saved.executedCommandsCount} commands (restored). Last: ${saved.lastCommandSnippet}`]);
     }
+    if (saved.enableMlTraining !== undefined) setEnableMlTraining(saved.enableMlTraining);
+    if (saved.enableMlRuleGen !== undefined) setEnableMlRuleGen(saved.enableMlRuleGen);
   }, []);
 
   // --- Auto-save session state for train-stc ---
   useSessionPersistence(useCallback((): SessionState | null => {
     if (workflow !== "train-stc" || (!isRunning && !trainRunId)) return null;
     return {
-      schemaVersion: 1,
+      schemaVersion: 2,
       workflow: "train-stc",
       trainRunId,
       trainPhase,
@@ -519,9 +523,11 @@ export default function HomePage() {
       wasCanceled,
       executedCommandsCount: executedCommands.length,
       lastCommandSnippet: executedCommands.length > 0 ? executedCommands[executedCommands.length - 1].slice(0, 200) : "",
+      enableMlTraining,
+      enableMlRuleGen,
       savedAt: Date.now(),
     };
-  }, [workflow, isRunning, trainRunId, trainPhase, startedAt, elapsedMs, trainStcPipelineStatus, resultPaths, trainStcResult, error, wasCanceled, executedCommands]));
+  }, [workflow, isRunning, trainRunId, trainPhase, startedAt, elapsedMs, trainStcPipelineStatus, resultPaths, trainStcResult, error, wasCanceled, executedCommands, enableMlTraining, enableMlRuleGen]));
 
   // --- Warn before leaving during active training ---
   const isTrainingActive = isRunning && workflow === "train-stc";
@@ -974,8 +980,11 @@ export default function HomePage() {
     if (!trainPaused) return;
     const shouldSkip =
       (trainPhase === 1 && skipAudit1) || (trainPhase === 2 && skipAudit2);
-    if (shouldSkip) {
+    if (!shouldSkip) return;
+    if (hasNextPhase) {
       handleContinueTraining();
+    } else {
+      handleCompleteTraining();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trainPaused]);
@@ -1804,6 +1813,30 @@ export default function HomePage() {
     }
   }
 
+  function handleCompleteTraining() {
+    const auditIdx = trainPhase === 1 ? 4 : 7;
+    setTrainStcPipelineStatus((prev) =>
+      prev.map((s, i) => (i === auditIdx ? "done" : s))
+    );
+    setTrainPaused(false);
+    setTrainAuditCsvPath("");
+    setTrainAuditRows([]);
+    setTrainAuditOriginal("");
+    setTrainAuditSaving(false);
+    setTrainAuditSaveStatus("");
+    setIsRunning(false);
+    const ended = new Date().toISOString();
+    setFinishedAt(ended);
+    if (startedAt) {
+      setElapsedMs(Math.max(0, Date.parse(ended) - Date.parse(startedAt)));
+    }
+    setTrainStcResult((prev) => ({
+      ...prev,
+      message: prev.message || "Training pipeline completed.",
+    }));
+    clearSessionState();
+  }
+
   function handleCancelTrainAudit() {
     setTrainPaused(false);
     setTrainAuditCsvPath("");
@@ -2134,6 +2167,14 @@ export default function HomePage() {
   }, [trainAuditRows, trainAuditOriginal]);
   const trainAuditHasChanges =
     Boolean(trainAuditCsvPath) && trainAuditCurrentText !== trainAuditOriginal;
+  const visibleTrainSteps = useMemo(() => {
+    return TRAIN_PIPELINE_STEPS.map((name, i) => ({ name, originalIndex: i }))
+      .filter(({ originalIndex: i }) =>
+        i <= 4 || (i <= 7 && enableMlTraining) || (i >= 8 && enableMlRuleGen)
+      );
+  }, [enableMlTraining, enableMlRuleGen]);
+  const hasNextPhase =
+    (trainPhase === 1 && enableMlTraining) || (trainPhase === 2 && enableMlRuleGen);
   const filteredRulesFiles = useMemo(() => {
     const filter = rulesFilter.trim().toUpperCase();
     if (!filter) {
@@ -3753,6 +3794,33 @@ export default function HomePage() {
                 </div>
               </details>
 
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", margin: "0.5rem 0" }}>
+                <label className="small">
+                  <input
+                    type="checkbox"
+                    checked={enableMlTraining}
+                    onChange={(e) => {
+                      setEnableMlTraining(e.target.checked);
+                      if (!e.target.checked) setEnableMlRuleGen(false);
+                    }}
+                    disabled={isRunning}
+                  />{" "}
+                  Enable ML Training (Phase 2)
+                </label>
+                <label className="small">
+                  <input
+                    type="checkbox"
+                    checked={enableMlRuleGen}
+                    onChange={(e) => setEnableMlRuleGen(e.target.checked)}
+                    disabled={isRunning || !enableMlTraining}
+                  />{" "}
+                  Enable ML Rule Generation (Phase 3)
+                </label>
+                <p className="small" style={{ margin: 0, color: "#666" }}>
+                  ML phases are optional. Default: rules-only categorization.
+                </p>
+              </div>
+
               <div style={{ display: "flex", gap: "1rem", margin: "0.5rem 0" }}>
                 <label className="small">
                   <input
@@ -3763,15 +3831,17 @@ export default function HomePage() {
                   />{" "}
                   Skip Human Audit #1
                 </label>
-                <label className="small">
-                  <input
-                    type="checkbox"
-                    checked={skipAudit2}
-                    onChange={(e) => setSkipAudit2(e.target.checked)}
-                    disabled={isRunning}
-                  />{" "}
-                  Skip Human Audit #2
-                </label>
+                {enableMlTraining && (
+                  <label className="small">
+                    <input
+                      type="checkbox"
+                      checked={skipAudit2}
+                      onChange={(e) => setSkipAudit2(e.target.checked)}
+                      disabled={isRunning}
+                    />{" "}
+                    Skip Human Audit #2
+                  </label>
+                )}
               </div>
 
               <div>
@@ -4120,10 +4190,10 @@ export default function HomePage() {
                   <h2>Pipeline Stages</h2>
                   <div className="pipeline-scroll">
                     <div className="pipeline-grid">
-                      {TRAIN_PIPELINE_STEPS.map((step, idx) => (
-                        <div key={step} className={`pipeline-step step-${trainStcPipelineStatus[idx] || "pending"}`}>
-                          <p className="pipeline-name">{step}</p>
-                          <p className="pipeline-state">{trainStcPipelineStatus[idx] || "pending"}</p>
+                      {visibleTrainSteps.map(({ name, originalIndex }) => (
+                        <div key={name} className={`pipeline-step step-${trainStcPipelineStatus[originalIndex] || "pending"}`}>
+                          <p className="pipeline-name">{name}</p>
+                          <p className="pipeline-state">{trainStcPipelineStatus[originalIndex] || "pending"}</p>
                         </div>
                       ))}
                     </div>
@@ -4274,13 +4344,23 @@ export default function HomePage() {
                         )}
                       </div>
                       <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
-                        <button
-                          className="primary"
-                          onClick={handleContinueTraining}
-                          aria-label="Continue Pipeline"
-                        >
-                          Continue Pipeline
-                        </button>
+                        {hasNextPhase ? (
+                          <button
+                            className="primary"
+                            onClick={handleContinueTraining}
+                            aria-label="Continue Pipeline"
+                          >
+                            Continue Pipeline
+                          </button>
+                        ) : (
+                          <button
+                            className="primary"
+                            onClick={handleCompleteTraining}
+                            aria-label="Complete Training"
+                          >
+                            Complete Training
+                          </button>
+                        )}
                         <button onClick={handleCancelTrainAudit} aria-label="Cancel Training">
                           Cancel Training
                         </button>

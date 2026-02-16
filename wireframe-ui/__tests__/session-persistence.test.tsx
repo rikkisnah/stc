@@ -10,7 +10,7 @@ import {
 
 function makeState(overrides: Partial<SessionState> = {}): SessionState {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     workflow: "train-stc",
     trainRunId: "train-2026-02-16T04-08-00-167Z",
     trainPhase: 1,
@@ -43,7 +43,7 @@ describe("session-persistence", () => {
       expect(loaded!.trainRunId).toBe(state.trainRunId);
       expect(loaded!.trainPhase).toBe(1);
       expect(loaded!.isRunning).toBe(true);
-      expect(loaded!.schemaVersion).toBe(1);
+      expect(loaded!.schemaVersion).toBe(2);
     });
 
     it("overwrites previous state on save", () => {

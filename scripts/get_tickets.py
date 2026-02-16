@@ -21,19 +21,7 @@ import requests
 DEFAULT_JIRA_TOKEN = "REDACTED_BITBUCKET_PAT"
 BASE_URL = "https://jira-sd.mc1.oracleiaas.com"
 
-BASE_JQL = """\
-(labels = GPU_V6_E6-IS_MI355X_S.01 OR "Rack Type" = GPU_MI355X_E6_R.01)
-AND status != "Pending Part(s)"
-AND (("Region / Domain" IN (aga.ad1, "AGA5 (AD)")
-      OR "Region Affected" = AGA
-      OR "Canonical AD" = aga.ad1
-      OR Building = aga5)
-     AND ("Rack Type" IN (GPU_MI355X_E6_R.02, GPU_MI355X_E6_R.01)
-          OR labels IN (GPU_V6_E6-IS_MI355X_S.02, GPU_V6_E6-IS_MI355X_S.01, AGA-CPV))
-     AND summary !~ "Master")
-AND project = "DC Ops"
-AND issuetype != "Service Request"
-AND "Component / Item" NOT IN cascadeOption(10046, 10064)"""
+BASE_JQL = 'project="High Performance Computing"'
 
 RESOLVED_FILTER = '\n     AND resolution = Resolved'
 UNRESOLVED_FILTER = '\n     AND resolution = Unresolved'

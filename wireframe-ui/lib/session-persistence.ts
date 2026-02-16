@@ -29,11 +29,13 @@ export type SessionState = {
   wasCanceled: boolean;
   executedCommandsCount: number;
   lastCommandSnippet: string;
+  enableMlTraining?: boolean;
+  enableMlRuleGen?: boolean;
   savedAt: number;
 };
 
 const STORAGE_KEY = "stc-session-state";
-const CURRENT_SCHEMA_VERSION = 1;
+const CURRENT_SCHEMA_VERSION = 2;
 const STALE_THRESHOLD_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export function saveSessionState(state: SessionState): void {
