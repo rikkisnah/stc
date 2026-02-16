@@ -22,16 +22,25 @@ function guessContentType(filePath: string): string {
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const inputPath = url.searchParams.get("path");
+  const asDownload = (url.searchParams.get("download") || "").trim() === "1";
   if (!inputPath) {
     return NextResponse.json({ error: "Missing path query parameter." }, { status: 400 });
   }
 
   const repoRoot = path.resolve(process.cwd(), "..");
-  const allowedRoot = path.resolve(repoRoot, "scripts", "analysis", "ui-runs");
-  const resolvedPath = path.resolve(inputPath);
+  const allowedRoots = [
+    path.resolve(repoRoot, "scripts", "analysis"),
+    path.resolve(repoRoot, "scripts", "trained-data"),
+    path.resolve(repoRoot, "scripts", "tickets-json"),
+    path.resolve(repoRoot, "scripts", "normalized-tickets")
+  ];
+  const resolvedPath = path.resolve(repoRoot, inputPath);
+  const isAllowed = allowedRoots.some(
+    (allowedRoot) => resolvedPath === allowedRoot || resolvedPath.startsWith(allowedRoot + path.sep)
+  );
 
-  if (!resolvedPath.startsWith(allowedRoot + path.sep)) {
-    return NextResponse.json({ error: "Path is outside allowed ui-runs directory." }, { status: 403 });
+  if (!isAllowed) {
+    return NextResponse.json({ error: "Path is outside allowed scripts directories." }, { status: 403 });
   }
 
   try {
@@ -44,7 +53,7 @@ export async function GET(req: Request) {
     return new NextResponse(content, {
       headers: {
         "Content-Type": guessContentType(resolvedPath),
-        "Content-Disposition": `inline; filename="${path.basename(resolvedPath)}"`
+        "Content-Disposition": `${asDownload ? "attachment" : "inline"}; filename="${path.basename(resolvedPath)}"`
       }
     });
   } catch {

@@ -2,9 +2,15 @@
 // Tag: #ai-assisted
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Stage = "landing" | "input" | "results";
+type Workflow =
+  | "categorize"
+  | "add-rule"
+  | "browse-tickets"
+  | "browse-categorized"
+  | "browse-rules";
 type InputMode = "jql" | "files" | "tickets";
 type ResolutionMode = "all" | "unresolved-only" | "resolved-only";
 type PipelineStepStatus = "pending" | "running" | "done" | "failed";
@@ -14,6 +20,29 @@ type SummaryRow = {
   "Count of Tickets": string;
   "JQL Query": string;
 };
+type TicketListItem = {
+  key: string;
+  summary: string;
+  status: string;
+  resolution: string;
+  sourcePath: string;
+  detailPath: string;
+  hasRawTicketFile: boolean;
+};
+type TicketDetailResponse = {
+  ticketKey: string;
+  sourcePath: string;
+  detailPath: string;
+  hasRawTicketFile: boolean;
+  payload: unknown;
+};
+type BrowserFileItem = {
+  path: string;
+  name: string;
+  sizeBytes: number;
+  modifiedAt: string;
+};
+type RulesSource = "trained-data" | "golden";
 
 const PIPELINE_STEPS = [
   "get_tickets.py",
@@ -22,8 +51,26 @@ const PIPELINE_STEPS = [
   "create_summary.py"
 ] as const;
 
+const ADD_RULE_DEFAULTS = {
+  ticketJsonDir: "scripts/tickets-json",
+  normalizedRoot: "scripts/normalized-tickets",
+  rulesEngine: "scripts/trained-data/rule-engine.local.csv",
+  matchFieldDefault: "summary+description",
+  priority: "85",
+  confidence: "1",
+  createdBy: "human-feedback",
+  hitCount: "0"
+};
+const CATEGORIZED_TICKETS_DIR = "scripts/analysis";
+const DEFAULT_CATEGORIZED_FILE = "tickets-categorized.csv";
+const RULES_SOURCE_DIRS: Record<RulesSource, string> = {
+  "trained-data": "scripts/trained-data",
+  golden: "scripts/trained-data/golden-rules-engine"
+};
+
 export default function HomePage() {
   const [stage, setStage] = useState<Stage>("landing");
+  const [workflow, setWorkflow] = useState<Workflow>("categorize");
   const [inputMode, setInputMode] = useState<InputMode>("jql");
   const [jql, setJql] = useState(
     'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"'
@@ -36,6 +83,13 @@ export default function HomePage() {
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState("");
   const [summaryRows, setSummaryRows] = useState<SummaryRow[]>([]);
+  const [addRuleResult, setAddRuleResult] = useState<{
+    ruleId?: string;
+    rulesEngine?: string;
+    ticketJson?: string;
+    normalizedJson?: string;
+    message?: string;
+  }>({});
   const [executedCommands, setExecutedCommands] = useState<string[]>([]);
   const [commandLogs, setCommandLogs] = useState<string[]>([]);
   const [resultPaths, setResultPaths] = useState<{
@@ -52,10 +106,69 @@ export default function HomePage() {
   const [lastLogAtMs, setLastLogAtMs] = useState<number | null>(null);
   const [heartbeatTick, setHeartbeatTick] = useState(0);
   const [renderedAt, setRenderedAt] = useState("-");
-  const [wrapLogs, setWrapLogs] = useState(true);
+  const [wrapLogs, setWrapLogs] = useState(false);
   const [pipelineStatus, setPipelineStatus] = useState<PipelineStepStatus[]>(
     PIPELINE_STEPS.map(() => "pending")
   );
+  const [ticketKey, setTicketKey] = useState("");
+  const [reason, setReason] = useState("");
+  const [failureCategory, setFailureCategory] = useState("");
+  const [category, setCategory] = useState("");
+  const [matchField, setMatchField] = useState("");
+  const [rulePattern, setRulePattern] = useState("");
+  const [ticketJsonDir, setTicketJsonDir] = useState(ADD_RULE_DEFAULTS.ticketJsonDir);
+  const [normalizedRoot, setNormalizedRoot] = useState(ADD_RULE_DEFAULTS.normalizedRoot);
+  const [rulesEngine, setRulesEngine] = useState(ADD_RULE_DEFAULTS.rulesEngine);
+  const [matchFieldDefault, setMatchFieldDefault] = useState(ADD_RULE_DEFAULTS.matchFieldDefault);
+  const [priority, setPriority] = useState(ADD_RULE_DEFAULTS.priority);
+  const [confidence, setConfidence] = useState(ADD_RULE_DEFAULTS.confidence);
+  const [createdBy, setCreatedBy] = useState(ADD_RULE_DEFAULTS.createdBy);
+  const [hitCount, setHitCount] = useState(ADD_RULE_DEFAULTS.hitCount);
+  const [ticketList, setTicketList] = useState<TicketListItem[]>([]);
+  const [ticketListLoading, setTicketListLoading] = useState(false);
+  const [ticketListError, setTicketListError] = useState("");
+  const [ticketListLoadedDir, setTicketListLoadedDir] = useState("");
+  const [ticketListExpanded, setTicketListExpanded] = useState(false);
+  const [ticketFilter, setTicketFilter] = useState("");
+  const [ticketDetail, setTicketDetail] = useState<TicketDetailResponse | null>(null);
+  const [ticketDetailLoading, setTicketDetailLoading] = useState(false);
+  const [ticketDetailError, setTicketDetailError] = useState("");
+  const [ticketDetailCopyStatus, setTicketDetailCopyStatus] = useState("");
+  const [categorizedFiles, setCategorizedFiles] = useState<BrowserFileItem[]>([]);
+  const [categorizedFilesLoading, setCategorizedFilesLoading] = useState(false);
+  const [categorizedFilesError, setCategorizedFilesError] = useState("");
+  const [categorizedDir, setCategorizedDir] = useState(CATEGORIZED_TICKETS_DIR);
+  const [categorizedFileName, setCategorizedFileName] = useState(DEFAULT_CATEGORIZED_FILE);
+  const [categorizedLoadedDir, setCategorizedLoadedDir] = useState("");
+  const [categorizedLoadedFileName, setCategorizedLoadedFileName] = useState("");
+  const [categorizedFilter, setCategorizedFilter] = useState("");
+  const [categorizedSelectedPath, setCategorizedSelectedPath] = useState("");
+  const [categorizedPreview, setCategorizedPreview] = useState("");
+  const [categorizedEditorText, setCategorizedEditorText] = useState("");
+  const [categorizedTableRows, setCategorizedTableRows] = useState<string[][]>([]);
+  const [categorizedTableError, setCategorizedTableError] = useState("");
+  const [categorizedPreviewLoading, setCategorizedPreviewLoading] = useState(false);
+  const [categorizedPreviewError, setCategorizedPreviewError] = useState("");
+  const [categorizedCopyStatus, setCategorizedCopyStatus] = useState("");
+  const [categorizedSaveStatus, setCategorizedSaveStatus] = useState("");
+  const [categorizedSaving, setCategorizedSaving] = useState(false);
+  const [categorizedScrollLeft, setCategorizedScrollLeft] = useState(0);
+  const [categorizedScrollMax, setCategorizedScrollMax] = useState(0);
+  const categorizedGridShellRef = useRef<HTMLDivElement | null>(null);
+  const categorizedGridTopScrollRef = useRef<HTMLDivElement | null>(null);
+  const categorizedGridTopSpacerRef = useRef<HTMLDivElement | null>(null);
+  const categorizedScrollSyncRef = useRef<"top" | "body" | null>(null);
+  const [rulesSource, setRulesSource] = useState<RulesSource>("trained-data");
+  const [rulesFiles, setRulesFiles] = useState<BrowserFileItem[]>([]);
+  const [rulesFilesLoading, setRulesFilesLoading] = useState(false);
+  const [rulesFilesError, setRulesFilesError] = useState("");
+  const [rulesLoadedDir, setRulesLoadedDir] = useState("");
+  const [rulesFilter, setRulesFilter] = useState("");
+  const [rulesSelectedPath, setRulesSelectedPath] = useState("");
+  const [rulesPreview, setRulesPreview] = useState("");
+  const [rulesPreviewLoading, setRulesPreviewLoading] = useState(false);
+  const [rulesPreviewError, setRulesPreviewError] = useState("");
+  const [rulesCopyStatus, setRulesCopyStatus] = useState("");
   const abortRef = useRef<AbortController | null>(null);
 
   function formatTimestamp(iso: string): string {
@@ -67,6 +180,89 @@ export default function HomePage() {
 
   function nowTime(): string {
     return new Date().toLocaleTimeString();
+  }
+
+  function toDisplayFolderPath(filePath: string): string {
+    const normalized = filePath.replace(/\\/g, "/");
+    const scriptsIndex = normalized.lastIndexOf("/scripts/");
+    const displayPath = scriptsIndex >= 0 ? normalized.slice(scriptsIndex + 1) : normalized;
+    const lastSlash = displayPath.lastIndexOf("/");
+    if (lastSlash <= 0) {
+      return displayPath;
+    }
+    return displayPath.slice(0, lastSlash);
+  }
+
+  function parseCsvRows(text: string): string[][] {
+    const rows: string[][] = [];
+    let currentRow: string[] = [];
+    let currentCell = "";
+    let inQuotes = false;
+
+    for (let index = 0; index < text.length; index += 1) {
+      const ch = text[index];
+      if (inQuotes) {
+        if (ch === "\"") {
+          if (text[index + 1] === "\"") {
+            currentCell += "\"";
+            index += 1;
+          } else {
+            inQuotes = false;
+          }
+        } else {
+          currentCell += ch;
+        }
+        continue;
+      }
+
+      if (ch === "\"") {
+        inQuotes = true;
+        continue;
+      }
+      if (ch === ",") {
+        currentRow.push(currentCell);
+        currentCell = "";
+        continue;
+      }
+      if (ch === "\n") {
+        currentRow.push(currentCell);
+        rows.push(currentRow);
+        currentRow = [];
+        currentCell = "";
+        continue;
+      }
+      if (ch === "\r") {
+        if (text[index + 1] === "\n") {
+          index += 1;
+        }
+        currentRow.push(currentCell);
+        rows.push(currentRow);
+        currentRow = [];
+        currentCell = "";
+        continue;
+      }
+      currentCell += ch;
+    }
+
+    if (inQuotes) {
+      throw new Error("CSV parse error: unterminated quoted field.");
+    }
+    if (currentCell || currentRow.length > 0 || rows.length === 0) {
+      currentRow.push(currentCell);
+      rows.push(currentRow);
+    }
+    return rows;
+  }
+
+  function csvEscapeCell(value: string): string {
+    if (!/[",\r\n]/.test(value) && !/^\s|\s$/.test(value)) {
+      return value;
+    }
+    return `"${value.replace(/"/g, "\"\"")}"`;
+  }
+
+  function serializeCsvRows(rows: string[][]): string {
+    return rows.map((row) => row.map((cell) => csvEscapeCell(cell || "")).join(",")).join("\n");
   }
 
   function validateJql(query: string): string | null {
@@ -103,20 +299,406 @@ export default function HomePage() {
     };
   }, [isRunning, startedAt]);
 
+  async function loadTicketList(dirOverride?: string) {
+    const directory = (dirOverride || normalizedRoot).trim();
+    if (!directory) {
+      setTicketList([]);
+      setTicketDetail(null);
+      setTicketListLoadedDir("");
+      setTicketListError("Normalized root is required.");
+      return;
+    }
+
+    setTicketListLoading(true);
+    setTicketListError("");
+    setTicketDetailError("");
+    setTicketDetailCopyStatus("");
+
+    try {
+      const response = await fetch(`/api/tickets-json?dir=${encodeURIComponent(directory)}`);
+      const data = (await response.json()) as { error?: string; tickets?: TicketListItem[] };
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to load ticket list.");
+      }
+      setTicketList(data.tickets || []);
+      setTicketListLoadedDir(directory);
+    } catch (ticketError) {
+      const message =
+        ticketError instanceof Error ? ticketError.message : "Failed to load ticket list.";
+      setTicketList([]);
+      setTicketDetail(null);
+      setTicketListError(message);
+    } finally {
+      setTicketListLoading(false);
+    }
+  }
+
+  async function loadTicketDetail(ticket: string, dirOverride?: string) {
+    const ticketKeyToLoad = ticket.trim().toUpperCase();
+    if (!/^[A-Z]+-\d+$/.test(ticketKeyToLoad)) {
+      setTicketDetail(null);
+      setTicketDetailError("");
+      setTicketDetailCopyStatus("");
+      return;
+    }
+
+    const directory = (dirOverride || normalizedRoot).trim();
+    if (!directory) {
+      setTicketDetail(null);
+      setTicketDetailError("Normalized root is required.");
+      setTicketDetailCopyStatus("");
+      return;
+    }
+
+    setTicketDetailLoading(true);
+    setTicketDetailError("");
+    setTicketDetailCopyStatus("");
+
+    try {
+      const response = await fetch(
+        `/api/tickets-json?dir=${encodeURIComponent(directory)}&ticketKey=${encodeURIComponent(ticketKeyToLoad)}`
+      );
+      const data = (await response.json()) as TicketDetailResponse & { error?: string };
+      if (!response.ok) {
+        throw new Error(data.error || `Ticket ${ticketKeyToLoad} not found.`);
+      }
+      setTicketDetail(data);
+    } catch (ticketError) {
+      const message =
+        ticketError instanceof Error ? ticketError.message : "Failed to load ticket details.";
+      setTicketDetail(null);
+      setTicketDetailError(message);
+    } finally {
+      setTicketDetailLoading(false);
+    }
+  }
+
+  async function readJsonError(response: Response, fallbackMessage: string): Promise<string> {
+    try {
+      const payload = (await response.json()) as { error?: string };
+      return payload.error || fallbackMessage;
+    } catch {
+      return fallbackMessage;
+    }
+  }
+
+  async function loadCategorizedFiles(dirOverride?: string, fileNameOverride?: string) {
+    const directory = (dirOverride || categorizedDir).trim() || CATEGORIZED_TICKETS_DIR;
+    const exactFileName =
+      typeof fileNameOverride === "string" ? fileNameOverride.trim() : categorizedFileName.trim();
+
+    setCategorizedFilesLoading(true);
+    setCategorizedFilesError("");
+    setCategorizedCopyStatus("");
+    setCategorizedSaveStatus("");
+    setCategorizedPreviewError("");
+
+    try {
+      const query = new URLSearchParams({
+        dir: directory,
+        extensions: "csv",
+        limit: "500"
+      });
+      if (exactFileName) {
+        query.set("nameExact", exactFileName);
+      }
+      const response = await fetch(`/api/list-files?${query.toString()}`);
+      const data = (await response.json()) as { error?: string; files?: BrowserFileItem[] };
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to load categorized ticket files.");
+      }
+      const files = data.files || [];
+      setCategorizedFiles(files);
+      setCategorizedLoadedDir(directory);
+      setCategorizedLoadedFileName(exactFileName);
+      if (!files.some((file) => file.path === categorizedSelectedPath)) {
+        setCategorizedSelectedPath("");
+        setCategorizedPreview("");
+        setCategorizedEditorText("");
+        setCategorizedTableRows([]);
+        setCategorizedTableError("");
+        setCategorizedPreviewError("");
+      }
+    } catch (loadError) {
+      const message =
+        loadError instanceof Error ? loadError.message : "Failed to load categorized ticket files.";
+      setCategorizedFiles([]);
+      setCategorizedLoadedDir(directory);
+      setCategorizedLoadedFileName(exactFileName);
+      setCategorizedSelectedPath("");
+      setCategorizedPreview("");
+      setCategorizedEditorText("");
+      setCategorizedTableRows([]);
+      setCategorizedTableError("");
+      setCategorizedPreviewError("");
+      setCategorizedFilesError(message);
+    } finally {
+      setCategorizedFilesLoading(false);
+    }
+  }
+
+  async function loadCategorizedPreview(filePath: string) {
+    setCategorizedSelectedPath(filePath);
+    setCategorizedPreviewLoading(true);
+    setCategorizedPreviewError("");
+    setCategorizedCopyStatus("");
+    setCategorizedSaveStatus("");
+
+    try {
+      const response = await fetch(`/api/open-file?path=${encodeURIComponent(filePath)}`);
+      if (!response.ok) {
+        const message = await readJsonError(response, "Failed to load categorized ticket file.");
+        throw new Error(message);
+      }
+      const content = await response.text();
+      setCategorizedPreview(content);
+      setCategorizedEditorText(content);
+      try {
+        setCategorizedTableRows(parseCsvRows(content));
+        setCategorizedTableError("");
+      } catch (csvError) {
+        setCategorizedTableRows([]);
+        const message =
+          csvError instanceof Error ? csvError.message : "CSV parse error.";
+        setCategorizedTableError(message);
+      }
+    } catch (loadError) {
+      const message =
+        loadError instanceof Error ? loadError.message : "Failed to load categorized ticket file.";
+      setCategorizedPreview("");
+      setCategorizedEditorText("");
+      setCategorizedTableRows([]);
+      setCategorizedTableError("");
+      setCategorizedPreviewError(message);
+    } finally {
+      setCategorizedPreviewLoading(false);
+    }
+  }
+
+  async function saveCategorizedFile() {
+    if (!categorizedSelectedPath) {
+      setCategorizedSaveStatus("Select a file before saving.");
+      return;
+    }
+
+    setCategorizedSaving(true);
+    setCategorizedSaveStatus("");
+    const contentToSave = categorizedTableRows.length > 0
+      ? serializeCsvRows(categorizedTableRows)
+      : categorizedEditorText;
+
+    try {
+      const response = await fetch("/api/save-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          path: categorizedSelectedPath,
+          content: contentToSave
+        })
+      });
+      if (!response.ok) {
+        const message = await readJsonError(response, "Failed to save categorized ticket file.");
+        throw new Error(message);
+      }
+      setCategorizedPreview(contentToSave);
+      setCategorizedEditorText(contentToSave);
+      if (categorizedLoadedDir) {
+        await loadCategorizedFiles(categorizedLoadedDir, categorizedLoadedFileName);
+      }
+      setCategorizedSaveStatus("File saved.");
+    } catch (saveError) {
+      const message =
+        saveError instanceof Error ? saveError.message : "Failed to save categorized ticket file.";
+      setCategorizedSaveStatus(message);
+    } finally {
+      setCategorizedSaving(false);
+    }
+  }
+
+  const rulesDirectory = RULES_SOURCE_DIRS[rulesSource];
+
+  async function loadRulesFiles(dirOverride?: string) {
+    const directory = (dirOverride || rulesDirectory).trim();
+    setRulesFilesLoading(true);
+    setRulesFilesError("");
+    setRulesCopyStatus("");
+    setRulesPreviewError("");
+
+    try {
+      const response = await fetch(
+        `/api/list-files?dir=${encodeURIComponent(directory)}&extensions=csv&nameContains=rule-engine&limit=500`
+      );
+      const data = (await response.json()) as { error?: string; files?: BrowserFileItem[] };
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to load rule engine files.");
+      }
+      const files = data.files || [];
+      setRulesFiles(files);
+      setRulesLoadedDir(directory);
+      if (!files.some((file) => file.path === rulesSelectedPath)) {
+        setRulesSelectedPath("");
+        setRulesPreview("");
+        setRulesPreviewError("");
+      }
+    } catch (loadError) {
+      const message =
+        loadError instanceof Error ? loadError.message : "Failed to load rule engine files.";
+      setRulesFiles([]);
+      setRulesSelectedPath("");
+      setRulesPreview("");
+      setRulesPreviewError("");
+      setRulesFilesError(message);
+    } finally {
+      setRulesFilesLoading(false);
+    }
+  }
+
+  async function loadRulesPreview(filePath: string) {
+    setRulesSelectedPath(filePath);
+    setRulesPreviewLoading(true);
+    setRulesPreviewError("");
+    setRulesCopyStatus("");
+
+    try {
+      const response = await fetch(`/api/open-file?path=${encodeURIComponent(filePath)}`);
+      if (!response.ok) {
+        const message = await readJsonError(response, "Failed to load rule engine file.");
+        throw new Error(message);
+      }
+      const content = await response.text();
+      setRulesPreview(content);
+    } catch (loadError) {
+      const message =
+        loadError instanceof Error ? loadError.message : "Failed to load rule engine file.";
+      setRulesPreview("");
+      setRulesPreviewError(message);
+    } finally {
+      setRulesPreviewLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (workflow !== "browse-tickets" || stage !== "input") {
+      return;
+    }
+    const directory = normalizedRoot.trim();
+    if (!directory || directory === ticketListLoadedDir) {
+      return;
+    }
+    void loadTicketList(directory);
+  }, [workflow, stage, normalizedRoot, ticketListLoadedDir]);
+
+  useEffect(() => {
+    if (workflow !== "browse-tickets" || stage !== "input") {
+      return;
+    }
+    const normalized = ticketKey.trim().toUpperCase();
+    if (!/^[A-Z]+-\d+$/.test(normalized)) {
+      setTicketDetail(null);
+      setTicketDetailError("");
+      return;
+    }
+    if (!ticketList.some((ticket) => ticket.key === normalized)) {
+      return;
+    }
+    if (ticketDetail?.ticketKey === normalized) {
+      return;
+    }
+    void loadTicketDetail(normalized);
+  }, [workflow, stage, ticketKey, ticketList, ticketDetail?.ticketKey, normalizedRoot]);
+
+  useEffect(() => {
+    if (workflow !== "browse-categorized" || stage !== "input") {
+      return;
+    }
+    if (categorizedLoadedDir) {
+      return;
+    }
+    void loadCategorizedFiles();
+  }, [workflow, stage, categorizedLoadedDir]);
+
+  useEffect(() => {
+    if (workflow !== "browse-rules" || stage !== "input") {
+      return;
+    }
+    if (rulesLoadedDir === rulesDirectory) {
+      return;
+    }
+    void loadRulesFiles(rulesDirectory);
+  }, [workflow, stage, rulesLoadedDir, rulesDirectory]);
+
   async function handleOk() {
-    if (inputMode === "jql") {
-      const jqlError = validateJql(jql);
-      if (jqlError) {
-        setError(jqlError);
+    if (workflow === "categorize") {
+      if (inputMode === "jql") {
+        const jqlError = validateJql(jql);
+        if (jqlError) {
+          setError(jqlError);
+          setStage("input");
+          return;
+        }
+      } else if (inputMode === "files" && !ticketsFile.trim()) {
+        setError("Ticket list file path is required.");
+        setStage("input");
+        return;
+      } else if (inputMode === "tickets" && !ticketsText.trim()) {
+        setError("Ticket list is required.");
         setStage("input");
         return;
       }
-    } else if (inputMode === "files" && !ticketsFile.trim()) {
-      setError("Ticket list file path is required.");
-      setStage("input");
-      return;
-    } else if (inputMode === "tickets" && !ticketsText.trim()) {
-      setError("Ticket list is required.");
+    } else if (workflow === "add-rule") {
+      const normalizedTicketKey = ticketKey.trim().toUpperCase();
+      if (!normalizedTicketKey) {
+        setError("Ticket key is required.");
+        setStage("input");
+        return;
+      }
+      if (!/^[A-Z]+-\d+$/.test(normalizedTicketKey)) {
+        setError("Ticket key must match format like HPC-123456.");
+        setStage("input");
+        return;
+      }
+      if (!reason.trim()) {
+        setError("Reason is required.");
+        setStage("input");
+        return;
+      }
+      if (!failureCategory.trim()) {
+        setError("Category of Issue is required.");
+        setStage("input");
+        return;
+      }
+      if (!category.trim()) {
+        setError("Category is required.");
+        setStage("input");
+        return;
+      }
+      if (!ticketJsonDir.trim() || !normalizedRoot.trim() || !rulesEngine.trim()) {
+        setError("Ticket JSON dir, normalized root, and rules engine are required.");
+        setStage("input");
+        return;
+      }
+      if (!matchFieldDefault.trim() || !createdBy.trim()) {
+        setError("Match Field default and Created By are required.");
+        setStage("input");
+        return;
+      }
+      if (!Number.isInteger(Number(priority))) {
+        setError("Priority must be an integer.");
+        setStage("input");
+        return;
+      }
+      if (Number.isNaN(Number(confidence))) {
+        setError("Confidence must be numeric.");
+        setStage("input");
+        return;
+      }
+      if (!Number.isInteger(Number(hitCount))) {
+        setError("Hit Count must be an integer.");
+        setStage("input");
+        return;
+      }
+    } else {
+      setError("Select Add Rule for a Ticket to run this action.");
       setStage("input");
       return;
     }
@@ -124,6 +706,7 @@ export default function HomePage() {
     setIsRunning(true);
     setError("");
     setSummaryRows([]);
+    setAddRuleResult({});
     setResultPaths({});
     setExecutedCommands([]);
     setCommandLogs([]);
@@ -136,20 +719,48 @@ export default function HomePage() {
     setLiveElapsedMs(0);
     setHeartbeatTick(0);
     setStage("results");
-    setPipelineStatus(PIPELINE_STEPS.map(() => "pending"));
+    setPipelineStatus(
+      workflow === "categorize" ? PIPELINE_STEPS.map(() => "pending") : []
+    );
 
     try {
       const abortController = new AbortController();
       abortRef.current = abortController;
-      const response = await fetch("/api/run-jql", {
+      const endpoint =
+        workflow === "categorize" ? "/api/run-jql" : "/api/add-rule-from-ticket";
+      const body =
+        workflow === "categorize"
+          ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText }
+          : {
+              ticketKey: ticketKey.trim().toUpperCase(),
+              reason: reason.trim(),
+              failureCategory: failureCategory.trim(),
+              category: category.trim(),
+              matchField: matchField.trim(),
+              rulePattern: rulePattern.trim(),
+              ticketJsonDir: ticketJsonDir.trim(),
+              normalizedRoot: normalizedRoot.trim(),
+              rulesEngine: rulesEngine.trim(),
+              matchFieldDefault: matchFieldDefault.trim(),
+              priority: Number(priority),
+              confidence: Number(confidence),
+              createdBy: createdBy.trim(),
+              hitCount: Number(hitCount)
+            };
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inputMode, jql, resolutionMode, ticketsFile, ticketsText }),
+        body: JSON.stringify(body),
         signal: abortController.signal
       });
       if (!response.ok) {
         const fallback = (await response.json()) as { error?: string };
-        throw new Error(fallback.error || "Failed to run pipeline.");
+        throw new Error(
+          fallback.error ||
+            (workflow === "categorize"
+              ? "Failed to run pipeline."
+              : "Failed to run add-rule workflow.")
+        );
       }
 
       if (!response.body) {
@@ -157,12 +768,20 @@ export default function HomePage() {
           error?: string;
           summaryRows?: SummaryRow[];
           paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string };
+          result?: {
+            ruleId?: string;
+            rulesEngine?: string;
+            ticketJson?: string;
+            normalizedJson?: string;
+            message?: string;
+          };
         };
         if (data.error) {
           throw new Error(data.error);
         }
         setSummaryRows(data.summaryRows || []);
         setResultPaths(data.paths || {});
+        setAddRuleResult(data.result || {});
       } else {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
@@ -188,22 +807,31 @@ export default function HomePage() {
               error?: string;
               summaryRows?: SummaryRow[];
               paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string };
+              result?: {
+                ruleId?: string;
+                rulesEngine?: string;
+                ticketJson?: string;
+                normalizedJson?: string;
+                message?: string;
+              };
             };
 
             if (event.type === "command-start" && event.command) {
-              const startIdx = PIPELINE_STEPS.findIndex((step) => event.command?.includes(step));
-              if (startIdx >= 0) {
-                setPipelineStatus((prev) =>
-                  prev.map((status, idx) => {
-                    if (idx < startIdx && status !== "done") {
-                      return "done";
-                    }
-                    if (idx === startIdx) {
-                      return "running";
-                    }
-                    return status;
-                  })
-                );
+              if (workflow === "categorize") {
+                const startIdx = PIPELINE_STEPS.findIndex((step) => event.command?.includes(step));
+                if (startIdx >= 0) {
+                  setPipelineStatus((prev) =>
+                    prev.map((status, idx) => {
+                      if (idx < startIdx && status !== "done") {
+                        return "done";
+                      }
+                      if (idx === startIdx) {
+                        return "running";
+                      }
+                      return status;
+                    })
+                  );
+                }
               }
               setLastLogAtMs(Date.now());
               setExecutedCommands((prev) =>
@@ -211,11 +839,13 @@ export default function HomePage() {
               );
               setCommandLogs((prev) => [...prev, `[${nowTime()}] > ${event.command}`]);
             } else if (event.type === "command-end" && event.command) {
-              const endIdx = PIPELINE_STEPS.findIndex((step) => event.command?.includes(step));
-              if (endIdx >= 0) {
-                setPipelineStatus((prev) =>
-                  prev.map((status, idx) => (idx === endIdx ? "done" : status))
-                );
+              if (workflow === "categorize") {
+                const endIdx = PIPELINE_STEPS.findIndex((step) => event.command?.includes(step));
+                if (endIdx >= 0) {
+                  setPipelineStatus((prev) =>
+                    prev.map((status, idx) => (idx === endIdx ? "done" : status))
+                  );
+                }
               }
             } else if ((event.type === "stdout" || event.type === "stderr") && event.line) {
               const linesFromEvent = event.line.split(/\r?\n/).filter((chunk) => chunk.trim());
@@ -223,26 +853,37 @@ export default function HomePage() {
                 setLastLogAtMs(Date.now());
                 setCommandLogs((prev) => [
                   ...prev,
-                  ...linesFromEvent.map((entry) => `[${nowTime()}] ${entry}`)
+                    ...linesFromEvent.map((entry) => `[${nowTime()}] ${entry}`)
                 ]);
               }
             } else if (event.type === "done") {
-              setPipelineStatus(PIPELINE_STEPS.map(() => "done"));
+              if (workflow === "categorize") {
+                setPipelineStatus(PIPELINE_STEPS.map(() => "done"));
+              }
               setSummaryRows(event.summaryRows || []);
               setResultPaths(event.paths || {});
+              setAddRuleResult(event.result || {});
             } else if (event.type === "canceled") {
               setWasCanceled(true);
               setError("Run canceled. Artifacts cleaned.");
               setSummaryRows([]);
               setResultPaths({});
+              setAddRuleResult(
+                workflow === "add-rule" ? { message: "Run canceled." } : {}
+              );
             } else if (event.type === "error") {
-              setPipelineStatus((prev) => {
-                const runningIdx = prev.findIndex((status) => status === "running");
-                if (runningIdx === -1) {
-                  return prev;
-                }
-                return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
-              });
+              if (workflow === "add-rule") {
+                setAddRuleResult({ message: `Run failed: ${event.error || "Unknown error"}` });
+              }
+              if (workflow === "categorize") {
+                setPipelineStatus((prev) => {
+                  const runningIdx = prev.findIndex((status) => status === "running");
+                  if (runningIdx === -1) {
+                    return prev;
+                  }
+                  return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
+                });
+              }
               throw new Error(event.error || "Pipeline failed.");
             }
           }
@@ -253,8 +894,14 @@ export default function HomePage() {
       if (message === "The operation was aborted.") {
         setWasCanceled(true);
         setError("Run canceled. Artifacts cleaned.");
+        if (workflow === "add-rule") {
+          setAddRuleResult({ message: "Run canceled." });
+        }
       } else {
         setError(message);
+        if (workflow === "add-rule") {
+          setAddRuleResult({ message: `Run failed: ${message}` });
+        }
       }
     } finally {
       abortRef.current = null;
@@ -269,14 +916,18 @@ export default function HomePage() {
     abortRef.current?.abort();
   }
 
-  async function copyText(label: string, text: string) {
+  async function copyText(
+    label: string,
+    text: string,
+    statusSetter: (message: string) => void = setCopyStatus
+  ) {
     try {
       if (!text.trim()) {
-        setCopyStatus(`No ${label.toLowerCase()} to copy.`);
+        statusSetter(`No ${label.toLowerCase()} to copy.`);
         return;
       }
       await navigator.clipboard.writeText(text);
-      setCopyStatus(`${label} copied.`);
+      statusSetter(`${label} copied.`);
     } catch {
       try {
         const area = document.createElement("textarea");
@@ -285,15 +936,195 @@ export default function HomePage() {
         area.select();
         document.execCommand("copy");
         document.body.removeChild(area);
-        setCopyStatus(`${label} copied.`);
+        statusSetter(`${label} copied.`);
       } catch {
-        setCopyStatus(`Failed to copy ${label.toLowerCase()}.`);
+        statusSetter(`Failed to copy ${label.toLowerCase()}.`);
       }
     }
   }
 
+  function updateCategorizedCell(rowIndex: number, colIndex: number, value: string) {
+    setCategorizedTableRows((prevRows) => {
+      const nextRows = prevRows.map((row) => [...row]);
+      while (nextRows.length <= rowIndex) {
+        nextRows.push([]);
+      }
+      while (nextRows[rowIndex].length <= colIndex) {
+        nextRows[rowIndex].push("");
+      }
+      nextRows[rowIndex][colIndex] = value;
+      return nextRows;
+    });
+    setCategorizedCopyStatus("");
+    setCategorizedSaveStatus("");
+  }
+
+  function resetCategorizedChanges() {
+    try {
+      const rows = parseCsvRows(categorizedPreview);
+      setCategorizedTableRows(rows);
+      setCategorizedTableError("");
+    } catch {
+      setCategorizedTableRows([]);
+      setCategorizedTableError("CSV parse error. Showing raw editor fallback.");
+      setCategorizedEditorText(categorizedPreview);
+    }
+    setCategorizedCopyStatus("");
+    setCategorizedSaveStatus("");
+  }
+
+  function syncCategorizedScrollTracks() {
+    const shell = categorizedGridShellRef.current;
+    const topScroll = categorizedGridTopScrollRef.current;
+    const topSpacer = categorizedGridTopSpacerRef.current;
+    if (!shell || !topScroll || !topSpacer) {
+      return;
+    }
+    const maxLeft = Math.max(0, shell.scrollWidth - shell.clientWidth);
+    setCategorizedScrollLeft(shell.scrollLeft);
+    setCategorizedScrollMax(maxLeft);
+    topSpacer.style.width = `${shell.scrollWidth}px`;
+    topScroll.scrollLeft = shell.scrollLeft;
+  }
+
+  function setCategorizedHorizontalScrollPosition(nextLeft: number, smooth = false) {
+    const shell = categorizedGridShellRef.current;
+    const topScroll = categorizedGridTopScrollRef.current;
+    if (!shell) {
+      return;
+    }
+    const maxLeft = Math.max(0, shell.scrollWidth - shell.clientWidth);
+    const clamped = Math.min(Math.max(0, nextLeft), maxLeft);
+    shell.scrollTo({ left: clamped, behavior: smooth ? "smooth" : "auto" });
+    if (topScroll) {
+      topScroll.scrollLeft = clamped;
+    }
+    setCategorizedScrollLeft(clamped);
+    setCategorizedScrollMax(maxLeft);
+  }
+
+  function handleCategorizedGridShellScroll() {
+    const shell = categorizedGridShellRef.current;
+    const topScroll = categorizedGridTopScrollRef.current;
+    if (!shell || !topScroll || categorizedScrollSyncRef.current === "top") {
+      return;
+    }
+    categorizedScrollSyncRef.current = "body";
+    topScroll.scrollLeft = shell.scrollLeft;
+    setCategorizedScrollLeft(shell.scrollLeft);
+    setCategorizedScrollMax(Math.max(0, shell.scrollWidth - shell.clientWidth));
+    categorizedScrollSyncRef.current = null;
+  }
+
+  function handleCategorizedGridTopScroll() {
+    const shell = categorizedGridShellRef.current;
+    const topScroll = categorizedGridTopScrollRef.current;
+    if (!shell || !topScroll || categorizedScrollSyncRef.current === "body") {
+      return;
+    }
+    categorizedScrollSyncRef.current = "top";
+    shell.scrollLeft = topScroll.scrollLeft;
+    setCategorizedScrollLeft(shell.scrollLeft);
+    setCategorizedScrollMax(Math.max(0, shell.scrollWidth - shell.clientWidth));
+    categorizedScrollSyncRef.current = null;
+  }
+
+  function nudgeCategorizedHorizontal(direction: "left" | "right") {
+    const shell = categorizedGridShellRef.current;
+    if (!shell) {
+      return;
+    }
+    const step = Math.max(220, Math.floor(shell.clientWidth * 0.35));
+    const next = direction === "left" ? shell.scrollLeft - step : shell.scrollLeft + step;
+    setCategorizedHorizontalScrollPosition(next, true);
+  }
+
+  function handleCategorizedHorizontalSlider(value: string) {
+    const parsed = Number.parseInt(value, 10);
+    if (Number.isNaN(parsed)) {
+      return;
+    }
+    setCategorizedHorizontalScrollPosition(parsed);
+  }
+
   const runState =
     isRunning ? "running" : error ? "failed" : finishedAt ? "success" : "idle";
+  const normalizedTicketKey = ticketKey.trim().toUpperCase();
+  const filteredTicketList = useMemo(() => {
+    const filter = ticketFilter.trim().toUpperCase();
+    if (!filter) {
+      return ticketList;
+    }
+    return ticketList.filter(
+      (ticket) =>
+        ticket.key.includes(filter) || ticket.summary.toUpperCase().includes(filter)
+    );
+  }, [ticketFilter, ticketList]);
+  const visibleTickets = filteredTicketList.slice(0, ticketListExpanded ? 200 : 1);
+  const filteredCategorizedFiles = useMemo(() => {
+    const filter = categorizedFilter.trim().toUpperCase();
+    if (!filter) {
+      return categorizedFiles;
+    }
+    return categorizedFiles.filter((file) => file.name.toUpperCase().includes(filter));
+  }, [categorizedFilter, categorizedFiles]);
+  const visibleCategorizedFiles = filteredCategorizedFiles.slice(0, 200);
+  const categorizedMaxCols = useMemo(() => {
+    if (categorizedTableRows.length === 0) {
+      return 0;
+    }
+    return categorizedTableRows.reduce((maxCols, row) => Math.max(maxCols, row.length), 0);
+  }, [categorizedTableRows]);
+  const categorizedDisplayRows = useMemo(() => {
+    if (categorizedMaxCols === 0) {
+      return categorizedTableRows;
+    }
+    return categorizedTableRows.map((row) => {
+      const nextRow = [...row];
+      while (nextRow.length < categorizedMaxCols) {
+        nextRow.push("");
+      }
+      return nextRow;
+    });
+  }, [categorizedTableRows, categorizedMaxCols]);
+  const categorizedVisibleRows = useMemo(() => {
+    if (categorizedDisplayRows.length <= 1) {
+      return categorizedDisplayRows;
+    }
+    return [categorizedDisplayRows[0], ...categorizedDisplayRows.slice(1, 51)];
+  }, [categorizedDisplayRows]);
+  const categorizedHiddenRowCount = Math.max(
+    0,
+    categorizedDisplayRows.length - categorizedVisibleRows.length
+  );
+  const categorizedCanScrollLeft = categorizedScrollLeft > 0;
+  const categorizedCanScrollRight = categorizedScrollLeft < categorizedScrollMax;
+  useEffect(() => {
+    syncCategorizedScrollTracks();
+    function handleResize() {
+      syncCategorizedScrollTracks();
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [categorizedVisibleRows, categorizedMaxCols, categorizedSelectedPath, categorizedTableError]);
+  const categorizedCurrentText = useMemo(() => {
+    if (categorizedTableRows.length > 0) {
+      return serializeCsvRows(categorizedTableRows);
+    }
+    return categorizedEditorText;
+  }, [categorizedTableRows, categorizedEditorText]);
+  const categorizedHasChanges =
+    Boolean(categorizedSelectedPath) && categorizedCurrentText !== categorizedPreview;
+  const filteredRulesFiles = useMemo(() => {
+    const filter = rulesFilter.trim().toUpperCase();
+    if (!filter) {
+      return rulesFiles;
+    }
+    return rulesFiles.filter((file) => file.name.toUpperCase().includes(filter));
+  }, [rulesFilter, rulesFiles]);
+  const visibleRulesFiles = filteredRulesFiles.slice(0, 200);
 
   return (
     <main>
@@ -305,24 +1136,78 @@ export default function HomePage() {
               onClick={() => setStage("landing")}
               aria-label="Go to home"
             >
-              Smart (Sudha&apos;s) Tickets&apos; Classifier (STC)
+              Smart Tickets&apos; Classifier (STC)
             </button>
           </h1>
           <p className="subtitle">v0.1 wireframe preview</p>
         </header>
 
         <div className="actions">
-          <button
-            className="primary"
-            onClick={() => setStage("input")}
-            aria-label="Categorize tickets"
-            disabled={isRunning}
-          >
-            Categorize tickets
-          </button>
-          <button disabled aria-label="Train Learn WIP">
-            Train Learn (WIP)
-          </button>
+          <div className="mode-menu" role="group" aria-label="Workflow menu">
+            <button
+              className={`menu-btn ${workflow === "categorize" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("categorize");
+                setStage("input");
+              }}
+              aria-label="Categorize tickets"
+              aria-pressed={workflow === "categorize"}
+              disabled={isRunning}
+            >
+              Categorize tickets
+            </button>
+            <button
+              className={`menu-btn ${workflow === "add-rule" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("add-rule");
+                setStage("input");
+              }}
+              aria-label="Add Rule for a Ticket"
+              aria-pressed={workflow === "add-rule"}
+              disabled={isRunning}
+            >
+              Add Rule for a Ticket
+            </button>
+            <button
+              className={`menu-btn ${workflow === "browse-tickets" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("browse-tickets");
+                setStage("input");
+              }}
+              aria-label="Tickets in Normalized root"
+              aria-pressed={workflow === "browse-tickets"}
+              disabled={isRunning}
+            >
+              Tickets in Normalized root
+            </button>
+            <button
+              className={`menu-btn ${workflow === "browse-categorized" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("browse-categorized");
+                setStage("input");
+              }}
+              aria-label="View Categorized Tickets"
+              aria-pressed={workflow === "browse-categorized"}
+              disabled={isRunning}
+            >
+              View Categorized Tickets
+            </button>
+            <button
+              className={`menu-btn ${workflow === "browse-rules" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("browse-rules");
+                setStage("input");
+              }}
+              aria-label="View Rules Engines"
+              aria-pressed={workflow === "browse-rules"}
+              disabled={isRunning}
+            >
+              View Rules Engines
+            </button>
+            <button className="menu-btn" disabled aria-label="Train Learn WIP">
+              Train Learn (WIP)
+            </button>
+          </div>
           {isRunning && (
             <button onClick={handleCancel} aria-label="Cancel run">
               Cancel
@@ -333,12 +1218,13 @@ export default function HomePage() {
         <div className="content">
           {stage === "landing" && (
             <p className="small">
-              Click <strong>Categorize tickets</strong> to preview the next
-              wireframe step.
+              Click <strong>Categorize tickets</strong>, <strong>Add Rule for a Ticket</strong>, or{" "}
+              <strong>Tickets in Normalized root</strong>, <strong>View Categorized Tickets</strong>, or{" "}
+              <strong>View Rules Engines</strong> to preview the next wireframe step.
             </p>
           )}
 
-          {stage === "input" && (
+          {stage === "input" && workflow === "categorize" && (
             <div className="grid" aria-label="Input section">
               <fieldset className="field">
                 <legend>Input source (either-or)</legend>
@@ -444,12 +1330,810 @@ export default function HomePage() {
             </div>
           )}
 
+          {stage === "input" && workflow === "browse-tickets" && (
+            <div className="grid" aria-label="Input section">
+              <article className="card ticket-browser-card">
+                <div className="ticket-browser-header">
+                  <h2>Tickets in Normalized root</h2>
+                  <div className="ticket-browser-controls">
+                    <button
+                      type="button"
+                      onClick={() => setTicketListExpanded((prev) => !prev)}
+                      disabled={ticketList.length === 0}
+                    >
+                      {ticketListExpanded ? "Compact list" : "Expand list"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        void loadTicketList();
+                      }}
+                      disabled={isRunning || ticketListLoading}
+                    >
+                      {ticketListLoading ? "Refreshing..." : "Refresh list"}
+                    </button>
+                  </div>
+                </div>
+                <p className="small">
+                  Choose a ticket key, then open JSON to read the normalized source payload.
+                </p>
+                <div className="field">
+                  <label htmlFor="ticket-filter">Filter loaded tickets</label>
+                  <input
+                    id="ticket-filter"
+                    placeholder="HPC-123 or summary text"
+                    value={ticketFilter}
+                    onChange={(e) => setTicketFilter(e.target.value)}
+                    disabled={isRunning || ticketListLoading || ticketList.length === 0}
+                  />
+                </div>
+                {ticketListError && (
+                  <p className="small" role="alert">
+                    {ticketListError}
+                  </p>
+                )}
+                {!ticketListError && (
+                  <p className="small">
+                    {ticketListLoading
+                      ? "Loading tickets..."
+                      : `${ticketList.length} ticket(s) visible in ${ticketListLoadedDir || normalizedRoot}.`}
+                  </p>
+                )}
+                {visibleTickets.length === 0 && !ticketListLoading ? (
+                  <p className="small">
+                    {ticketList.length === 0
+                      ? `Directory is empty: ${ticketListLoadedDir || normalizedRoot}.`
+                      : "No tickets match the current filter."}
+                  </p>
+                ) : (
+                  <ul
+                    className={`ticket-picker-list ${ticketListExpanded ? "is-expanded" : ""}`}
+                    aria-label="Ticket picker list"
+                  >
+                    {visibleTickets.map((ticket) => (
+                      <li
+                        key={`${ticket.key}-${ticket.sourcePath}`}
+                        className={`ticket-picker-item ${
+                          ticket.key === normalizedTicketKey ? "is-selected" : ""
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          className="ticket-pick-btn"
+                          onClick={() => {
+                            setTicketKey(ticket.key);
+                            void loadTicketDetail(ticket.key);
+                          }}
+                          disabled={isRunning}
+                        >
+                          {ticket.key}
+                        </button>
+                        <p className="ticket-summary">{ticket.summary || "(no summary)"}</p>
+                        <p className="small ticket-meta">
+                          Status: {ticket.status || "n/a"} | Resolution: {ticket.resolution || "n/a"}
+                        </p>
+                        <a
+                          className="link small"
+                          href={`/api/open-file?path=${encodeURIComponent(ticket.detailPath)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Open JSON
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {filteredTicketList.length > visibleTickets.length && (
+                  <p className="small">
+                    {ticketListExpanded
+                      ? `Showing first ${visibleTickets.length} results. Keep filtering to narrow the list.`
+                      : "Showing 1 ticket (compact view). Click Expand list to see more."}
+                  </p>
+                )}
+                <div className="ticket-detail-view">
+                  <h3>Selected Ticket Details (Read-only)</h3>
+                  {ticketDetailLoading ? (
+                    <p className="small">Loading ticket details...</p>
+                  ) : ticketDetailError ? (
+                    <p className="small" role="alert">
+                      {ticketDetailError}
+                    </p>
+                  ) : ticketDetail ? (
+                    <>
+                      <div className="inline-actions">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyText(
+                              "Ticket details",
+                              JSON.stringify(ticketDetail.payload, null, 2),
+                              setTicketDetailCopyStatus
+                            )
+                          }
+                        >
+                          Copy details
+                        </button>
+                      </div>
+                      {ticketDetailCopyStatus && <p className="small">{ticketDetailCopyStatus}</p>}
+                      <p className="small">
+                        Source:
+                        {" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(ticketDetail.detailPath)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {ticketDetail.detailPath}
+                        </a>
+                      </p>
+                      <pre className="ticket-detail-json">
+                        {JSON.stringify(ticketDetail.payload, null, 2)}
+                      </pre>
+                    </>
+                  ) : (
+                    <p className="small">Pick a ticket from the list to inspect details here.</p>
+                  )}
+                </div>
+              </article>
+            </div>
+          )}
+
+          {stage === "input" && workflow === "browse-categorized" && (
+            <div className="grid" aria-label="Input section">
+              <article className="card ticket-browser-card">
+                <div className="ticket-browser-header">
+                  <h2>View Categorized Tickets</h2>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void loadCategorizedFiles();
+                    }}
+                    disabled={isRunning || categorizedFilesLoading}
+                  >
+                    {categorizedFilesLoading ? "Refreshing..." : "Refresh list"}
+                  </button>
+                </div>
+                <div className="field">
+                  <label htmlFor="categorized-dir">Categorized directory (optional)</label>
+                  <input
+                    id="categorized-dir"
+                    placeholder={CATEGORIZED_TICKETS_DIR}
+                    value={categorizedDir}
+                    onChange={(e) => setCategorizedDir(e.target.value)}
+                    disabled={isRunning || categorizedFilesLoading}
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="categorized-file-name">Exact file name (optional)</label>
+                  <input
+                    id="categorized-file-name"
+                    placeholder={DEFAULT_CATEGORIZED_FILE}
+                    value={categorizedFileName}
+                    onChange={(e) => setCategorizedFileName(e.target.value)}
+                    disabled={isRunning || categorizedFilesLoading}
+                  />
+                </div>
+                <p className="small">
+                  Source directory:
+                  {" "}
+                  <code>{categorizedLoadedDir || categorizedDir.trim() || CATEGORIZED_TICKETS_DIR}</code>
+                  {" "}
+                  | Exact file:
+                  {" "}
+                  <code>{categorizedLoadedFileName || categorizedFileName.trim() || "(none)"}</code>
+                </p>
+                <div className="field">
+                  <label htmlFor="categorized-filter">Filter loaded files</label>
+                  <input
+                    id="categorized-filter"
+                    placeholder="tickets-categorized"
+                    value={categorizedFilter}
+                    onChange={(e) => setCategorizedFilter(e.target.value)}
+                    disabled={
+                      isRunning || categorizedFilesLoading || categorizedFiles.length === 0
+                    }
+                  />
+                </div>
+                {categorizedFilesError && (
+                  <p className="small" role="alert">
+                    {categorizedFilesError}
+                  </p>
+                )}
+                {!categorizedFilesError && (
+                  <p className="small">
+                    {categorizedFilesLoading
+                      ? "Loading categorized ticket files..."
+                      : `${categorizedFiles.length} file(s) visible in ${categorizedLoadedDir || categorizedDir.trim() || CATEGORIZED_TICKETS_DIR}.`}
+                  </p>
+                )}
+                {visibleCategorizedFiles.length === 0 && !categorizedFilesLoading ? (
+                  <p className="small">
+                    {categorizedFiles.length === 0
+                      ? categorizedLoadedFileName || categorizedFileName.trim()
+                        ? `No files matched ${(categorizedLoadedFileName || categorizedFileName.trim())} in ${categorizedLoadedDir || categorizedDir.trim() || CATEGORIZED_TICKETS_DIR}.`
+                        : `Directory is empty: ${categorizedLoadedDir || categorizedDir.trim() || CATEGORIZED_TICKETS_DIR}.`
+                      : "No files match the current filter."}
+                  </p>
+                ) : (
+                  <ul className="ticket-picker-list is-expanded" aria-label="Categorized ticket files list">
+                    {visibleCategorizedFiles.map((file) => (
+                      <li
+                        key={file.path}
+                        className={`ticket-picker-item ${
+                          file.path === categorizedSelectedPath ? "is-selected" : ""
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          className="ticket-pick-btn"
+                          onClick={() => {
+                            void loadCategorizedPreview(file.path);
+                          }}
+                          disabled={isRunning}
+                        >
+                          {file.name}
+                        </button>
+                        <p className="small ticket-meta">
+                          Updated: {formatTimestamp(file.modifiedAt)} | Size: {file.sizeBytes} bytes
+                        </p>
+                        <p className="small ticket-meta">
+                          Folder: <code>{toDisplayFolderPath(file.path)}</code>
+                        </p>
+                        <p className="small">
+                          <a
+                            className="link small"
+                            href={`/api/open-file?path=${encodeURIComponent(file.path)}&download=1`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Download file
+                          </a>
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {filteredCategorizedFiles.length > visibleCategorizedFiles.length && (
+                  <p className="small">
+                    Showing first {visibleCategorizedFiles.length} results. Keep filtering to narrow
+                    the list.
+                  </p>
+                )}
+                <div className="ticket-detail-view">
+                  <h3>Selected File (View/Edit)</h3>
+                  {categorizedPreviewLoading ? (
+                    <p className="small">Loading file preview...</p>
+                  ) : categorizedPreviewError ? (
+                    <p className="small" role="alert">
+                      {categorizedPreviewError}
+                    </p>
+                  ) : categorizedSelectedPath ? (
+                    <>
+                      <div className="inline-actions">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyText(
+                              "Categorized file contents",
+                              categorizedCurrentText,
+                              setCategorizedCopyStatus
+                            )
+                          }
+                          disabled={categorizedPreviewLoading}
+                        >
+                          Copy details
+                        </button>
+                        <button
+                          type="button"
+                          onClick={resetCategorizedChanges}
+                          disabled={categorizedSaving || !categorizedHasChanges}
+                        >
+                          Reset changes
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            void saveCategorizedFile();
+                          }}
+                          disabled={categorizedSaving || !categorizedHasChanges}
+                        >
+                          {categorizedSaving ? "Saving..." : "Save changes"}
+                        </button>
+                      </div>
+                      {categorizedCopyStatus && <p className="small">{categorizedCopyStatus}</p>}
+                      {categorizedSaveStatus && <p className="small">{categorizedSaveStatus}</p>}
+                      <p className="small">
+                        Source:
+                        {" "}
+                        <code>{categorizedSelectedPath}</code>
+                      </p>
+                      <p className="small">
+                        Folder: <code>{toDisplayFolderPath(categorizedSelectedPath)}</code>
+                      </p>
+                      <p className="small">
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(categorizedSelectedPath)}&download=1`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Download selected file
+                        </a>
+                      </p>
+                      <div className="field">
+                        {categorizedTableError ? (
+                          <label htmlFor="categorized-editor">In-place file editor</label>
+                        ) : (
+                          <p className="small">In-place file editor</p>
+                        )}
+                        {categorizedTableError ? (
+                          <>
+                            <p className="small" role="alert">
+                              {categorizedTableError}
+                            </p>
+                            <textarea
+                              id="categorized-editor"
+                              rows={16}
+                              value={categorizedEditorText}
+                              onChange={(e) => {
+                                setCategorizedEditorText(e.target.value);
+                                setCategorizedCopyStatus("");
+                                setCategorizedSaveStatus("");
+                              }}
+                              disabled={categorizedSaving}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <div className="csv-grid-nav" aria-label="Horizontal scroll controls">
+                              <button
+                                type="button"
+                                className="csv-grid-nav-btn"
+                                onClick={() => nudgeCategorizedHorizontal("left")}
+                                disabled={categorizedSaving}
+                              >
+                                Scroll left
+                              </button>
+                              <button
+                                type="button"
+                                className="csv-grid-nav-btn"
+                                onClick={() => nudgeCategorizedHorizontal("right")}
+                                disabled={categorizedSaving}
+                              >
+                                Scroll right
+                              </button>
+                            </div>
+                            <div className="csv-grid-slider">
+                              <label className="small" htmlFor="categorized-horizontal-scroll">
+                                Drag left/right
+                              </label>
+                              <input
+                                id="categorized-horizontal-scroll"
+                                className="csv-grid-slider-input"
+                                type="range"
+                                min={0}
+                                max={Math.max(1, categorizedScrollMax)}
+                                value={Math.min(categorizedScrollLeft, Math.max(1, categorizedScrollMax))}
+                                onChange={(e) => handleCategorizedHorizontalSlider(e.target.value)}
+                                disabled={categorizedSaving || categorizedScrollMax <= 0}
+                                aria-label="Horizontal drag scrollbar"
+                              />
+                            </div>
+                            <div
+                              className="csv-grid-top-scroll"
+                              aria-hidden="true"
+                              ref={categorizedGridTopScrollRef}
+                              onScroll={handleCategorizedGridTopScroll}
+                            >
+                              <div className="csv-grid-top-spacer" ref={categorizedGridTopSpacerRef} />
+                            </div>
+                            <div className="csv-grid-frame">
+                              <button
+                                type="button"
+                                className="csv-grid-edge-btn left"
+                                onClick={() => nudgeCategorizedHorizontal("left")}
+                                disabled={categorizedSaving || !categorizedCanScrollLeft}
+                                aria-label="Scroll table left"
+                              >
+                                {"<"}
+                              </button>
+                              <button
+                                type="button"
+                                className="csv-grid-edge-btn right"
+                                onClick={() => nudgeCategorizedHorizontal("right")}
+                                disabled={categorizedSaving || !categorizedCanScrollRight}
+                                aria-label="Scroll table right"
+                              >
+                                {">"}
+                              </button>
+                              <div
+                                className="csv-grid-shell"
+                                aria-label="In-place file editor"
+                                ref={categorizedGridShellRef}
+                                onScroll={handleCategorizedGridShellScroll}
+                              >
+                                <div className="csv-grid-content">
+                                  <table className="csv-grid-table">
+                                    <thead>
+                                      <tr className="csv-grid-head">
+                                        <th className="csv-grid-index">#</th>
+                                        {(categorizedVisibleRows[0] || []).map((cell, colIndex) => (
+                                          <th key={`header-${colIndex}`}>
+                                            <input
+                                              className="csv-grid-input"
+                                              value={cell}
+                                              onChange={(e) =>
+                                                updateCategorizedCell(0, colIndex, e.target.value)
+                                              }
+                                              disabled={categorizedSaving}
+                                            />
+                                          </th>
+                                        ))}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {categorizedVisibleRows.slice(1).map((row, rowIndex) => (
+                                        <tr key={`row-${rowIndex + 1}`}>
+                                          <th className="csv-grid-index">{rowIndex + 2}</th>
+                                          {row.map((cell, colIndex) => (
+                                            <td key={`cell-${rowIndex + 1}-${colIndex}`}>
+                                              <input
+                                                className="csv-grid-input"
+                                                value={cell}
+                                                onChange={(e) =>
+                                                  updateCategorizedCell(
+                                                    rowIndex + 1,
+                                                    colIndex,
+                                                    e.target.value
+                                                  )
+                                                }
+                                                disabled={categorizedSaving}
+                                              />
+                                            </td>
+                                          ))}
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                            {categorizedHiddenRowCount > 0 && (
+                              <p className="small">
+                                Showing first 50 tickets by default. {categorizedHiddenRowCount} more
+                                row(s) are still in the file.
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <p className="small">Pick a file from the list to inspect details here.</p>
+                  )}
+                </div>
+              </article>
+            </div>
+          )}
+
+          {stage === "input" && workflow === "browse-rules" && (
+            <div className="grid" aria-label="Input section">
+              <article className="card ticket-browser-card">
+                <div className="ticket-browser-header">
+                  <h2>View Rules Engines</h2>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void loadRulesFiles();
+                    }}
+                    disabled={isRunning || rulesFilesLoading}
+                  >
+                    {rulesFilesLoading ? "Refreshing..." : "Refresh list"}
+                  </button>
+                </div>
+                <div className="field">
+                  <label htmlFor="rule-engine-source">Rules source</label>
+                  <select
+                    id="rule-engine-source"
+                    value={rulesSource}
+                    onChange={(e) => {
+                      const nextSource = e.target.value as RulesSource;
+                      setRulesSource(nextSource);
+                      setRulesLoadedDir("");
+                      setRulesFiles([]);
+                      setRulesSelectedPath("");
+                      setRulesPreview("");
+                      setRulesPreviewError("");
+                      setRulesCopyStatus("");
+                    }}
+                    disabled={isRunning || rulesFilesLoading}
+                  >
+                    <option value="trained-data">trained-data (default)</option>
+                    <option value="golden">golden-rules-engine</option>
+                  </select>
+                </div>
+                <p className="small">
+                  Source directory: <code>{rulesDirectory}</code>
+                </p>
+                <div className="field">
+                  <label htmlFor="rule-engine-filter">Filter loaded files</label>
+                  <input
+                    id="rule-engine-filter"
+                    placeholder="rule-engine"
+                    value={rulesFilter}
+                    onChange={(e) => setRulesFilter(e.target.value)}
+                    disabled={isRunning || rulesFilesLoading || rulesFiles.length === 0}
+                  />
+                </div>
+                {rulesFilesError && (
+                  <p className="small" role="alert">
+                    {rulesFilesError}
+                  </p>
+                )}
+                {!rulesFilesError && (
+                  <p className="small">
+                    {rulesFilesLoading
+                      ? "Loading rule engine files..."
+                      : `${rulesFiles.length} file(s) visible in ${rulesLoadedDir || rulesDirectory}.`}
+                  </p>
+                )}
+                {visibleRulesFiles.length === 0 && !rulesFilesLoading ? (
+                  <p className="small">
+                    {rulesFiles.length === 0
+                      ? `Directory is empty: ${rulesLoadedDir || rulesDirectory}.`
+                      : "No files match the current filter."}
+                  </p>
+                ) : (
+                  <ul className="ticket-picker-list is-expanded" aria-label="Rule engine files list">
+                    {visibleRulesFiles.map((file) => (
+                      <li
+                        key={file.path}
+                        className={`ticket-picker-item ${
+                          file.path === rulesSelectedPath ? "is-selected" : ""
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          className="ticket-pick-btn"
+                          onClick={() => {
+                            void loadRulesPreview(file.path);
+                          }}
+                          disabled={isRunning}
+                        >
+                          {file.name}
+                        </button>
+                        <p className="small ticket-meta">
+                          Updated: {formatTimestamp(file.modifiedAt)} | Size: {file.sizeBytes} bytes
+                        </p>
+                        <a
+                          className="link small"
+                          href={`/api/open-file?path=${encodeURIComponent(file.path)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Open file
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {filteredRulesFiles.length > visibleRulesFiles.length && (
+                  <p className="small">
+                    Showing first {visibleRulesFiles.length} results. Keep filtering to narrow the
+                    list.
+                  </p>
+                )}
+                <div className="ticket-detail-view">
+                  <h3>Selected File (Read-only)</h3>
+                  {rulesPreviewLoading ? (
+                    <p className="small">Loading file preview...</p>
+                  ) : rulesPreviewError ? (
+                    <p className="small" role="alert">
+                      {rulesPreviewError}
+                    </p>
+                  ) : rulesSelectedPath && rulesPreview ? (
+                    <>
+                      <div className="inline-actions">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyText(
+                              "Rule engine file contents",
+                              rulesPreview,
+                              setRulesCopyStatus
+                            )
+                          }
+                        >
+                          Copy details
+                        </button>
+                      </div>
+                      {rulesCopyStatus && <p className="small">{rulesCopyStatus}</p>}
+                      <p className="small">
+                        Source:
+                        {" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(rulesSelectedPath)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {rulesSelectedPath}
+                        </a>
+                      </p>
+                      <pre className="ticket-detail-json">{rulesPreview}</pre>
+                    </>
+                  ) : (
+                    <p className="small">Pick a file from the list to inspect details here.</p>
+                  )}
+                </div>
+              </article>
+            </div>
+          )}
+
+          {stage === "input" && workflow === "add-rule" && (
+            <div className="grid" aria-label="Input section">
+              <div className="field">
+                <label htmlFor="rule-ticket-key">Ticket key</label>
+                <input
+                  id="rule-ticket-key"
+                  placeholder="HPC-123456"
+                  value={ticketKey}
+                  onChange={(e) => setTicketKey(e.target.value.toUpperCase())}
+                  disabled={isRunning}
+                />
+                <p className="small">
+                  Required. Matches script prompt: <code>Ticket key (e.g. HPC-123456)</code>.
+                </p>
+                <p className="small">
+                  Use the <strong>Tickets in Normalized root</strong> tab to browse and inspect
+                  ticket payloads.
+                </p>
+              </div>
+              <div className="field">
+                <label htmlFor="rule-reason">Why should a new rule be added?</label>
+                <textarea
+                  id="rule-reason"
+                  rows={3}
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-failure-category">Category of Issue</label>
+                <input
+                  id="rule-failure-category"
+                  value={failureCategory}
+                  onChange={(e) => setFailureCategory(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-category">Category</label>
+                <input
+                  id="rule-category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-match-field">Match Field</label>
+                <input
+                  id="rule-match-field"
+                  placeholder="Leave blank to use default"
+                  value={matchField}
+                  onChange={(e) => setMatchField(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-pattern">Rule Pattern</label>
+                <input
+                  id="rule-pattern"
+                  placeholder="Leave blank to auto-generate"
+                  value={rulePattern}
+                  onChange={(e) => setRulePattern(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-ticket-json-dir">Ticket JSON dir</label>
+                <input
+                  id="rule-ticket-json-dir"
+                  value={ticketJsonDir}
+                  onChange={(e) => setTicketJsonDir(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-normalized-root">Normalized root</label>
+                <input
+                  id="rule-normalized-root"
+                  value={normalizedRoot}
+                  onChange={(e) => setNormalizedRoot(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-rules-engine">Rules engine</label>
+                <input
+                  id="rule-rules-engine"
+                  value={rulesEngine}
+                  onChange={(e) => setRulesEngine(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-match-field-default">CLI --match-field-default</label>
+                <input
+                  id="rule-match-field-default"
+                  value={matchFieldDefault}
+                  onChange={(e) => setMatchFieldDefault(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-priority">Priority</label>
+                <input
+                  id="rule-priority"
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-confidence">Confidence</label>
+                <input
+                  id="rule-confidence"
+                  value={confidence}
+                  onChange={(e) => setConfidence(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-created-by">Created By</label>
+                <input
+                  id="rule-created-by"
+                  value={createdBy}
+                  onChange={(e) => setCreatedBy(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="rule-hit-count">Hit Count</label>
+                <input
+                  id="rule-hit-count"
+                  value={hitCount}
+                  onChange={(e) => setHitCount(e.target.value)}
+                  disabled={isRunning}
+                />
+              </div>
+              <div>
+                <button className="primary" onClick={handleOk} disabled={isRunning}>
+                  {isRunning ? "Running..." : "OK"}
+                </button>
+              </div>
+              {error && (
+                <p className="small" role="alert">
+                  {error}
+                </p>
+              )}
+            </div>
+          )}
+
           {stage === "results" && (
             <div className="grid" aria-label="Results section">
               <span className={`badge run-state-${runState}`}>
                 {isRunning
-                  ? "Live local pipeline run (in progress)"
-                  : "Live local pipeline run"}
+                  ? workflow === "categorize"
+                    ? "Live local pipeline run (in progress)"
+                    : "Live local add-rule run (in progress)"
+                  : workflow === "categorize"
+                    ? "Live local pipeline run"
+                    : "Live local add-rule run"}
               </span>
               {isRunning && (
                 <p className={`small heartbeat-row run-state-${runState}`}>
@@ -460,28 +2144,30 @@ export default function HomePage() {
                     : " | Waiting for first log..."}
                 </p>
               )}
-              {stage === "results" && (
+              {workflow === "categorize" && (
                 <p className="small">
                   Pipeline completed via: `get_tickets.py` → `normalize_tickets.py` →
                   `rule_engine_categorize.py` → `create_summary.py`
                 </p>
               )}
-              {inputMode === "jql" && (
+              {workflow === "categorize" && inputMode === "jql" && (
                 <p className="small">Resolution filter used: {resolutionMode}</p>
               )}
-              <article className="card">
-                <h2>Pipeline Stages</h2>
-                <div className="pipeline-scroll">
-                  <div className="pipeline-grid">
-                    {PIPELINE_STEPS.map((step, idx) => (
-                      <div key={step} className={`pipeline-step step-${pipelineStatus[idx]}`}>
-                        <p className="pipeline-name">{step}</p>
-                        <p className="pipeline-state">{pipelineStatus[idx]}</p>
-                      </div>
-                    ))}
+              {workflow === "categorize" && (
+                <article className="card">
+                  <h2>Pipeline Stages</h2>
+                  <div className="pipeline-scroll">
+                    <div className="pipeline-grid">
+                      {PIPELINE_STEPS.map((step, idx) => (
+                        <div key={step} className={`pipeline-step step-${pipelineStatus[idx]}`}>
+                          <p className="pipeline-name">{step}</p>
+                          <p className="pipeline-state">{pipelineStatus[idx]}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              )}
               <p className="small">
                 Started: {formatTimestamp(startedAt)} | Finished: {formatTimestamp(finishedAt)} |
                 {" "}Elapsed: {isRunning
@@ -493,64 +2179,123 @@ export default function HomePage() {
               {wasCanceled && (
                 <p className="small">Run was canceled and artifacts were cleaned.</p>
               )}
-              <div className="cards">
-                <article className="card">
-                  <h2>Summary Output</h2>
-                  {summaryRows.length === 0 ? (
-                    <p className="small">No summary rows returned.</p>
-                  ) : (
-                    <table className="summary-table">
-                      <thead>
-                        <tr>
-                          <th>Category</th>
-                          <th>Percent</th>
-                          <th>Count</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {summaryRows.map((row) => (
-                          <tr key={`${row["Tickets Category"]}-${row["Count of Tickets"]}`}>
-                            <td>{row["Tickets Category"]}</td>
-                            <td>{row["Percentage of Total Tickets"]}</td>
-                            <td>{row["Count of Tickets"]}</td>
+              {workflow === "categorize" ? (
+                <div className="cards">
+                  <article className="card">
+                    <h2>Summary Output</h2>
+                    {summaryRows.length === 0 ? (
+                      <p className="small">No summary rows returned.</p>
+                    ) : (
+                      <table className="summary-table">
+                        <thead>
+                          <tr>
+                            <th>Category</th>
+                            <th>Percent</th>
+                            <th>Count</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </article>
-                <article className="card">
-                  <h2>Raw Data</h2>
-                  <p className="small">
-                    {resultPaths.ticketsCsv ? (
-                      <a
-                        className="link"
-                        href={`/api/open-file?path=${encodeURIComponent(resultPaths.ticketsCsv)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {resultPaths.ticketsCsv}
-                      </a>
-                    ) : (
-                      "tickets-categorized.csv"
+                        </thead>
+                        <tbody>
+                          {summaryRows.map((row) => (
+                            <tr key={`${row["Tickets Category"]}-${row["Count of Tickets"]}`}>
+                              <td>{row["Tickets Category"]}</td>
+                              <td>{row["Percentage of Total Tickets"]}</td>
+                              <td>{row["Count of Tickets"]}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     )}
-                  </p>
-                  <p className="small">
-                    {resultPaths.summaryCsv ? (
-                      <a
-                        className="link"
-                        href={`/api/open-file?path=${encodeURIComponent(resultPaths.summaryCsv)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {resultPaths.summaryCsv}
-                      </a>
-                    ) : (
-                      "tickets-summary.csv"
+                  </article>
+                  <article className="card">
+                    <h2>Raw Data</h2>
+                    <p className="small">
+                      {resultPaths.ticketsCsv ? (
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(resultPaths.ticketsCsv)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {resultPaths.ticketsCsv}
+                        </a>
+                      ) : (
+                        "tickets-categorized.csv"
+                      )}
+                    </p>
+                    <p className="small">
+                      {resultPaths.summaryCsv ? (
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(resultPaths.summaryCsv)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {resultPaths.summaryCsv}
+                        </a>
+                      ) : (
+                        "tickets-summary.csv"
+                      )}
+                    </p>
+                  </article>
+                </div>
+              ) : (
+                <div className="cards">
+                  <article className="card">
+                    <h2>Add Rule Result</h2>
+                    <p className="small">{addRuleResult.message || "Waiting for completion..."}</p>
+                    {addRuleResult.ruleId && (
+                      <p className="small">
+                        Rule ID: <code>{addRuleResult.ruleId}</code>
+                      </p>
                     )}
-                  </p>
-                </article>
-              </div>
+                  </article>
+                  <article className="card">
+                    <h2>Output Artifacts</h2>
+                    <p className="small">
+                      {addRuleResult.rulesEngine ? (
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(addRuleResult.rulesEngine)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {addRuleResult.rulesEngine}
+                        </a>
+                      ) : (
+                        "Rules engine path not available."
+                      )}
+                    </p>
+                    <p className="small">
+                      {addRuleResult.ticketJson ? (
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(addRuleResult.ticketJson)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {addRuleResult.ticketJson}
+                        </a>
+                      ) : (
+                        "Ticket JSON not found."
+                      )}
+                    </p>
+                    <p className="small">
+                      {addRuleResult.normalizedJson ? (
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(addRuleResult.normalizedJson)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {addRuleResult.normalizedJson}
+                        </a>
+                      ) : (
+                        "Normalized ticket JSON not found."
+                      )}
+                    </p>
+                  </article>
+                </div>
+              )}
               <article className="card">
                 <h2>Executed Commands</h2>
                 <div className="copy-actions">
@@ -594,10 +2339,12 @@ export default function HomePage() {
                     : commandLogs.join("\n")}
                 </pre>
               </article>
-              <article className="card">
-                <h2>Graphs of the data</h2>
-                <p className="small">Graph region placeholder for wireframe</p>
-              </article>
+              {workflow === "categorize" && (
+                <article className="card">
+                  <h2>Graphs of the data</h2>
+                  <p className="small">Graph region placeholder for wireframe</p>
+                </article>
+              )}
             </div>
           )}
         </div>

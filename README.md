@@ -208,6 +208,23 @@ UI pipeline API executes local scripts in this order:
 
 Outputs are written under `scripts/analysis/ui-runs/<run-id>/`.
 
+## UI Quality Gate (Required)
+
+For any change under `wireframe-ui/`, run this before handoff:
+
+```bash
+make ui-verify
+```
+
+`make ui-verify` is a blocking gate and runs:
+- `npm test` (unit tests)
+- `npx tsc --noEmit` (typecheck)
+- clean Next build (`rm -rf wireframe-ui/.next` + `npm run build`)
+- runtime smoke against built app (`make UI_SMOKE_MODE=start ui-runtime-smoke`) to catch runtime/chunk module errors such as `Cannot find module`
+- Playwright E2E (`npm run test:e2e`)
+
+If this gate fails, the UI change is not complete.
+
 # Tests
 
 Backend:
@@ -229,6 +246,18 @@ Wireframe E2E:
 make ui-e2e
 ```
 
+Wireframe fast local check (iteration loop):
+
+```bash
+make ui-quick
+```
+
+Wireframe full gate (required for `wireframe-ui/` changes):
+
+```bash
+make ui-verify
+```
+
 # Make Targets
 
 Show available commands:
@@ -242,9 +271,12 @@ Notable targets:
 - `run-training`
 - `run-training-inline`
 - `ui-e2e-setup`
+- `ui-quick`
+- `ui-clean-cache`
+- `ui-runtime-smoke`
 - `ui-e2e`
+- `ui-verify`
 - `test-ml_classifier`
 - `test-ml_train`
 - `ml-train`
 - `ml-categorize`
-

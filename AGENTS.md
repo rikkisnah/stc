@@ -130,4 +130,7 @@ All generated code MUST include:
 - For JQL-triggered UX runs, keep script artifacts confined under `scripts/analysis/ui-runs/`.
 - Preserve cancel semantics: cancel must stop active script execution and attempt artifact cleanup for that run.
 - Any UX behavior changes must include tests in `wireframe-ui/__tests__/` and keep `npm test` green.
+- Any change under `wireframe-ui/` MUST run `make ui-verify` before task handoff/review; this is a blocking quality gate.
+- `make ui-verify` is the required runtime guard because it clears `.next`, runs a clean build, runs runtime smoke against the built app (`UI_SMOKE_MODE=start`) for runtime/chunk module errors, and then runs Playwright E2E.
+- If `make ui-verify` fails (including `Cannot find module`/runtime overlay signatures), the task remains `[in-impl]` until fixed and re-verified.
 - Hydration-sensitive changes (timestamps/random data/locale formatting) require running Playwright E2E (`make ui-e2e`).
