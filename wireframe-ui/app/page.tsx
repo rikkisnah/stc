@@ -13,6 +13,7 @@ type Workflow =
   | "browse-tickets"
   | "browse-categorized"
   | "browse-rules"
+  | "browse-ml-model"
   | "train-stc"
   | "promote-to-golden";
 type DiffRowStatus = "added" | "removed" | "changed" | "unchanged";
@@ -54,6 +55,14 @@ type BrowserFileItem = {
   modifiedAt: string;
 };
 type RulesSource = "trained-data" | "golden";
+type MlModelSource = "working" | "golden";
+type MlModelInfo = {
+  exists: boolean;
+  sizeBytes: number;
+  modifiedAt: string;
+  report: string;
+  categoryMap: Record<string, string> | null;
+};
 
 const PIPELINE_STEPS = [
   "get_tickets.py",
@@ -102,10 +111,14 @@ const RULES_SOURCE_DIRS: Record<RulesSource, string> = {
   "trained-data": "scripts/trained-data",
   golden: "scripts/trained-data/golden-rules-engine"
 };
+const ML_MODEL_SOURCE_DIRS: Record<MlModelSource, string> = {
+  working: "scripts/trained-data/ml-model",
+  golden: "scripts/trained-data/golden-ml-model"
+};
 
 const VALID_WORKFLOWS = new Set<Workflow>([
   "categorize", "add-rule", "browse-tickets", "browse-categorized",
-  "browse-rules", "train-stc", "promote-to-golden"
+  "browse-rules", "browse-ml-model", "train-stc", "promote-to-golden"
 ]);
 
 function workflowFromHash(): Workflow {
@@ -302,6 +315,23 @@ export default function HomePage() {
     golden: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string };
     identical: boolean;
   } | null>(null);
+
+  // --- Browse ML Model state ---
+  const [mlViewSource, setMlViewSource] = useState<MlModelSource>("golden");
+  const [mlViewLoading, setMlViewLoading] = useState(false);
+  const [mlViewError, setMlViewError] = useState("");
+  const [mlViewData, setMlViewData] = useState<{
+    working: MlModelInfo;
+    golden: MlModelInfo;
+    identical: boolean;
+  } | null>(null);
+  const [mlViewMode, setMlViewMode] = useState<"single" | "compare">("single");
+
+  function formatBytes(bytes: number): string {
+    if (bytes === 0) return "0 B";
+    if (bytes < 1024) return `${bytes} B`;
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  }
 
   function formatTimestamp(iso: string): string {
     if (!iso) {
@@ -913,6 +943,31 @@ export default function HomePage() {
     }
     void loadRulesFiles(rulesDirectory);
   }, [workflow, stage, rulesLoadedDir, rulesDirectory]);
+
+  async function loadMlModelInfo() {
+    setMlViewLoading(true);
+    setMlViewError("");
+    setMlViewData(null);
+    try {
+      const params = new URLSearchParams({
+        source: ML_MODEL_SOURCE_DIRS.working,
+        target: ML_MODEL_SOURCE_DIRS.golden
+      });
+      const resp = await fetch(`/api/promote-ml-model?${params}`);
+      if (!resp.ok) throw new Error(`Failed to load ML model info: ${resp.statusText}`);
+      setMlViewData(await resp.json());
+    } catch (err) {
+      setMlViewError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setMlViewLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (workflow !== "browse-ml-model" || stage !== "input") return;
+    if (mlViewData) return;
+    void loadMlModelInfo();
+  }, [workflow, stage, mlViewData]);
 
   // Auto-skip human audit when the corresponding skip flag is enabled
   useEffect(() => {
@@ -2172,6 +2227,7 @@ export default function HomePage() {
               ["browse-tickets", "Tickets in Normalized root"],
               ["browse-categorized", "View Categorized Tickets"],
               ["browse-rules", "View Rules Engines"],
+              ["browse-ml-model", "View ML Models"],
               ["promote-to-golden", "Promote to Golden"],
               ["train-stc", "Train STC model"],
             ] as [Workflow, string][]).map(([wf, label]) => (
@@ -3169,6 +3225,238 @@ export default function HomePage() {
                     <p className="small">Pick a file from the list to inspect details here.</p>
                   )}
                 </div>
+              </article>
+            </div>
+          )}
+
+          {stage === "input" && workflow === "browse-ml-model" && (
+            <div className="grid" aria-label="Input section">
+              <article className="card">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                  <h2>View ML Models</h2>
+                  <button
+                    type="button"
+                    onClick={() => { setMlViewData(null); void loadMlModelInfo(); }}
+                    disabled={mlViewLoading}
+                  >
+                    {mlViewLoading ? "Loading..." : "Refresh"}
+                  </button>
+                </div>
+
+                <div className="field">
+                  <label htmlFor="ml-view-mode">View mode</label>
+                  <select
+                    id="ml-view-mode"
+                    value={mlViewMode}
+                    onChange={(e) => setMlViewMode(e.target.value as "single" | "compare")}
+                  >
+                    <option value="single">Single source</option>
+                    <option value="compare">Side-by-side comparison</option>
+                  </select>
+                </div>
+
+                {mlViewMode === "single" && (
+                  <div className="field">
+                    <label htmlFor="ml-view-source">Model source</label>
+                    <select
+                      id="ml-view-source"
+                      value={mlViewSource}
+                      onChange={(e) => setMlViewSource(e.target.value as MlModelSource)}
+                    >
+                      <option value="working">Working (ml-model/)</option>
+                      <option value="golden">Golden (golden-ml-model/)</option>
+                    </select>
+                    <p className="small">
+                      Source directory: <code>{ML_MODEL_SOURCE_DIRS[mlViewSource]}</code>
+                    </p>
+                  </div>
+                )}
+
+                {mlViewError && (
+                  <p className="small" role="alert" style={{ color: "var(--color-error, #c00)" }}>
+                    {mlViewError}
+                  </p>
+                )}
+
+                {mlViewLoading && <p className="small">Loading ML model information...</p>}
+
+                {mlViewData && mlViewMode === "single" && (() => {
+                  const model = mlViewData[mlViewSource];
+                  return (
+                    <div>
+                      <p className="small" style={{ fontWeight: "bold", color: model.exists ? "#2a7" : "#c33" }}>
+                        {model.exists ? "Available" : "Not found"}
+                      </p>
+                      {model.exists && (
+                        <>
+                          <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: "1rem" }}>
+                            <thead>
+                              <tr>
+                                <th style={{ textAlign: "left", padding: "4px 12px" }}>File</th>
+                                <th style={{ textAlign: "left", padding: "4px 12px" }}>Details</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td style={{ padding: "4px 12px" }}>classifier.joblib</td>
+                                <td style={{ padding: "4px 12px" }}>
+                                  {formatBytes(model.sizeBytes)} — modified {model.modifiedAt ? new Date(model.modifiedAt).toLocaleString() : "-"}
+                                  <br /><span className="small" style={{ color: "#888" }}>Binary model file (not viewable)</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style={{ padding: "4px 12px" }}>training_report.txt</td>
+                                <td style={{ padding: "4px 12px" }}>{model.report ? "Present" : "Not available"}</td>
+                              </tr>
+                              <tr>
+                                <td style={{ padding: "4px 12px" }}>category_map.json</td>
+                                <td style={{ padding: "4px 12px" }}>{model.categoryMap ? `${Object.keys(model.categoryMap).length} categories` : "Not available"}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          {model.report && (
+                            <>
+                              <h3>Training Report</h3>
+                              <pre style={{ background: "#f5f5f5", padding: "0.75rem", borderRadius: 6, fontSize: "0.8rem", maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap" }}>
+                                {model.report}
+                              </pre>
+                            </>
+                          )}
+                          {model.categoryMap && Object.keys(model.categoryMap).length > 0 && (
+                            <>
+                              <h3>Category Map</h3>
+                              <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: "1rem" }}>
+                                <thead>
+                                  <tr>
+                                    <th style={{ textAlign: "left", padding: "4px 12px" }}>Internal Category</th>
+                                    <th style={{ textAlign: "left", padding: "4px 12px" }}>Display Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {Object.entries(model.categoryMap).map(([key, val]) => (
+                                    <tr key={key}>
+                                      <td style={{ padding: "4px 12px" }}>{key}</td>
+                                      <td style={{ padding: "4px 12px" }}>{val}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {mlViewData && mlViewMode === "compare" && (
+                  <div>
+                    {mlViewData.identical && (
+                      <p className="small" style={{ color: "#2a7", fontWeight: "bold" }}>
+                        Models are identical.
+                      </p>
+                    )}
+                    <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: "1rem" }}>
+                      <thead>
+                        <tr>
+                          <th style={{ textAlign: "left", padding: "4px 12px" }}></th>
+                          <th style={{ textAlign: "left", padding: "4px 12px" }}>Working (ml-model/)</th>
+                          <th style={{ textAlign: "left", padding: "4px 12px" }}>Golden (golden-ml-model/)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Status</td>
+                          <td style={{ padding: "4px 12px", color: mlViewData.working.exists ? "#2a7" : "#c33" }}>
+                            {mlViewData.working.exists ? "Available" : "Not found"}
+                          </td>
+                          <td style={{ padding: "4px 12px", color: mlViewData.golden.exists ? "#2a7" : "#c33" }}>
+                            {mlViewData.golden.exists ? "Available" : "Not found"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Size</td>
+                          <td style={{ padding: "4px 12px" }}>{mlViewData.working.exists ? formatBytes(mlViewData.working.sizeBytes) : "-"}</td>
+                          <td style={{ padding: "4px 12px" }}>{mlViewData.golden.exists ? formatBytes(mlViewData.golden.sizeBytes) : "-"}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Last Modified</td>
+                          <td style={{ padding: "4px 12px" }}>{mlViewData.working.modifiedAt ? new Date(mlViewData.working.modifiedAt).toLocaleString() : "-"}</td>
+                          <td style={{ padding: "4px 12px" }}>{mlViewData.golden.modifiedAt ? new Date(mlViewData.golden.modifiedAt).toLocaleString() : "-"}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Categories</td>
+                          <td style={{ padding: "4px 12px" }}>{mlViewData.working.categoryMap ? Object.keys(mlViewData.working.categoryMap).length : "-"}</td>
+                          <td style={{ padding: "4px 12px" }}>{mlViewData.golden.categoryMap ? Object.keys(mlViewData.golden.categoryMap).length : "-"}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                      {mlViewData.working.report && (
+                        <div style={{ flex: "1 1 45%", minWidth: 300 }}>
+                          <h3>Working Model Report</h3>
+                          <pre style={{ background: "#f5f5f5", padding: "0.75rem", borderRadius: 6, fontSize: "0.8rem", maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap" }}>
+                            {mlViewData.working.report}
+                          </pre>
+                        </div>
+                      )}
+                      {mlViewData.golden.report && (
+                        <div style={{ flex: "1 1 45%", minWidth: 300 }}>
+                          <h3>Golden Model Report</h3>
+                          <pre style={{ background: "#f5f5f5", padding: "0.75rem", borderRadius: 6, fontSize: "0.8rem", maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap" }}>
+                            {mlViewData.golden.report}
+                          </pre>
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1rem" }}>
+                      {mlViewData.working.categoryMap && Object.keys(mlViewData.working.categoryMap).length > 0 && (
+                        <div style={{ flex: "1 1 45%", minWidth: 300 }}>
+                          <h3>Working Category Map</h3>
+                          <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                            <thead>
+                              <tr>
+                                <th style={{ textAlign: "left", padding: "4px 12px" }}>Internal Category</th>
+                                <th style={{ textAlign: "left", padding: "4px 12px" }}>Display Name</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Object.entries(mlViewData.working.categoryMap).map(([key, val]) => (
+                                <tr key={key}>
+                                  <td style={{ padding: "4px 12px" }}>{key}</td>
+                                  <td style={{ padding: "4px 12px" }}>{val}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                      {mlViewData.golden.categoryMap && Object.keys(mlViewData.golden.categoryMap).length > 0 && (
+                        <div style={{ flex: "1 1 45%", minWidth: 300 }}>
+                          <h3>Golden Category Map</h3>
+                          <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                            <thead>
+                              <tr>
+                                <th style={{ textAlign: "left", padding: "4px 12px" }}>Internal Category</th>
+                                <th style={{ textAlign: "left", padding: "4px 12px" }}>Display Name</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Object.entries(mlViewData.golden.categoryMap).map(([key, val]) => (
+                                <tr key={key}>
+                                  <td style={{ padding: "4px 12px" }}>{key}</td>
+                                  <td style={{ padding: "4px 12px" }}>{val}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </article>
             </div>
           )}

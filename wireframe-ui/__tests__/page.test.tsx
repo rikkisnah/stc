@@ -1145,3 +1145,159 @@ describe("STC wireframe flow", () => {
     });
   });
 });
+
+describe("View ML Models workflow", () => {
+  const mlModelResponse = {
+    working: {
+      exists: true,
+      sizeBytes: 242940,
+      modifiedAt: "2026-02-16T02:06:05.000Z",
+      report: "Training Report\n===============\nCV Accuracy: 0.9663",
+      categoryMap: {
+        "CPV CDFP Fault - Auto Resolved (TRS)": "CDFP",
+        "Potential Test Issue - Retest Passed": "Potential Test Issue"
+      }
+    },
+    golden: {
+      exists: true,
+      sizeBytes: 242940,
+      modifiedAt: "2026-02-16T02:06:05.000Z",
+      report: "Training Report\n===============\nCV Accuracy: 0.9663",
+      categoryMap: {
+        "CPV CDFP Fault - Auto Resolved (TRS)": "CDFP",
+        "Potential Test Issue - Retest Passed": "Potential Test Issue"
+      }
+    },
+    identical: true
+  };
+
+  beforeEach(() => {
+    window.history.replaceState(null, "", window.location.pathname);
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mlModelResponse
+    }) as unknown as typeof fetch;
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+  });
+
+  it("shows View ML Models in workflow menu", () => {
+    render(<HomePage />);
+    const link = screen.getByRole("link", { name: /view ml models/i });
+    expect(link).toBeInTheDocument();
+  });
+
+  it("auto-loads ML model info when entering workflow", async () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/promote-ml-model?")
+      );
+    });
+  });
+
+  it("displays model metadata for golden source", async () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Available")).toBeInTheDocument();
+    });
+
+    expect(screen.getByText("classifier.joblib")).toBeInTheDocument();
+    expect(screen.getByText(/237\.2 KB/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /training report/i })).toBeInTheDocument();
+    expect(screen.getByText(/CV Accuracy: 0.9663/)).toBeInTheDocument();
+    expect(screen.getByText("2 categories")).toBeInTheDocument();
+    expect(screen.getByText("CDFP")).toBeInTheDocument();
+  });
+
+  it("shows Not found when model does not exist", async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        ...mlModelResponse,
+        working: { exists: false, sizeBytes: 0, modifiedAt: "", report: "", categoryMap: null }
+      })
+    }) as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    // Switch to working source
+    await waitFor(() => {
+      expect(screen.getByLabelText(/model source/i)).toBeInTheDocument();
+    });
+    fireEvent.change(screen.getByLabelText(/model source/i), { target: { value: "working" } });
+
+    expect(screen.getByText("Not found")).toBeInTheDocument();
+  });
+
+  it("shows side-by-side comparison when compare mode selected", async () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/view mode/i)).toBeInTheDocument();
+    });
+    fireEvent.change(screen.getByLabelText(/view mode/i), { target: { value: "compare" } });
+
+    expect(screen.getByText(/Working \(ml-model\/\)/)).toBeInTheDocument();
+    expect(screen.getByText(/Golden \(golden-ml-model\/\)/)).toBeInTheDocument();
+  });
+
+  it("shows identical badge when models match", async () => {
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/view mode/i)).toBeInTheDocument();
+    });
+    fireEvent.change(screen.getByLabelText(/view mode/i), { target: { value: "compare" } });
+
+    expect(screen.getByText(/models are identical/i)).toBeInTheDocument();
+  });
+
+  it("shows error on API failure", async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      statusText: "Internal Server Error"
+    }) as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(/failed to load ml model info/i);
+    });
+  });
+
+  it("refresh button reloads model info", async () => {
+    const mockFetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mlModelResponse
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("link", { name: /view ml models/i }));
+
+    // Wait for initial load to complete (button text changes from Loading... to Refresh)
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /refresh/i })).toBeInTheDocument();
+    });
+    const callsAfterLoad = mockFetch.mock.calls.length;
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /refresh/i }));
+    });
+
+    await waitFor(() => {
+      expect(mockFetch.mock.calls.length).toBeGreaterThan(callsAfterLoad);
+    });
+  });
+});

@@ -11,11 +11,12 @@ const DEFAULT_SOURCE = "scripts/trained-data/ml-model";
 const DEFAULT_TARGET = "scripts/trained-data/golden-ml-model";
 
 async function readDirInfo(dirPath: string) {
-  const info: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string } = {
+  const info: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string; categoryMap: Record<string, string> | null } = {
     exists: false,
     sizeBytes: 0,
     modifiedAt: "",
     report: "",
+    categoryMap: null,
   };
   try {
     const modelStat = await fs.stat(path.join(dirPath, "classifier.joblib"));
@@ -29,6 +30,12 @@ async function readDirInfo(dirPath: string) {
     info.report = await fs.readFile(path.join(dirPath, "training_report.txt"), "utf-8");
   } catch {
     // no report available
+  }
+  try {
+    const mapRaw = await fs.readFile(path.join(dirPath, "category_map.json"), "utf-8");
+    info.categoryMap = JSON.parse(mapRaw);
+  } catch {
+    // no category map available
   }
   return info;
 }
