@@ -2082,20 +2082,25 @@ export default function HomePage() {
       <section className="panel">
         <header className="header">
           <h1 className="title">
-            <button
+            <a
+              href="/"
               className="home-link"
-              onClick={() => {
+              onClick={(e) => {
                 if (isRunning && workflow === "train-stc") {
                   const leave = window.confirm("A training run is in progress. Leaving will cancel it. Continue?");
-                  if (!leave) return;
+                  if (!leave) {
+                    e.preventDefault();
+                    return;
+                  }
                   abortRef.current?.abort();
                 }
+                e.preventDefault();
                 setStage("landing");
               }}
               aria-label="Go to home"
             >
               Smart Tickets&apos; Classifier (STC)
-            </button>
+            </a>
           </h1>
           <p className="subtitle">v0.1 wireframe preview</p>
         </header>

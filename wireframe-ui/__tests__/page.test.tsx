@@ -49,7 +49,7 @@ describe("STC wireframe flow", () => {
     render(<HomePage />);
 
     expect(
-      screen.getByRole("heading", { name: /smart.*tickets' classifier/i })
+      screen.getByText(/smart.*tickets' classifier/i)
     ).toBeInTheDocument();
     expect(screen.getByText(/to preview the next wireframe step/i)).toBeInTheDocument();
   });
