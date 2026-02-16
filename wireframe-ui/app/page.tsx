@@ -214,6 +214,7 @@ export default function HomePage() {
   const rulesGridTopSpacerRef = useRef<HTMLDivElement | null>(null);
   const rulesScrollSyncRef = useRef<"top" | "body" | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const logBlockRef = useRef<HTMLPreElement | null>(null);
 
   // --- Train STC state ---
   const [trainInputMode, setTrainInputMode] = useState<InputMode>("jql");
@@ -393,6 +394,13 @@ export default function HomePage() {
       window.clearInterval(timer);
     };
   }, [isRunning, startedAt]);
+
+  useEffect(() => {
+    const el = logBlockRef.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [commandLogs]);
 
   async function loadTicketList(dirOverride?: string) {
     const directory = (dirOverride || normalizedRoot).trim();
@@ -3902,7 +3910,7 @@ export default function HomePage() {
                   />{" "}
                   Wrap lines
                 </label>
-                <pre className={`log-block ${wrapLogs ? "wrap" : "no-wrap"}`}>
+                <pre ref={logBlockRef} className={`log-block ${wrapLogs ? "wrap" : "no-wrap"}`}>
                   {commandLogs.length === 0
                     ? "No logs yet."
                     : commandLogs.join("\n")}

@@ -23,7 +23,7 @@ function runCommand(
   onStderr?: (line: string) => void
 ): Promise<{ stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
-    const child = spawn("uv", ["run", "python3", ...args], { cwd });
+    const child = spawn("uv", ["run", "python3", "-u", ...args], { cwd });
     setActiveChild?.(child);
     let stdout = "";
     let stderr = "";

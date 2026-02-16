@@ -38,6 +38,10 @@ AND "Component / Item" NOT IN cascadeOption(10046, 10064)"""
 RESOLVED_FILTER = '\n     AND resolution = Resolved'
 UNRESOLVED_FILTER = '\n     AND resolution = Unresolved'
 
+REQUEST_TIMEOUT_SECONDS = 45
+REQUEST_RETRY_COUNT = 3
+REQUEST_RETRY_DELAY_SECONDS = 2
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = SCRIPT_DIR / "tickets-json"
 CONFIG_ENV_PATH = SCRIPT_DIR.parent / "env.json"
@@ -82,6 +86,43 @@ def make_headers():
         "Authorization": f"Bearer {load_jira_token()}",
         "Accept": "application/json",
     }
+
+
+def _request_json(url, *, headers=None, params=None, context="Jira request"):
+    """Run a GET request with timeout + retry and return the JSON body.
+
+    Raises SystemExit on repeated request failures so callers get a clear
+    error instead of waiting indefinitely.
+    """
+
+    for attempt in range(1, REQUEST_RETRY_COUNT + 1):
+        try:
+            resp = requests.get(
+                url,
+                headers=headers,
+                params=params,
+                timeout=REQUEST_TIMEOUT_SECONDS,
+            )
+            resp.raise_for_status()
+            return resp.json()
+        except requests.Timeout:
+            print(
+                f"Warning: {context} timed out (attempt {attempt}/{REQUEST_RETRY_COUNT}).",
+                file=sys.stderr,
+            )
+        except requests.RequestException as exc:
+            print(
+                f"Warning: {context} failed (attempt {attempt}/{REQUEST_RETRY_COUNT}): {exc}",
+                file=sys.stderr,
+            )
+        if attempt < REQUEST_RETRY_COUNT:
+            time.sleep(REQUEST_RETRY_DELAY_SECONDS)
+
+    print(
+        f"Error: {context} failed after {REQUEST_RETRY_COUNT} attempt(s); aborting.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
 
 
 def parse_ticket_key(value):
@@ -190,9 +231,7 @@ def fetch_single_ticket(ticket_key):
     """Fetch a single ticket by its key."""
     print(f"Fetching ticket {ticket_key}...")
     url = f"{BASE_URL}/rest/api/2/issue/{ticket_key}"
-    resp = requests.get(url, headers=make_headers())
-
-    data = resp.json()
+    data = _request_json(url, headers=make_headers(), context=f"fetch_single_ticket {ticket_key}")
 
     errors = data.get("errorMessages")
     if errors:
@@ -276,7 +315,7 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
 
     while True:
         print(f"Fetching tickets starting at {start_at}...")
-        resp = requests.get(
+        data = _request_json(
             f"{BASE_URL}/rest/api/2/search",
             headers=headers,
             params={
@@ -285,9 +324,8 @@ def fetch_search(date_filter="", force=False, include_unresolved=False,
                 "maxResults": max_results,
                 "fields": "*all,comment",
             },
+            context=f"fetch_search startAt={start_at} maxResults={max_results}",
         )
-
-        data = resp.json()
         issues = data.get("issues")
 
         if issues is None:
