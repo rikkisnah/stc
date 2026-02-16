@@ -169,6 +169,17 @@ export default function HomePage() {
   const [rulesPreviewLoading, setRulesPreviewLoading] = useState(false);
   const [rulesPreviewError, setRulesPreviewError] = useState("");
   const [rulesCopyStatus, setRulesCopyStatus] = useState("");
+  const [rulesTableRows, setRulesTableRows] = useState<string[][]>([]);
+  const [rulesTableError, setRulesTableError] = useState("");
+  const [rulesEditorText, setRulesEditorText] = useState("");
+  const [rulesSaving, setRulesSaving] = useState(false);
+  const [rulesSaveStatus, setRulesSaveStatus] = useState("");
+  const [rulesScrollLeft, setRulesScrollLeft] = useState(0);
+  const [rulesScrollMax, setRulesScrollMax] = useState(0);
+  const rulesGridShellRef = useRef<HTMLDivElement | null>(null);
+  const rulesGridTopScrollRef = useRef<HTMLDivElement | null>(null);
+  const rulesGridTopSpacerRef = useRef<HTMLDivElement | null>(null);
+  const rulesScrollSyncRef = useRef<"top" | "body" | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   function formatTimestamp(iso: string): string {
@@ -522,6 +533,7 @@ export default function HomePage() {
     setRulesFilesLoading(true);
     setRulesFilesError("");
     setRulesCopyStatus("");
+    setRulesSaveStatus("");
     setRulesPreviewError("");
 
     try {
@@ -538,6 +550,9 @@ export default function HomePage() {
       if (!files.some((file) => file.path === rulesSelectedPath)) {
         setRulesSelectedPath("");
         setRulesPreview("");
+        setRulesEditorText("");
+        setRulesTableRows([]);
+        setRulesTableError("");
         setRulesPreviewError("");
       }
     } catch (loadError) {
@@ -546,6 +561,9 @@ export default function HomePage() {
       setRulesFiles([]);
       setRulesSelectedPath("");
       setRulesPreview("");
+      setRulesEditorText("");
+      setRulesTableRows([]);
+      setRulesTableError("");
       setRulesPreviewError("");
       setRulesFilesError(message);
     } finally {
@@ -558,6 +576,7 @@ export default function HomePage() {
     setRulesPreviewLoading(true);
     setRulesPreviewError("");
     setRulesCopyStatus("");
+    setRulesSaveStatus("");
 
     try {
       const response = await fetch(`/api/open-file?path=${encodeURIComponent(filePath)}`);
@@ -567,13 +586,66 @@ export default function HomePage() {
       }
       const content = await response.text();
       setRulesPreview(content);
+      setRulesEditorText(content);
+      try {
+        setRulesTableRows(parseCsvRows(content));
+        setRulesTableError("");
+      } catch (csvError) {
+        setRulesTableRows([]);
+        const csvMessage =
+          csvError instanceof Error ? csvError.message : "CSV parse error.";
+        setRulesTableError(csvMessage);
+      }
     } catch (loadError) {
       const message =
         loadError instanceof Error ? loadError.message : "Failed to load rule engine file.";
       setRulesPreview("");
+      setRulesEditorText("");
+      setRulesTableRows([]);
+      setRulesTableError("");
       setRulesPreviewError(message);
     } finally {
       setRulesPreviewLoading(false);
+    }
+  }
+
+  async function saveRulesFile() {
+    if (!rulesSelectedPath) {
+      setRulesSaveStatus("Select a file before saving.");
+      return;
+    }
+
+    setRulesSaving(true);
+    setRulesSaveStatus("");
+    const contentToSave = rulesTableRows.length > 0
+      ? serializeCsvRows(rulesTableRows)
+      : rulesEditorText;
+
+    try {
+      const response = await fetch("/api/save-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          path: rulesSelectedPath,
+          content: contentToSave
+        })
+      });
+      if (!response.ok) {
+        const message = await readJsonError(response, "Failed to save rule engine file.");
+        throw new Error(message);
+      }
+      setRulesPreview(contentToSave);
+      setRulesEditorText(contentToSave);
+      if (rulesLoadedDir) {
+        await loadRulesFiles(rulesLoadedDir);
+      }
+      setRulesSaveStatus("File saved.");
+    } catch (saveError) {
+      const message =
+        saveError instanceof Error ? saveError.message : "Failed to save rule engine file.";
+      setRulesSaveStatus(message);
+    } finally {
+      setRulesSaving(false);
     }
   }
 
@@ -1047,6 +1119,110 @@ export default function HomePage() {
     setCategorizedHorizontalScrollPosition(parsed);
   }
 
+  function updateRulesCell(rowIndex: number, colIndex: number, value: string) {
+    setRulesTableRows((prevRows) => {
+      const nextRows = prevRows.map((row) => [...row]);
+      while (nextRows.length <= rowIndex) {
+        nextRows.push([]);
+      }
+      while (nextRows[rowIndex].length <= colIndex) {
+        nextRows[rowIndex].push("");
+      }
+      nextRows[rowIndex][colIndex] = value;
+      return nextRows;
+    });
+    setRulesCopyStatus("");
+    setRulesSaveStatus("");
+  }
+
+  function resetRulesChanges() {
+    try {
+      const rows = parseCsvRows(rulesPreview);
+      setRulesTableRows(rows);
+      setRulesTableError("");
+    } catch {
+      setRulesTableRows([]);
+      setRulesTableError("CSV parse error. Showing raw editor fallback.");
+      setRulesEditorText(rulesPreview);
+    }
+    setRulesCopyStatus("");
+    setRulesSaveStatus("");
+  }
+
+  function syncRulesScrollTracks() {
+    const shell = rulesGridShellRef.current;
+    const topScroll = rulesGridTopScrollRef.current;
+    const topSpacer = rulesGridTopSpacerRef.current;
+    if (!shell || !topScroll || !topSpacer) {
+      return;
+    }
+    const maxLeft = Math.max(0, shell.scrollWidth - shell.clientWidth);
+    setRulesScrollLeft(shell.scrollLeft);
+    setRulesScrollMax(maxLeft);
+    topSpacer.style.width = `${shell.scrollWidth}px`;
+    topScroll.scrollLeft = shell.scrollLeft;
+  }
+
+  function setRulesHorizontalScrollPosition(nextLeft: number, smooth = false) {
+    const shell = rulesGridShellRef.current;
+    const topScroll = rulesGridTopScrollRef.current;
+    if (!shell) {
+      return;
+    }
+    const maxLeft = Math.max(0, shell.scrollWidth - shell.clientWidth);
+    const clamped = Math.min(Math.max(0, nextLeft), maxLeft);
+    shell.scrollTo({ left: clamped, behavior: smooth ? "smooth" : "auto" });
+    if (topScroll) {
+      topScroll.scrollLeft = clamped;
+    }
+    setRulesScrollLeft(clamped);
+    setRulesScrollMax(maxLeft);
+  }
+
+  function handleRulesGridShellScroll() {
+    const shell = rulesGridShellRef.current;
+    const topScroll = rulesGridTopScrollRef.current;
+    if (!shell || !topScroll || rulesScrollSyncRef.current === "top") {
+      return;
+    }
+    rulesScrollSyncRef.current = "body";
+    topScroll.scrollLeft = shell.scrollLeft;
+    setRulesScrollLeft(shell.scrollLeft);
+    setRulesScrollMax(Math.max(0, shell.scrollWidth - shell.clientWidth));
+    rulesScrollSyncRef.current = null;
+  }
+
+  function handleRulesGridTopScroll() {
+    const shell = rulesGridShellRef.current;
+    const topScroll = rulesGridTopScrollRef.current;
+    if (!shell || !topScroll || rulesScrollSyncRef.current === "body") {
+      return;
+    }
+    rulesScrollSyncRef.current = "top";
+    shell.scrollLeft = topScroll.scrollLeft;
+    setRulesScrollLeft(shell.scrollLeft);
+    setRulesScrollMax(Math.max(0, shell.scrollWidth - shell.clientWidth));
+    rulesScrollSyncRef.current = null;
+  }
+
+  function nudgeRulesHorizontal(direction: "left" | "right") {
+    const shell = rulesGridShellRef.current;
+    if (!shell) {
+      return;
+    }
+    const step = Math.max(220, Math.floor(shell.clientWidth * 0.35));
+    const next = direction === "left" ? shell.scrollLeft - step : shell.scrollLeft + step;
+    setRulesHorizontalScrollPosition(next, true);
+  }
+
+  function handleRulesHorizontalSlider(value: string) {
+    const parsed = Number.parseInt(value, 10);
+    if (Number.isNaN(parsed)) {
+      return;
+    }
+    setRulesHorizontalScrollPosition(parsed);
+  }
+
   const runState =
     isRunning ? "running" : error ? "failed" : finishedAt ? "success" : "idle";
   const normalizedTicketKey = ticketKey.trim().toUpperCase();
@@ -1125,6 +1301,54 @@ export default function HomePage() {
     return rulesFiles.filter((file) => file.name.toUpperCase().includes(filter));
   }, [rulesFilter, rulesFiles]);
   const visibleRulesFiles = filteredRulesFiles.slice(0, 200);
+  const rulesMaxCols = useMemo(() => {
+    if (rulesTableRows.length === 0) {
+      return 0;
+    }
+    return rulesTableRows.reduce((maxCols, row) => Math.max(maxCols, row.length), 0);
+  }, [rulesTableRows]);
+  const rulesDisplayRows = useMemo(() => {
+    if (rulesMaxCols === 0) {
+      return rulesTableRows;
+    }
+    return rulesTableRows.map((row) => {
+      const nextRow = [...row];
+      while (nextRow.length < rulesMaxCols) {
+        nextRow.push("");
+      }
+      return nextRow;
+    });
+  }, [rulesTableRows, rulesMaxCols]);
+  const rulesVisibleRows = useMemo(() => {
+    if (rulesDisplayRows.length <= 1) {
+      return rulesDisplayRows;
+    }
+    return [rulesDisplayRows[0], ...rulesDisplayRows.slice(1, 51)];
+  }, [rulesDisplayRows]);
+  const rulesHiddenRowCount = Math.max(
+    0,
+    rulesDisplayRows.length - rulesVisibleRows.length
+  );
+  const rulesCanScrollLeft = rulesScrollLeft > 0;
+  const rulesCanScrollRight = rulesScrollLeft < rulesScrollMax;
+  useEffect(() => {
+    syncRulesScrollTracks();
+    function handleResize() {
+      syncRulesScrollTracks();
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [rulesVisibleRows, rulesMaxCols, rulesSelectedPath, rulesTableError]);
+  const rulesCurrentText = useMemo(() => {
+    if (rulesTableRows.length > 0) {
+      return serializeCsvRows(rulesTableRows);
+    }
+    return rulesEditorText;
+  }, [rulesTableRows, rulesEditorText]);
+  const rulesHasChanges =
+    Boolean(rulesSelectedPath) && rulesCurrentText !== rulesPreview;
 
   return (
     <main>
@@ -1845,8 +2069,12 @@ export default function HomePage() {
                       setRulesFiles([]);
                       setRulesSelectedPath("");
                       setRulesPreview("");
+                      setRulesEditorText("");
+                      setRulesTableRows([]);
+                      setRulesTableError("");
                       setRulesPreviewError("");
                       setRulesCopyStatus("");
+                      setRulesSaveStatus("");
                     }}
                     disabled={isRunning || rulesFilesLoading}
                   >
@@ -1907,6 +2135,9 @@ export default function HomePage() {
                         <p className="small ticket-meta">
                           Updated: {formatTimestamp(file.modifiedAt)} | Size: {file.sizeBytes} bytes
                         </p>
+                        <p className="small ticket-meta">
+                          Folder: <code>{toDisplayFolderPath(file.path)}</code>
+                        </p>
                         <a
                           className="link small"
                           href={`/api/open-file?path=${encodeURIComponent(file.path)}`}
@@ -1926,14 +2157,14 @@ export default function HomePage() {
                   </p>
                 )}
                 <div className="ticket-detail-view">
-                  <h3>Selected File (Read-only)</h3>
+                  <h3>Selected File (View/Edit)</h3>
                   {rulesPreviewLoading ? (
                     <p className="small">Loading file preview...</p>
                   ) : rulesPreviewError ? (
                     <p className="small" role="alert">
                       {rulesPreviewError}
                     </p>
-                  ) : rulesSelectedPath && rulesPreview ? (
+                  ) : rulesSelectedPath ? (
                     <>
                       <div className="inline-actions">
                         <button
@@ -1941,28 +2172,195 @@ export default function HomePage() {
                           onClick={() =>
                             copyText(
                               "Rule engine file contents",
-                              rulesPreview,
+                              rulesCurrentText,
                               setRulesCopyStatus
                             )
                           }
+                          disabled={rulesPreviewLoading}
                         >
                           Copy details
                         </button>
+                        <button
+                          type="button"
+                          onClick={resetRulesChanges}
+                          disabled={rulesSaving || !rulesHasChanges}
+                        >
+                          Reset changes
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            void saveRulesFile();
+                          }}
+                          disabled={rulesSaving || !rulesHasChanges}
+                        >
+                          {rulesSaving ? "Saving..." : "Save changes"}
+                        </button>
                       </div>
                       {rulesCopyStatus && <p className="small">{rulesCopyStatus}</p>}
+                      {rulesSaveStatus && <p className="small">{rulesSaveStatus}</p>}
                       <p className="small">
                         Source:
                         {" "}
+                        <code>{rulesSelectedPath}</code>
+                      </p>
+                      <p className="small">
                         <a
                           className="link"
-                          href={`/api/open-file?path=${encodeURIComponent(rulesSelectedPath)}`}
+                          href={`/api/open-file?path=${encodeURIComponent(rulesSelectedPath)}&download=1`}
                           target="_blank"
                           rel="noreferrer"
                         >
-                          {rulesSelectedPath}
+                          Download selected file
                         </a>
                       </p>
-                      <pre className="ticket-detail-json">{rulesPreview}</pre>
+                      <div className="field">
+                        {rulesTableError ? (
+                          <label htmlFor="rules-editor">In-place file editor</label>
+                        ) : (
+                          <p className="small">In-place file editor</p>
+                        )}
+                        {rulesTableError ? (
+                          <>
+                            <p className="small" role="alert">
+                              {rulesTableError}
+                            </p>
+                            <textarea
+                              id="rules-editor"
+                              rows={16}
+                              value={rulesEditorText}
+                              onChange={(e) => {
+                                setRulesEditorText(e.target.value);
+                                setRulesCopyStatus("");
+                                setRulesSaveStatus("");
+                              }}
+                              disabled={rulesSaving}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <div className="csv-grid-nav" aria-label="Horizontal scroll controls">
+                              <button
+                                type="button"
+                                className="csv-grid-nav-btn"
+                                onClick={() => nudgeRulesHorizontal("left")}
+                                disabled={rulesSaving}
+                              >
+                                Scroll left
+                              </button>
+                              <button
+                                type="button"
+                                className="csv-grid-nav-btn"
+                                onClick={() => nudgeRulesHorizontal("right")}
+                                disabled={rulesSaving}
+                              >
+                                Scroll right
+                              </button>
+                            </div>
+                            <div className="csv-grid-slider">
+                              <label className="small" htmlFor="rules-horizontal-scroll">
+                                Drag left/right
+                              </label>
+                              <input
+                                id="rules-horizontal-scroll"
+                                className="csv-grid-slider-input"
+                                type="range"
+                                min={0}
+                                max={Math.max(1, rulesScrollMax)}
+                                value={Math.min(rulesScrollLeft, Math.max(1, rulesScrollMax))}
+                                onChange={(e) => handleRulesHorizontalSlider(e.target.value)}
+                                disabled={rulesSaving || rulesScrollMax <= 0}
+                                aria-label="Horizontal drag scrollbar"
+                              />
+                            </div>
+                            <div
+                              className="csv-grid-top-scroll"
+                              aria-hidden="true"
+                              ref={rulesGridTopScrollRef}
+                              onScroll={handleRulesGridTopScroll}
+                            >
+                              <div className="csv-grid-top-spacer" ref={rulesGridTopSpacerRef} />
+                            </div>
+                            <div className="csv-grid-frame">
+                              <button
+                                type="button"
+                                className="csv-grid-edge-btn left"
+                                onClick={() => nudgeRulesHorizontal("left")}
+                                disabled={rulesSaving || !rulesCanScrollLeft}
+                                aria-label="Scroll table left"
+                              >
+                                {"<"}
+                              </button>
+                              <button
+                                type="button"
+                                className="csv-grid-edge-btn right"
+                                onClick={() => nudgeRulesHorizontal("right")}
+                                disabled={rulesSaving || !rulesCanScrollRight}
+                                aria-label="Scroll table right"
+                              >
+                                {">"}
+                              </button>
+                              <div
+                                className="csv-grid-shell"
+                                aria-label="In-place file editor"
+                                ref={rulesGridShellRef}
+                                onScroll={handleRulesGridShellScroll}
+                              >
+                                <div className="csv-grid-content">
+                                  <table className="csv-grid-table">
+                                    <thead>
+                                      <tr className="csv-grid-head">
+                                        <th className="csv-grid-index">#</th>
+                                        {(rulesVisibleRows[0] || []).map((cell, colIndex) => (
+                                          <th key={`rh-${colIndex}`}>
+                                            <input
+                                              className="csv-grid-input"
+                                              value={cell}
+                                              onChange={(e) =>
+                                                updateRulesCell(0, colIndex, e.target.value)
+                                              }
+                                              disabled={rulesSaving}
+                                            />
+                                          </th>
+                                        ))}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {rulesVisibleRows.slice(1).map((row, rowIndex) => (
+                                        <tr key={`rr-${rowIndex + 1}`}>
+                                          <th className="csv-grid-index">{rowIndex + 2}</th>
+                                          {row.map((cell, colIndex) => (
+                                            <td key={`rc-${rowIndex + 1}-${colIndex}`}>
+                                              <input
+                                                className="csv-grid-input"
+                                                value={cell}
+                                                onChange={(e) =>
+                                                  updateRulesCell(
+                                                    rowIndex + 1,
+                                                    colIndex,
+                                                    e.target.value
+                                                  )
+                                                }
+                                                disabled={rulesSaving}
+                                              />
+                                            </td>
+                                          ))}
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                            {rulesHiddenRowCount > 0 && (
+                              <p className="small">
+                                Showing first 50 rows by default. {rulesHiddenRowCount} more
+                                row(s) are still in the file.
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </div>
                     </>
                   ) : (
                     <p className="small">Pick a file from the list to inspect details here.</p>

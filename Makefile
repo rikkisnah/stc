@@ -1,4 +1,4 @@
-.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform ui-e2e-setup ui-quick ui-e2e ui-clean-cache ui-runtime-smoke ui-verify test-ml_classifier test-ml_train ml-train ml-categorize clean fmt lint
+.PHONY: help test test-get_tickets test-normalize_tickets test-get_tickets_cli test-rule_engine_categorize test-run_training run-training run-training-inline test-csv_jql_transform ui-e2e-setup ui-quick ui-e2e ui-clean-cache ui-runtime-smoke ui-verify test-ml_classifier test-ml_train ml-train ml-categorize sync-agent-guides check-agent-guides clean fmt lint
 
 PROMPT ?= prompts/update-rule-engine-prompt.md
 CODEX_TIMEOUT ?= 180
@@ -27,6 +27,8 @@ help:
 	@echo "  test-ml_train           Run ml_train unit tests"
 	@echo "  ml-train                Train local ML classifier"
 	@echo "  ml-categorize           Categorize tickets with ML fallback"
+	@echo "  sync-agent-guides       Copy AGENTS.md into CLAUDE.md"
+	@echo "  check-agent-guides      Check AGENTS.md and CLAUDE.md are in sync"
 	@echo "  clean                   Remove zip archives, tickets-json/, and normalized-tickets/"
 
 test:
@@ -154,6 +156,12 @@ ml-categorize:
 	uv run python scripts/rule_engine_categorize.py \
 		--ml-model scripts/trained-data/ml-model/classifier.joblib \
 		--ml-category-map scripts/trained-data/ml-model/category_map.json
+
+sync-agent-guides:
+	python3 scripts/sync_agents_claude.py
+
+check-agent-guides:
+	python3 scripts/sync_agents_claude.py --check
 
 clean:
 	rm -f scripts/*.zip

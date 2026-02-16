@@ -28,13 +28,18 @@ export async function POST(req: Request) {
   }
 
   const repoRoot = path.resolve(process.cwd(), "..");
-  const allowedRoot = path.resolve(repoRoot, "scripts", "analysis");
+  const allowedRoots = [
+    path.resolve(repoRoot, "scripts", "analysis"),
+    path.resolve(repoRoot, "scripts", "trained-data")
+  ];
   const resolvedPath = path.resolve(repoRoot, inputPath);
-  const isAllowed = resolvedPath === allowedRoot || resolvedPath.startsWith(allowedRoot + path.sep);
+  const isAllowed = allowedRoots.some(
+    (root) => resolvedPath === root || resolvedPath.startsWith(root + path.sep)
+  );
 
   if (!isAllowed) {
     return NextResponse.json(
-      { error: "Path is outside editable scripts/analysis directory." },
+      { error: "Path is outside editable directories (scripts/analysis, scripts/trained-data)." },
       { status: 403 }
     );
   }

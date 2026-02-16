@@ -53,18 +53,12 @@ go.sum
 .DS_Store
 Thumbs.db
 
-# Personal working notes
-?LAUDE.md
-
 # Script ticket and output data
 scripts/tickets-json/
 scripts/normalized-tickets/
 scripts/overnight-logs/
 scripts/logs/
 scripts/analysis/
-
-# Claude launcher scripts
-*claude*
 
 # codex configuration
 .codex
