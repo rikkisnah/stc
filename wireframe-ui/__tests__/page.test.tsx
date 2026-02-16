@@ -1,9 +1,34 @@
 // Code was generated via OCI AI and was reviewed by a human SDE
 // Tag: #ai-assisted
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import HomePage from "../app/page";
 
 const originalFetch = global.fetch;
+
+/**
+ * Create a mock Response with an NDJSON body stream that works in jsdom.
+ * Returns { ok, body } where body.getReader() returns a functioning reader.
+ */
+function mockNdjsonResponse(ndjsonLines: string[]) {
+  const encoded = new TextEncoder().encode(ndjsonLines.join("\n") + "\n");
+  let read = false;
+  return {
+    ok: true,
+    body: {
+      getReader() {
+        return {
+          read() {
+            if (!read) {
+              read = true;
+              return Promise.resolve({ value: encoded, done: false });
+            }
+            return Promise.resolve({ value: undefined, done: true });
+          }
+        };
+      }
+    }
+  };
+}
 
 describe("STC wireframe flow", () => {
   beforeEach(() => {
@@ -78,12 +103,14 @@ describe("STC wireframe flow", () => {
     const browseBtn = screen.getByRole("button", { name: /tickets in normalized root/i });
     const categorizedBtn = screen.getByRole("button", { name: /view categorized tickets/i });
     const rulesBtn = screen.getByRole("button", { name: /view rules engines/i });
+    const trainBtn = screen.getByRole("button", { name: /train stc model/i });
 
     expect(categorizeBtn).toHaveAttribute("aria-pressed", "true");
     expect(addRuleBtn).toHaveAttribute("aria-pressed", "false");
     expect(browseBtn).toHaveAttribute("aria-pressed", "false");
     expect(categorizedBtn).toHaveAttribute("aria-pressed", "false");
     expect(rulesBtn).toHaveAttribute("aria-pressed", "false");
+    expect(trainBtn).toHaveAttribute("aria-pressed", "false");
 
     fireEvent.click(addRuleBtn);
     expect(categorizeBtn).toHaveAttribute("aria-pressed", "false");
@@ -91,6 +118,7 @@ describe("STC wireframe flow", () => {
     expect(browseBtn).toHaveAttribute("aria-pressed", "false");
     expect(categorizedBtn).toHaveAttribute("aria-pressed", "false");
     expect(rulesBtn).toHaveAttribute("aria-pressed", "false");
+    expect(trainBtn).toHaveAttribute("aria-pressed", "false");
 
     fireEvent.click(browseBtn);
     expect(categorizeBtn).toHaveAttribute("aria-pressed", "false");
@@ -666,5 +694,451 @@ describe("STC wireframe flow", () => {
         "/api/list-files?dir=scripts%2Ftrained-data%2Fgolden-rules-engine&extensions=csv&nameContains=rule-engine&limit=500"
       )
     );
+  });
+
+  it("shows Train STC model tab with JQL input mode and default advanced params", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+
+    expect(screen.getByRole("radio", { name: /^jql$/i })).toBeChecked();
+    expect(screen.getByRole("radio", { name: /ticket list files/i })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: /^ticket ids$/i })).not.toBeChecked();
+    expect(screen.getByRole("button", { name: /^ok$/i })).toBeInTheDocument();
+  });
+
+  it("shows advanced training params with defaults in details section", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+
+    expect(screen.getByDisplayValue("scripts/trained-data/ml-training-data.csv")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("20")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("200")).toBeInTheDocument();
+  });
+
+  it("switches between ticket input modes on train-stc tab", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+
+    fireEvent.click(screen.getByRole("radio", { name: /^ticket ids$/i }));
+    expect(screen.getByRole("radio", { name: /^ticket ids$/i })).toBeChecked();
+    expect(screen.getByRole("radio", { name: /^jql$/i })).not.toBeChecked();
+  });
+
+  it("posts correct pipeline payload with JQL defaults", async () => {
+    const mockFetch = jest.fn().mockResolvedValue({
+      ok: true,
+      body: null,
+      json: async () => ({})
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(mockFetch).toHaveBeenCalledWith(
+      "/api/train-stc",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          phase: 1,
+          inputMode: "jql",
+          jql: 'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"',
+          resolutionMode: "resolved-only",
+          ticketsFile: "scripts/analysis/ui-runs/templates/tickets-template.txt",
+          ticketsText: "HPC-110621,HPC-110615",
+          trainingData: "scripts/trained-data/ml-training-data.csv",
+          minSamples: 20,
+          maxReviewRows: 200
+        })
+      })
+    );
+  });
+
+  it("validates JQL is required in JQL mode for train-stc", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    const jqlTextareas = screen.getAllByRole("textbox");
+    const trainJql = jqlTextareas.find((el) => el.tagName === "TEXTAREA" && (el as HTMLTextAreaElement).value.includes("High Performance Computing"));
+    expect(trainJql).toBeTruthy();
+    fireEvent.change(trainJql!, { target: { value: "" } });
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent(/jql query is required/i);
+  });
+
+  it("validates training data CSV is required for train-stc", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    const trainingDataInput = screen.getByDisplayValue("scripts/trained-data/ml-training-data.csv");
+    fireEvent.change(trainingDataInput, { target: { value: "" } });
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent(/training data csv path is required/i);
+  });
+
+  it("validates ticket IDs are required when tickets mode is selected", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("radio", { name: /^ticket ids$/i }));
+    const ticketTextareas = screen.getAllByRole("textbox");
+    const ticketIdInput = ticketTextareas.find((el) => (el as HTMLTextAreaElement).value === "HPC-110621,HPC-110615");
+    expect(ticketIdInput).toBeTruthy();
+    fireEvent.change(ticketIdInput!, { target: { value: "" } });
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent(/enter at least one ticket key/i);
+  });
+
+  it("shows Train STC model active state in workflow menu", () => {
+    render(<HomePage />);
+
+    const trainBtn = screen.getByRole("button", { name: /train stc model/i });
+    expect(trainBtn).toHaveAttribute("aria-pressed", "false");
+
+    fireEvent.click(trainBtn);
+    expect(trainBtn).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /categorize tickets/i })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("shows audit UI when train-stc pipeline emits paused event", async () => {
+    const csvContent = "Ticket Key,Category\nHPC-1001,network\nHPC-1002,storage";
+    const lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/normalize_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/normalize_tickets.py" }),
+      JSON.stringify({ type: "command-start", command: "cp golden rules" }),
+      JSON.stringify({ type: "command-end", command: "cp golden rules" }),
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/rule_engine_categorize.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/rule_engine_categorize.py" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 1,
+        runId: "train-test-run-1",
+        paths: { ticketsCsv: "/tmp/tickets-categorized.csv", outputDir: "/tmp/output" }
+      })
+    ];
+
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url === "/api/train-stc") {
+        return Promise.resolve(mockNdjsonResponse(lines));
+      }
+      if (typeof url === "string" && url.includes("/api/open-file")) {
+        return Promise.resolve({ ok: true, text: async () => csvContent });
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    // Use act to flush async state updates from the streaming NDJSON handler
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+      // Allow microtasks (stream reads, fetch for open-file) to settle
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(screen.getByText(/review and optionally edit/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /continue pipeline/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /cancel training/i })).toBeInTheDocument();
+  });
+
+  it("sends phase 2 request when Continue Pipeline is clicked after audit pause", async () => {
+    const phase1Lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-start", command: "cp golden rules" }),
+      JSON.stringify({ type: "command-end", command: "cp golden rules" }),
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/rule_engine_categorize.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/rule_engine_categorize.py" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 1,
+        runId: "train-test-run-2",
+        paths: { ticketsCsv: "/tmp/tickets-categorized.csv" }
+      })
+    ];
+    const phase2Lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/ml_train.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/ml_train.py" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 2,
+        runId: "train-test-run-2",
+        paths: { ticketsCsv: "/tmp/tickets-categorized.csv" }
+      })
+    ];
+
+    let callCount = 0;
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url === "/api/train-stc") {
+        callCount++;
+        return Promise.resolve(mockNdjsonResponse(callCount === 1 ? phase1Lines : phase2Lines));
+      }
+      if (typeof url === "string" && url.includes("/api/open-file")) {
+        return Promise.resolve({ ok: true, text: async () => "H1,H2\nA,B" });
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(screen.getByRole("button", { name: /continue pipeline/i })).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /continue pipeline/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "/api/train-stc",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({ phase: 2, runId: "train-test-run-2" })
+      })
+    );
+  });
+
+  it("cancels training during audit pause", async () => {
+    const lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-start", command: "cp golden rules" }),
+      JSON.stringify({ type: "command-end", command: "cp golden rules" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 1,
+        runId: "train-cancel-run",
+        paths: { ticketsCsv: "/tmp/tc.csv" }
+      })
+    ];
+
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url === "/api/train-stc") {
+        return Promise.resolve(mockNdjsonResponse(lines));
+      }
+      if (typeof url === "string" && url.includes("/api/open-file")) {
+        return Promise.resolve({ ok: true, text: async () => "H1\nV1" });
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(screen.getByRole("button", { name: /cancel training/i })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /cancel training/i }));
+
+    // After cancel, audit UI disappears and result card shows cancel message
+    expect(screen.queryByText(/review and optionally edit/i)).toBeNull();
+    expect(screen.getByText(/training canceled during audit/i)).toBeInTheDocument();
+  });
+
+  it("saves audit changes via save-file API during pause", async () => {
+    const csvContent = "Ticket Key,Category\nHPC-1001,network";
+    const lines = [
+      JSON.stringify({ type: "command-start", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-end", command: "uv run python3 scripts/get_tickets.py" }),
+      JSON.stringify({ type: "command-start", command: "cp golden rules" }),
+      JSON.stringify({ type: "command-end", command: "cp golden rules" }),
+      JSON.stringify({
+        type: "paused",
+        phase: 1,
+        runId: "train-save-run",
+        paths: { ticketsCsv: "/tmp/tc-save.csv" }
+      })
+    ];
+
+    const mockFetch = jest.fn().mockImplementation((url: string, opts?: RequestInit) => {
+      if (typeof url === "string" && url === "/api/train-stc") {
+        return Promise.resolve(mockNdjsonResponse(lines));
+      }
+      if (typeof url === "string" && url.includes("/api/open-file")) {
+        return Promise.resolve({ ok: true, text: async () => csvContent });
+      }
+      if (typeof url === "string" && url === "/api/save-file" && opts?.method === "POST") {
+        return Promise.resolve({ ok: true, json: async () => ({ saved: true }) });
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(screen.getByText(/review and optionally edit/i)).toBeInTheDocument();
+
+    // Edit a cell
+    const cellInput = screen.getByDisplayValue("network");
+    fireEvent.change(cellInput, { target: { value: "storage" } });
+    expect(screen.getByText(/unsaved changes/i)).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /save changes/i }));
+      await new Promise((r) => setTimeout(r, 100));
+    });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "/api/save-file",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          path: "/tmp/tc-save.csv",
+          content: "Ticket Key,Category\nHPC-1001,storage"
+        })
+      })
+    );
+  });
+
+  it("shows Promote to Golden tab with source and target path defaults", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+
+    expect(screen.getByDisplayValue("scripts/trained-data/rule-engine.local.csv")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("scripts/trained-data/golden-rules-engine/rule-engine.csv")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /load diff/i })).toBeInTheDocument();
+  });
+
+  it("shows Promote to Golden active state in workflow menu", () => {
+    render(<HomePage />);
+
+    const promoteBtn = screen.getByRole("button", { name: /promote to golden/i });
+    expect(promoteBtn).toHaveAttribute("aria-pressed", "false");
+
+    fireEvent.click(promoteBtn);
+    expect(promoteBtn).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /categorize tickets/i })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("loads diff and shows added rules in summary", async () => {
+    const goldenCsv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,pat1,summary,Cat1,C1,100,0.95,human,5";
+    const trainedCsv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,pat1,summary,Cat1,C1,100,0.95,human,5\nHPC,R002,pat2,description,Cat2,C2,85,0.80,ml,0";
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url.includes("golden")) {
+        return Promise.resolve({ ok: true, text: async () => goldenCsv });
+      }
+      return Promise.resolve({ ok: true, text: async () => trainedCsv });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/1 added/)).toBeInTheDocument();
+    });
+    expect(screen.getByText(/0 changed/)).toBeInTheDocument();
+    expect(screen.getByText(/0 removed/)).toBeInTheDocument();
+    expect(screen.getByText(/show 1 unchanged rules/i)).toBeInTheDocument();
+  });
+
+  it("shows changed rows when rules differ between source and target", async () => {
+    const goldenCsv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,old_pattern,summary,Cat1,C1,100,0.95,human,5";
+    const trainedCsv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,new_pattern,summary,Cat1,C1,100,0.99,human,10";
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url.includes("golden")) {
+        return Promise.resolve({ ok: true, text: async () => goldenCsv });
+      }
+      return Promise.resolve({ ok: true, text: async () => trainedCsv });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/1 changed/)).toBeInTheDocument();
+    });
+    expect(screen.getByText(/~ changed/)).toBeInTheDocument();
+  });
+
+  it("shows identical message when files have no differences", async () => {
+    const csv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,pat1,summary,Cat1,C1,100,0.95,human,5";
+    const mockFetch = jest.fn().mockResolvedValue({ ok: true, text: async () => csv });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/files are identical/i)).toBeInTheDocument();
+    });
+  });
+
+  it("shows confirm and cancel flow for promotion", async () => {
+    const goldenCsv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,pat1,summary,Cat1,C1,100,0.95,human,5";
+    const trainedCsv = "Project Key,RuleID,Rule Pattern,Match Field,Failure Category,Category,Priority,Confidence,Created By,Hit Count\nDO,R001,pat1,summary,Cat1,C1,100,0.95,human,5\nHPC,R002,pat2,description,Cat2,C2,85,0.80,ml,0";
+    const mockFetch = jest.fn().mockImplementation((url: string) => {
+      if (typeof url === "string" && url.includes("golden")) {
+        return Promise.resolve({ ok: true, text: async () => goldenCsv });
+      }
+      if (typeof url === "string" && url.includes("save-file")) {
+        return Promise.resolve({ ok: true, json: async () => ({ saved: true }) });
+      }
+      return Promise.resolve({ ok: true, text: async () => trainedCsv });
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/1 added/)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/confirm promotion/i)).not.toBeInTheDocument();
+    const promoteButtons = screen.getAllByRole("button", { name: /promote to golden/i });
+    const actionBtn = promoteButtons.find((b) => !b.hasAttribute("aria-pressed"));
+    expect(actionBtn).toBeTruthy();
+    fireEvent.click(actionBtn!);
+    expect(screen.getByText(/confirm promotion/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
+    expect(screen.queryByText(/confirm promotion/i)).not.toBeInTheDocument();
+  });
+
+  it("shows error when source file fetch fails", async () => {
+    const mockFetch = jest.fn().mockResolvedValue({
+      ok: false,
+      statusText: "Not Found"
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(/failed to load source/i);
+    });
   });
 });

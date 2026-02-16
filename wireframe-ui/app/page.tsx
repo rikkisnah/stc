@@ -10,7 +10,16 @@ type Workflow =
   | "add-rule"
   | "browse-tickets"
   | "browse-categorized"
-  | "browse-rules";
+  | "browse-rules"
+  | "train-stc"
+  | "promote-to-golden";
+type DiffRowStatus = "added" | "removed" | "changed" | "unchanged";
+type DiffRow = {
+  status: DiffRowStatus;
+  ruleId: string;
+  sourceRow?: string[];
+  targetRow?: string[];
+};
 type InputMode = "jql" | "files" | "tickets";
 type ResolutionMode = "all" | "unresolved-only" | "resolved-only";
 type PipelineStepStatus = "pending" | "running" | "done" | "failed";
@@ -61,6 +70,30 @@ const ADD_RULE_DEFAULTS = {
   createdBy: "human-feedback",
   hitCount: "0"
 };
+const TRAIN_PIPELINE_STEPS = [
+  "get_tickets.py",
+  "normalize_tickets.py",
+  "init local rules",
+  "rule_engine_categorize.py (initial)",
+  "Human audit #1",
+  "ml_train.py",
+  "rule_engine_categorize.py (ML)",
+  "Human audit #2",
+  "run_training.py",
+  "rule_engine_categorize.py (final)"
+] as const;
+
+const TRAIN_STC_DEFAULTS = {
+  trainingData: "scripts/trained-data/ml-training-data.csv",
+  minSamples: "20",
+  maxReviewRows: "200"
+};
+
+const PROMOTE_DEFAULTS = {
+  sourcePath: "scripts/trained-data/rule-engine.local.csv",
+  targetPath: "scripts/trained-data/golden-rules-engine/rule-engine.csv"
+};
+
 const CATEGORIZED_TICKETS_DIR = "scripts/analysis";
 const DEFAULT_CATEGORIZED_FILE = "tickets-categorized.csv";
 const RULES_SOURCE_DIRS: Record<RulesSource, string> = {
@@ -106,7 +139,7 @@ export default function HomePage() {
   const [lastLogAtMs, setLastLogAtMs] = useState<number | null>(null);
   const [heartbeatTick, setHeartbeatTick] = useState(0);
   const [renderedAt, setRenderedAt] = useState("-");
-  const [wrapLogs, setWrapLogs] = useState(false);
+  const [wrapLogs, setWrapLogs] = useState(true);
   const [pipelineStatus, setPipelineStatus] = useState<PipelineStepStatus[]>(
     PIPELINE_STEPS.map(() => "pending")
   );
@@ -181,6 +214,57 @@ export default function HomePage() {
   const rulesGridTopSpacerRef = useRef<HTMLDivElement | null>(null);
   const rulesScrollSyncRef = useRef<"top" | "body" | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  // --- Train STC state ---
+  const [trainInputMode, setTrainInputMode] = useState<InputMode>("jql");
+  const [trainJql, setTrainJql] = useState(
+    'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"'
+  );
+  const [trainResolutionMode, setTrainResolutionMode] = useState<ResolutionMode>("resolved-only");
+  const [trainTicketsFile, setTrainTicketsFile] = useState(
+    "scripts/analysis/ui-runs/templates/tickets-template.txt"
+  );
+  const [trainTicketsText, setTrainTicketsText] = useState("HPC-110621,HPC-110615");
+  const [trainTrainingData, setTrainTrainingData] = useState(TRAIN_STC_DEFAULTS.trainingData);
+  const [trainMinSamples, setTrainMinSamples] = useState(TRAIN_STC_DEFAULTS.minSamples);
+  const [trainMaxReviewRows, setTrainMaxReviewRows] = useState(TRAIN_STC_DEFAULTS.maxReviewRows);
+  const [trainStcResult, setTrainStcResult] = useState<{
+    message?: string;
+    trainingSamples?: number;
+    cvAccuracy?: string;
+    rulesAdded?: number;
+    ticketsCsv?: string;
+    localRules?: string;
+    mlModel?: string;
+    mlReport?: string;
+    trainingLog?: string;
+    outputDir?: string;
+  }>({});
+  const [trainStcPipelineStatus, setTrainStcPipelineStatus] = useState<PipelineStepStatus[]>([]);
+  const [trainPhase, setTrainPhase] = useState<1 | 2 | 3>(1);
+  const [trainRunId, setTrainRunId] = useState("");
+  const [trainPaused, setTrainPaused] = useState(false);
+  const [skipAudit1, setSkipAudit1] = useState(true);
+  const [skipAudit2, setSkipAudit2] = useState(true);
+  const [trainAuditCsvPath, setTrainAuditCsvPath] = useState("");
+  const [trainAuditRows, setTrainAuditRows] = useState<string[][]>([]);
+  const [trainAuditOriginal, setTrainAuditOriginal] = useState("");
+  const [trainAuditSaving, setTrainAuditSaving] = useState(false);
+  const [trainAuditSaveStatus, setTrainAuditSaveStatus] = useState("");
+
+  // --- Promote to Golden state ---
+  const [promoteSourcePath, setPromoteSourcePath] = useState(PROMOTE_DEFAULTS.sourcePath);
+  const [promoteTargetPath, setPromoteTargetPath] = useState(PROMOTE_DEFAULTS.targetPath);
+  const [promoteSourceText, setPromoteSourceText] = useState("");
+  const [promoteTargetText, setPromoteTargetText] = useState("");
+  const [promoteHeaders, setPromoteHeaders] = useState<string[]>([]);
+  const [promoteDiff, setPromoteDiff] = useState<DiffRow[]>([]);
+  const [promoteLoading, setPromoteLoading] = useState(false);
+  const [promoteError, setPromoteError] = useState("");
+  const [promoteConfirming, setPromoteConfirming] = useState(false);
+  const [promoteSaving, setPromoteSaving] = useState(false);
+  const [promoteResult, setPromoteResult] = useState("");
+  const [promoteShowUnchanged, setPromoteShowUnchanged] = useState(false);
 
   function formatTimestamp(iso: string): string {
     if (!iso) {
@@ -699,6 +783,122 @@ export default function HomePage() {
     void loadRulesFiles(rulesDirectory);
   }, [workflow, stage, rulesLoadedDir, rulesDirectory]);
 
+  // Auto-skip human audit when the corresponding skip flag is enabled
+  useEffect(() => {
+    if (!trainPaused) return;
+    const shouldSkip =
+      (trainPhase === 1 && skipAudit1) || (trainPhase === 2 && skipAudit2);
+    if (shouldSkip) {
+      handleContinueTraining();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trainPaused]);
+
+  async function loadPromoteDiff() {
+    setPromoteLoading(true);
+    setPromoteError("");
+    setPromoteDiff([]);
+    setPromoteHeaders([]);
+    setPromoteResult("");
+    setPromoteConfirming(false);
+    setPromoteShowUnchanged(false);
+
+    try {
+      const [sourceResp, targetResp] = await Promise.all([
+        fetch(`/api/open-file?path=${encodeURIComponent(promoteSourcePath)}`),
+        fetch(`/api/open-file?path=${encodeURIComponent(promoteTargetPath)}`)
+      ]);
+      if (!sourceResp.ok) {
+        throw new Error(`Failed to load source: ${sourceResp.statusText}`);
+      }
+      if (!targetResp.ok) {
+        throw new Error(`Failed to load target: ${targetResp.statusText}`);
+      }
+      const sourceText = await sourceResp.text();
+      const targetText = await targetResp.text();
+      setPromoteSourceText(sourceText);
+      setPromoteTargetText(targetText);
+
+      const sourceRows = parseCsvRows(sourceText);
+      const targetRows = parseCsvRows(targetText);
+      if (sourceRows.length === 0) {
+        throw new Error("Source CSV is empty.");
+      }
+      if (targetRows.length === 0) {
+        throw new Error("Target CSV is empty.");
+      }
+
+      const headers = sourceRows[0];
+      setPromoteHeaders(headers);
+      const ruleIdIdx = headers.findIndex((h) => h.trim().toLowerCase() === "ruleid");
+      const idCol = ruleIdIdx >= 0 ? ruleIdIdx : 1;
+
+      const sourceMap = new Map<string, string[]>();
+      for (let i = 1; i < sourceRows.length; i++) {
+        const row = sourceRows[i];
+        if (row.every((c) => !c.trim())) continue;
+        const id = (row[idCol] || "").trim();
+        if (id) sourceMap.set(id, row);
+      }
+      const targetMap = new Map<string, string[]>();
+      for (let i = 1; i < targetRows.length; i++) {
+        const row = targetRows[i];
+        if (row.every((c) => !c.trim())) continue;
+        const id = (row[idCol] || "").trim();
+        if (id) targetMap.set(id, row);
+      }
+
+      const diff: DiffRow[] = [];
+      for (const [id, sRow] of sourceMap) {
+        const tRow = targetMap.get(id);
+        if (!tRow) {
+          diff.push({ status: "added", ruleId: id, sourceRow: sRow });
+        } else if (sRow.join(",") !== tRow.join(",")) {
+          diff.push({ status: "changed", ruleId: id, sourceRow: sRow, targetRow: tRow });
+        } else {
+          diff.push({ status: "unchanged", ruleId: id, sourceRow: sRow, targetRow: tRow });
+        }
+      }
+      for (const [id, tRow] of targetMap) {
+        if (!sourceMap.has(id)) {
+          diff.push({ status: "removed", ruleId: id, targetRow: tRow });
+        }
+      }
+
+      diff.sort((a, b) => {
+        const order: Record<DiffRowStatus, number> = { added: 0, changed: 1, removed: 2, unchanged: 3 };
+        return order[a.status] - order[b.status];
+      });
+      setPromoteDiff(diff);
+    } catch (err) {
+      setPromoteError(err instanceof Error ? err.message : "Unknown error loading diff.");
+    } finally {
+      setPromoteLoading(false);
+    }
+  }
+
+  async function handlePromote() {
+    setPromoteSaving(true);
+    setPromoteResult("");
+    try {
+      const resp = await fetch("/api/save-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: promoteTargetPath, content: promoteSourceText })
+      });
+      if (!resp.ok) {
+        const data = (await resp.json()) as { error?: string };
+        throw new Error(data.error || "Failed to save.");
+      }
+      setPromoteResult("Golden rules updated successfully.");
+      setPromoteConfirming(false);
+    } catch (err) {
+      setPromoteResult(`Promotion failed: ${err instanceof Error ? err.message : "Unknown error"}`);
+    } finally {
+      setPromoteSaving(false);
+    }
+  }
+
   async function handleOk() {
     if (workflow === "categorize") {
       if (inputMode === "jql") {
@@ -769,8 +969,41 @@ export default function HomePage() {
         setStage("input");
         return;
       }
+    } else if (workflow === "train-stc") {
+      if (trainInputMode === "jql" && !trainJql.trim()) {
+        setError("JQL query is required.");
+        setStage("input");
+        return;
+      }
+      if (trainInputMode === "files" && !trainTicketsFile.trim()) {
+        setError("Ticket list file path is required.");
+        setStage("input");
+        return;
+      }
+      if (trainInputMode === "tickets" && !trainTicketsText.trim()) {
+        setError("Enter at least one ticket key.");
+        setStage("input");
+        return;
+      }
+      if (!trainTrainingData.trim()) {
+        setError("Training data CSV path is required.");
+        setStage("input");
+        return;
+      }
+      const minSamplesNum = Number(trainMinSamples);
+      if (!Number.isInteger(minSamplesNum) || minSamplesNum <= 0) {
+        setError("Min samples must be a positive integer.");
+        setStage("input");
+        return;
+      }
+      const maxRows = Number(trainMaxReviewRows);
+      if (!Number.isInteger(maxRows) || maxRows <= 0) {
+        setError("Max review rows must be a positive integer.");
+        setStage("input");
+        return;
+      }
     } else {
-      setError("Select Add Rule for a Ticket to run this action.");
+      setError("Select a runnable workflow to execute.");
       setStage("input");
       return;
     }
@@ -779,6 +1012,15 @@ export default function HomePage() {
     setError("");
     setSummaryRows([]);
     setAddRuleResult({});
+    setTrainStcResult({});
+    setTrainPhase(1);
+    setTrainRunId("");
+    setTrainPaused(false);
+    setTrainAuditCsvPath("");
+    setTrainAuditRows([]);
+    setTrainAuditOriginal("");
+    setTrainAuditSaving(false);
+    setTrainAuditSaveStatus("");
     setResultPaths({});
     setExecutedCommands([]);
     setCommandLogs([]);
@@ -794,31 +1036,54 @@ export default function HomePage() {
     setPipelineStatus(
       workflow === "categorize" ? PIPELINE_STEPS.map(() => "pending") : []
     );
+    setTrainStcPipelineStatus(
+      workflow === "train-stc"
+        ? TRAIN_PIPELINE_STEPS.map(() => "pending" as PipelineStepStatus)
+        : []
+    );
+
+    let pausedDuringRun = false;
 
     try {
       const abortController = new AbortController();
       abortRef.current = abortController;
       const endpoint =
-        workflow === "categorize" ? "/api/run-jql" : "/api/add-rule-from-ticket";
+        workflow === "categorize"
+          ? "/api/run-jql"
+          : workflow === "train-stc"
+            ? "/api/train-stc"
+            : "/api/add-rule-from-ticket";
       const body =
         workflow === "categorize"
           ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText }
-          : {
-              ticketKey: ticketKey.trim().toUpperCase(),
-              reason: reason.trim(),
-              failureCategory: failureCategory.trim(),
-              category: category.trim(),
-              matchField: matchField.trim(),
-              rulePattern: rulePattern.trim(),
-              ticketJsonDir: ticketJsonDir.trim(),
-              normalizedRoot: normalizedRoot.trim(),
-              rulesEngine: rulesEngine.trim(),
-              matchFieldDefault: matchFieldDefault.trim(),
-              priority: Number(priority),
-              confidence: Number(confidence),
-              createdBy: createdBy.trim(),
-              hitCount: Number(hitCount)
-            };
+          : workflow === "train-stc"
+            ? {
+                phase: 1 as const,
+                inputMode: trainInputMode,
+                jql: trainJql.trim(),
+                resolutionMode: trainResolutionMode,
+                ticketsFile: trainTicketsFile.trim(),
+                ticketsText: trainTicketsText.trim(),
+                trainingData: trainTrainingData.trim(),
+                minSamples: Number(trainMinSamples),
+                maxReviewRows: Number(trainMaxReviewRows)
+              }
+            : {
+                ticketKey: ticketKey.trim().toUpperCase(),
+                reason: reason.trim(),
+                failureCategory: failureCategory.trim(),
+                category: category.trim(),
+                matchField: matchField.trim(),
+                rulePattern: rulePattern.trim(),
+                ticketJsonDir: ticketJsonDir.trim(),
+                normalizedRoot: normalizedRoot.trim(),
+                rulesEngine: rulesEngine.trim(),
+                matchFieldDefault: matchFieldDefault.trim(),
+                priority: Number(priority),
+                confidence: Number(confidence),
+                createdBy: createdBy.trim(),
+                hitCount: Number(hitCount)
+              };
       const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -831,7 +1096,9 @@ export default function HomePage() {
           fallback.error ||
             (workflow === "categorize"
               ? "Failed to run pipeline."
-              : "Failed to run add-rule workflow.")
+              : workflow === "train-stc"
+                ? "Failed to run training workflow."
+                : "Failed to run add-rule workflow.")
         );
       }
 
@@ -878,13 +1145,25 @@ export default function HomePage() {
               line?: string;
               error?: string;
               summaryRows?: SummaryRow[];
-              paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string };
+              paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string };
+              phase?: number;
+              runId?: string;
+              partialResult?: { trainingSamples?: number; cvAccuracy?: string };
               result?: {
                 ruleId?: string;
                 rulesEngine?: string;
                 ticketJson?: string;
                 normalizedJson?: string;
                 message?: string;
+                trainingSamples?: number;
+                cvAccuracy?: string;
+                rulesAdded?: number;
+                ticketsCsv?: string;
+                localRules?: string;
+                mlModel?: string;
+                mlReport?: string;
+                trainingLog?: string;
+                outputDir?: string;
               };
             };
 
@@ -905,6 +1184,17 @@ export default function HomePage() {
                   );
                 }
               }
+              if (workflow === "train-stc") {
+                setTrainStcPipelineStatus((prev) => {
+                  const nextIdx = prev.findIndex((s) => s === "pending");
+                  if (nextIdx === -1) return prev;
+                  return prev.map((s, i) => {
+                    if (i < nextIdx && s !== "done") return "done";
+                    if (i === nextIdx) return "running";
+                    return s;
+                  });
+                });
+              }
               setLastLogAtMs(Date.now());
               setExecutedCommands((prev) =>
                 prev.includes(event.command as string) ? prev : [...prev, event.command as string]
@@ -919,6 +1209,13 @@ export default function HomePage() {
                   );
                 }
               }
+              if (workflow === "train-stc") {
+                setTrainStcPipelineStatus((prev) => {
+                  const runIdx = prev.findIndex((s) => s === "running");
+                  if (runIdx === -1) return prev;
+                  return prev.map((s, i) => (i === runIdx ? "done" : s));
+                });
+              }
             } else if ((event.type === "stdout" || event.type === "stderr") && event.line) {
               const linesFromEvent = event.line.split(/\r?\n/).filter((chunk) => chunk.trim());
               if (linesFromEvent.length > 0) {
@@ -928,9 +1225,50 @@ export default function HomePage() {
                     ...linesFromEvent.map((entry) => `[${nowTime()}] ${entry}`)
                 ]);
               }
+            } else if (event.type === "paused" && workflow === "train-stc") {
+              pausedDuringRun = true;
+              const pausePhase = event.phase as number;
+              setTrainRunId(event.runId || "");
+              setTrainPaused(true);
+              // Mark audit step as "running" (step 4 for phase 1, step 7 for phase 2)
+              const auditIdx = pausePhase === 1 ? 4 : 7;
+              setTrainStcPipelineStatus((prev) =>
+                prev.map((s, i) => (i === auditIdx ? "running" : s))
+              );
+              // Store partial ML results from phase 2
+              if (pausePhase === 2 && event.partialResult) {
+                setTrainStcResult((prev) => ({
+                  ...prev,
+                  trainingSamples: event.partialResult?.trainingSamples ?? prev.trainingSamples,
+                  cvAccuracy: event.partialResult?.cvAccuracy ?? prev.cvAccuracy
+                }));
+              }
+              // Load tickets-categorized.csv into audit editor
+              const csvPath = event.paths?.ticketsCsv;
+              if (csvPath) {
+                setTrainAuditCsvPath(csvPath);
+                try {
+                  const csvResp = await fetch(`/api/open-file?path=${encodeURIComponent(csvPath)}`);
+                  if (csvResp.ok) {
+                    const csvText = await csvResp.text();
+                    setTrainAuditOriginal(csvText);
+                    try {
+                      setTrainAuditRows(parseCsvRows(csvText));
+                    } catch {
+                      setTrainAuditRows([]);
+                    }
+                  }
+                } catch {
+                  // Best effort — user can still edit externally via file path
+                }
+              }
             } else if (event.type === "done") {
               if (workflow === "categorize") {
                 setPipelineStatus(PIPELINE_STEPS.map(() => "done"));
+              }
+              if (workflow === "train-stc") {
+                setTrainStcPipelineStatus(TRAIN_PIPELINE_STEPS.map(() => "done"));
+                setTrainStcResult((prev) => ({ ...prev, ...event.result }));
               }
               setSummaryRows(event.summaryRows || []);
               setResultPaths(event.paths || {});
@@ -943,9 +1281,20 @@ export default function HomePage() {
               setAddRuleResult(
                 workflow === "add-rule" ? { message: "Run canceled." } : {}
               );
+              if (workflow === "train-stc") {
+                setTrainStcResult({ message: "Run canceled." });
+              }
             } else if (event.type === "error") {
               if (workflow === "add-rule") {
                 setAddRuleResult({ message: `Run failed: ${event.error || "Unknown error"}` });
+              }
+              if (workflow === "train-stc") {
+                setTrainStcResult({ message: `Run failed: ${event.error || "Unknown error"}` });
+                setTrainStcPipelineStatus((prev) => {
+                  const runningIdx = prev.findIndex((status) => status === "running");
+                  if (runningIdx === -1) return prev;
+                  return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
+                });
               }
               if (workflow === "categorize") {
                 setPipelineStatus((prev) => {
@@ -969,23 +1318,280 @@ export default function HomePage() {
         if (workflow === "add-rule") {
           setAddRuleResult({ message: "Run canceled." });
         }
+        if (workflow === "train-stc") {
+          setTrainStcResult({ message: "Run canceled." });
+        }
       } else {
         setError(message);
         if (workflow === "add-rule") {
           setAddRuleResult({ message: `Run failed: ${message}` });
         }
+        if (workflow === "train-stc") {
+          setTrainStcResult({ message: `Run failed: ${message}` });
+        }
       }
     } finally {
       abortRef.current = null;
-      const ended = new Date().toISOString();
-      setFinishedAt(ended);
-      setElapsedMs(Math.max(0, Date.parse(ended) - Date.parse(runStartedAt)));
       setIsRunning(false);
+      // Don't mark as finished when paused — pipeline is still in progress
+      if (!pausedDuringRun) {
+        const ended = new Date().toISOString();
+        setFinishedAt(ended);
+        setElapsedMs(Math.max(0, Date.parse(ended) - Date.parse(runStartedAt)));
+      }
     }
   }
 
   function handleCancel() {
     abortRef.current?.abort();
+  }
+
+  function updateTrainAuditCell(rowIndex: number, colIndex: number, value: string) {
+    setTrainAuditRows((prevRows) => {
+      const nextRows = prevRows.map((row) => [...row]);
+      while (nextRows.length <= rowIndex) {
+        nextRows.push([]);
+      }
+      while (nextRows[rowIndex].length <= colIndex) {
+        nextRows[rowIndex].push("");
+      }
+      nextRows[rowIndex][colIndex] = value;
+      return nextRows;
+    });
+    setTrainAuditSaveStatus("");
+  }
+
+  function resetTrainAudit() {
+    try {
+      setTrainAuditRows(parseCsvRows(trainAuditOriginal));
+    } catch {
+      setTrainAuditRows([]);
+    }
+    setTrainAuditSaveStatus("");
+  }
+
+  async function saveTrainAudit() {
+    if (!trainAuditCsvPath) {
+      setTrainAuditSaveStatus("No file path available.");
+      return;
+    }
+    setTrainAuditSaving(true);
+    setTrainAuditSaveStatus("");
+    const contentToSave = trainAuditRows.length > 0
+      ? serializeCsvRows(trainAuditRows)
+      : trainAuditOriginal;
+    try {
+      const response = await fetch("/api/save-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: trainAuditCsvPath, content: contentToSave })
+      });
+      if (!response.ok) {
+        const errData = (await response.json()) as { error?: string };
+        throw new Error(errData.error || "Save failed.");
+      }
+      setTrainAuditOriginal(contentToSave);
+      setTrainAuditSaveStatus("Saved.");
+    } catch (saveError) {
+      const msg = saveError instanceof Error ? saveError.message : "Save failed.";
+      setTrainAuditSaveStatus(msg);
+    } finally {
+      setTrainAuditSaving(false);
+    }
+  }
+
+  async function handleContinueTraining() {
+    const nextPhase = (trainPhase === 1 ? 2 : 3) as 1 | 2 | 3;
+
+    // Mark audit step as done
+    setTrainStcPipelineStatus((prev) => {
+      const auditIdx = trainPhase === 1 ? 4 : 7;
+      return prev.map((s, i) => (i === auditIdx ? "done" : s));
+    });
+
+    setTrainPaused(false);
+    setTrainPhase(nextPhase);
+    setTrainAuditCsvPath("");
+    setTrainAuditRows([]);
+    setTrainAuditOriginal("");
+    setTrainAuditSaving(false);
+    setTrainAuditSaveStatus("");
+    setIsRunning(true);
+    setError("");
+
+    let pausedDuringRun = false;
+    const phaseStartedAt = new Date().toISOString();
+
+    try {
+      const abortController = new AbortController();
+      abortRef.current = abortController;
+      const response = await fetch("/api/train-stc", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phase: nextPhase, runId: trainRunId }),
+        signal: abortController.signal
+      });
+
+      if (!response.ok) {
+        const fallback = (await response.json()) as { error?: string };
+        throw new Error(fallback.error || "Failed to run training workflow.");
+      }
+
+      if (response.body) {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            const event = JSON.parse(line) as {
+              type: string;
+              command?: string;
+              line?: string;
+              error?: string;
+              phase?: number;
+              runId?: string;
+              paths?: { ticketsCsv?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string };
+              partialResult?: { trainingSamples?: number; cvAccuracy?: string };
+              result?: {
+                message?: string;
+                trainingSamples?: number;
+                cvAccuracy?: string;
+                rulesAdded?: number;
+                ticketsCsv?: string;
+                localRules?: string;
+                mlModel?: string;
+                mlReport?: string;
+                trainingLog?: string;
+                outputDir?: string;
+              };
+            };
+
+            if (event.type === "command-start" && event.command) {
+              setTrainStcPipelineStatus((prev) => {
+                const nextIdx = prev.findIndex((s) => s === "pending");
+                if (nextIdx === -1) return prev;
+                return prev.map((s, i) => {
+                  if (i < nextIdx && s !== "done") return "done";
+                  if (i === nextIdx) return "running";
+                  return s;
+                });
+              });
+              setLastLogAtMs(Date.now());
+              setExecutedCommands((prev) =>
+                prev.includes(event.command as string) ? prev : [...prev, event.command as string]
+              );
+              setCommandLogs((prev) => [...prev, `[${nowTime()}] > ${event.command}`]);
+            } else if (event.type === "command-end" && event.command) {
+              setTrainStcPipelineStatus((prev) => {
+                const runIdx = prev.findIndex((s) => s === "running");
+                if (runIdx === -1) return prev;
+                return prev.map((s, i) => (i === runIdx ? "done" : s));
+              });
+            } else if ((event.type === "stdout" || event.type === "stderr") && event.line) {
+              const linesFromEvent = event.line.split(/\r?\n/).filter((chunk) => chunk.trim());
+              if (linesFromEvent.length > 0) {
+                setLastLogAtMs(Date.now());
+                setCommandLogs((prev) => [
+                  ...prev,
+                  ...linesFromEvent.map((entry) => `[${nowTime()}] ${entry}`)
+                ]);
+              }
+            } else if (event.type === "paused") {
+              pausedDuringRun = true;
+              const pausePhase = event.phase as number;
+              setTrainPaused(true);
+              const auditIdx = pausePhase === 1 ? 4 : 7;
+              setTrainStcPipelineStatus((prev) =>
+                prev.map((s, i) => (i === auditIdx ? "running" : s))
+              );
+              if (pausePhase === 2 && event.partialResult) {
+                setTrainStcResult((prev) => ({
+                  ...prev,
+                  trainingSamples: event.partialResult?.trainingSamples ?? prev.trainingSamples,
+                  cvAccuracy: event.partialResult?.cvAccuracy ?? prev.cvAccuracy
+                }));
+              }
+              const csvPath = event.paths?.ticketsCsv;
+              if (csvPath) {
+                setTrainAuditCsvPath(csvPath);
+                try {
+                  const csvResp = await fetch(`/api/open-file?path=${encodeURIComponent(csvPath)}`);
+                  if (csvResp.ok) {
+                    const csvText = await csvResp.text();
+                    setTrainAuditOriginal(csvText);
+                    try {
+                      setTrainAuditRows(parseCsvRows(csvText));
+                    } catch {
+                      setTrainAuditRows([]);
+                    }
+                  }
+                } catch {
+                  // Best effort
+                }
+              }
+            } else if (event.type === "done") {
+              setTrainStcPipelineStatus(TRAIN_PIPELINE_STEPS.map(() => "done"));
+              setTrainStcResult((prev) => ({ ...prev, ...event.result }));
+            } else if (event.type === "canceled") {
+              setWasCanceled(true);
+              setError("Run canceled.");
+              setTrainStcResult({ message: "Run canceled." });
+            } else if (event.type === "error") {
+              setTrainStcResult({ message: `Run failed: ${event.error || "Unknown error"}` });
+              setTrainStcPipelineStatus((prev) => {
+                const runningIdx = prev.findIndex((status) => status === "running");
+                if (runningIdx === -1) return prev;
+                return prev.map((status, idx) => (idx === runningIdx ? "failed" : status));
+              });
+              throw new Error(event.error || "Pipeline failed.");
+            }
+          }
+        }
+      }
+    } catch (runError) {
+      const message = runError instanceof Error ? runError.message : "Unexpected error.";
+      if (message === "The operation was aborted.") {
+        setWasCanceled(true);
+        setError("Run canceled.");
+        setTrainStcResult({ message: "Run canceled." });
+      } else {
+        setError(message);
+        setTrainStcResult({ message: `Run failed: ${message}` });
+      }
+    } finally {
+      abortRef.current = null;
+      setIsRunning(false);
+      if (!pausedDuringRun) {
+        const ended = new Date().toISOString();
+        setFinishedAt(ended);
+        setElapsedMs(Math.max(0, Date.parse(ended) - Date.parse(phaseStartedAt)));
+      }
+    }
+  }
+
+  function handleCancelTrainAudit() {
+    setTrainPaused(false);
+    setTrainAuditCsvPath("");
+    setTrainAuditRows([]);
+    setTrainAuditOriginal("");
+    setTrainAuditSaveStatus("");
+    setWasCanceled(true);
+    setError("Training canceled during audit.");
+    setTrainStcResult({ message: "Training canceled during audit." });
+    setTrainStcPipelineStatus((prev) => {
+      const auditIdx = trainPhase === 1 ? 4 : 7;
+      return prev.map((s, i) => (i === auditIdx ? "failed" : s));
+    });
+    const ended = new Date().toISOString();
+    setFinishedAt(ended);
   }
 
   async function copyText(
@@ -1293,6 +1899,14 @@ export default function HomePage() {
   }, [categorizedTableRows, categorizedEditorText]);
   const categorizedHasChanges =
     Boolean(categorizedSelectedPath) && categorizedCurrentText !== categorizedPreview;
+  const trainAuditCurrentText = useMemo(() => {
+    if (trainAuditRows.length > 0) {
+      return serializeCsvRows(trainAuditRows);
+    }
+    return trainAuditOriginal;
+  }, [trainAuditRows, trainAuditOriginal]);
+  const trainAuditHasChanges =
+    Boolean(trainAuditCsvPath) && trainAuditCurrentText !== trainAuditOriginal;
   const filteredRulesFiles = useMemo(() => {
     const filter = rulesFilter.trim().toUpperCase();
     if (!filter) {
@@ -1428,8 +2042,29 @@ export default function HomePage() {
             >
               View Rules Engines
             </button>
-            <button className="menu-btn" disabled aria-label="Train Learn WIP">
-              Train Learn (WIP)
+            <button
+              className={`menu-btn ${workflow === "promote-to-golden" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("promote-to-golden");
+                setStage("input");
+              }}
+              aria-label="Promote to Golden"
+              aria-pressed={workflow === "promote-to-golden"}
+              disabled={isRunning}
+            >
+              Promote to Golden
+            </button>
+            <button
+              className={`menu-btn ${workflow === "train-stc" ? "is-active" : ""}`}
+              onClick={() => {
+                setWorkflow("train-stc");
+                setStage("input");
+              }}
+              aria-label="Train STC model"
+              aria-pressed={workflow === "train-stc"}
+              disabled={isRunning}
+            >
+              Train STC model
             </button>
           </div>
           {isRunning && (
@@ -1442,9 +2077,10 @@ export default function HomePage() {
         <div className="content">
           {stage === "landing" && (
             <p className="small">
-              Click <strong>Categorize tickets</strong>, <strong>Add Rule for a Ticket</strong>, or{" "}
-              <strong>Tickets in Normalized root</strong>, <strong>View Categorized Tickets</strong>, or{" "}
-              <strong>View Rules Engines</strong> to preview the next wireframe step.
+              Click <strong>Categorize tickets</strong>, <strong>Add Rule for a Ticket</strong>,{" "}
+              <strong>Tickets in Normalized root</strong>, <strong>View Categorized Tickets</strong>,{" "}
+              <strong>View Rules Engines</strong>, <strong>Promote to Golden</strong>,{" "}
+              or <strong>Train STC model</strong> to preview the next wireframe step.
             </p>
           )}
 
@@ -2522,16 +3158,347 @@ export default function HomePage() {
             </div>
           )}
 
+          {stage === "input" && workflow === "train-stc" && (
+            <div className="grid" aria-label="Input section">
+              <fieldset className="field">
+                <legend>Ticket source (either-or)</legend>
+                <label>
+                  <input
+                    type="radio"
+                    name="train-input-mode"
+                    value="jql"
+                    checked={trainInputMode === "jql"}
+                    onChange={() => setTrainInputMode("jql")}
+                    disabled={isRunning}
+                  />{" "}
+                  JQL
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="train-input-mode"
+                    value="files"
+                    checked={trainInputMode === "files"}
+                    onChange={() => setTrainInputMode("files")}
+                    disabled={isRunning}
+                  />{" "}
+                  Ticket list files
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="train-input-mode"
+                    value="tickets"
+                    checked={trainInputMode === "tickets"}
+                    onChange={() => setTrainInputMode("tickets")}
+                    disabled={isRunning}
+                  />{" "}
+                  Ticket IDs
+                </label>
+              </fieldset>
+
+              <div className="field">
+                <label htmlFor="train-jql">Enter JQL</label>
+                <textarea
+                  id="train-jql"
+                  rows={3}
+                  value={trainJql}
+                  onChange={(e) => setTrainJql(e.target.value)}
+                  disabled={isRunning || trainInputMode !== "jql"}
+                />
+              </div>
+              <fieldset className="field">
+                <legend>Ticket resolution filter</legend>
+                <label>
+                  <input
+                    type="radio"
+                    name="train-resolution-mode"
+                    value="all"
+                    checked={trainResolutionMode === "all"}
+                    onChange={() => setTrainResolutionMode("all")}
+                    disabled={isRunning || trainInputMode !== "jql"}
+                  />{" "}
+                  All (resolved + unresolved)
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="train-resolution-mode"
+                    value="resolved-only"
+                    checked={trainResolutionMode === "resolved-only"}
+                    onChange={() => setTrainResolutionMode("resolved-only")}
+                    disabled={isRunning || trainInputMode !== "jql"}
+                  />{" "}
+                  Resolved only
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="train-resolution-mode"
+                    value="unresolved-only"
+                    checked={trainResolutionMode === "unresolved-only"}
+                    onChange={() => setTrainResolutionMode("unresolved-only")}
+                    disabled={isRunning || trainInputMode !== "jql"}
+                  />{" "}
+                  Unresolved only
+                </label>
+              </fieldset>
+              <div className="field">
+                <label htmlFor="train-tickets-file">Enter ticket list files</label>
+                <input
+                  id="train-tickets-file"
+                  value={trainTicketsFile}
+                  onChange={(e) => setTrainTicketsFile(e.target.value)}
+                  disabled={isRunning || trainInputMode !== "files"}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="train-tickets-text">Enter list of ticket IDs</label>
+                <textarea
+                  id="train-tickets-text"
+                  rows={2}
+                  value={trainTicketsText}
+                  onChange={(e) => setTrainTicketsText(e.target.value)}
+                  disabled={isRunning || trainInputMode !== "tickets"}
+                />
+                <p className="small">Comma or newline-separated, e.g. HPC-110621,HPC-110615</p>
+              </div>
+
+              <details>
+                <summary className="small"><strong>Advanced training parameters</strong></summary>
+                <div className="field">
+                  <label htmlFor="train-training-data">Training data CSV</label>
+                  <input
+                    id="train-training-data"
+                    value={trainTrainingData}
+                    onChange={(e) => setTrainTrainingData(e.target.value)}
+                    disabled={isRunning}
+                  />
+                  <p className="small">CSV with columns: Ticket, Category of Issue, Category</p>
+                </div>
+                <div className="field">
+                  <label htmlFor="train-min-samples">Min samples</label>
+                  <input
+                    id="train-min-samples"
+                    value={trainMinSamples}
+                    onChange={(e) => setTrainMinSamples(e.target.value)}
+                    disabled={isRunning}
+                  />
+                  <p className="small">Minimum labeled samples required to train (default: 20)</p>
+                </div>
+                <div className="field">
+                  <label htmlFor="train-max-review-rows">Max review rows</label>
+                  <input
+                    id="train-max-review-rows"
+                    value={trainMaxReviewRows}
+                    onChange={(e) => setTrainMaxReviewRows(e.target.value)}
+                    disabled={isRunning}
+                  />
+                  <p className="small">Maximum review rows for rule generation (default: 200)</p>
+                </div>
+              </details>
+
+              <div style={{ display: "flex", gap: "1rem", margin: "0.5rem 0" }}>
+                <label className="small">
+                  <input
+                    type="checkbox"
+                    checked={skipAudit1}
+                    onChange={(e) => setSkipAudit1(e.target.checked)}
+                    disabled={isRunning}
+                  />{" "}
+                  Skip Human Audit #1
+                </label>
+                <label className="small">
+                  <input
+                    type="checkbox"
+                    checked={skipAudit2}
+                    onChange={(e) => setSkipAudit2(e.target.checked)}
+                    disabled={isRunning}
+                  />{" "}
+                  Skip Human Audit #2
+                </label>
+              </div>
+
+              <div>
+                <button className="primary" onClick={handleOk} disabled={isRunning}>
+                  {isRunning ? "Running..." : "OK"}
+                </button>
+              </div>
+              {error && (
+                <p className="small" role="alert">
+                  {error}
+                </p>
+              )}
+            </div>
+          )}
+
+          {stage === "input" && workflow === "promote-to-golden" && (
+            <div className="grid" aria-label="Input section">
+              <div className="field">
+                <label htmlFor="promote-source">Source (trained-data rules)</label>
+                <input
+                  id="promote-source"
+                  value={promoteSourcePath}
+                  onChange={(e) => setPromoteSourcePath(e.target.value)}
+                  disabled={promoteLoading || promoteSaving}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="promote-target">Target (golden rules)</label>
+                <input
+                  id="promote-target"
+                  value={promoteTargetPath}
+                  onChange={(e) => setPromoteTargetPath(e.target.value)}
+                  disabled={promoteLoading || promoteSaving}
+                />
+              </div>
+              <div>
+                <button
+                  className="primary"
+                  onClick={loadPromoteDiff}
+                  disabled={promoteLoading || promoteSaving || !promoteSourcePath.trim() || !promoteTargetPath.trim()}
+                >
+                  {promoteLoading ? "Loading..." : "Load Diff"}
+                </button>
+              </div>
+              {promoteError && (
+                <p className="small" role="alert" style={{ color: "var(--color-error, #c00)" }}>
+                  {promoteError}
+                </p>
+              )}
+              {promoteResult && (
+                <p className="small" role="status">
+                  {promoteResult}
+                </p>
+              )}
+              {promoteDiff.length > 0 && (
+                <>
+                  <article className="card">
+                    <h2>Diff Summary</h2>
+                    <p className="small">
+                      <span style={{ color: "#2a7" }}>{promoteDiff.filter((r) => r.status === "added").length} added</span>
+                      {" · "}
+                      <span style={{ color: "#c80" }}>{promoteDiff.filter((r) => r.status === "changed").length} changed</span>
+                      {" · "}
+                      <span style={{ color: "#c33" }}>{promoteDiff.filter((r) => r.status === "removed").length} removed</span>
+                      {" · "}
+                      {promoteDiff.filter((r) => r.status === "unchanged").length} unchanged
+                    </p>
+                  </article>
+                  {promoteDiff.every((r) => r.status === "unchanged") ? (
+                    <p className="small">Files are identical — nothing to promote.</p>
+                  ) : (
+                    <article className="card">
+                      <h2>Changes</h2>
+                      <div className="pipeline-scroll">
+                        <table className="summary-table">
+                          <thead>
+                            <tr>
+                              <th>Status</th>
+                              {promoteHeaders.map((h) => (
+                                <th key={h}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {promoteDiff
+                              .filter((r) => r.status !== "unchanged" || promoteShowUnchanged)
+                              .map((r) => (
+                                <tr
+                                  key={`${r.status}-${r.ruleId}`}
+                                  style={{
+                                    background:
+                                      r.status === "added"
+                                        ? "rgba(42,170,70,0.1)"
+                                        : r.status === "removed"
+                                          ? "rgba(204,51,51,0.1)"
+                                          : r.status === "changed"
+                                            ? "rgba(200,128,0,0.1)"
+                                            : "transparent"
+                                  }}
+                                >
+                                  <td>
+                                    {r.status === "added" && <span style={{ color: "#2a7" }}>+ added</span>}
+                                    {r.status === "removed" && <span style={{ color: "#c33" }}>- removed</span>}
+                                    {r.status === "changed" && <span style={{ color: "#c80" }}>~ changed</span>}
+                                    {r.status === "unchanged" && <span>= same</span>}
+                                  </td>
+                                  {(r.sourceRow || r.targetRow || []).map((cell, ci) => (
+                                    <td key={ci}>{cell}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      {promoteDiff.some((r) => r.status === "unchanged") && (
+                        <button
+                          className="small"
+                          onClick={() => setPromoteShowUnchanged(!promoteShowUnchanged)}
+                          style={{ marginTop: "0.5rem" }}
+                        >
+                          {promoteShowUnchanged
+                            ? "Hide unchanged rules"
+                            : `Show ${promoteDiff.filter((r) => r.status === "unchanged").length} unchanged rules`}
+                        </button>
+                      )}
+                    </article>
+                  )}
+                  {!promoteDiff.every((r) => r.status === "unchanged") && !promoteConfirming && (
+                    <div>
+                      <button
+                        className="primary"
+                        onClick={() => setPromoteConfirming(true)}
+                        disabled={promoteSaving}
+                      >
+                        Promote to Golden
+                      </button>
+                    </div>
+                  )}
+                  {promoteConfirming && (
+                    <article className="card" aria-label="Confirm promotion">
+                      <h2>Confirm Promotion</h2>
+                      <p className="small">
+                        Overwrite <strong>golden rule-engine.csv</strong> with{" "}
+                        {promoteDiff.filter((r) => r.status !== "removed").length} rules from trained-data?
+                        This action is hard to reverse.
+                      </p>
+                      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+                        <button
+                          className="primary"
+                          onClick={handlePromote}
+                          disabled={promoteSaving}
+                        >
+                          {promoteSaving ? "Saving..." : "Confirm Promote"}
+                        </button>
+                        <button
+                          onClick={() => setPromoteConfirming(false)}
+                          disabled={promoteSaving}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </article>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+
           {stage === "results" && (
             <div className="grid" aria-label="Results section">
               <span className={`badge run-state-${runState}`}>
                 {isRunning
                   ? workflow === "categorize"
                     ? "Live local pipeline run (in progress)"
-                    : "Live local add-rule run (in progress)"
+                    : workflow === "train-stc"
+                      ? "Live training pipeline run (in progress)"
+                      : "Live local add-rule run (in progress)"
                   : workflow === "categorize"
                     ? "Live local pipeline run"
-                    : "Live local add-rule run"}
+                    : workflow === "train-stc"
+                      ? "Live training pipeline run"
+                      : "Live local add-rule run"}
               </span>
               {isRunning && (
                 <p className={`small heartbeat-row run-state-${runState}`}>
@@ -2560,6 +3527,21 @@ export default function HomePage() {
                         <div key={step} className={`pipeline-step step-${pipelineStatus[idx]}`}>
                           <p className="pipeline-name">{step}</p>
                           <p className="pipeline-state">{pipelineStatus[idx]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              )}
+              {workflow === "train-stc" && (
+                <article className="card">
+                  <h2>Pipeline Stages</h2>
+                  <div className="pipeline-scroll">
+                    <div className="pipeline-grid">
+                      {TRAIN_PIPELINE_STEPS.map((step, idx) => (
+                        <div key={step} className={`pipeline-step step-${trainStcPipelineStatus[idx] || "pending"}`}>
+                          <p className="pipeline-name">{step}</p>
+                          <p className="pipeline-state">{trainStcPipelineStatus[idx] || "pending"}</p>
                         </div>
                       ))}
                     </div>
@@ -2635,6 +3617,195 @@ export default function HomePage() {
                       )}
                     </p>
                   </article>
+                </div>
+              ) : workflow === "train-stc" ? (
+                <div className="cards">
+                  {trainPaused && (
+                    <article className="card" aria-label="Human audit">
+                      <h2>Human Audit — Phase {trainPhase}</h2>
+                      <p className="small">
+                        Review and optionally edit tickets-categorized.csv before continuing.
+                      </p>
+                      {trainAuditCsvPath && (
+                        <p className="small">
+                          File path:{" "}
+                          <code>{trainAuditCsvPath}</code>
+                          {" "}
+                          <button
+                            className="small"
+                            onClick={() => copyText("File path", trainAuditCsvPath, setTrainAuditSaveStatus)}
+                          >
+                            Copy path
+                          </button>
+                        </p>
+                      )}
+                      {trainAuditRows.length > 0 && (
+                        <div className="grid-shell" style={{ maxHeight: "400px", overflow: "auto" }}>
+                          <table className="summary-table">
+                            <thead>
+                              <tr>
+                                {trainAuditRows[0]?.map((header, colIdx) => (
+                                  <th key={colIdx}>{header}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {trainAuditRows.slice(1).map((row, rowIdx) => (
+                                <tr key={rowIdx}>
+                                  {row.map((cell, colIdx) => (
+                                    <td key={colIdx}>
+                                      <input
+                                        type="text"
+                                        value={cell}
+                                        onChange={(e) =>
+                                          updateTrainAuditCell(rowIdx + 1, colIdx, e.target.value)
+                                        }
+                                        style={{ width: "100%", minWidth: "80px", border: "1px solid #ccc", padding: "2px 4px", fontSize: "0.85em" }}
+                                      />
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                      {trainAuditRows.length === 0 && trainAuditCsvPath && (
+                        <p className="small">Could not load CSV for inline editing. Use the file path above to edit externally.</p>
+                      )}
+                      <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                        <button
+                          className="primary"
+                          onClick={saveTrainAudit}
+                          disabled={trainAuditSaving || !trainAuditHasChanges}
+                        >
+                          {trainAuditSaving ? "Saving..." : "Save Changes"}
+                        </button>
+                        <button onClick={resetTrainAudit} disabled={trainAuditSaving || !trainAuditHasChanges}>
+                          Reset
+                        </button>
+                        <span className="small">
+                          {trainAuditHasChanges ? "Unsaved changes" : "No changes"}
+                        </span>
+                        {trainAuditSaveStatus && (
+                          <span className="small">{trainAuditSaveStatus}</span>
+                        )}
+                      </div>
+                      <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
+                        <button
+                          className="primary"
+                          onClick={handleContinueTraining}
+                          aria-label="Continue Pipeline"
+                        >
+                          Continue Pipeline
+                        </button>
+                        <button onClick={handleCancelTrainAudit} aria-label="Cancel Training">
+                          Cancel Training
+                        </button>
+                      </div>
+                    </article>
+                  )}
+                  {!trainPaused && (
+                    <>
+                  <article className="card">
+                    <h2>Training Pipeline Result</h2>
+                    <p className="small">{trainStcResult.message || "Waiting for completion..."}</p>
+                    {trainStcResult.trainingSamples !== undefined && (
+                      <p className="small">Training samples: {trainStcResult.trainingSamples}</p>
+                    )}
+                    {trainStcResult.cvAccuracy && (
+                      <p className="small">CV Accuracy: {trainStcResult.cvAccuracy}</p>
+                    )}
+                    {trainStcResult.rulesAdded !== undefined && (
+                      <p className="small">Rules added: {trainStcResult.rulesAdded}</p>
+                    )}
+                  </article>
+                  <article className="card">
+                    <h2>Output Artifacts</h2>
+                    {trainStcResult.ticketsCsv && (
+                      <p className="small">
+                        Tickets CSV:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.ticketsCsv)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.ticketsCsv}
+                        </a>
+                      </p>
+                    )}
+                    {trainStcResult.localRules && (
+                      <p className="small">
+                        Local rules:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.localRules)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.localRules}
+                        </a>
+                      </p>
+                    )}
+                    {trainStcResult.mlModel && (
+                      <p className="small">
+                        ML model:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.mlModel)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.mlModel}
+                        </a>
+                      </p>
+                    )}
+                    {trainStcResult.mlReport && (
+                      <p className="small">
+                        ML report:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.mlReport)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.mlReport}
+                        </a>
+                      </p>
+                    )}
+                    {trainStcResult.trainingLog && (
+                      <p className="small">
+                        Training log:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.trainingLog)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.trainingLog}
+                        </a>
+                      </p>
+                    )}
+                    {trainStcResult.outputDir && (
+                      <p className="small">
+                        Output directory:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.outputDir)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.outputDir}
+                        </a>
+                      </p>
+                    )}
+                    {!trainStcResult.ticketsCsv && !trainStcResult.mlModel && !trainStcResult.trainingLog && (
+                      <p className="small">No output artifacts yet.</p>
+                    )}
+                  </article>
+                    </>
+                  )}
                 </div>
               ) : (
                 <div className="cards">

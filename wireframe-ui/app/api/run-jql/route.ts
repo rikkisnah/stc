@@ -23,7 +23,7 @@ function runCommand(
   onStderr?: (line: string) => void
 ): Promise<{ stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
-    const child = spawn("python3", args, { cwd });
+    const child = spawn("uv", ["run", "python3", ...args], { cwd });
     setActiveChild?.(child);
     let stdout = "";
     let stderr = "";
@@ -56,7 +56,7 @@ function runCommand(
       if (code === 0) {
         resolve({ stdout, stderr });
       } else {
-        reject(new Error(stderr || stdout || `Command failed: python3 ${args.join(" ")}`));
+        reject(new Error(stderr || stdout || `Command failed: uv run python3 ${args.join(" ")}`));
       }
     });
   });
@@ -229,7 +229,7 @@ export async function POST(req: Request) {
         );
 
         for (const args of commands) {
-          const cmd = `python3 ${args.join(" ")}`;
+          const cmd = `uv run python3 ${args.join(" ")}`;
           emit({ type: "command-start", command: cmd });
           await runCommand(
             args,
