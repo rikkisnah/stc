@@ -34,7 +34,11 @@ export async function GET(req: Request) {
     path.resolve(repoRoot, "scripts", "tickets-json"),
     path.resolve(repoRoot, "scripts", "normalized-tickets")
   ];
-  const resolvedPath = path.resolve(repoRoot, inputPath);
+  let normalizedInput = inputPath;
+  if (path.isAbsolute(normalizedInput) && normalizedInput.startsWith(repoRoot + path.sep)) {
+    normalizedInput = path.relative(repoRoot, normalizedInput);
+  }
+  const resolvedPath = path.resolve(repoRoot, normalizedInput);
   const isAllowed = allowedRoots.some(
     (allowedRoot) => resolvedPath === allowedRoot || resolvedPath.startsWith(allowedRoot + path.sep)
   );

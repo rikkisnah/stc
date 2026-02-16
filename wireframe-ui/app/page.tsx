@@ -2,7 +2,7 @@
 // Tag: #ai-assisted
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Stage = "landing" | "input" | "results";
 type Workflow =
@@ -101,9 +101,20 @@ const RULES_SOURCE_DIRS: Record<RulesSource, string> = {
   golden: "scripts/trained-data/golden-rules-engine"
 };
 
+const VALID_WORKFLOWS = new Set<Workflow>([
+  "categorize", "add-rule", "browse-tickets", "browse-categorized",
+  "browse-rules", "train-stc", "promote-to-golden"
+]);
+
+function workflowFromHash(): Workflow {
+  if (typeof window === "undefined") return "categorize";
+  const hash = window.location.hash.replace("#", "");
+  return VALID_WORKFLOWS.has(hash as Workflow) ? (hash as Workflow) : "categorize";
+}
+
 export default function HomePage() {
   const [stage, setStage] = useState<Stage>("landing");
-  const [workflow, setWorkflow] = useState<Workflow>("categorize");
+  const [workflow, setWorkflowState] = useState<Workflow>("categorize");
   const [inputMode, setInputMode] = useState<InputMode>("jql");
   const [jql, setJql] = useState(
     'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"'
@@ -113,6 +124,9 @@ export default function HomePage() {
     "scripts/analysis/ui-runs/templates/tickets-template.txt"
   );
   const [ticketsText, setTicketsText] = useState("HPC-110621,HPC-110615");
+  const [categorizeRulesEngine, setCategorizeRulesEngine] = useState(
+    "scripts/trained-data/rule-engine.local.csv"
+  );
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState("");
   const [summaryRows, setSummaryRows] = useState<SummaryRow[]>([]);
@@ -374,6 +388,23 @@ export default function HomePage() {
 
     return null;
   }
+
+  const setWorkflow = useCallback((w: Workflow) => {
+    setWorkflowState(w);
+    window.history.replaceState(null, "", `#${w}`);
+  }, []);
+
+  useEffect(() => {
+    const initial = workflowFromHash();
+    setWorkflowState(initial);
+    if (window.location.hash) setStage("input");
+    const onHashChange = () => {
+      setWorkflowState(workflowFromHash());
+      setStage("input");
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   useEffect(() => {
     setRenderedAt(new Date().toLocaleString());
@@ -1063,7 +1094,7 @@ export default function HomePage() {
             : "/api/add-rule-from-ticket";
       const body =
         workflow === "categorize"
-          ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText }
+          ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText, rulesEngine: categorizeRulesEngine.trim() }
           : workflow === "train-stc"
             ? {
                 phase: 1 as const,
@@ -1990,90 +2021,31 @@ export default function HomePage() {
 
         <div className="actions">
           <div className="mode-menu" role="group" aria-label="Workflow menu">
-            <button
-              className={`menu-btn ${workflow === "categorize" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("categorize");
-                setStage("input");
-              }}
-              aria-label="Categorize tickets"
-              aria-pressed={workflow === "categorize"}
-              disabled={isRunning}
-            >
-              Categorize tickets
-            </button>
-            <button
-              className={`menu-btn ${workflow === "add-rule" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("add-rule");
-                setStage("input");
-              }}
-              aria-label="Add Rule for a Ticket"
-              aria-pressed={workflow === "add-rule"}
-              disabled={isRunning}
-            >
-              Add Rule for a Ticket
-            </button>
-            <button
-              className={`menu-btn ${workflow === "browse-tickets" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("browse-tickets");
-                setStage("input");
-              }}
-              aria-label="Tickets in Normalized root"
-              aria-pressed={workflow === "browse-tickets"}
-              disabled={isRunning}
-            >
-              Tickets in Normalized root
-            </button>
-            <button
-              className={`menu-btn ${workflow === "browse-categorized" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("browse-categorized");
-                setStage("input");
-              }}
-              aria-label="View Categorized Tickets"
-              aria-pressed={workflow === "browse-categorized"}
-              disabled={isRunning}
-            >
-              View Categorized Tickets
-            </button>
-            <button
-              className={`menu-btn ${workflow === "browse-rules" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("browse-rules");
-                setStage("input");
-              }}
-              aria-label="View Rules Engines"
-              aria-pressed={workflow === "browse-rules"}
-              disabled={isRunning}
-            >
-              View Rules Engines
-            </button>
-            <button
-              className={`menu-btn ${workflow === "promote-to-golden" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("promote-to-golden");
-                setStage("input");
-              }}
-              aria-label="Promote to Golden"
-              aria-pressed={workflow === "promote-to-golden"}
-              disabled={isRunning}
-            >
-              Promote to Golden
-            </button>
-            <button
-              className={`menu-btn ${workflow === "train-stc" ? "is-active" : ""}`}
-              onClick={() => {
-                setWorkflow("train-stc");
-                setStage("input");
-              }}
-              aria-label="Train STC model"
-              aria-pressed={workflow === "train-stc"}
-              disabled={isRunning}
-            >
-              Train STC model
-            </button>
+            {([
+              ["categorize", "Categorize tickets"],
+              ["add-rule", "Add Rule for a Ticket"],
+              ["browse-tickets", "Tickets in Normalized root"],
+              ["browse-categorized", "View Categorized Tickets"],
+              ["browse-rules", "View Rules Engines"],
+              ["promote-to-golden", "Promote to Golden"],
+              ["train-stc", "Train STC model"],
+            ] as [Workflow, string][]).map(([wf, label]) => (
+              <a
+                key={wf}
+                href={`#${wf}`}
+                className={`menu-btn ${workflow === wf ? "is-active" : ""}${isRunning ? " disabled" : ""}`}
+                aria-label={label}
+                aria-current={workflow === wf ? "page" : undefined}
+                onClick={(e) => {
+                  if (isRunning) { e.preventDefault(); return; }
+                  e.preventDefault();
+                  setWorkflow(wf);
+                  setStage("input");
+                }}
+              >
+                {label}
+              </a>
+            ))}
           </div>
           {isRunning && (
             <button onClick={handleCancel} aria-label="Cancel run">
@@ -2184,6 +2156,15 @@ export default function HomePage() {
                 <p className="small">
                   You can paste comma-separated tickets, e.g. <code>HPC-110621,HPC-110615</code>.
                 </p>
+              </div>
+              <div className="field">
+                <label htmlFor="categorize-rules-engine">Rules engine CSV</label>
+                <input
+                  id="categorize-rules-engine"
+                  value={categorizeRulesEngine}
+                  onChange={(e) => setCategorizeRulesEngine(e.target.value)}
+                  disabled={isRunning}
+                />
               </div>
               <div>
                 <button className="primary" onClick={handleOk} disabled={isRunning}>

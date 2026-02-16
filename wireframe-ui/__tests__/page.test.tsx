@@ -32,6 +32,7 @@ function mockNdjsonResponse(ndjsonLines: string[]) {
 
 describe("STC wireframe flow", () => {
   beforeEach(() => {
+    window.history.replaceState(null, "", window.location.pathname);
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
       json: async () => ({ tickets: [] })
@@ -41,6 +42,7 @@ describe("STC wireframe flow", () => {
   afterEach(() => {
     jest.restoreAllMocks();
     global.fetch = originalFetch;
+    window.history.replaceState(null, "", window.location.pathname);
   });
 
   it("shows landing view by default", () => {
@@ -55,7 +57,7 @@ describe("STC wireframe flow", () => {
   it("shows input fields after clicking categorize", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
+    fireEvent.click(screen.getByRole("link", { name: /categorize tickets/i }));
 
     expect(screen.getByLabelText(/enter jql/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/enter ticket list files/i)).toBeInTheDocument();
@@ -72,7 +74,7 @@ describe("STC wireframe flow", () => {
   it("shows add-rule inputs with script-matching defaults", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /add rule for a ticket/i }));
+    fireEvent.click(screen.getByRole("link", { name: /add rule for a ticket/i }));
 
     expect(screen.getByLabelText(/ticket key/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/why should a new rule be added/i)).toBeInTheDocument();
@@ -98,44 +100,44 @@ describe("STC wireframe flow", () => {
   it("shows active workflow state in the top menu", async () => {
     render(<HomePage />);
 
-    const categorizeBtn = screen.getByRole("button", { name: /categorize tickets/i });
-    const addRuleBtn = screen.getByRole("button", { name: /add rule for a ticket/i });
-    const browseBtn = screen.getByRole("button", { name: /tickets in normalized root/i });
-    const categorizedBtn = screen.getByRole("button", { name: /view categorized tickets/i });
-    const rulesBtn = screen.getByRole("button", { name: /view rules engines/i });
-    const trainBtn = screen.getByRole("button", { name: /train stc model/i });
+    const categorizeBtn = screen.getByRole("link", { name: /categorize tickets/i });
+    const addRuleBtn = screen.getByRole("link", { name: /add rule for a ticket/i });
+    const browseBtn = screen.getByRole("link", { name: /tickets in normalized root/i });
+    const categorizedBtn = screen.getByRole("link", { name: /view categorized tickets/i });
+    const rulesBtn = screen.getByRole("link", { name: /view rules engines/i });
+    const trainBtn = screen.getByRole("link", { name: /train stc model/i });
 
-    expect(categorizeBtn).toHaveAttribute("aria-pressed", "true");
-    expect(addRuleBtn).toHaveAttribute("aria-pressed", "false");
-    expect(browseBtn).toHaveAttribute("aria-pressed", "false");
-    expect(categorizedBtn).toHaveAttribute("aria-pressed", "false");
-    expect(rulesBtn).toHaveAttribute("aria-pressed", "false");
-    expect(trainBtn).toHaveAttribute("aria-pressed", "false");
+    expect(categorizeBtn).toHaveAttribute("aria-current", "page");
+    expect(addRuleBtn).not.toHaveAttribute("aria-current");
+    expect(browseBtn).not.toHaveAttribute("aria-current");
+    expect(categorizedBtn).not.toHaveAttribute("aria-current");
+    expect(rulesBtn).not.toHaveAttribute("aria-current");
+    expect(trainBtn).not.toHaveAttribute("aria-current");
 
     fireEvent.click(addRuleBtn);
-    expect(categorizeBtn).toHaveAttribute("aria-pressed", "false");
-    expect(addRuleBtn).toHaveAttribute("aria-pressed", "true");
-    expect(browseBtn).toHaveAttribute("aria-pressed", "false");
-    expect(categorizedBtn).toHaveAttribute("aria-pressed", "false");
-    expect(rulesBtn).toHaveAttribute("aria-pressed", "false");
-    expect(trainBtn).toHaveAttribute("aria-pressed", "false");
+    expect(categorizeBtn).not.toHaveAttribute("aria-current");
+    expect(addRuleBtn).toHaveAttribute("aria-current", "page");
+    expect(browseBtn).not.toHaveAttribute("aria-current");
+    expect(categorizedBtn).not.toHaveAttribute("aria-current");
+    expect(rulesBtn).not.toHaveAttribute("aria-current");
+    expect(trainBtn).not.toHaveAttribute("aria-current");
 
     fireEvent.click(browseBtn);
-    expect(categorizeBtn).toHaveAttribute("aria-pressed", "false");
-    expect(addRuleBtn).toHaveAttribute("aria-pressed", "false");
-    expect(browseBtn).toHaveAttribute("aria-pressed", "true");
-    expect(categorizedBtn).toHaveAttribute("aria-pressed", "false");
-    expect(rulesBtn).toHaveAttribute("aria-pressed", "false");
+    expect(categorizeBtn).not.toHaveAttribute("aria-current");
+    expect(addRuleBtn).not.toHaveAttribute("aria-current");
+    expect(browseBtn).toHaveAttribute("aria-current", "page");
+    expect(categorizedBtn).not.toHaveAttribute("aria-current");
+    expect(rulesBtn).not.toHaveAttribute("aria-current");
     await waitFor(() =>
       expect(global.fetch).toHaveBeenCalledWith("/api/tickets-json?dir=scripts%2Fnormalized-tickets")
     );
 
     fireEvent.click(categorizedBtn);
-    expect(categorizeBtn).toHaveAttribute("aria-pressed", "false");
-    expect(addRuleBtn).toHaveAttribute("aria-pressed", "false");
-    expect(browseBtn).toHaveAttribute("aria-pressed", "false");
-    expect(categorizedBtn).toHaveAttribute("aria-pressed", "true");
-    expect(rulesBtn).toHaveAttribute("aria-pressed", "false");
+    expect(categorizeBtn).not.toHaveAttribute("aria-current");
+    expect(addRuleBtn).not.toHaveAttribute("aria-current");
+    expect(browseBtn).not.toHaveAttribute("aria-current");
+    expect(categorizedBtn).toHaveAttribute("aria-current", "page");
+    expect(rulesBtn).not.toHaveAttribute("aria-current");
     await waitFor(() =>
       expect(global.fetch).toHaveBeenCalledWith(
         "/api/list-files?dir=scripts%2Fanalysis&extensions=csv&limit=500&nameExact=tickets-categorized.csv"
@@ -143,11 +145,11 @@ describe("STC wireframe flow", () => {
     );
 
     fireEvent.click(rulesBtn);
-    expect(categorizeBtn).toHaveAttribute("aria-pressed", "false");
-    expect(addRuleBtn).toHaveAttribute("aria-pressed", "false");
-    expect(browseBtn).toHaveAttribute("aria-pressed", "false");
-    expect(categorizedBtn).toHaveAttribute("aria-pressed", "false");
-    expect(rulesBtn).toHaveAttribute("aria-pressed", "true");
+    expect(categorizeBtn).not.toHaveAttribute("aria-current");
+    expect(addRuleBtn).not.toHaveAttribute("aria-current");
+    expect(browseBtn).not.toHaveAttribute("aria-current");
+    expect(categorizedBtn).not.toHaveAttribute("aria-current");
+    expect(rulesBtn).toHaveAttribute("aria-current", "page");
     await waitFor(() =>
       expect(global.fetch).toHaveBeenCalledWith(
         "/api/list-files?dir=scripts%2Ftrained-data&extensions=csv&nameContains=rule-engine&limit=500"
@@ -158,7 +160,7 @@ describe("STC wireframe flow", () => {
   it("enforces either-or input mode", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
+    fireEvent.click(screen.getByRole("link", { name: /categorize tickets/i }));
 
     const jqlInput = screen.getByLabelText(/enter jql/i);
     const filesInput = screen.getByLabelText(/enter ticket list files/i);
@@ -201,7 +203,7 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
+    fireEvent.click(screen.getByRole("link", { name: /categorize tickets/i }));
     fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -214,7 +216,8 @@ describe("STC wireframe flow", () => {
           jql: 'project="High Performance Computing" and createdDate >= "2026-02-10" and createdDate <= "2026-02-11"',
           resolutionMode: "all",
           ticketsFile: "scripts/analysis/ui-runs/templates/tickets-template.txt",
-          ticketsText: "HPC-110621,HPC-110615"
+          ticketsText: "HPC-110621,HPC-110615",
+          rulesEngine: "scripts/trained-data/rule-engine.local.csv"
         })
       })
     );
@@ -236,7 +239,7 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /categorize tickets/i }));
+    fireEvent.click(screen.getByRole("link", { name: /categorize tickets/i }));
     fireEvent.click(screen.getByRole("radio", { name: /ticket ids/i }));
     fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
 
@@ -279,7 +282,7 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /add rule for a ticket/i }));
+    fireEvent.click(screen.getByRole("link", { name: /add rule for a ticket/i }));
     fireEvent.change(screen.getByLabelText(/ticket key/i), { target: { value: "HPC-123456" } });
     fireEvent.change(screen.getByLabelText(/why should a new rule be added/i), {
       target: { value: "Repeat incident pattern" }
@@ -340,7 +343,7 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /add rule for a ticket/i }));
+    fireEvent.click(screen.getByRole("link", { name: /add rule for a ticket/i }));
     fireEvent.change(screen.getByLabelText(/ticket key/i), { target: { value: "HPC-123" } });
     fireEvent.change(screen.getByLabelText(/why should a new rule be added/i), {
       target: { value: "Repeat incident pattern" }
@@ -421,7 +424,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /tickets in normalized root/i }));
+    fireEvent.click(screen.getByRole("link", { name: /tickets in normalized root/i }));
 
     const ticketButton = await screen.findByRole("button", { name: "HPC-123" });
     fireEvent.click(ticketButton);
@@ -476,7 +479,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /tickets in normalized root/i }));
+    fireEvent.click(screen.getByRole("link", { name: /tickets in normalized root/i }));
 
     expect(await screen.findByRole("button", { name: "HPC-123" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "HPC-456" })).not.toBeInTheDocument();
@@ -502,7 +505,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /tickets in normalized root/i }));
+    fireEvent.click(screen.getByRole("link", { name: /tickets in normalized root/i }));
 
     expect(
       await screen.findByText(/directory is empty: scripts\/normalized-tickets\./i)
@@ -550,7 +553,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /view categorized tickets/i }));
+    fireEvent.click(screen.getByRole("link", { name: /view categorized tickets/i }));
 
     const categorizedFile = await screen.findByRole("button", { name: "tickets-categorized.csv" });
     fireEvent.click(categorizedFile);
@@ -616,7 +619,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /view categorized tickets/i }));
+    fireEvent.click(screen.getByRole("link", { name: /view categorized tickets/i }));
     await screen.findByRole("button", { name: /refresh list/i });
 
     fireEvent.change(screen.getByLabelText(/categorized directory \(optional\)/i), {
@@ -681,7 +684,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /view rules engines/i }));
+    fireEvent.click(screen.getByRole("link", { name: /view rules engines/i }));
 
     expect(await screen.findByRole("button", { name: "rule-engine.local.csv" })).toBeInTheDocument();
     expect(screen.getByLabelText(/rules source/i)).toHaveDisplayValue("trained-data (default)");
@@ -699,7 +702,7 @@ describe("STC wireframe flow", () => {
   it("shows Train STC model tab with JQL input mode and default advanced params", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
 
     expect(screen.getByRole("radio", { name: /^jql$/i })).toBeChecked();
     expect(screen.getByRole("radio", { name: /ticket list files/i })).not.toBeChecked();
@@ -710,7 +713,7 @@ describe("STC wireframe flow", () => {
   it("shows advanced training params with defaults in details section", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
 
     expect(screen.getByDisplayValue("scripts/trained-data/ml-training-data.csv")).toBeInTheDocument();
     expect(screen.getByDisplayValue("20")).toBeInTheDocument();
@@ -720,7 +723,7 @@ describe("STC wireframe flow", () => {
   it("switches between ticket input modes on train-stc tab", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
 
     fireEvent.click(screen.getByRole("radio", { name: /^ticket ids$/i }));
     expect(screen.getByRole("radio", { name: /^ticket ids$/i })).toBeChecked();
@@ -737,7 +740,7 @@ describe("STC wireframe flow", () => {
 
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -763,7 +766,7 @@ describe("STC wireframe flow", () => {
   it("validates JQL is required in JQL mode for train-stc", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     const jqlTextareas = screen.getAllByRole("textbox");
     const trainJql = jqlTextareas.find((el) => el.tagName === "TEXTAREA" && (el as HTMLTextAreaElement).value.includes("High Performance Computing"));
     expect(trainJql).toBeTruthy();
@@ -776,7 +779,7 @@ describe("STC wireframe flow", () => {
   it("validates training data CSV is required for train-stc", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     const trainingDataInput = screen.getByDisplayValue("scripts/trained-data/ml-training-data.csv");
     fireEvent.change(trainingDataInput, { target: { value: "" } });
     fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
@@ -787,7 +790,7 @@ describe("STC wireframe flow", () => {
   it("validates ticket IDs are required when tickets mode is selected", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     fireEvent.click(screen.getByRole("radio", { name: /^ticket ids$/i }));
     const ticketTextareas = screen.getAllByRole("textbox");
     const ticketIdInput = ticketTextareas.find((el) => (el as HTMLTextAreaElement).value === "HPC-110621,HPC-110615");
@@ -801,12 +804,12 @@ describe("STC wireframe flow", () => {
   it("shows Train STC model active state in workflow menu", () => {
     render(<HomePage />);
 
-    const trainBtn = screen.getByRole("button", { name: /train stc model/i });
-    expect(trainBtn).toHaveAttribute("aria-pressed", "false");
+    const trainBtn = screen.getByRole("link", { name: /train stc model/i });
+    expect(trainBtn).not.toHaveAttribute("aria-current");
 
     fireEvent.click(trainBtn);
-    expect(trainBtn).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByRole("button", { name: /categorize tickets/i })).toHaveAttribute("aria-pressed", "false");
+    expect(trainBtn).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: /categorize tickets/i })).not.toHaveAttribute("aria-current");
   });
 
   it("shows audit UI when train-stc pipeline emits paused event", async () => {
@@ -840,7 +843,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     // Use act to flush async state updates from the streaming NDJSON handler
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
@@ -893,7 +896,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
       await new Promise((r) => setTimeout(r, 100));
@@ -940,7 +943,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
       await new Promise((r) => setTimeout(r, 100));
@@ -984,7 +987,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /train stc model/i }));
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
       await new Promise((r) => setTimeout(r, 100));
@@ -1017,7 +1020,7 @@ describe("STC wireframe flow", () => {
   it("shows Promote to Golden tab with source and target path defaults", () => {
     render(<HomePage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("link", { name: /promote to golden/i }));
 
     expect(screen.getByDisplayValue("scripts/trained-data/rule-engine.local.csv")).toBeInTheDocument();
     expect(screen.getByDisplayValue("scripts/trained-data/golden-rules-engine/rule-engine.csv")).toBeInTheDocument();
@@ -1027,12 +1030,12 @@ describe("STC wireframe flow", () => {
   it("shows Promote to Golden active state in workflow menu", () => {
     render(<HomePage />);
 
-    const promoteBtn = screen.getByRole("button", { name: /promote to golden/i });
-    expect(promoteBtn).toHaveAttribute("aria-pressed", "false");
+    const promoteBtn = screen.getByRole("link", { name: /promote to golden/i });
+    expect(promoteBtn).not.toHaveAttribute("aria-current");
 
     fireEvent.click(promoteBtn);
-    expect(promoteBtn).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByRole("button", { name: /categorize tickets/i })).toHaveAttribute("aria-pressed", "false");
+    expect(promoteBtn).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: /categorize tickets/i })).not.toHaveAttribute("aria-current");
   });
 
   it("loads diff and shows added rules in summary", async () => {
@@ -1047,7 +1050,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("link", { name: /promote to golden/i }));
     fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
 
     await waitFor(() => {
@@ -1070,7 +1073,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("link", { name: /promote to golden/i }));
     fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
 
     await waitFor(() => {
@@ -1085,7 +1088,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("link", { name: /promote to golden/i }));
     fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
 
     await waitFor(() => {
@@ -1108,7 +1111,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("link", { name: /promote to golden/i }));
     fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
 
     await waitFor(() => {
@@ -1116,10 +1119,8 @@ describe("STC wireframe flow", () => {
     });
 
     expect(screen.queryByText(/confirm promotion/i)).not.toBeInTheDocument();
-    const promoteButtons = screen.getAllByRole("button", { name: /promote to golden/i });
-    const actionBtn = promoteButtons.find((b) => !b.hasAttribute("aria-pressed"));
-    expect(actionBtn).toBeTruthy();
-    fireEvent.click(actionBtn!);
+    const actionBtn = screen.getByRole("button", { name: /promote to golden/i });
+    fireEvent.click(actionBtn);
     expect(screen.getByText(/confirm promotion/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
@@ -1134,7 +1135,7 @@ describe("STC wireframe flow", () => {
     global.fetch = mockFetch as unknown as typeof fetch;
 
     render(<HomePage />);
-    fireEvent.click(screen.getByRole("button", { name: /promote to golden/i }));
+    fireEvent.click(screen.getByRole("link", { name: /promote to golden/i }));
     fireEvent.click(screen.getByRole("button", { name: /load diff/i }));
 
     await waitFor(() => {

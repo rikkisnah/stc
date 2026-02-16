@@ -32,7 +32,11 @@ export async function POST(req: Request) {
     path.resolve(repoRoot, "scripts", "analysis"),
     path.resolve(repoRoot, "scripts", "trained-data")
   ];
-  const resolvedPath = path.resolve(repoRoot, inputPath);
+  let normalizedInput = inputPath;
+  if (path.isAbsolute(normalizedInput) && normalizedInput.startsWith(repoRoot + path.sep)) {
+    normalizedInput = path.relative(repoRoot, normalizedInput);
+  }
+  const resolvedPath = path.resolve(repoRoot, normalizedInput);
   const isAllowed = allowedRoots.some(
     (root) => resolvedPath === root || resolvedPath.startsWith(root + path.sep)
   );

@@ -91,6 +91,7 @@ export async function POST(req: Request) {
     resolutionMode?: "all" | "unresolved-only" | "resolved-only";
     ticketsFile?: string;
     ticketsText?: string;
+    rulesEngine?: string;
   };
   const inputMode = body.inputMode || "jql";
   const rawJql = body.jql?.trim();
@@ -223,6 +224,9 @@ export async function POST(req: Request) {
             normalizedDir,
             "--output-dir",
             outputDir,
+            ...(body.rulesEngine?.trim()
+              ? ["--rule-engine", body.rulesEngine.trim()]
+              : []),
             "-y"
           ],
           ["scripts/create_summary.py", "--tickets", ticketsCsv, "--output", summaryCsv]

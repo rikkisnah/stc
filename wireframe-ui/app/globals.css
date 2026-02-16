@@ -90,10 +90,12 @@ main {
   color: #334155;
   font-weight: 700;
   padding: 0.55rem 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
   transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 
-.menu-btn:hover:not(:disabled) {
+.menu-btn:hover:not(.disabled) {
   background: #e2e8f0;
 }
 
@@ -103,9 +105,10 @@ main {
   border-color: var(--accent);
 }
 
-.menu-btn:disabled {
+.menu-btn.disabled {
   opacity: 0.55;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 button {

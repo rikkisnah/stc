@@ -167,3 +167,4 @@ clean:
 	rm -f scripts/*.zip
 	rm -rf scripts/tickets-json/
 	rm -rf scripts/normalized-tickets/
+	rm -rf scripts/analysis/
