@@ -74,6 +74,7 @@ export async function POST(req: Request) {
     trainingData?: string;
     minSamples?: number;
     maxReviewRows?: number;
+    maxTickets?: number;
   };
 
   const phase = body.phase || 1;
@@ -181,6 +182,7 @@ async function runPhase1(
     trainingData?: string;
     minSamples?: number;
     maxReviewRows?: number;
+    maxTickets?: number;
   },
   repoRoot: string,
   scriptsDir: string,
@@ -213,6 +215,7 @@ async function runPhase1(
     path.join(scriptsDir, "trained-data", "ml-training-data.csv");
   const minSamples = body.minSamples ?? 20;
   const maxReviewRows = body.maxReviewRows ?? 200;
+  const maxTickets = body.maxTickets && body.maxTickets > 0 ? body.maxTickets : 0;
 
   await fs.mkdir(jqlDir, { recursive: true });
   await fs.mkdir(outputDir, { recursive: true });
@@ -235,7 +238,7 @@ async function runPhase1(
     fetchCommands.push([
       ...getTicketsArgs,
       "--number-of-tickets",
-      "100000",
+      String(maxTickets > 0 ? maxTickets : 100000),
       "--output-file",
       path.join(ingestDir, "limited-tickets.json")
     ]);
@@ -271,6 +274,9 @@ async function runPhase1(
 
     if (ticketKeys.length === 0) {
       throw new Error("No ticket keys provided.");
+    }
+    if (maxTickets > 0 && ticketKeys.length > maxTickets) {
+      ticketKeys = ticketKeys.slice(0, maxTickets);
     }
 
     for (const ticket of ticketKeys) {

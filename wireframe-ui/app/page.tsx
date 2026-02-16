@@ -185,6 +185,7 @@ export default function HomePage() {
   const [getNormPipelineStatus, setGetNormPipelineStatus] = useState<PipelineStepStatus[]>(
     GET_NORMALIZE_STEPS.map(() => "pending")
   );
+  const [gnMaxTickets, setGnMaxTickets] = useState("");
   const [gnBrowseSource, setGnBrowseSource] = useState<"ingest" | "normalized">("normalized");
   const [gnTicketList, setGnTicketList] = useState<TicketListItem[]>([]);
   const [gnTicketListLoading, setGnTicketListLoading] = useState(false);
@@ -278,6 +279,7 @@ export default function HomePage() {
     "scripts/analysis/ui-runs/templates/tickets-template.txt"
   );
   const [trainTicketsText, setTrainTicketsText] = useState("HPC-110621,HPC-110615");
+  const [trainMaxTickets, setTrainMaxTickets] = useState("");
   const [trainTrainingData, setTrainTrainingData] = useState(TRAIN_STC_DEFAULTS.trainingData);
   const [trainMinSamples, setTrainMinSamples] = useState(TRAIN_STC_DEFAULTS.minSamples);
   const [trainMaxReviewRows, setTrainMaxReviewRows] = useState(TRAIN_STC_DEFAULTS.maxReviewRows);
@@ -1405,7 +1407,7 @@ export default function HomePage() {
         workflow === "categorize"
           ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText, rulesEngine: categorizeRulesEngine.trim(), mlModel: categorizeMlModel.trim(), mlCategoryMap: categorizeMlCategoryMap.trim() }
           : workflow === "get-normalize"
-            ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText }
+            ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText, maxTickets: gnMaxTickets.trim() ? Number(gnMaxTickets) : undefined }
             : workflow === "train-stc"
             ? {
                 phase: 1 as const,
@@ -1416,7 +1418,8 @@ export default function HomePage() {
                 ticketsText: trainTicketsText.trim(),
                 trainingData: trainTrainingData.trim(),
                 minSamples: Number(trainMinSamples),
-                maxReviewRows: Number(trainMaxReviewRows)
+                maxReviewRows: Number(trainMaxReviewRows),
+                maxTickets: trainMaxTickets.trim() ? Number(trainMaxTickets) : undefined
               }
             : {
                 ticketKey: ticketKey.trim().toUpperCase(),
@@ -2747,6 +2750,21 @@ export default function HomePage() {
                   You can paste comma-separated tickets, e.g. <code>HPC-110621,HPC-110615</code>.
                 </p>
               </div>
+              <div className="field">
+                <label htmlFor="gn-max-tickets">Max tickets (leave empty for all)</label>
+                <input
+                  id="gn-max-tickets"
+                  type="number"
+                  min="1"
+                  placeholder="all"
+                  value={gnMaxTickets}
+                  onChange={(e) => setGnMaxTickets(e.target.value)}
+                  disabled={isRunning}
+                />
+                <p className="small">
+                  Limit the number of tickets fetched. Useful for smaller training/audit batches.
+                </p>
+              </div>
               <div>
                 <button className="primary" onClick={handleOk} disabled={isRunning}>
                   {isRunning ? "Running..." : "OK"}
@@ -4064,6 +4082,21 @@ export default function HomePage() {
                   disabled={isRunning || trainInputMode !== "tickets"}
                 />
                 <p className="small">Comma or newline-separated, e.g. HPC-110621,HPC-110615</p>
+              </div>
+              <div className="field">
+                <label htmlFor="train-max-tickets">Max tickets (leave empty for all)</label>
+                <input
+                  id="train-max-tickets"
+                  type="number"
+                  min="1"
+                  placeholder="all"
+                  value={trainMaxTickets}
+                  onChange={(e) => setTrainMaxTickets(e.target.value)}
+                  disabled={isRunning}
+                />
+                <p className="small">
+                  Limit the number of tickets fetched. Useful for smaller training/audit batches.
+                </p>
               </div>
 
               <details>

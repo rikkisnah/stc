@@ -62,10 +62,12 @@ export async function POST(req: Request) {
     resolutionMode?: "all" | "unresolved-only" | "resolved-only";
     ticketsFile?: string;
     ticketsText?: string;
+    maxTickets?: number;
   };
   const inputMode = body.inputMode || "jql";
   const rawJql = body.jql?.trim();
   const resolutionMode = body.resolutionMode || "all";
+  const maxTickets = body.maxTickets && body.maxTickets > 0 ? body.maxTickets : 0;
   if (inputMode === "jql" && !rawJql) {
     return NextResponse.json({ error: "JQL is required." }, { status: 400 });
   }
@@ -132,7 +134,7 @@ export async function POST(req: Request) {
           commands.push([
             ...getTicketsArgs,
             "--number-of-tickets",
-            "100000",
+            String(maxTickets > 0 ? maxTickets : 100000),
             "--output-file",
             path.join(ingestDir, "limited-tickets.json")
           ]);
@@ -168,6 +170,9 @@ export async function POST(req: Request) {
 
           if (ticketKeys.length === 0) {
             throw new Error("No ticket keys provided.");
+          }
+          if (maxTickets > 0 && ticketKeys.length > maxTickets) {
+            ticketKeys = ticketKeys.slice(0, maxTickets);
           }
 
           for (const ticket of ticketKeys) {
