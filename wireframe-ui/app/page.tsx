@@ -2902,6 +2902,16 @@ export default function HomePage() {
                         >
                           Copy details
                         </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setTicketDetail(null);
+                            void loadTicketDetail(ticketDetail.ticketKey);
+                          }}
+                          disabled={ticketDetailLoading}
+                        >
+                          {ticketDetailLoading ? "Reloading..." : "Reload from disk"}
+                        </button>
                       </div>
                       {ticketDetailCopyStatus && <p className="small">{ticketDetailCopyStatus}</p>}
                       <p className="small">
@@ -3072,6 +3082,15 @@ export default function HomePage() {
                           disabled={categorizedPreviewLoading}
                         >
                           Copy details
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            void loadCategorizedPreview(categorizedSelectedPath);
+                          }}
+                          disabled={categorizedPreviewLoading}
+                        >
+                          {categorizedPreviewLoading ? "Reloading..." : "Reload from disk"}
                         </button>
                         <button
                           type="button"
@@ -3403,6 +3422,15 @@ export default function HomePage() {
                           disabled={rulesPreviewLoading}
                         >
                           Copy details
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            void loadRulesPreview(rulesSelectedPath);
+                          }}
+                          disabled={rulesPreviewLoading}
+                        >
+                          {rulesPreviewLoading ? "Reloading..." : "Reload from disk"}
                         </button>
                         <button
                           type="button"
@@ -4888,6 +4916,30 @@ export default function HomePage() {
                         </button>
                         <button onClick={resetTrainAudit} disabled={trainAuditSaving || !trainAuditHasChanges}>
                           Reset
+                        </button>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!trainAuditCsvPath) return;
+                            try {
+                              const csvResp = await fetch(`/api/open-file?path=${encodeURIComponent(trainAuditCsvPath)}`);
+                              if (csvResp.ok) {
+                                const csvText = await csvResp.text();
+                                setTrainAuditOriginal(csvText);
+                                try {
+                                  setTrainAuditRows(parseCsvRows(csvText));
+                                } catch {
+                                  setTrainAuditRows([]);
+                                }
+                                setTrainAuditSaveStatus("Reloaded from disk.");
+                              }
+                            } catch {
+                              setTrainAuditSaveStatus("Failed to reload from disk.");
+                            }
+                          }}
+                          disabled={trainAuditSaving || !trainAuditCsvPath}
+                        >
+                          Reload from disk
                         </button>
                         <span className="small">
                           {trainAuditHasChanges ? "Unsaved changes" : "No changes"}
