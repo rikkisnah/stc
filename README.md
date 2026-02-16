@@ -28,7 +28,17 @@ The default workflow is rule-based categorization plus Codex-assisted rule updat
 | `scripts/trained-data/` | Working rule-engine and model/training artifacts |
 | `scripts/trained-data/golden-rules-engine/` | Audited production rules |
 | `templates/` | Header/template CSVs (do not write live outputs here) |
+| `scripts/ml_train.py` | Train ML classifier (TF-IDF + SGD) |
+| `scripts/ml_classifier.py` | ML classification module |
+| `scripts/create_rule_from_ticket.py` | Create rule from single ticket |
+| `scripts/csv_jql_transform.py` | CSV metadata augmentation |
+| `scripts/run_training_loop.sh` | One-command helper (fetch→normalize→categorize) |
+| `scripts/trained-data/ml-model/` | Trained ML classifier artifacts |
 | `wireframe-ui/` | Local Next.js wireframe UI |
+| `docs/` | Design docs, runbooks, and reference materials |
+| `docs/AI-Assisted-Ticket-Classification-DDD.md` | Detailed design document |
+| `docs/archives/` | Archived/historical documentation |
+| `SKILLS/` | TDD role definitions (architect, tester, coder, reviewer) |
 
 # Prerequisites
 
@@ -181,10 +191,44 @@ scripts/run_training_loop.sh \
 
 ML support exists, but the backward-compatible/default path does not require it.
 
-- `scripts/ml_train.py`
-- `scripts/ml_classifier.py`
-- `run_training.py --engine ml|codex+ml`
-- `rule_engine_categorize.py --ml-model ... --ml-category-map ...`
+## Train ML Classifier
+
+```bash
+uv run python scripts/ml_train.py \
+  --training-data scripts/trained-data/ml-training-data.csv \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --tickets-dir "scripts/normalized-tickets/$LATEST" \
+  --output-model scripts/trained-data/ml-model/classifier.joblib \
+  --output-category-map scripts/trained-data/ml-model/category_map.json \
+  --output-report scripts/trained-data/ml-model/training_report.txt \
+  --min-samples 20 \
+  -y
+```
+
+## Categorize with ML Fallback
+
+```bash
+uv run python scripts/rule_engine_categorize.py \
+  --tickets-dir "scripts/normalized-tickets/$LATEST" \
+  --rule-engine scripts/trained-data/rule-engine.local.csv \
+  --ml-model scripts/trained-data/ml-model/classifier.joblib \
+  --ml-category-map scripts/trained-data/ml-model/category_map.json \
+  --output-dir scripts/analysis \
+  -y
+```
+
+## Hybrid Training (Codex + ML)
+
+```bash
+uv run python scripts/run_training.py \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --rules-engine-file scripts/trained-data/rule-engine.local.csv \
+  --prompt-file prompts/training.md \
+  --engine codex+ml \
+  --ml-model scripts/trained-data/ml-model/classifier.joblib \
+  --ml-category-map scripts/trained-data/ml-model/category_map.json \
+  -y
+```
 
 If you want legacy behavior, do not pass ML flags and keep `--engine codex`.
 
@@ -200,11 +244,29 @@ PATH="../.venv/bin:$PATH" npm run dev
 
 Open `http://localhost:3000`.
 
-UI pipeline API executes local scripts in this order:
-- `get_tickets.py`
-- `normalize_tickets.py`
-- `rule_engine_categorize.py`
-- `create_summary.py`
+## Available Workflows
+
+| Workflow | Description |
+|----------|-------------|
+| **Categorize** | Run JQL → categorization pipeline (get_tickets → normalize → categorize → summary) |
+| **Train STC model** | Multi-phase training with ML + LLM rule generation |
+| **Add rule from ticket** | Create a rule from a single ticket interactively |
+| **Browse tickets** | Explore raw ticket JSON files |
+| **Browse categorized** | View categorization output CSVs |
+| **Browse rules** | View rule-engine rules (trained-data vs golden) |
+| **Promote to Golden** | Copy local rules to golden-rules-engine (with diff preview) |
+
+## Train STC Workflow
+
+The Train STC workflow runs a multi-phase pipeline:
+
+1. **Phase 1:** Fetch tickets → Normalize → Init local rules → Initial categorize
+2. **Human Audit #1** (skippable, default: skipped)
+3. **Phase 2:** ML train → ML categorize (rules + ML fallback)
+4. **Human Audit #2** (skippable, default: skipped)
+5. **Phase 3:** LLM rule generation → Final categorize
+
+Both audit pause points are configurable via checkboxes in the UI. When skipped (default), the pipeline auto-continues to the next phase without pausing.
 
 Outputs are written under `scripts/analysis/ui-runs/<run-id>/`.
 
@@ -280,3 +342,14 @@ Notable targets:
 - `test-ml_train`
 - `ml-train`
 - `ml-categorize`
+
+# Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Detailed Design (DDD)](docs/AI-Assisted-Ticket-Classification-DDD.md) | Comprehensive detailed design document |
+| [HLD (prior art)](docs/pdfs_docs/AI-Assisted-Ticket-Classification-HLD.docx) | Original high-level design |
+| [Training Runbook](docs/training-runbook.md) | Step-by-step training workflow |
+| [Human Audit Playbook](docs/human-audit-playbook.md) | Row-level audit procedures |
+| [Data Schemas](templates/data-schemes.md) | CSV schema definitions |
+| [Installing Codex](docs/installing-codex.md) | Codex CLI setup (Oracle internal) |

@@ -13,6 +13,11 @@
 - Rule engine rows carry a `Project Key` column so project-specific classifiers can filter applicable rules without duplicating files.
 - The golden directory (`scripts/trained-data/golden-rules-engine/`) is immutable for automated workflows; updates happen only via audited, manual promotion.
 
+- Wireframe UI (Next.js 15, React 19) provides a local web interface for all pipeline workflows with real-time log streaming via NDJSON.
+- ML classifier (TF-IDF + SGDClassifier, scikit-learn) serves as fallback when no rule matches; confidence threshold 0.4, min samples 20.
+- Training pipeline runs in 3 phases with 2 configurable audit pause points (Human Audit #1 after initial categorize, Human Audit #2 after ML categorize); both default to skipped in the UI.
+- Outdated docs archived to `docs/archives/`; active reference docs (fault dictionary, MI355X context) remain in `docs/`.
+
 ## Assumptions
 - Jira export cadence supplies at least 5 fresh tickets per training batch.
 - Human auditors are available to review each pass before promoting rules to the golden directory.

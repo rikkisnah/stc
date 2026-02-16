@@ -86,3 +86,46 @@ Then:
 2. Run the printed `run_training.py` command
 3. Re-run categorization
 4. Repeat until stable
+
+## ML Training (Optional)
+
+Train the ML classifier from human-labeled data:
+
+```bash
+LATEST=$(ls -1 scripts/normalized-tickets | sort | tail -1)
+uv run python3 scripts/ml_train.py \
+  --training-data scripts/trained-data/ml-training-data.csv \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --tickets-dir "scripts/normalized-tickets/$LATEST" \
+  --output-model scripts/trained-data/ml-model/classifier.joblib \
+  --output-category-map scripts/trained-data/ml-model/category_map.json \
+  --output-report scripts/trained-data/ml-model/training_report.txt \
+  --min-samples 20 \
+  -y
+```
+
+Then re-categorize with ML fallback:
+
+```bash
+uv run python3 scripts/rule_engine_categorize.py \
+  --tickets-dir "scripts/normalized-tickets/$LATEST" \
+  --rule-engine scripts/trained-data/rule-engine.local.csv \
+  --ml-model scripts/trained-data/ml-model/classifier.joblib \
+  --ml-category-map scripts/trained-data/ml-model/category_map.json \
+  --output-dir scripts/analysis \
+  -y
+```
+
+## Wireframe UI Training Workflow
+
+The wireframe UI (`http://localhost:3000`) provides a "Train STC model" workflow that automates the multi-phase pipeline:
+
+1. **Phase 1:** Fetch → Normalize → Init rules → Initial categorize
+2. **Human Audit #1** (skippable via checkbox, default: skipped)
+3. **Phase 2:** ML train → ML categorize (rules + ML fallback)
+4. **Human Audit #2** (skippable via checkbox, default: skipped)
+5. **Phase 3:** LLM rule generation → Final categorize
+
+### Skip-Audit
+
+Both audit pause points default to "skipped" — the pipeline auto-continues without pausing. Uncheck "Skip Human Audit #1" or "Skip Human Audit #2" to enable manual review at those points. When an audit is not skipped, the pipeline pauses and shows an inline CSV editor for reviewing `tickets-categorized.csv`.
