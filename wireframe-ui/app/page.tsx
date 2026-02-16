@@ -283,6 +283,18 @@ export default function HomePage() {
   const [promoteResult, setPromoteResult] = useState("");
   const [promoteShowUnchanged, setPromoteShowUnchanged] = useState(false);
 
+  // --- Promote ML Model state ---
+  const [mlPromoteLoading, setMlPromoteLoading] = useState(false);
+  const [mlPromoteError, setMlPromoteError] = useState("");
+  const [mlPromoteResult, setMlPromoteResult] = useState("");
+  const [mlPromoteSaving, setMlPromoteSaving] = useState(false);
+  const [mlPromoteConfirming, setMlPromoteConfirming] = useState(false);
+  const [mlCompare, setMlCompare] = useState<{
+    working: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string };
+    golden: { exists: boolean; sizeBytes: number; modifiedAt: string; report: string };
+    identical: boolean;
+  } | null>(null);
+
   function formatTimestamp(iso: string): string {
     if (!iso) {
       return "-";
@@ -1007,6 +1019,40 @@ export default function HomePage() {
       setPromoteResult(`Promotion failed: ${err instanceof Error ? err.message : "Unknown error"}`);
     } finally {
       setPromoteSaving(false);
+    }
+  }
+
+  async function loadMlCompare() {
+    setMlPromoteLoading(true);
+    setMlPromoteError("");
+    setMlCompare(null);
+    setMlPromoteResult("");
+    setMlPromoteConfirming(false);
+    try {
+      const resp = await fetch("/api/promote-ml-model");
+      if (!resp.ok) throw new Error(`Failed to load ML model info: ${resp.statusText}`);
+      setMlCompare(await resp.json());
+    } catch (err) {
+      setMlPromoteError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setMlPromoteLoading(false);
+    }
+  }
+
+  async function handleMlPromote() {
+    setMlPromoteSaving(true);
+    setMlPromoteResult("");
+    try {
+      const resp = await fetch("/api/promote-ml-model", { method: "POST" });
+      const data = (await resp.json()) as { error?: string; message?: string };
+      if (!resp.ok) throw new Error(data.error || "Failed to promote.");
+      setMlPromoteResult(data.message || "ML model promoted to golden successfully.");
+      setMlPromoteConfirming(false);
+      setMlCompare(null);
+    } catch (err) {
+      setMlPromoteResult(`Promotion failed: ${err instanceof Error ? err.message : "Unknown error"}`);
+    } finally {
+      setMlPromoteSaving(false);
     }
   }
 
@@ -3569,6 +3615,115 @@ export default function HomePage() {
                     </article>
                   )}
                 </>
+              )}
+
+              {/* --- ML Model Promotion --- */}
+              <hr style={{ margin: "1.5rem 0", border: "none", borderTop: "1px solid #ddd" }} />
+              <h2>ML Model</h2>
+              <div>
+                <button
+                  className="primary"
+                  onClick={loadMlCompare}
+                  disabled={mlPromoteLoading || mlPromoteSaving}
+                >
+                  {mlPromoteLoading ? "Loading..." : "Compare ML Models"}
+                </button>
+              </div>
+              {mlPromoteError && (
+                <p className="small" role="alert" style={{ color: "var(--color-error, #c00)" }}>
+                  {mlPromoteError}
+                </p>
+              )}
+              {mlPromoteResult && (
+                <p className="small" role="status">{mlPromoteResult}</p>
+              )}
+              {mlCompare && (
+                <article className="card">
+                  <h2>ML Model Comparison</h2>
+                  <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: "1rem" }}>
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: "left", padding: "4px 12px" }}></th>
+                        <th style={{ textAlign: "left", padding: "4px 12px" }}>Working (trained-data/ml-model)</th>
+                        <th style={{ textAlign: "left", padding: "4px 12px" }}>Golden (golden-ml-model)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Status</td>
+                        <td style={{ padding: "4px 12px", color: mlCompare.working.exists ? "#2a7" : "#c33" }}>
+                          {mlCompare.working.exists ? "Available" : "Not found"}
+                        </td>
+                        <td style={{ padding: "4px 12px", color: mlCompare.golden.exists ? "#2a7" : "#c33" }}>
+                          {mlCompare.golden.exists ? "Available" : "Not found"}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Size</td>
+                        <td style={{ padding: "4px 12px" }}>{mlCompare.working.exists ? `${(mlCompare.working.sizeBytes / 1024).toFixed(1)} KB` : "-"}</td>
+                        <td style={{ padding: "4px 12px" }}>{mlCompare.golden.exists ? `${(mlCompare.golden.sizeBytes / 1024).toFixed(1)} KB` : "-"}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "4px 12px", fontWeight: "bold" }}>Last Modified</td>
+                        <td style={{ padding: "4px 12px" }}>{mlCompare.working.modifiedAt ? new Date(mlCompare.working.modifiedAt).toLocaleString() : "-"}</td>
+                        <td style={{ padding: "4px 12px" }}>{mlCompare.golden.modifiedAt ? new Date(mlCompare.golden.modifiedAt).toLocaleString() : "-"}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {mlCompare.identical && (
+                    <p className="small">Models are identical — nothing to promote.</p>
+                  )}
+                  {mlCompare.working.report && (
+                    <>
+                      <h3>Working Model Report</h3>
+                      <pre style={{ background: "#f5f5f5", padding: "0.75rem", borderRadius: 6, fontSize: "0.8rem", maxHeight: 200, overflow: "auto", whiteSpace: "pre-wrap" }}>
+                        {mlCompare.working.report}
+                      </pre>
+                    </>
+                  )}
+                  {mlCompare.golden.report && (
+                    <>
+                      <h3>Golden Model Report</h3>
+                      <pre style={{ background: "#f5f5f5", padding: "0.75rem", borderRadius: 6, fontSize: "0.8rem", maxHeight: 200, overflow: "auto", whiteSpace: "pre-wrap" }}>
+                        {mlCompare.golden.report}
+                      </pre>
+                    </>
+                  )}
+                  {mlCompare.working.exists && !mlCompare.identical && !mlPromoteConfirming && (
+                    <div style={{ marginTop: "0.5rem" }}>
+                      <button
+                        className="primary"
+                        onClick={() => setMlPromoteConfirming(true)}
+                        disabled={mlPromoteSaving}
+                      >
+                        Promote ML Model to Golden
+                      </button>
+                    </div>
+                  )}
+                  {mlPromoteConfirming && (
+                    <div style={{ marginTop: "0.75rem", padding: "0.75rem", border: "1px solid #c80", borderRadius: 6, background: "rgba(200,128,0,0.05)" }}>
+                      <p className="small" style={{ margin: "0 0 0.5rem 0" }}>
+                        Overwrite <strong>golden ML model</strong> with the working model?
+                        This replaces the audited production model. This action is hard to reverse.
+                      </p>
+                      <div style={{ display: "flex", gap: "0.5rem" }}>
+                        <button
+                          className="primary"
+                          onClick={handleMlPromote}
+                          disabled={mlPromoteSaving}
+                        >
+                          {mlPromoteSaving ? "Promoting..." : "Confirm Promote"}
+                        </button>
+                        <button
+                          onClick={() => setMlPromoteConfirming(false)}
+                          disabled={mlPromoteSaving}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </article>
               )}
             </div>
           )}

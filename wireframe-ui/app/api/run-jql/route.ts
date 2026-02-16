@@ -207,6 +207,28 @@ export async function POST(req: Request) {
           }
         }
 
+        // Check if a trained ML model exists for fallback categorization
+        // Prefer golden (audited) model; fall back to working (latest training) model
+        const goldenModelPath = path.join(scriptsDir, "trained-data", "golden-ml-model", "classifier.joblib");
+        const goldenCategoryMapPath = path.join(scriptsDir, "trained-data", "golden-ml-model", "category_map.json");
+        const workingModelPath = path.join(scriptsDir, "trained-data", "ml-model", "classifier.joblib");
+        const workingCategoryMapPath = path.join(scriptsDir, "trained-data", "ml-model", "category_map.json");
+        const mlModelArgs: string[] = [];
+        const tryMlModel = async (modelPath: string, mapPath: string) => {
+          await fs.stat(modelPath);
+          await fs.stat(mapPath);
+          mlModelArgs.push("--ml-model", modelPath, "--ml-category-map", mapPath);
+        };
+        try {
+          await tryMlModel(goldenModelPath, goldenCategoryMapPath);
+        } catch {
+          try {
+            await tryMlModel(workingModelPath, workingCategoryMapPath);
+          } catch {
+            // No ML model available — rule-only categorization
+          }
+        }
+
         commands.push(
           [
             "scripts/normalize_tickets.py",
@@ -227,6 +249,7 @@ export async function POST(req: Request) {
             ...(body.rulesEngine?.trim()
               ? ["--rule-engine", body.rulesEngine.trim()]
               : []),
+            ...mlModelArgs,
             "-y"
           ],
           ["scripts/create_summary.py", "--tickets", ticketsCsv, "--output", summaryCsv]
