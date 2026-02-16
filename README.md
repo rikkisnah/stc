@@ -4,14 +4,16 @@ STC ((S)mart (T)riager (C)lassifier) predicts two ticket outputs for HPC and DO 
 - `Category of Issue`
 - `Category`
 
-The default workflow is rule-based categorization plus LLM-assisted rule updates from audited results.
+The default workflow is rule-based categorization with ML fallback for unmatched tickets. Rule updates can be generated via a local ML classifier (preferred — fast, offline) or optionally via an LLM/Codex provider (slower, requires API access).
 
 ## Core Principles
 
 - Keep all runtime artifacts under `scripts/`.
-- Treat `scripts/trained-data/golden-rules-engine/rule-engine.csv` as production/audited data.
-- Human audit is required before promoting new rules to golden.
-- Backward-compatible mode is fully supported: rules + LLM updates only (no ML flags required).
+- Treat `scripts/trained-data/golden-rules-engine/rule-engine.csv` as production/audited rules.
+- Treat `scripts/trained-data/golden-ml-model/` as the production/audited ML model.
+- Human audit is required before promoting new rules or ML models to golden.
+- ML-based rule generation is the preferred engine (`--engine ml`) — fast and offline.
+- LLM/Codex-based rule generation is optional (`--engine codex`) — slower, requires API access and token setup.
 
 # Repository Layout
 
@@ -20,13 +22,14 @@ The default workflow is rule-based categorization plus LLM-assisted rule updates
 | `scripts/get_tickets.py` | Pull Jira tickets into JSON files |
 | `scripts/normalize_tickets.py` | Normalize raw Jira JSON |
 | `scripts/rule_engine_categorize.py` | Categorize tickets using rules (optional ML fallback) |
-| `scripts/run_training.py` | Generate/update rules from audited rows (LLM-assisted) |
+| `scripts/run_training.py` | Generate/update rules from audited rows (ML preferred, LLM optional) |
 | `scripts/create_summary.py` | Produce category summary CSV + JQL |
 | `scripts/tickets-json/` | Raw ticket JSON output |
 | `scripts/normalized-tickets/<date>/` | Normalized ticket JSON output |
 | `scripts/analysis/` | Categorization and analysis outputs |
 | `scripts/trained-data/` | Working rule-engine and model/training artifacts |
 | `scripts/trained-data/golden-rules-engine/` | Audited production rules |
+| `scripts/trained-data/golden-ml-model/` | Audited production ML model |
 | `templates/` | Header/template CSVs (do not write live outputs here) |
 | `scripts/ml_train.py` | Train ML classifier (TF-IDF + SGD) |
 | `scripts/ml_classifier.py` | ML classification module |
@@ -66,9 +69,9 @@ From repo root:
 uv sync
 ```
 
-# Backward-Compatible Backend Runbook (Rules + LLM Only)
+# Backend Runbook (Rules + ML)
 
-This is the default non-ML flow.
+This is the recommended flow. ML fallback is automatic when a golden ML model exists.
 
 ## Step 1: Fetch Tickets
 
@@ -105,18 +108,22 @@ uv run python scripts/normalize_tickets.py -y
 
 Output: `scripts/normalized-tickets/<date>/`
 
-## Step 3: Categorize with Rules Only
+## Step 3: Categorize (Rules + ML Fallback)
 
 ```bash
 LATEST=$(ls -1 scripts/normalized-tickets | sort | tail -1)
 uv run python scripts/rule_engine_categorize.py \
   --tickets-dir "scripts/normalized-tickets/$LATEST" \
   --rule-engine scripts/trained-data/golden-rules-engine/rule-engine.csv \
+  --ml-model scripts/trained-data/golden-ml-model/classifier.joblib \
+  --ml-category-map scripts/trained-data/golden-ml-model/category_map.json \
   --output-dir scripts/analysis \
   -y
 ```
 
 Output: `scripts/analysis/tickets-categorized.csv`
+
+Tickets matched by rules get `source="rule"`. Unmatched tickets fall back to the ML model (`source="ml"` if confidence ≥ 0.4, otherwise `source="none"`). Omit the `--ml-model` flags for rules-only categorization.
 
 ## Step 4: Human Audit
 
@@ -130,7 +137,21 @@ Audit values:
 - pre-audit pipeline values: `pending-review`, `needs-review`
 - post-audit human values: `correct`, `incorrect`
 
-## Step 5: Run Training (LLM-Assisted)
+## Step 5: Run Training (ML Preferred)
+
+**ML engine (recommended — fast, offline):**
+
+```bash
+uv run python scripts/run_training.py \
+  --tickets-categorized scripts/analysis/tickets-categorized.csv \
+  --rules-engine-file scripts/trained-data/golden-rules-engine/rule-engine.csv \
+  --engine ml \
+  --ml-model scripts/trained-data/golden-ml-model/classifier.joblib \
+  --ml-category-map scripts/trained-data/golden-ml-model/category_map.json \
+  -y
+```
+
+**LLM/Codex engine (optional — slower, requires API access):**
 
 ```bash
 uv run python scripts/run_training.py \
@@ -151,6 +172,8 @@ This writes updates to `scripts/trained-data/rule-engine.local.csv`.
 uv run python scripts/rule_engine_categorize.py \
   --tickets-dir "scripts/normalized-tickets/$LATEST" \
   --rule-engine scripts/trained-data/rule-engine.local.csv \
+  --ml-model scripts/trained-data/golden-ml-model/classifier.joblib \
+  --ml-category-map scripts/trained-data/golden-ml-model/category_map.json \
   --output-dir scripts/analysis \
   -y
 ```
@@ -168,11 +191,20 @@ For subsequent training passes, use:
 Only after human-audited regression stability:
 
 ```bash
+# Promote rules
 cp scripts/trained-data/rule-engine.local.csv \
   scripts/trained-data/golden-rules-engine/rule-engine.csv
+
+# Promote ML model
+cp scripts/trained-data/ml-model/classifier.joblib \
+  scripts/trained-data/golden-ml-model/classifier.joblib
+cp scripts/trained-data/ml-model/category_map.json \
+  scripts/trained-data/golden-ml-model/category_map.json
+cp scripts/trained-data/ml-model/training_report.txt \
+  scripts/trained-data/golden-ml-model/training_report.txt
 ```
 
-This promotion is intentionally manual.
+Both promotions are intentionally manual. The wireframe UI provides a "Promote to Golden" workflow with diff preview for rules and side-by-side comparison for ML models.
 
 # One-Command Helper
 
@@ -190,11 +222,9 @@ scripts/run_training_loop.sh \
   --yes
 ```
 
-# Optional ML Features (Not Required for Backward-Compatible Flow)
+# ML Classifier Training
 
-ML support exists, but the backward-compatible/default path does not require it.
-
-## Train ML Classifier
+The ML classifier (TF-IDF + SGDClassifier) powers both fallback categorization and ML-based rule generation. Retrain it when you have new audited data:
 
 ```bash
 uv run python scripts/ml_train.py \
@@ -208,17 +238,15 @@ uv run python scripts/ml_train.py \
   -y
 ```
 
-## Categorize with ML Fallback
+After reviewing the training report, promote to golden:
 
 ```bash
-uv run python scripts/rule_engine_categorize.py \
-  --tickets-dir "scripts/normalized-tickets/$LATEST" \
-  --rule-engine scripts/trained-data/rule-engine.local.csv \
-  --ml-model scripts/trained-data/ml-model/classifier.joblib \
-  --ml-category-map scripts/trained-data/ml-model/category_map.json \
-  --output-dir scripts/analysis \
-  -y
+cp scripts/trained-data/ml-model/* scripts/trained-data/golden-ml-model/
 ```
+
+# Optional: LLM/Codex Rule Generation (Slow)
+
+LLM-based rule generation is available but **not recommended** for routine use — it requires API access, token setup, and is significantly slower than the ML engine.
 
 ## Hybrid Training (LLM + ML)
 
@@ -233,7 +261,7 @@ uv run python scripts/run_training.py \
   -y
 ```
 
-If you want legacy behavior, do not pass ML flags and keep `--engine <provider>`.
+For rules-only (no ML) with LLM, use `--engine <provider>` without ML flags.
 
 # Wireframe UI
 
@@ -251,13 +279,13 @@ Open `http://localhost:3000`.
 
 | Workflow | Description |
 |----------|-------------|
-| **Categorize** | Run JQL → categorization pipeline (get_tickets → normalize → categorize → summary) |
-| **Train STC model** | Multi-phase training with ML + LLM rule generation |
+| **Categorize** | Run JQL → categorization pipeline (get_tickets → normalize → categorize with ML fallback → summary) |
+| **Train STC model** | Multi-phase training with ML classifier and ML-based rule generation |
 | **Add rule from ticket** | Create a rule from a single ticket interactively |
 | **Browse tickets** | Explore raw ticket JSON files |
 | **Browse categorized** | View categorization output CSVs |
 | **Browse rules** | View rule-engine rules (trained-data vs golden) |
-| **Promote to Golden** | Copy local rules to golden-rules-engine (with diff preview) |
+| **Promote to Golden** | Promote local rules and ML model to golden (with diff/comparison preview) |
 
 ## Train STC Workflow
 
@@ -267,7 +295,7 @@ The Train STC workflow runs a multi-phase pipeline:
 2. **Human Audit #1** (skippable, default: skipped)
 3. **Phase 2:** ML train → ML categorize (rules + ML fallback)
 4. **Human Audit #2** (skippable, default: skipped)
-5. **Phase 3:** LLM rule generation → Final categorize
+5. **Phase 3:** ML rule generation → Final categorize (LLM optional via `--engine codex`)
 
 Both audit pause points are configurable via checkboxes in the UI. When skipped (default), the pipeline auto-continues to the next phase without pausing.
 
