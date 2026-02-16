@@ -127,7 +127,13 @@ export default function HomePage() {
   );
   const [ticketsText, setTicketsText] = useState("HPC-110621,HPC-110615");
   const [categorizeRulesEngine, setCategorizeRulesEngine] = useState(
-    "scripts/trained-data/rule-engine.local.csv"
+    "scripts/trained-data/golden-rules-engine/rule-engine.csv"
+  );
+  const [categorizeMlModel, setCategorizeMlModel] = useState(
+    "scripts/trained-data/golden-ml-model/classifier.joblib"
+  );
+  const [categorizeMlCategoryMap, setCategorizeMlCategoryMap] = useState(
+    "scripts/trained-data/golden-ml-model/category_map.json"
   );
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState("");
@@ -1219,7 +1225,7 @@ export default function HomePage() {
             : "/api/add-rule-from-ticket";
       const body =
         workflow === "categorize"
-          ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText, rulesEngine: categorizeRulesEngine.trim() }
+          ? { inputMode, jql, resolutionMode, ticketsFile, ticketsText, rulesEngine: categorizeRulesEngine.trim(), mlModel: categorizeMlModel.trim(), mlCategoryMap: categorizeMlCategoryMap.trim() }
           : workflow === "train-stc"
             ? {
                 phase: 1 as const,
@@ -2316,6 +2322,26 @@ export default function HomePage() {
                   value={categorizeRulesEngine}
                   onChange={(e) => setCategorizeRulesEngine(e.target.value)}
                   disabled={isRunning}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="categorize-ml-model">ML model (optional — leave empty for rules-only)</label>
+                <input
+                  id="categorize-ml-model"
+                  value={categorizeMlModel}
+                  onChange={(e) => setCategorizeMlModel(e.target.value)}
+                  disabled={isRunning}
+                  placeholder="e.g. scripts/trained-data/golden-ml-model/classifier.joblib"
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="categorize-ml-category-map">ML category map (optional)</label>
+                <input
+                  id="categorize-ml-category-map"
+                  value={categorizeMlCategoryMap}
+                  onChange={(e) => setCategorizeMlCategoryMap(e.target.value)}
+                  disabled={isRunning}
+                  placeholder="e.g. scripts/trained-data/golden-ml-model/category_map.json"
                 />
               </div>
               <div>

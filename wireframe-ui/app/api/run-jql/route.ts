@@ -92,6 +92,8 @@ export async function POST(req: Request) {
     ticketsFile?: string;
     ticketsText?: string;
     rulesEngine?: string;
+    mlModel?: string;
+    mlCategoryMap?: string;
   };
   const inputMode = body.inputMode || "jql";
   const rawJql = body.jql?.trim();
@@ -207,25 +209,36 @@ export async function POST(req: Request) {
           }
         }
 
-        // Check if a trained ML model exists for fallback categorization
-        // Prefer golden (audited) model; fall back to working (latest training) model
-        const goldenModelPath = path.join(scriptsDir, "trained-data", "golden-ml-model", "classifier.joblib");
-        const goldenCategoryMapPath = path.join(scriptsDir, "trained-data", "golden-ml-model", "category_map.json");
-        const workingModelPath = path.join(scriptsDir, "trained-data", "ml-model", "classifier.joblib");
-        const workingCategoryMapPath = path.join(scriptsDir, "trained-data", "ml-model", "category_map.json");
+        // Resolve ML model paths: use request body if provided, otherwise auto-detect
         const mlModelArgs: string[] = [];
         const tryMlModel = async (modelPath: string, mapPath: string) => {
-          await fs.stat(modelPath);
-          await fs.stat(mapPath);
-          mlModelArgs.push("--ml-model", modelPath, "--ml-category-map", mapPath);
+          const resolvedModel = path.isAbsolute(modelPath) ? modelPath : path.resolve(repoRoot, modelPath);
+          const resolvedMap = path.isAbsolute(mapPath) ? mapPath : path.resolve(repoRoot, mapPath);
+          await fs.stat(resolvedModel);
+          await fs.stat(resolvedMap);
+          mlModelArgs.push("--ml-model", resolvedModel, "--ml-category-map", resolvedMap);
         };
-        try {
-          await tryMlModel(goldenModelPath, goldenCategoryMapPath);
-        } catch {
+        if (body.mlModel?.trim() && body.mlCategoryMap?.trim()) {
+          // Use explicit paths from the request
           try {
-            await tryMlModel(workingModelPath, workingCategoryMapPath);
+            await tryMlModel(body.mlModel.trim(), body.mlCategoryMap.trim());
           } catch {
-            // No ML model available — rule-only categorization
+            // Specified ML model not found — rule-only categorization
+          }
+        } else if (!body.mlModel?.trim() && !body.mlCategoryMap?.trim()) {
+          // No ML paths specified — auto-detect: prefer golden, fall back to working
+          const goldenModelPath = path.join(scriptsDir, "trained-data", "golden-ml-model", "classifier.joblib");
+          const goldenCategoryMapPath = path.join(scriptsDir, "trained-data", "golden-ml-model", "category_map.json");
+          const workingModelPath = path.join(scriptsDir, "trained-data", "ml-model", "classifier.joblib");
+          const workingCategoryMapPath = path.join(scriptsDir, "trained-data", "ml-model", "category_map.json");
+          try {
+            await tryMlModel(goldenModelPath, goldenCategoryMapPath);
+          } catch {
+            try {
+              await tryMlModel(workingModelPath, workingCategoryMapPath);
+            } catch {
+              // No ML model available — rule-only categorization
+            }
           }
         }
 

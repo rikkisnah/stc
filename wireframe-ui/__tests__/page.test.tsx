@@ -217,7 +217,9 @@ describe("STC wireframe flow", () => {
           resolutionMode: "all",
           ticketsFile: "scripts/analysis/ui-runs/templates/tickets-template.txt",
           ticketsText: "HPC-110621,HPC-110615",
-          rulesEngine: "scripts/trained-data/rule-engine.local.csv"
+          rulesEngine: "scripts/trained-data/golden-rules-engine/rule-engine.csv",
+          mlModel: "scripts/trained-data/golden-ml-model/classifier.joblib",
+          mlCategoryMap: "scripts/trained-data/golden-ml-model/category_map.json"
         })
       })
     );
