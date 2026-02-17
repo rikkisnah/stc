@@ -168,6 +168,7 @@ export default function HomePage() {
     summaryCsv?: string;
     normalizedDir?: string;
     ingestDir?: string;
+    ticketListFile?: string;
   }>({});
   const [startedAt, setStartedAt] = useState<string>("");
   const [finishedAt, setFinishedAt] = useState<string>("");
@@ -280,6 +281,8 @@ export default function HomePage() {
   );
   const [trainTicketsText, setTrainTicketsText] = useState("HPC-110621,HPC-110615");
   const [trainMaxTickets, setTrainMaxTickets] = useState("");
+  const [trainRandomizeSample, setTrainRandomizeSample] = useState(false);
+  const [trainSaveTicketList, setTrainSaveTicketList] = useState(true);
   const [trainTrainingData, setTrainTrainingData] = useState(TRAIN_STC_DEFAULTS.trainingData);
   const [trainMinSamples, setTrainMinSamples] = useState(TRAIN_STC_DEFAULTS.minSamples);
   const [trainMaxReviewRows, setTrainMaxReviewRows] = useState(TRAIN_STC_DEFAULTS.maxReviewRows);
@@ -294,6 +297,7 @@ export default function HomePage() {
     mlReport?: string;
     trainingLog?: string;
     outputDir?: string;
+    ticketListFile?: string;
   }>({});
   const [trainStcPipelineStatus, setTrainStcPipelineStatus] = useState<PipelineStepStatus[]>([]);
   const [trainPhase, setTrainPhase] = useState<1 | 2 | 3>(1);
@@ -559,7 +563,7 @@ export default function HomePage() {
       if (saved) clearSessionState();
       return;
     }
-    if (!saved.isRunning) {
+    if (!saved.isRunning || !saved.trainRunId) {
       clearSessionState();
       return;
     }
@@ -1461,7 +1465,13 @@ export default function HomePage() {
                 trainingData: trainTrainingData.trim(),
                 minSamples: Number(trainMinSamples),
                 maxReviewRows: Number(trainMaxReviewRows),
-                maxTickets: trainMaxTickets.trim() ? Number(trainMaxTickets) : undefined
+                maxTickets: trainMaxTickets.trim() ? Number(trainMaxTickets) : undefined,
+                randomizeSample: trainInputMode === "jql" && trainMaxTickets.trim()
+                  ? trainRandomizeSample
+                  : undefined,
+                saveTicketList: trainInputMode === "jql" && trainMaxTickets.trim()
+                  ? trainSaveTicketList
+                  : undefined
               }
             : {
                 ticketKey: ticketKey.trim().toUpperCase(),
@@ -1542,7 +1552,7 @@ export default function HomePage() {
               line?: string;
               error?: string;
               summaryRows?: SummaryRow[];
-              paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string; ingestDir?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string };
+              paths?: { ticketsCsv?: string; summaryCsv?: string; normalizedDir?: string; ingestDir?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string; ticketListFile?: string };
               phase?: number;
               runId?: string;
               partialResult?: { trainingSamples?: number; cvAccuracy?: string };
@@ -1561,6 +1571,7 @@ export default function HomePage() {
                 mlReport?: string;
                 trainingLog?: string;
                 outputDir?: string;
+                ticketListFile?: string;
               };
             };
 
@@ -1647,6 +1658,9 @@ export default function HomePage() {
               const pausePhase = event.phase as number;
               setTrainRunId(event.runId || "");
               setTrainPaused(true);
+              if (event.paths?.ticketListFile) {
+                setTrainStcResult((prev) => ({ ...prev, ticketListFile: event.paths?.ticketListFile }));
+              }
               // Mark audit step as "running" (step 4 for phase 1, step 7 for phase 2)
               const auditIdx = pausePhase === 1 ? 4 : 7;
               setTrainStcPipelineStatus((prev) =>
@@ -1886,7 +1900,7 @@ export default function HomePage() {
               error?: string;
               phase?: number;
               runId?: string;
-              paths?: { ticketsCsv?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string };
+              paths?: { ticketsCsv?: string; outputDir?: string; localRules?: string; mlModel?: string; mlReport?: string; ticketListFile?: string };
               partialResult?: { trainingSamples?: number; cvAccuracy?: string };
               result?: {
                 message?: string;
@@ -1899,6 +1913,7 @@ export default function HomePage() {
                 mlReport?: string;
                 trainingLog?: string;
                 outputDir?: string;
+                ticketListFile?: string;
               };
             };
 
@@ -1936,6 +1951,9 @@ export default function HomePage() {
               pausedDuringRun = true;
               const pausePhase = event.phase as number;
               setTrainPaused(true);
+              if (event.paths?.ticketListFile) {
+                setTrainStcResult((prev) => ({ ...prev, ticketListFile: event.paths?.ticketListFile }));
+              }
               const auditIdx = pausePhase === 1 ? 4 : 7;
               setTrainStcPipelineStatus((prev) =>
                 prev.map((s, i) => (i === auditIdx ? "running" : s))
@@ -4169,6 +4187,24 @@ export default function HomePage() {
                 <p className="small">
                   Limit the number of tickets fetched. Useful for smaller training/audit batches.
                 </p>
+                <label className="small" style={{ display: "block", marginTop: "0.35rem" }}>
+                  <input
+                    type="checkbox"
+                    checked={trainRandomizeSample}
+                    onChange={(e) => setTrainRandomizeSample(e.target.checked)}
+                    disabled={isRunning || trainInputMode !== "jql" || !trainMaxTickets.trim()}
+                  />{" "}
+                  Randomize selected tickets (JQL mode)
+                </label>
+                <label className="small" style={{ display: "block", marginTop: "0.25rem" }}>
+                  <input
+                    type="checkbox"
+                    checked={trainSaveTicketList}
+                    onChange={(e) => setTrainSaveTicketList(e.target.checked)}
+                    disabled={isRunning || trainInputMode !== "jql" || !trainMaxTickets.trim()}
+                  />{" "}
+                  Save selected ticket IDs to reusable list file
+                </label>
               </div>
 
               <details>
@@ -5049,6 +5085,19 @@ export default function HomePage() {
                           rel="noreferrer"
                         >
                           {trainStcResult.ticketsCsv}
+                        </a>
+                      </p>
+                    )}
+                    {trainStcResult.ticketListFile && (
+                      <p className="small">
+                        Ticket list file:{" "}
+                        <a
+                          className="link"
+                          href={`/api/open-file?path=${encodeURIComponent(trainStcResult.ticketListFile)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {trainStcResult.ticketListFile}
                         </a>
                       </p>
                     )}

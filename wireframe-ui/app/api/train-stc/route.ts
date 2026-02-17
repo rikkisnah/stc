@@ -12,7 +12,21 @@ type PhaseMeta = {
   trainingData: string;
   minSamples: number;
   maxReviewRows: number;
+  ticketListFile?: string;
 };
+
+type JiraIssue = { key?: string };
+
+function sampleIssues(issues: JiraIssue[], size: number): JiraIssue[] {
+  const shuffled = [...issues];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = temp;
+  }
+  return shuffled.slice(0, Math.max(0, size));
+}
 
 function runCommand(
   args: string[],
@@ -75,6 +89,8 @@ export async function POST(req: Request) {
     minSamples?: number;
     maxReviewRows?: number;
     maxTickets?: number;
+    randomizeSample?: boolean;
+    saveTicketList?: boolean;
   };
 
   const phase = body.phase || 1;
@@ -183,6 +199,8 @@ async function runPhase1(
     minSamples?: number;
     maxReviewRows?: number;
     maxTickets?: number;
+    randomizeSample?: boolean;
+    saveTicketList?: boolean;
   },
   repoRoot: string,
   scriptsDir: string,
@@ -216,6 +234,9 @@ async function runPhase1(
   const minSamples = body.minSamples ?? 20;
   const maxReviewRows = body.maxReviewRows ?? 200;
   const maxTickets = body.maxTickets && body.maxTickets > 0 ? body.maxTickets : 0;
+  const randomizeSample = Boolean(body.randomizeSample);
+  const saveTicketList = body.saveTicketList !== false;
+  let ticketListFile: string | undefined;
 
   await fs.mkdir(jqlDir, { recursive: true });
   await fs.mkdir(outputDir, { recursive: true });
@@ -238,7 +259,7 @@ async function runPhase1(
     fetchCommands.push([
       ...getTicketsArgs,
       "--number-of-tickets",
-      String(maxTickets > 0 ? maxTickets : 100000),
+      String(maxTickets > 0 && randomizeSample ? 100000 : (maxTickets > 0 ? maxTickets : 100000)),
       "--output-file",
       path.join(ingestDir, "limited-tickets.json")
     ]);
@@ -302,6 +323,49 @@ async function runPhase1(
     emit({ type: "command-end", command: cmd });
   }
 
+  if (inputMode === "jql") {
+    const limitedPath = path.join(ingestDir, "limited-tickets.json");
+    const raw = await fs.readFile(limitedPath, "utf-8");
+    const parsed = JSON.parse(raw) as { issues?: JiraIssue[]; total?: number };
+    const issues = Array.isArray(parsed.issues) ? parsed.issues : [];
+    let selectedIssues = issues;
+
+    if (maxTickets > 0) {
+      if (randomizeSample && issues.length > maxTickets) {
+        selectedIssues = sampleIssues(issues, maxTickets);
+      } else if (!randomizeSample && issues.length > maxTickets) {
+        selectedIssues = issues.slice(0, maxTickets);
+      }
+      if (selectedIssues.length !== issues.length) {
+        await fs.writeFile(
+          limitedPath,
+          JSON.stringify({
+            ...parsed,
+            issues: selectedIssues,
+            fetched: selectedIssues.length,
+            limited: true
+          }, null, 2),
+          "utf-8"
+        );
+      }
+    }
+
+    const ticketKeys = selectedIssues
+      .map((issue) => (typeof issue?.key === "string" ? issue.key.trim() : ""))
+      .filter(Boolean);
+
+    if (saveTicketList && ticketKeys.length > 0) {
+      const ticketListDir = path.join(jqlDir, "templates", "ticket-lists");
+      await fs.mkdir(ticketListDir, { recursive: true });
+      ticketListFile = path.join(ticketListDir, `${runId}-tickets.txt`);
+      await fs.writeFile(ticketListFile, `${ticketKeys.join("\n")}\n`, "utf-8");
+      emit({
+        type: "stdout",
+        line: `Saved sampled ticket list to ${ticketListFile}`
+      });
+    }
+  }
+
   // --- Step 2: Normalize ---
   const normalizeArgs = [
     "scripts/normalize_tickets.py",
@@ -344,7 +408,7 @@ async function runPhase1(
   emit({ type: "command-end", command: cat1Cmd });
 
   // --- Write phase metadata for subsequent phases ---
-  const meta: PhaseMeta = { normalizeDate, trainingData, minSamples, maxReviewRows };
+  const meta: PhaseMeta = { normalizeDate, trainingData, minSamples, maxReviewRows, ticketListFile };
   await fs.writeFile(path.join(outputDir, "phase-meta.json"), JSON.stringify(meta), "utf-8");
 
   // --- Pause for human audit ---
@@ -352,7 +416,7 @@ async function runPhase1(
     type: "paused",
     phase: 1,
     runId,
-    paths: { ticketsCsv, outputDir, normalizedDir, localRules }
+    paths: { ticketsCsv, outputDir, normalizedDir, localRules, ticketListFile }
   });
 }
 
@@ -427,7 +491,7 @@ async function runPhase2(
     type: "paused",
     phase: 2,
     runId,
-    paths: { ticketsCsv, outputDir, localRules, mlModel, mlReport },
+    paths: { ticketsCsv, outputDir, localRules, mlModel, mlReport, ticketListFile: meta.ticketListFile },
     partialResult: {
       trainingSamples: samplesMatch ? Number(samplesMatch[1]) : undefined,
       cvAccuracy: accuracyMatch ? accuracyMatch[1] : undefined
@@ -513,7 +577,8 @@ async function runPhase3(
       mlModel,
       mlReport,
       trainingLog,
-      outputDir
+      outputDir,
+      ticketListFile: meta.ticketListFile
     }
   });
 }

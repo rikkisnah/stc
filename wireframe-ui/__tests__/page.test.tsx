@@ -765,6 +765,29 @@ describe("STC wireframe flow", () => {
     );
   });
 
+  it("posts train-stc random sample options when max tickets is set", async () => {
+    const mockFetch = jest.fn().mockResolvedValue({
+      ok: true,
+      body: null,
+      json: async () => ({})
+    });
+    global.fetch = mockFetch as unknown as typeof fetch;
+
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("link", { name: /train stc model/i }));
+    fireEvent.change(screen.getByLabelText(/max tickets/i), { target: { value: "20" } });
+    fireEvent.click(screen.getByLabelText(/randomize selected tickets/i));
+    fireEvent.click(screen.getByRole("button", { name: /^ok$/i }));
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    const [, requestInit] = mockFetch.mock.calls[0] as [string, RequestInit];
+    const payload = JSON.parse(String(requestInit.body));
+    expect(payload.maxTickets).toBe(20);
+    expect(payload.randomizeSample).toBe(true);
+    expect(payload.saveTicketList).toBe(true);
+  });
+
   it("validates JQL is required in JQL mode for train-stc", () => {
     render(<HomePage />);
 
@@ -1451,7 +1474,7 @@ describe("Stale session banner", () => {
     workflow: "train-stc",
     trainRunId: "train-2026-02-16T04-00-00-000Z",
     trainPhase: 2,
-    isRunning: false,
+    isRunning: true,
     startedAt: "",
     elapsedMs: 0,
     pipelineStatus: [],
