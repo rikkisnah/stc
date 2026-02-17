@@ -31,7 +31,7 @@
 | `Categorization Source` | string | Origin of the label: `rule` (regex match), `ml` (local ML classifier fallback), or `none` (uncategorized). |
 | `LLM Confidence` | float | For `rule` rows, the highest matching rule confidence; for `ml` rows, the local classifier's predicted probability; empty for `none`. |
 | `Human Audit for Accuracy` | string | Review state: `pending-review` (rule matched, confidence >= 0.5), `needs-review` (no match or confidence < 0.5), `correct` (human confirmed), `incorrect` (human rejected). |
-| `Human Audit Guidance` | string | Inline reminder for auditors: `Before audit use pending-review or needs-review. After audit set correct or incorrect.` |
+| `Human Audit Guidance` | string | Inline reminder for auditors: `Before audit use pending-review or needs-review. After audit set correct or incorrect. For needs-review add Human Comments using: Expected Category of Issue <> / Expected Category <> / Reason <>.` |
 | `Human Comments` | string | Supplemental notes captured during audit. |
 
 ### ML Training Data (`ml-training-data.csv`)

@@ -124,6 +124,7 @@ export default function SessionsPage() {
                 key={s.runId}
                 data-testid="session-item"
                 onClick={() => loadDetail(s.runId)}
+                className="session-card"
                 style={{
                   padding: "0.75rem",
                   marginBottom: "0.5rem",
@@ -155,6 +156,7 @@ export default function SessionsPage() {
                   <span>{new Date(s.createdAt).toLocaleString()}</span>
                   <button
                     data-testid="delete-session-btn"
+                    className="session-delete-btn"
                     onClick={(e) => {
                       e.stopPropagation();
                       deleteSession(s.runId);

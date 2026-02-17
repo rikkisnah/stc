@@ -24,7 +24,9 @@ DEFAULT_OUTPUT_DIR = REPO_ROOT / "scripts" / "analysis"
 JIRA_BROWSE_BASE = "https://jira-sd.mc1.oracleiaas.com/browse"
 HUMAN_AUDIT_GUIDANCE = (
     "Before audit use pending-review or needs-review. "
-    "After audit set correct or incorrect."
+    "After audit set correct or incorrect. "
+    "For needs-review add Human Comments using: "
+    "Expected Category of Issue <> / Expected Category <> / Reason <>."
 )
 
 # Meta-rules only set Runbook Present; they don't count as categorization rules

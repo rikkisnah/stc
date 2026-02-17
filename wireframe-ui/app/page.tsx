@@ -448,6 +448,45 @@ export default function HomePage() {
     return rows.map((row) => row.map((cell) => csvEscapeCell(cell || "")).join(",")).join("\n");
   }
 
+  function normalizeAuditTemplateColumns(rows: string[][]): string[][] {
+    if (rows.length < 2) return rows;
+
+    const header = rows[0] || [];
+    const headerLen = header.length;
+    const guidanceIdx = header.findIndex((h) => h.trim() === "Human Audit Guidance");
+    const commentsIdx = header.findIndex((h) => h.trim() === "Human Comments");
+    if (guidanceIdx < 0 || commentsIdx < 0) return rows;
+
+    return rows.map((row, idx) => {
+      if (idx === 0) return row;
+      const next = [...row];
+      if (next.length > headerLen) {
+        const overflow = next.slice(headerLen);
+        next.length = headerLen;
+        if (overflow.length > 0) {
+          const baseComments = next[commentsIdx] || "";
+          next[commentsIdx] = [baseComments, ...overflow].filter(Boolean).join(",");
+        }
+      }
+      const guidance = (next[guidanceIdx] || "").trim();
+      const comments = (next[commentsIdx] || "").trim();
+
+      // Repair older runs where the helper template was split into comments.
+      if (
+        guidance.includes("For needs-review add Human Comments using: Expected Category of Issue") &&
+        /^Expected Category:/i.test(comments)
+      ) {
+        const normalizedTail = comments
+          .replace(/\s*,\s*/g, "; ")
+          .replace(/\s{2,}/g, " ")
+          .trim();
+        next[guidanceIdx] = `${guidance}; ${normalizedTail}`;
+        next[commentsIdx] = "";
+      }
+      return next;
+    });
+  }
+
   function validateJql(query: string): string | null {
     const trimmed = query.trim();
     if (!trimmed) {
@@ -520,7 +559,10 @@ export default function HomePage() {
       if (saved) clearSessionState();
       return;
     }
-    if (!saved.isRunning && !saved.trainRunId) return;
+    if (!saved.isRunning) {
+      clearSessionState();
+      return;
+    }
     setStaleSession(saved);
   }, []);
 
@@ -1628,7 +1670,7 @@ export default function HomePage() {
                     const csvText = await csvResp.text();
                     setTrainAuditOriginal(csvText);
                     try {
-                      setTrainAuditRows(parseCsvRows(csvText));
+                      setTrainAuditRows(normalizeAuditTemplateColumns(parseCsvRows(csvText)));
                     } catch {
                       setTrainAuditRows([]);
                     }
@@ -1749,7 +1791,7 @@ export default function HomePage() {
 
   function resetTrainAudit() {
     try {
-      setTrainAuditRows(parseCsvRows(trainAuditOriginal));
+      setTrainAuditRows(normalizeAuditTemplateColumns(parseCsvRows(trainAuditOriginal)));
     } catch {
       setTrainAuditRows([]);
     }
@@ -1914,7 +1956,7 @@ export default function HomePage() {
                     const csvText = await csvResp.text();
                     setTrainAuditOriginal(csvText);
                     try {
-                      setTrainAuditRows(parseCsvRows(csvText));
+                      setTrainAuditRows(normalizeAuditTemplateColumns(parseCsvRows(csvText)));
                     } catch {
                       setTrainAuditRows([]);
                     }
@@ -2419,6 +2461,7 @@ export default function HomePage() {
                 restoreSession(staleSession);
                 setStaleSession(null);
               }}
+              className="banner-btn banner-btn-restore"
               style={{ background: "#3b82f6", color: "#fff", border: "none", borderRadius: 4, padding: "4px 12px", cursor: "pointer" }}
             >
               Restore
@@ -2428,6 +2471,7 @@ export default function HomePage() {
                 clearSessionState();
                 setStaleSession(null);
               }}
+              className="banner-btn banner-btn-dismiss"
               style={{ background: "#6b7280", color: "#fff", border: "none", borderRadius: 4, padding: "4px 12px", cursor: "pointer" }}
             >
               Dismiss
@@ -2458,7 +2502,7 @@ export default function HomePage() {
               Smart Tickets&apos; Classifier (STC)
             </a>
           </h1>
-          <p className="subtitle">v0.1 wireframe preview</p>
+          <p className="subtitle">AI-powered ticket whisperer for HPC and GPUs</p>
         </header>
 
         <div className="actions">
@@ -4859,6 +4903,12 @@ export default function HomePage() {
                       <p className="small">
                         Review and optionally edit tickets-categorized.csv before continuing.
                       </p>
+                      <p className="small">
+                        For <code>needs-review</code>, use this comment template:{" "}
+                        <code>
+                          Expected Category of Issue &lt;&gt; / Expected Category &lt;&gt; / Reason &lt;&gt;
+                        </code>
+                      </p>
                       {trainAuditCsvPath && (
                         <p className="small">
                           File path:{" "}
@@ -4927,7 +4977,7 @@ export default function HomePage() {
                                 const csvText = await csvResp.text();
                                 setTrainAuditOriginal(csvText);
                                 try {
-                                  setTrainAuditRows(parseCsvRows(csvText));
+                                  setTrainAuditRows(normalizeAuditTemplateColumns(parseCsvRows(csvText)));
                                 } catch {
                                   setTrainAuditRows([]);
                                 }

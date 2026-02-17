@@ -92,17 +92,26 @@ main {
   padding: 0.55rem 0.85rem;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, transform 0.1s ease;
 }
 
 .menu-btn:hover:not(.disabled) {
   background: #e2e8f0;
 }
 
+.menu-btn:active:not(.disabled) {
+  transform: translateY(1px);
+  background: #cbd5e1;
+}
+
 .menu-btn.is-active {
   background: var(--accent);
   color: #ffffff;
   border-color: var(--accent);
+}
+
+.menu-btn.is-active:active:not(.disabled) {
+  background: #1e40af;
 }
 
 .menu-btn.disabled {
@@ -119,12 +128,37 @@ button {
   background: #f8fafc;
   color: #111827;
   font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.1s ease, transform 0.1s ease, background 0.1s ease;
+}
+
+button:hover:not(:disabled) {
+  background: #e2e8f0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  background: #cbd5e1;
 }
 
 button.primary {
   background: var(--accent);
   color: white;
   border-color: var(--accent);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3), 0 1px 2px rgba(37, 99, 235, 0.2);
+}
+
+button.primary:hover:not(:disabled) {
+  background: #1d4ed8;
+  box-shadow: 0 3px 6px rgba(37, 99, 235, 0.35), 0 2px 4px rgba(37, 99, 235, 0.25);
+}
+
+button.primary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+  background: #1e40af;
 }
 
 button:disabled {
@@ -633,4 +667,65 @@ fieldset.field legend {
   margin: 0.7rem 0 0;
   font-size: 0.78rem;
   color: #64748b;
+}
+
+/* Session cards — press/release */
+.session-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.1s ease, transform 0.1s ease, background 0.15s ease;
+}
+
+.session-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.14);
+}
+
+.session-card:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Session delete button — press/release */
+.session-delete-btn {
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.3);
+  transition: box-shadow 0.1s ease, transform 0.1s ease, background 0.1s ease !important;
+}
+
+.session-delete-btn:hover {
+  background: #dc2626 !important;
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
+}
+
+.session-delete-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 0 2px rgba(239, 68, 68, 0.2) !important;
+  background: #b91c1c !important;
+}
+
+/* Banner buttons (Restore / Dismiss) — press/release */
+.banner-btn {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.1s ease, transform 0.1s ease, background 0.1s ease !important;
+}
+
+.banner-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.banner-btn-restore:hover {
+  background: #2563eb !important;
+  box-shadow: 0 3px 6px rgba(59, 130, 246, 0.35);
+}
+
+.banner-btn-restore:active {
+  background: #1d4ed8 !important;
+}
+
+.banner-btn-dismiss:hover {
+  background: #4b5563 !important;
+  box-shadow: 0 3px 6px rgba(107, 114, 128, 0.35);
+}
+
+.banner-btn-dismiss:active {
+  background: #374151 !important;
 }
